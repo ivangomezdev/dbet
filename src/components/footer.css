@@ -1,0 +1,149 @@
+.footer {
+    background-color: #000000;
+    color: #ffffff;
+    padding: 20px 0;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    
+  }
+  
+  .footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .footer-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .footer-links a {
+    color: #ffffff;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  
+  .footer-links a:hover {
+    color: #10b981;
+  }
+  
+  .separator {
+    color: #ffffff;
+    margin: 0 5px;
+  }
+  
+  .payment-methods {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  .payment-icon {
+    height: 30px;
+    object-fit: contain;
+  }
+  
+  .social-contact {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .social-icons {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background-color: #10b981;
+    border-radius: 50%;
+    color: #ffffff;
+    text-decoration: none;
+    transition: background-color 0.3s;
+  }
+  
+  .social-icon:hover {
+    background-color: #0d9668;
+  }
+  
+  .icon {
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .contact-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #10b981;
+    color: #ffffff;
+    border: none;
+    border-radius: 30px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .contact-button:hover {
+    background-color: #0d9668;
+  }
+  
+  .chat-icon {
+    width: 20px;
+    height: 20px;
+  }
+  
+  @media (max-width: 768px) {
+    .footer-container {
+      flex-direction: column;
+      gap: 20px;
+    }
+  
+    .social-contact {
+      width: 100%;
+      justify-content: space-between;
+    }
+  
+    .footer-links,
+    .payment-methods {
+      justify-content: center;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .footer-links {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .separator {
+      display: none;
+    }
+  
+    .payment-methods {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  }
+  
+  

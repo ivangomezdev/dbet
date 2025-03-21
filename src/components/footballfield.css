@@ -1,0 +1,384 @@
+/* Contenedor principal */
+.football-field-container {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    background-color: #000;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    border-top: 5px solid #21d5998d;
+    padding-bottom: 100px;
+  }
+  
+  /* Campo de fútbol */
+  .football-field {
+    position: relative;
+    width: 90%;
+    max-width: 1000px;
+    height: 600px;
+    margin: 0 auto;
+    background-color: #054f36;
+    border-radius: 5px;
+    z-index: 2;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+  
+    /* Textura del césped */
+    background-image: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 20px,
+        rgba(0, 0, 0, 0.05) 20px,
+        rgba(0, 0, 0, 0.05) 40px
+      ),
+      repeating-linear-gradient(90deg, transparent, transparent 20px, rgba(0, 0, 0, 0.02) 20px, rgba(0, 0, 0, 0.02) 40px);
+  }
+  
+  /* Líneas del campo */
+  .field-line {
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  
+  /* Círculo central */
+  .center-circle {
+    width: 150px;
+    height: 150px;
+    border: 2px solid rgba(255, 255, 255, 0.7);
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: transparent;
+  }
+  
+  /* Punto central */
+  .center-spot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  /* Línea de medio campo */
+  .halfway-line {
+    width: 2px;
+    height: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  /* Áreas de penalti */
+  .penalty-area-left {
+    width: 160px;
+    height: 360px;
+    border: 2px solid rgba(255, 255, 255, 0.7);
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: transparent;
+  }
+  
+  .penalty-area-right {
+    width: 160px;
+    height: 360px;
+    border: 2px solid rgba(255, 255, 255, 0.7);
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: transparent;
+  }
+  
+  /* Áreas pequeñas */
+  .goal-area-left {
+    width: 60px;
+    height: 180px;
+    border: 2px solid rgba(255, 255, 255, 0.7);
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: transparent;
+  }
+  
+  .goal-area-right {
+    width: 60px;
+    height: 180px;
+    border: 2px solid rgba(255, 255, 255, 0.7);
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: transparent;
+  }
+  
+  /* Puntos de penalti */
+  .penalty-spot-left {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    left: 110px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
+  .penalty-spot-right {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    right: 110px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
+  /* Semicírculos de penalti */
+  .penalty-arc-left {
+    width: 80px;
+    height: 80px;
+    border: 2px solid rgba(255, 255, 255, 0.7);
+    border-radius: 0 80px 80px 0;
+    left: 160px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: transparent;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+  
+  .penalty-arc-right {
+    width: 80px;
+    height: 80px;
+    border: 2px solid rgba(255, 255, 255, 0.7);
+    border-radius: 80px 0 0 80px;
+    right: 160px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: transparent;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+  
+  /* Esquinas */
+  .corner {
+    width: 20px;
+    height: 20px;
+    border-radius: 0;
+    background-color: transparent;
+  }
+  
+  .corner-top-left {
+    top: 0;
+    left: 0;
+    border-top: none;
+    border-left: none;
+    border-right: 2px solid rgba(255, 255, 255, 0.7);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.7);
+    border-bottom-right-radius: 20px;
+  }
+  
+  .corner-top-right {
+    top: 0;
+    right: 0;
+    border-top: none;
+    border-right: none;
+    border-left: 2px solid rgba(255, 255, 255, 0.7);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.7);
+    border-bottom-left-radius: 20px;
+  }
+  
+  .corner-bottom-left {
+    bottom: 0;
+    left: 0;
+    border-bottom: none;
+    border-left: none;
+    border-right: 2px solid rgba(255, 255, 255, 0.7);
+    border-top: 2px solid rgba(255, 255, 255, 0.7);
+    border-top-right-radius: 20px;
+  }
+  
+  .corner-bottom-right {
+    bottom: 0;
+    right: 0;
+    border-bottom: none;
+    border-right: none;
+    border-left: 2px solid rgba(255, 255, 255, 0.7);
+    border-top: 2px solid rgba(255, 255, 255, 0.7);
+    border-top-left-radius: 20px;
+  }
+  
+  /* Porterías */
+  .goal {
+    position: absolute;
+    width: 20px;
+    height: 120px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
+  .goal-left {
+    left: 0;
+  }
+  
+  .goal-right {
+    right: 0;
+  }
+  
+  .goal-post {
+    position: absolute;
+    background-color: white;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
+  }
+  
+  .goal-left .goal-post-left,
+  .goal-left .goal-post-right {
+    width: 4px;
+    height: 120px;
+    left: -2px;
+  }
+  
+  .goal-left .goal-post-left {
+    top: -60px;
+  }
+  
+  .goal-left .goal-post-right {
+    bottom: -60px;
+  }
+  
+  .goal-left .goal-post-top {
+    width: 4px;
+    height: 120px;
+    left: -2px;
+    top: -60px;
+    transform: rotate(90deg);
+    transform-origin: top left;
+  }
+  
+  .goal-right .goal-post-left,
+  .goal-right .goal-post-right {
+    width: 4px;
+    height: 120px;
+    right: -2px;
+  }
+  
+  .goal-right .goal-post-left {
+    top: -60px;
+  }
+  
+  .goal-right .goal-post-right {
+    bottom: -60px;
+  }
+  
+  .goal-right .goal-post-top {
+    width: 4px;
+    height: 120px;
+    right: -2px;
+    top: -60px;
+    transform: rotate(-90deg);
+    transform-origin: top right;
+  }
+  
+  .goal-net {
+    position: absolute;
+    width: 20px;
+    height: 120px;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.2) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.2) 1px, transparent 1px);
+    background-size: 10px 10px;
+  }
+  
+  .goal-left .goal-net {
+    left: 0;
+    top: 0;
+  }
+  
+  .goal-right .goal-net {
+    right: 0;
+    top: 0;
+  }
+  
+  /* Sección de logotipos dentro del campo */
+  .logos-section {
+    position: absolute;
+    width: 80%;
+    max-width: 800px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    z-index: 3;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  }
+  
+  .logos-title {
+    background-color: #0448318c;
+    padding: 10px;
+    text-align: center;
+    color: #ffffff;
+    font-size: 30px;
+    margin-bottom: 100px;
+    font-weight: 600;
+
+  }
+  
+  .logos-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .logo-row {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+  
+  .logo-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    transition: transform 0.3s;
+  }
+  
+  .logo-item:hover {
+    transform: scale(1.05);
+  }
+  
+  .logo {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .football-field {
+      height: 500px;
+    }
+  
+    .logos-section {
+      width: 90%;
+      padding: 15px;
+    }
+  
+    .logos-grid {
+      gap: 15px;
+    }
+  
+    .logo-row {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .logos-title {
+      font-size: 20px;
+      margin-bottom: 15px;
+    }
+  
+    .logo-item {
+      padding: 3px;
+    }
+  }
+  
+  

@@ -1,0 +1,343 @@
+/* Estilos generales */
+.guides {
+    font-family: "Roboto", "Arial", sans-serif;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 16px;
+    color: #0f0f0f;
+  }
+  
+  /* Estilos del perfil */
+  .guides__profile {
+    display: flex;
+    padding: 16px 0;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  
+  .guides__profile-avatar {
+    flex-shrink: 0;
+  }
+  
+  .guides__profile-image {
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .guides__profile-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .guides__profile-name-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .guides__profile-name {
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .guides__profile-verified {
+    font-size: 20px;
+    color: #606060;
+  }
+  
+  .guides__profile-stats {
+    font-size: 14px;
+    color: #606060;
+  }
+  
+  .guides__profile-description {
+    font-size: 14px;
+    color: #0f0f0f;
+    margin: 8px 0;
+  }
+  
+  .guides__profile-more-button {
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: 14px;
+    color: #606060;
+    cursor: pointer;
+    margin-left: 4px;
+  }
+  
+  .guides__profile-link {
+    color: #065fd4;
+    text-decoration: none;
+    font-size: 14px;
+  }
+  
+  .guides__profile-time {
+    color: #606060;
+    font-size: 14px;
+    margin-left: 4px;
+  }
+  
+  .guides__profile-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+  }
+  
+  .guides__profile-subscribe-button {
+    background-color: #0f0f0f;
+    color: #ffffff;
+    border: none;
+    border-radius: 18px;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  
+  .guides__profile-unlink-button {
+    background-color: #f2f2f2;
+    color: #0f0f0f;
+    border: none;
+    border-radius: 18px;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  
+  /* Estilos de navegación */
+  .guides__navigation {
+    border-bottom: 1px solid #e5e5e5;
+    margin-bottom: 24px;
+  }
+  
+  .guides__main-nav {
+    margin-bottom: 8px;
+  }
+  
+  .guides__nav-list {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    gap: 8px;
+  }
+  
+  .guides__nav-item {
+    position: relative;
+  }
+  
+  .guides__nav-item--active::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: #0f0f0f;
+  }
+  
+  .guides__nav-button {
+    background: none;
+    border: none;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    color: #0f0f0f;
+  }
+  
+  .guides__nav-item--search {
+    margin-left: auto;
+  }
+  
+  .guides__search-button {
+    background: none;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .guides__filters {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  
+  .guides__filter-button {
+    background: none;
+    border: none;
+    padding: 8px 12px;
+    font-size: 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #0f0f0f;
+  }
+  
+  .guides__filter-button--active {
+    background-color: #054F36;
+    color: #ffffff;
+  }
+  
+  /* Estilos del contenido y videos */
+  .guides__content {
+    padding: 16px 0;
+  }
+  
+  .guides__videos-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 16px;
+  }
+  
+  .guides__video-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+  }
+  
+  .guides__video-thumbnail-container {
+    position: relative;
+    width: 100%;
+    margin-bottom: 8px;
+  }
+  
+  .guides__video-thumbnail {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    object-fit: contain;
+    aspect-ratio: 16 / 9;
+  }
+  
+  .guides__video-duration {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 2px 4px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  
+  .guides__video-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .guides__video-title {
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .guides__video-meta {
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    color: #606060;
+  }
+  
+  .guides__video-views {
+    margin-right: 4px;
+  }
+  
+  .guides__video-separator {
+    margin: 0 4px;
+  }
+  
+  .guides__video-options {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: none;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    color: #606060;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  
+  .guides__video-card:hover .guides__video-options {
+    opacity: 1;
+  }
+  
+  /* Media queries para responsive */
+  @media (min-width: 640px) {
+    .guides__videos-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (min-width: 768px) {
+    .guides__videos-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .guides__videos-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  
+  .article__share {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .article__share-label {
+    font-size: 14px;
+    color: #666;
+  }
+  
+  .article__share-buttons {
+    display: flex;
+    gap: 5px;
+  }
+  
+  .article__share-btn {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 3px;
+    font-size: 14px;
+    cursor: pointer;
+    color: white;
+  }
+  
+  .article__share-btn--facebook {
+    background-color: #3b5998;
+  }
+  
+  .article__share-btn--twitter {
+    background-color: #1da1f2;
+  }
+  
+  .article__share-btn--email {
+    background-color: #dd4b39;
+  }
+  
+  .article__share-btn--more {
+    background-color: #9c27b0;
+  }

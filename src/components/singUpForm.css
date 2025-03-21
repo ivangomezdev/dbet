@@ -1,0 +1,143 @@
+.signup {
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  .signup__container {
+    background-color: rgba(255, 255, 255, 0.91);
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    position: relative;
+  }
+  
+  .signup__title {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #222;
+  }
+  
+  .signup__social-text {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 15px;
+  }
+  
+  .signup__social-buttons {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+  }
+  
+  .signup__social-button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid #e0e0e0;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+  }
+  
+  .signup__social-button:hover {
+    transform: translateY(-2px);
+  }
+  
+  .signup__social-button--facebook .signup__social-icon {
+    color: #3b5998;
+  }
+  
+  .signup__social-button--twitter .signup__social-icon {
+    color: #000000;
+  }
+  
+  .signup__social-button--google .signup__social-icon {
+    color: #db4437;
+  }
+  
+  .signup__social-icon {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .signup__divider {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 20px;
+  }
+  
+  .signup__form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 25px;
+  }
+  
+  .signup__form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .signup__label {
+    font-size: 14px;
+    color: #666;
+  }
+  
+  .signup__input {
+    padding: 10px 0;
+    border: none;
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  
+  .signup__input:focus {
+    border-color: #0070f3;
+  }
+  
+  .signup__submit-button {
+    background-color: #054F36;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-top: 10px;
+  }
+  
+  .signup__submit-button:hover {
+    background-color: #0060df;
+  }
+  
+  .signup__footer {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    font-size: 12px;
+    color: #999;
+    margin-top: 20px;
+  }
+  
+  .signup__link {
+    color: #999;
+    text-decoration: none;
+  }
+  
+  .signup__link:hover {
+    text-decoration: underline;
+  }
+  
+  .signup__separator {
+    color: #999;
+  }
+  
+  

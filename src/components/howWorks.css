@@ -1,0 +1,26 @@
+
+.howWorks__cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  
+}
+
+
+.howWorks__card h2 {
+  background-color: aquamarine;
+}
+
+.howWorks__card p {
+  width: 250px;
+  font-size: 20px;
+  margin: 0 auto;
+}
+
+.howWorks__content h1 {
+  text-align: center;
+  font-size: 40px;
+  margin-top: 0px !important;
+  padding-top: 30px;
+  color: white;
+}

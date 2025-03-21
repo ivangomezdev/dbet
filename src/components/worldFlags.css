@@ -1,0 +1,42 @@
+.linea-divisoria {
+    width: 80%;
+    margin: 0px auto;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .worldFlags__cont {
+    
+    display: flex;
+    width: 60%;
+    margin: 0 auto;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding-bottom: 70px;
+
+  }
+  
+  .worldFlags__each {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Calcula el ancho para que 11 elementos quepan en una fila */
+    width: calc((100% - (10 * 16px)) / 9); /* 10 gaps, 11 elementos */
+  }
+  
+  .worldFlags__each p {
+    margin-top: 0px;
+    color: whitesmoke;
+  }
+  
+  .worldFlags__each img {
+    margin-bottom: 0px;
+  }
+
+  .worldFlags__container h2{
+    text-align: center;
+    color: whitesmoke;
+  }
+
+  .worldFlags__container{
+    background: linear-gradient(to right, #122720, black);
+  }

@@ -1,0 +1,378 @@
+.user-bono {
+    font-family: Arial, sans-serif;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    color: #333;
+  }
+  
+  /* Header */
+  .user-bono__header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-bottom: 30px;
+    position: relative;
+  }
+  
+  .user-bono__ninja {
+    width: 80px;
+    height: 80px;
+    background-image: url("/placeholder.svg?height=80&width=80");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-bottom: 10px;
+  }
+  
+  .user-bono__welcome {
+    text-align: center;
+  }
+  
+  .user-bono__title {
+    font-size: 32px;
+    font-weight: bold;
+    color: #00b3a6;
+    margin: 0;
+    text-transform: uppercase;
+  }
+  
+  .user-bono__subtitle {
+    font-size: 14px;
+    color: #ff9a9a;
+    margin: 5px 0 15px;
+  }
+  
+  .user-bono__divider {
+    height: 2px;
+    background-color: #00b3a6;
+    width: 100%;
+    max-width: 400px;
+    position: relative;
+  }
+  
+  .user-bono__divider::before,
+  .user-bono__divider::after {
+    content: "";
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: #00b3a6;
+    border-radius: 50%;
+    top: -4px;
+  }
+  
+  .user-bono__divider::before {
+    left: 0;
+  }
+  
+  .user-bono__divider::after {
+    right: 0;
+  }
+  
+  /* Content layout */
+  .user-bono__content {
+    display: flex;
+    gap: 30px;
+  }
+  
+  .user-bono__main {
+    flex: 1;
+  }
+  
+  .user-bono__sidebar {
+    width: 250px;
+  }
+  
+  /* Tabs */
+  .user-bono__tabs {
+    display: flex;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .user-bono__tab {
+    padding: 10px 20px;
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    position: relative;
+    color: #666;
+  }
+  
+  .user-bono__tab--active {
+    color: #ff5a5a;
+    font-weight: bold;
+  }
+  
+  .user-bono__tab--active::after {
+    content: "";
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: #ff5a5a;
+  }
+  
+  /* Bono items */
+  .user-bono__list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .user-bono__item {
+    display: flex;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    padding: 20px;
+    position: relative;
+  }
+  
+  .user-bono__logo {
+    width: 150px;
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .user-bono__logo-img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .user-bono__details {
+    flex: 1;
+  }
+  
+  .user-bono__item-title {
+    font-size: 18px;
+    margin: 0 0 10px;
+    font-weight: bold;
+  }
+  
+  .user-bono__offer-type {
+    font-size: 14px;
+    margin: 0 0 5px;
+  }
+  
+  .user-bono__offer-value {
+    color: #00b3a6;
+    font-weight: bold;
+  }
+  
+  .user-bono__promo {
+    color: #ff0000;
+    font-size: 14px;
+    margin: 0 0 15px;
+  }
+  
+  .user-bono__meta {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 15px;
+    font-size: 14px;
+  }
+  
+  .user-bono__difficulty,
+  .user-bono__date {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+  }
+  
+  .user-bono__date-separator {
+    margin: 0 5px;
+  }
+  
+  .user-bono__actions {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .user-bono__button {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 12px;
+  }
+  
+  .user-bono__button--show {
+    background-color: #00b3a6;
+  }
+  
+  .user-bono__button--complete {
+    background-color: #00b3a6;
+  }
+  
+  .user-bono__value {
+    position: absolute;
+    right: -15px;
+    top: 20px;
+    background-color: #00b3a6;
+    color: white;
+    padding: 10px 15px;
+    text-align: center;
+    border-radius: 5px;
+    min-width: 80px;
+  }
+  
+  .user-bono__value::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    right: 15px;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #00b3a6;
+  }
+  
+  .user-bono__value-label {
+    font-size: 12px;
+    margin-bottom: 5px;
+  }
+  
+  .user-bono__value-amount {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  /* Sidebar promos */
+  .user-bono__sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-height: 800px;
+    overflow-y: auto;
+  }
+  
+  .user-bono__promo {
+    text-align: center;
+  }
+  
+  .user-bono__promo-title {
+    font-size: 16px;
+    color: #00b3a6;
+    margin-bottom: 10px;
+  }
+  
+  .user-bono__promo:nth-child(2) .user-bono__promo-title {
+    color: white;
+    background-color: #ff5a5a;
+    padding: 10px;
+    font-size: 14px;
+  }
+  
+  .user-bono__promo:nth-child(3) .user-bono__promo-title {
+    color: white;
+    background-color: #3b5998;
+    padding: 10px;
+    font-size: 14px;
+  }
+  
+  .user-bono__promo:nth-child(4) .user-bono__promo-title {
+    color: white;
+    background-color: #00b3a6;
+    padding: 10px;
+    font-size: 14px;
+  }
+  
+  /* Estilos para bonos completados */
+  .user-bono__item--completed {
+    opacity: 0.7;
+    background-color: #f9f9f9;
+  }
+  
+  .user-bono__item--completed .user-bono__button--complete {
+    background-color: #999;
+    cursor: not-allowed;
+  }
+  
+  /* Indicadores de dificultad */
+  .user-bono__difficulty-value {
+    font-weight: bold;
+  }
+  
+  .user-bono__difficulty-value--easy {
+    color: #4caf50;
+  }
+  
+  .user-bono__difficulty-value--medium {
+    color: #ff9800;
+  }
+  
+  .user-bono__difficulty-value--hard {
+    color: #f44336;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .user-bono__content {
+      flex-direction: column;
+    }
+  
+    .user-bono__sidebar {
+      width: 100%;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  
+    .user-bono__promo {
+      width: 45%;
+    }
+  
+    .user-bono__item {
+      flex-direction: column;
+    }
+  
+    .user-bono__logo {
+      width: 100%;
+      margin-right: 0;
+      margin-bottom: 15px;
+      justify-content: center;
+    }
+  
+    .user-bono__value {
+      position: static;
+      margin-top: 15px;
+      align-self: flex-end;
+    }
+  
+    .user-bono__value::after {
+      display: none;
+    }
+  }
+  
+  /* Mejoras para responsive con más elementos */
+  @media (max-width: 992px) {
+    .user-bono__sidebar {
+      flex-direction: row;
+      flex-wrap: wrap;
+      max-height: none;
+      overflow-y: visible;
+    }
+  
+    .user-bono__promo {
+      width: calc(50% - 10px);
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .user-bono__promo {
+      width: 100%;
+    }
+  
+    .user-bono__meta {
+      flex-direction: column;
+      gap: 5px;
+    }
+  }
+  
+  

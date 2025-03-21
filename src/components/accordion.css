@@ -1,0 +1,21 @@
+.accordion__wrapper {
+    width: 50%;
+    margin: 0 auto;
+    padding: 0; /* Elimina padding del contenedor */
+  }
+  
+  .accordion__content {
+    width: 100%;
+    margin: 0;
+    padding: 10px; /* Elimina padding adicional */
+  }
+
+
+  .accordion__content{
+    background-color: #00d75677 !important; /* Fondo verde */
+    position: relative !important; /* Para permitir pseudo-elementos o capas */
+    overflow: hidden; /* Evita desbordamiento */
+    color: white !important;
+  }
+
+  
