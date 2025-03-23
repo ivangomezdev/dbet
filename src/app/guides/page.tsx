@@ -3,7 +3,7 @@ import NavBar from '@/components/NavBar'
 import Videos from '@/components/Videos'
 import React from 'react'
 import "./guides.css"
-const page = () => {
+const Page = () => {
   return (
     <>
     <header>
@@ -21,4 +21,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

@@ -19,7 +19,7 @@ import UserEditForm from "../../components/UserEditForm"
     // You could also pass a banner image URL
   }
 
-const page = () => {
+const Page = () => {
     
   const [cookies] = useCookies(["token"]); // Leer las cookies
   const router = useRouter()
@@ -40,4 +40,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

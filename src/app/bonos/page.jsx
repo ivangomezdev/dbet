@@ -4,7 +4,7 @@
     import UserBono from '@/components/UserBono'
     import { getBonos } from '@/lib/contenful'
 
-    const  page = async () => {
+    const  Page = async () => {
         const otrosDatos = await getBonos();
         
      
@@ -24,4 +24,4 @@
     )
     }
 
-    export default page
+    export default Page

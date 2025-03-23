@@ -4,7 +4,7 @@ import React from 'react'
 import "./register.css"
 import Footer from '@/components/Footer'
 
-const page = () => {
+const Page = () => {
   return (
     <>
       <header>
@@ -27,4 +27,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page
