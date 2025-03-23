@@ -1,5 +1,5 @@
 .accordion__wrapper {
-    width: 50%;
+    width: 60%;
     margin: 0 auto;
     padding: 0; /* Elimina padding del contenedor */
   }
@@ -16,6 +16,54 @@
     position: relative !important; /* Para permitir pseudo-elementos o capas */
     overflow: hidden; /* Evita desbordamiento */
     color: white !important;
+ 
   }
 
+
+  @media(max-width:1030px){
+    .accordion__wrapper {
+      width: 80%;
+
+    }
+  }
   
+
+  @media(max-width:780px){
+    .accordion__wrapper {
+      width: 90%;
+
+    }
+  }
+
+
+  @media(max-width:591px){
+    .accordion__wrapper {
+      margin: 0 auto;
+      width: 400px !important;
+
+    }
+  }
+
+  @media(max-width:556px){
+    .accordion__wrapper {
+      margin: 0 auto !important;
+      width: 300px !important;
+
+    }
+  }
+
+  @media(max-width:556px){
+    .accordion__wrapper {
+      margin: 0 auto;
+      width: 300px !important;
+
+    }
+  }
+
+  @media(max-width:350px){
+    .accordion__wrapper {
+     
+      width: 270px !important;
+
+    }
+  }

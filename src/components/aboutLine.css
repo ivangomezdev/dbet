@@ -10,3 +10,9 @@ color: whitesmoke;
   padding: 10px;
   margin: 0;
 }
+
+@media(max-width:460px){
+  .aboutLine__q{
+    font-size: 15px !important;
+  }
+}

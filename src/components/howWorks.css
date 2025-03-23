@@ -1,7 +1,7 @@
 
 .howWorks__cards {
   display: flex;
-  flex-wrap: wrap;
+  
   justify-content: center;
   
 }
@@ -24,3 +24,5 @@
   padding-top: 30px;
   color: white;
 }
+
+

@@ -7,7 +7,7 @@
   .worldFlags__cont {
     
     display: flex;
-    width: 60%;
+    width: 80%;
     margin: 0 auto;
     flex-wrap: wrap;
     gap: 16px;
@@ -39,4 +39,29 @@
 
   .worldFlags__container{
     background: linear-gradient(to right, #122720, black);
+  }
+
+  @media(max-width:977px){
+    .worldFlags__cont {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+      justify-items: center;
+    }
+  }
+
+  @media(max-width:649px){
+    .worldFlags__cont {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr ;
+     
+    }
+  }
+
+
+  @media(max-width:380px){
+    .worldFlags__cont {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr  ;
+     
+    }
   }

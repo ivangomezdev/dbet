@@ -10,6 +10,61 @@
 
 }
 
+@media(max-width:1180px) {
+  .imageTextContainer__cont {
+    display: flex;
+   flex-direction: column;
+  
+  }
+}
+
+
+@media(max-width:655px) {
+  .imageTextContainer__texts {
+   text-align: center;
+  
+  }
+}
+
+@media(max-width:570px) {
+  .imageTextContainer__texts {
+   font-size: 1.4rem;
+  
+  }
+
+  .imageTextContainer__img{
+    width: 400px;
+    height: 340px;
+    margin-bottom: 30px;
+  }
+
+
+}
+
+@media(max-width:420px) {
+  .imageTextContainer__texts {
+   font-size: 1.2rem;
+  
+  }
+
+  .imageTextContainer__img{
+    width: 330px;
+    height: 270px;
+    margin-bottom: 30px;
+  }
+
+  .imageTextContainer__link{
+   display: none;
+  }
+  
+  .imageTextContainer__btn{
+   width: 300px !important;
+   justify-content: center;
+   }
+}
+
+
+
 .imageTextContainer__text {
   text-align: end;
   color: gainsboro;
@@ -54,4 +109,5 @@
 .imageTextContainer__btnAnda{
     display: flex;
     justify-content: space-around;
+    align-items: center;
 }

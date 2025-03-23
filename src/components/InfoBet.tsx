@@ -79,7 +79,7 @@ export default function InfoBet() {
                 alt="Comparador de cuotas"
                 width={530}
                 height={150}
-                className="feature-image"
+                className="feature-image-quotes"
                 style={{border:"none"}}
               />
             </div>

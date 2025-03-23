@@ -68,8 +68,9 @@ const CommunityInfo = () => {
       <div className="placeholder-content">
         <div className="communityInfo__cont">
           <div
+          className="howToImgDiv"
             style={{
-              width: "600px",
+              width: "500px",
               height: "300px",
               backgroundColor: "rgba(119, 119, 119, 0.338)",
             }}
@@ -79,8 +80,9 @@ const CommunityInfo = () => {
                 "https://res.cloudinary.com/dc5zbh38m/image/upload/v1742499694/hqdefault_inax8c.jpg"
               }
               alt="howTo"
-              width={600}
+              width={500}
               height={350}
+              className="howToImg"
             />
           </div>
           <div className="communityInfo__text">

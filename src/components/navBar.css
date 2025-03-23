@@ -67,3 +67,10 @@
     background-color: #64d792;
  
  }
+
+ @media (max-width:490px){
+    .NavBar__SocialIcons{
+    display: none;
+     
+     }
+ }

@@ -74,7 +74,7 @@
 /* Contenedor principal */
 .betting-background {
   position: relative;
-  width: 100%;
+ 
   min-height: 100vh;
   background: linear-gradient(135deg, #044a32 0%, #022218 50%, #000000 100%);
   overflow: hidden;
@@ -428,7 +428,10 @@
   border: 1px solid rgba(4, 74, 50, 0.5);
   color: #ffffff;
   text-align: center;
+  padding: 20px;
 }
+
+
 
 .placeholder-content h2 {
   font-size: 32px;
@@ -471,3 +474,198 @@
   }
 }
 
+@media (max-width: 1502px) {
+
+  .howToImgDiv{
+    width: 400px !important;
+    height: 300px !important;
+  }
+ 
+  .howToImg{
+    width: 400px !important;
+    height: 300px !important;
+  }
+
+
+  .communityInfo__text {
+    width: 400px !important;
+  }
+
+  .communityInfo__cont {
+    display: grid;
+    grid-template-columns: 400px auto;
+  
+  }
+}
+
+@media (max-width: 1211px) {
+
+  .communityInfo__info{
+    width: 400px !important;
+    margin: 0 !important;
+  }
+
+  .communityInfo__text{
+   width: 390px !important;
+  }
+
+  .communityInfo__cont{
+   margin: 0 auto;
+  }
+  .placeholder-content{
+    width: 90%;
+  }
+}
+
+
+@media (max-width: 998px) {
+
+  .communityInfo__cont{
+    row-gap: 50px;
+    grid-template-columns:1fr !important;
+    
+  }
+
+  .communityInfo__text{
+    
+    width: 400px !important;
+    
+  }
+  .howToImgDiv{
+    width: 75% !important;
+    height: 50%;
+  }
+
+  .howToImg{
+    width: 100% !important;
+    height: 50%;
+  }
+
+  .communityInfo__cont button{
+    
+    width: 100% !important;
+    
+  }
+
+}
+
+
+
+@media (max-width: 534px) {
+
+  .placeholder-content{
+    width:90%!important; 
+  }
+
+
+  .howToImgDiv{
+    width: 300px !important;
+    height: 240px !important;
+  }
+ 
+  .howToImg{
+    width: 300px !important;
+    height: 240px !important;
+  }
+
+
+}
+
+@media (max-width: 482px) {
+
+  .communityInfo__text {
+width: 330px !important;
+
+  }
+
+  .communityInfo__cont{
+    margin-left: -20px;
+  }
+
+ 
+
+
+}
+
+
+
+@media (max-width: 425px) {
+
+  .communityInfo__text {
+width: 300px !important;
+
+  }
+
+  .communityInfo__text h1 {
+   text-align: center;
+    
+      }
+
+  .communityInfo__cont{
+    margin-left: -50px;
+  }
+
+  .communityInfo__quantity{
+   width: 300px;
+  }
+
+ 
+  .communityInfo__info{
+   flex-direction: column-reverse;
+   }
+ 
+
+
+}
+
+@media (max-width: 358px) {
+
+.howToImgDiv{
+  width: 70% !important;
+  margin-left: -50px;
+}
+
+.howToImg{
+  width: 100% !important;
+  
+}
+
+.communityInfo__quantity{
+  width: 270px !important;
+  margin-left: -10px;
+ }
+
+ .communityInfo__quantity p{
+  width: 250px !important;
+  margin-left: 10px;
+ }
+
+ .communityInfo__quantity h1{
+  font-size: 30px;
+  margin-left: 10px;
+ }
+
+ .communityInfo__info{
+ margin-left: -30px !important;
+ }
+
+ .communityInfo__text p{
+  width: 270px !important;
+  padding: 5px;
+
+ }
+
+ .communityInfo__text h1{
+  
+  width: 270px;
+
+ }
+
+ 
+ .communityInfo__text button{
+  
+  width: 280px !important;
+
+ }
+
+}
