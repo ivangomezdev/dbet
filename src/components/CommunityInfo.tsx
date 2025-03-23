@@ -5,7 +5,7 @@ import Image from "next/image";
 
 import Link from "next/link";
 const CommunityInfo = () => {
-  const thumbnailUrl = `https://img.youtube.com/vi/C2Z-KMx6jGM/hqdefault.jpg`;
+
   return (
     <div className="betting-background">
       <div className="background-overlay"></div>

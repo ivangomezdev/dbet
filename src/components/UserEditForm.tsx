@@ -28,6 +28,7 @@ export default function UserEditForm({
   const [phoneType, setPhoneType] = useState(initialData.phoneType || 'Mobile');
   const [showPhoneDropdown, setShowPhoneDropdown] = useState(false);
   const [isEditing, setIsEditing] = useState(false); // New state to track edit mode
+console.log(activeTab);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

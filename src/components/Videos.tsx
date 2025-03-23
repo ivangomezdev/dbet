@@ -104,7 +104,7 @@ const videoData = [
 ];
 
 export default function Videos() {
-  const [activeTab, setActiveTab] = useState("videos");
+
   const [activeFilter, setActiveFilter] = useState("recientes");
 
   return (
