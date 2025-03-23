@@ -3,11 +3,11 @@
 .blog__posts {
     display: grid;
     justify-items: center !important;
-    grid-template-columns: repeat(3, minmax(250px, 450px)); /* 3 columnas fijas */
-    width: 1050px; /* 3 * 350px (ancho de .blog__post) como base */
+    grid-template-columns: 1fr 1fr 1fr; /* 3 columnas fijas */
+  
     max-width: 100%; /* No exceder el contenedor padre */
     margin: 0 auto !important; /* Centra horizontalmente */
-    gap: 90px;
+    gap: 30px;
     
     
 }
@@ -180,3 +180,37 @@ background-color: rgba(255, 255, 255, 0.51);
 .shape-fill {
     fill: #054F36 !important; /* Cambia este color */
   }
+
+
+  @media(max-width:970px){
+    
+
+.blog__posts {
+ 
+  grid-template-columns: 1fr 1fr ; /* 3 columnas fijas */
+
+  
+  
+}
+  }
+
+
+  @media(max-width:637px){
+    
+
+    .blog__posts {
+     
+      grid-template-columns: 1fr ;
+    
+      
+      
+    }
+      }
+
+
+      @media(max-width:475px){
+        .blog__subtitle{
+       font-size: 15px;
+      
+      }
+      }
