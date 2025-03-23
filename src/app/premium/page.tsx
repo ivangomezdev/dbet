@@ -10,7 +10,7 @@ const premium = () => {
         <NavBar/>
       </header>
       <main>
-      <SubscriptionCard/>
+      <SubscriptionCard hrefAnual='/auth/register' hrefMensual='/auth/register' hrefFree='/auth/register' />
       </main>
       <footer>
         <Footer/>

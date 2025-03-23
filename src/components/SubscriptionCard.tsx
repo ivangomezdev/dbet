@@ -1,7 +1,17 @@
 import Link from "next/link"
 import "./subscriptionCard.css"
 
-export default function SubscriptionCard() {
+interface SubscriptionCardProps {
+  hrefFree?: string;
+  hrefMensual?: string;
+  hrefAnual?:string;
+}
+
+export default function SubscriptionCard(hrefsData: SubscriptionCardProps) {
+  const safeFreeHref = hrefsData.hrefFree || "#"; 
+  const safeMensualHref = hrefsData.hrefMensual || "#"; 
+  const safeAnualHref = hrefsData.hrefAnual || "#"; 
+  
   return (
     <div className="premium-container">
       <div className="decorative-elements">
@@ -54,7 +64,7 @@ export default function SubscriptionCard() {
             </div>
 
             <div className="card-footer">
-              <Link href={"/auth/register"}>
+              <Link href={safeFreeHref}>
               <button className="btn btn-register">REGÍSTRATE GRATIS</button>
               </Link>
             </div>
@@ -82,8 +92,8 @@ export default function SubscriptionCard() {
             </div>
 
             <div className="card-footer">
-            <Link href={"/auth/register"} style={{textDecoration:"none"}}><button style={{marginBottom:"10px"}} className="btn btn-premium">OBTÉN PREMIUM – ESPAÑA</button></Link>
-            <Link href={"/auth/register"} style={{textDecoration:"none"}}><button className="btn btn-premium">OBTÉN PREMIUM – LATINOAMÉRICA</button></Link>
+            <Link href={safeMensualHref} style={{textDecoration:"none"}}><button style={{marginBottom:"10px"}} className="btn btn-premium">OBTÉN PREMIUM – ESPAÑA</button></Link>
+            <Link href={safeMensualHref} style={{textDecoration:"none"}}><button className="btn btn-premium">OBTÉN PREMIUM – LATINOAMÉRICA</button></Link>
             </div>
           </div>
 
@@ -109,8 +119,8 @@ export default function SubscriptionCard() {
             </div>
 
             <div className="card-footer">
-            <Link href={"/auth/register"} style={{textDecoration:"none"}}><button style={{marginBottom:"10px"}} className="btn btn-premium">OBTÉN PREMIUM – ESPAÑA</button></Link>
-            <Link href={"/auth/register"} style={{textDecoration:"none"}}><button className="btn btn-premium">OBTÉN PREMIUM – LATINOAMÉRICA</button></Link>
+            <Link href={safeAnualHref} style={{textDecoration:"none"}}><button style={{marginBottom:"10px"}} className="btn btn-premium">OBTÉN PREMIUM – ESPAÑA</button></Link>
+            <Link href={safeAnualHref} style={{textDecoration:"none"}}><button className="btn btn-premium">OBTÉN PREMIUM – LATINOAMÉRICA</button></Link>
               
               
             </div>

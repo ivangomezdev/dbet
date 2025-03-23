@@ -10,7 +10,8 @@ import NavBar from "@/components/NavBar";
 import SubscriptionCard from "@/components/SubscriptionCard";
 import WorldFlags from "@/components/WorldFlags";
 
-
+import { initDB } from '../lib/init-db';
+initDB();
 export default function Home() {
   return (
     <>
@@ -32,7 +33,7 @@ export default function Home() {
        <InfoBet/>
       </section>
       <section>
-        <SubscriptionCard/>
+        <SubscriptionCard hrefAnual='/auth/register' hrefMensual='/auth/register' hrefFree='/auth/register'/>
         <FootballField/>
       </section>
 

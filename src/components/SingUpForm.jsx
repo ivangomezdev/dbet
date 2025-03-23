@@ -1,58 +1,105 @@
-// app/signup/page.js
 "use client";
 
-import { useState } from "react";
-import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import "./singUpForm.css";
+import SubscriptionCard from "./SubscriptionCard";
+import { useCookies } from "react-cookie";
+import { useRouter } from "next/navigation";
 
 export default function SignupForm() {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const router = useRouter();
+  const [code, setCode] = useState("");
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [showCodeInput, setShowCodeInput] = useState(false);
+  const [errorCode, serErrorCode] = useState(false);
+  const [showSubscription, setShowSubscription] = useState(false);
+  const [cookies, setCookie] = useCookies(["token"]);
+  const router = useRouter(); // Add router
 
-  const handleSocialLogin = async (provider) => {
+  useEffect(() => {
+    console.log("Cookies:", cookies);
+    console.log("Token:", cookies.token);
+    if (cookies.token ) {
+      router.push("/me");
+    }
+  }, [cookies.token, router]);
+
+
+  
+  //crear o buscar usuario y enviar codigo
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
+
     try {
-      const result = await signIn(provider, { callbackUrl: "/dashboard" });
-      if (result?.error) {
-        setError(`Error al iniciar con ${provider}`);
+      const response = await fetch("/api/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Algo salió mal");
       }
+
+      // Bloquear email y mostrar campo de código
+      setShowCodeInput(true);
     } catch (err) {
-      setError(`Error al conectar con ${provider}`);
+      setError(err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError("");
+  useEffect(() => {
+    if (cookies.token) {
+      //redirige si ya estoy logueado
+      router.push("/me");
+    }
+  }, [cookies.token]);
 
+  //manejar codigo y tomar el TOKEN para pasarlo a las cookies
+  const handleCodeSubmit = async (e) => {
+    e.preventDefault();
+    const codeVal = e.target.code.value;
     try {
-      const registerResponse = await fetch("/api/register", {
+      const response = await fetch("/api/signup/code", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ codeVal, email }),
       });
 
-      if (!registerResponse.ok) {
-        const errorData = await registerResponse.json();
-        setError(errorData.message || "Error al registrar usuario");
-        return;
+      if (!response.ok) {
+        serErrorCode(true);
       }
 
-      const signInResult = await signIn("credentials", {
-        email,
-        password,
-        redirect: false,
-      });
+      if (response.ok) {
+        const { token } = await response.json();
+        setCookie("token",token);
+        console.log(cookies);
 
-      if (signInResult?.error) {
-        setError("Error al iniciar sesión después del registro");
-      } else {
-        router.push("/dashboard");
+        setShowSubscription(true);
       }
     } catch (err) {
-      setError("Error en el servidor");
+      console.log(err);
+    }
+
+    if (showSubscription) {
+      return (
+        <SubscriptionCard
+          hrefAnual="/auth/register"
+          hrefMensual="/auth/register"
+          hrefFree="/auth/register"
+        />
+      );
     }
   };
 
@@ -60,35 +107,30 @@ export default function SignupForm() {
     <div className="signup">
       <div className="signup__container">
         <h1 className="signup__title">¡Bienvenido!</h1>
-
-        {error && <p className="signup__error">{error}</p>}
-
-        <p className="signup__social-text">Regístrate con una de tus redes sociales</p>
+        <p className="signup__social-text">
+          Regístrate con una de tus redes sociales
+        </p>
 
         <div className="signup__social-buttons">
-          <button
-            onClick={() => handleSocialLogin("facebook")}
-            className="signup__social-button signup__social-button--facebook"
-          >
+          <button className="signup__social-button signup__social-button--facebook">
             <span className="signup__social-icon">f</span>
           </button>
-          <button
-            onClick={() => handleSocialLogin("twitter")}
-            className="signup__social-button signup__social-button--twitter"
-          >
+          <button className="signup__social-button signup__social-button--twitter">
             <span className="signup__social-icon">X</span>
           </button>
-          <button
-            onClick={() => handleSocialLogin("google")}
-            className="signup__social-button signup__social-button--google"
-          >
+          <button className="signup__social-button signup__social-button--google">
             <span className="signup__social-icon">G</span>
           </button>
         </div>
 
         <p className="signup__divider">O utiliza tu email</p>
 
-        <form className="signup__form" onSubmit={handleSubmit}>
+        <form
+          className="signup__form"
+          onSubmit={showCodeInput ? handleCodeSubmit : handleSubmit}
+        >
+          {error && <p className="signup__error">{error}</p>}
+
           <div className="signup__form-group">
             <label htmlFor="email" className="signup__label">
               Email
@@ -100,35 +142,52 @@ export default function SignupForm() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+              disabled={showCodeInput || loading}
             />
           </div>
 
-          <div className="signup__form-group">
-            <label htmlFor="password" className="signup__label">
-              Contraseña
-            </label>
-            <input
-              type="password"
-              id="password"
-              className="signup__input"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
+          {showCodeInput && (
+            <div className="signup__form-group">
+              <label htmlFor="code" className="signup__label">
+                Ingresa el código enviado por email:
+              </label>
+              {errorCode && (
+                <p style={{ color: "red" }}>
+                  El código ingresado es incorrecto
+                </p>
+              )}
+              <input
+                type="text"
+                id="code"
+                className="signup__input"
+                value={code}
+                onChange={(e) => setCode(e.target.value)}
+                required
+                disabled={loading}
+              />
+            </div>
+          )}
 
-          <button type="submit" className="signup__submit-button">
-            Regístrate
+          <button
+            type="submit"
+            className="signup__submit-button"
+            disabled={loading}
+          >
+            {loading
+              ? "Procesando..."
+              : showCodeInput
+              ? "Confirmar Código"
+              : "Regístrate"}
           </button>
         </form>
 
         <div className="signup__footer">
           <a href="#" className="signup__link">
-            Terms & Conditions
+            Términos y Condiciones
           </a>
           <span className="signup__separator">|</span>
           <a href="#" className="signup__link">
-            Privacy Policy
+            Política de Privacidad
           </a>
         </div>
       </div>

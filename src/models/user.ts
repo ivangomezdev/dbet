@@ -1,8 +1,11 @@
-// lib/models/user.js
-import {  DataTypes } from 'sequelize';
-import { sequelize } from '../lib/db.js';
 
-const User = sequelize.define('User', {
+import { DataTypes, Model } from "sequelize";
+import { sequelize } from "../lib/db";
+
+export class User extends Model {}
+
+User.init(
+  {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -21,6 +24,5 @@ const User = sequelize.define('User', {
     type: DataTypes.ENUM('active', 'inactive', 'pending'),
     defaultValue: 'inactive',
   },
-});
-
-export { User };
+  
+} , { sequelize, modelName: "User" });

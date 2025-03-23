@@ -17,7 +17,6 @@ import XIcon from '@mui/icons-material/X';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import "./navBar.css";
 import Link from "next/link";
-const pages = ["Cómo funciona", "Ganancias", "Quienes Somos", "Blog", "Entrar"];
 const pages2= [{name:"Cómo funciona",src:"#howWorks"},{name:"FAQS",src:"#faqs"},{name:"Servicio Premium",src:"/premium"},{name:"Blog",src:"/blog"},{name:"Entrar",src:""}];
 function NavBar() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(

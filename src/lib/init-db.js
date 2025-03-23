@@ -1,4 +1,4 @@
-// lib/init-db.js
+// src/lib/init-db.js
 import { sequelize } from './db.js';
 
 export async function initDB() {

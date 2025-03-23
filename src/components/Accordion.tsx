@@ -1,8 +1,8 @@
 "use client";
 import * as React from "react";
-import Accordion, { AccordionSlots, accordionClasses } from "@mui/material/Accordion";
+import Accordion, { AccordionSlots } from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails, { accordionDetailsClasses } from "@mui/material/AccordionDetails";
+import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Fade from "@mui/material/Fade";

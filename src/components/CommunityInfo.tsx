@@ -2,7 +2,7 @@ import React from "react";
 import "./CommunityInfo.css";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import Image from "next/image";
-import AboutLine from "./AboutLine";
+
 import Link from "next/link";
 const CommunityInfo = () => {
   const thumbnailUrl = `https://img.youtube.com/vi/C2Z-KMx6jGM/hqdefault.jpg`;
