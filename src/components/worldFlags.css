@@ -58,7 +58,7 @@
   }
 
 
-  @media(max-width:380px){
+  @media(max-width:424px){
     .worldFlags__cont {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr  ;

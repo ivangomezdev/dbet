@@ -575,11 +575,19 @@
 
   .communityInfo__text {
 width: 330px !important;
-
+    text-align: center;
   }
 
   .communityInfo__cont{
-    margin-left: -20px;
+    width: 393px !important;
+    margin: 0px !important;
+    padding: 0px !important;
+  }
+
+  .placeholder-content{
+    width: 393px !important;
+    margin: 0px !important;
+    padding: 0px !important;
   }
 
  
@@ -591,19 +599,13 @@ width: 330px !important;
 
 @media (max-width: 425px) {
 
-  .communityInfo__text {
-width: 300px !important;
-
-  }
 
   .communityInfo__text h1 {
    text-align: center;
     
       }
 
-  .communityInfo__cont{
-    margin-left: -50px;
-  }
+ 
 
   .communityInfo__quantity{
    width: 300px;
@@ -612,8 +614,42 @@ width: 300px !important;
  
   .communityInfo__info{
    flex-direction: column-reverse;
+   font-size: 25px !important;
    }
  
+   .communityInfo__info p{
+    width: 250px;
+    font-size: 25px !important;
+    }
+  
+
+
+}
+
+@media (max-width: 406px) {
+
+
+    
+      .communityInfo__cont{
+        display: flex !important;
+        flex-direction: column;
+        margin: 0 auto !important;
+        justify-content: center !important;
+        width: 330px !important;
+
+      
+      }
+    
+      .placeholder-content{
+         
+        width: 340px !important;
+      }
+    
+      .sports-elements{
+        display: none;
+      }
+      
+     
 
 
 }
@@ -622,7 +658,7 @@ width: 300px !important;
 
 .howToImgDiv{
   width: 70% !important;
-  margin-left: -50px;
+
 }
 
 .howToImg{
@@ -632,39 +668,28 @@ width: 300px !important;
 
 .communityInfo__quantity{
   width: 270px !important;
-  margin-left: -10px;
+
  }
 
  .communityInfo__quantity p{
   width: 250px !important;
-  margin-left: 10px;
+  padding: 5px !important;
+
  }
 
  .communityInfo__quantity h1{
   font-size: 30px;
-  margin-left: 10px;
- }
-
- .communityInfo__info{
- margin-left: -30px !important;
- }
-
- .communityInfo__text p{
-  width: 270px !important;
-  padding: 5px;
-
- }
-
- .communityInfo__text h1{
   
-  width: 270px;
-
  }
+
+
+
+
+
 
  
  .communityInfo__text button{
-  
-  width: 280px !important;
+ background-color: #054e3483;
 
  }
 

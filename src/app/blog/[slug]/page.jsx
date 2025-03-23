@@ -32,11 +32,11 @@ export default async function BlogPostPage({ params }) {
         <NavBar />
         <nav className="article__nav">
           <div className="article__breadcrumbs">
-            <Link href="/" className="article__breadcrumb-link">
+            <Link href="/" style={{textDecoration:"none"}} className="article__breadcrumb-link">
               Blog
             </Link>
             <span className="article__breadcrumb-separator">/</span>
-            <Link href="/environment" className="article__breadcrumb-link">
+            <Link style={{textDecoration:"none"}} href="/environment" className="article__breadcrumb-link">
               Post
             </Link>
           </div>
@@ -119,7 +119,7 @@ export default async function BlogPostPage({ params }) {
                     />
                     <div>
                     <h3 className="article__popular-title">
-                      <Link href="#" className="article__popular-link">
+                      <Link style={{textDecoration:"none"}} href="#" className="article__popular-link">
                         {i.fields.titulo}
                       </Link>
                     </h3>

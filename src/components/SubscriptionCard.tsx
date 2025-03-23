@@ -64,7 +64,7 @@ export default function SubscriptionCard(hrefsData: SubscriptionCardProps) {
             </div>
 
             <div className="card-footer">
-              <Link href={safeFreeHref}>
+              <Link style={{textDecoration:"none"}} href={safeFreeHref}>
               <button className="btn btn-register">REGÍSTRATE GRATIS</button>
               </Link>
             </div>

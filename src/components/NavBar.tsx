@@ -43,7 +43,7 @@ function NavBar() {
             variant="h6"
             noWrap
             component="a"
-            href="/"
+            href="/ "
             sx={{
               mr: 6,
               display: { xs: "none", md: "flex" },
@@ -117,6 +117,7 @@ function NavBar() {
               <Link
                 className="navBar__link"
                 key={index}
+                style={{textDecoration:"none"}}
                 onClick={handleCloseNavMenu}
                 href={page.src}
               >
@@ -124,7 +125,7 @@ function NavBar() {
               </Link>
             ))}
           </Box>
-          <Link href={"/auth/register"}>
+          <Link style={{textDecoration:"none"}} href={"/auth/register"}>
           <button className="NavBar__RegisterBTN">
             <PersonIcon />
             REGÍSTRATE</button>

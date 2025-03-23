@@ -2,13 +2,13 @@
 .football-field-container {
     position: relative;
     width: 100%;
-    min-height: 100vh;
+
     background-color: #000;
     overflow: hidden;
     display: flex;
     flex-direction: column;
     border-top: 5px solid #21d5998d;
-    padding-bottom: 100px;
+    padding-bottom: 40px;
   }
   
   /* Campo de fútbol */

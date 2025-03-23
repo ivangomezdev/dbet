@@ -15,11 +15,11 @@ const ImageTextContainer = () => {
         <h1 style={{textAlign:"center",color:"#64D792"}}>Matched Betting</h1>
         </div>
         <div className="imageTextContainer__btnAnda">
-          <Link href={"/auth/register"}>
+          <Link style={{textDecoration:"none"}} href={"/auth/register"}>
         <button style={{cursor:"pointer"}} className="imageTextContainer__btn">
         <PersonIcon/>REGÍSTRATE GRATIS</button>
         </Link>
-        <Link className="imageTextContainer__link" href={"#howWorks"}>
+        <Link style={{textDecoration:"none"}} className="imageTextContainer__link" href={"#howWorks"}>
         Más detalles ▼
         </Link>
         </div>

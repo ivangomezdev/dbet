@@ -34,6 +34,7 @@ export default async function BlogPage() {
         <Link
           href={`/blog/${post.fields.slug}`}
           className="blog__link"
+          style={{textDecoration:"none"}}
         >
           <VisibilityIcon/> VER 
         </Link>

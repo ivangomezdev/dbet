@@ -18,7 +18,7 @@ export default function InfoBet() {
       <div className="content-container">
         {/* Header */}
         <div className="header">
-          <h1>xxxx Te Ofrece Todas Las Herramientas</h1>
+          <h1 style={{color:"#054F36"}}>xxxx Te Ofrece Todas Las Herramientas</h1>
           <p>que necesitas para ganar dinero online de manera rápida y eficiente</p>
         </div>
 

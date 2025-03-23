@@ -27,6 +27,9 @@
 }
 
 @media(max-width:570px) {
+  .imageTextContainer__img{
+    padding-top: 30px;
+  }
   .imageTextContainer__texts {
    font-size: 1.4rem;
   
