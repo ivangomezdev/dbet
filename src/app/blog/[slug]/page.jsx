@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Footer from "@/components/Footer";
 
-export async function GenerateStaticParams() {
+export async function generateStaticParams() {
   const posts = await getBlogPosts();
   return posts.map((post) => ({ slug: post.fields.slug }));
 }
