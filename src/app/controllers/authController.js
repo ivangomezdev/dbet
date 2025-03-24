@@ -1,62 +1,59 @@
+// src/lib/auth.js (o donde lo tengas)
 import { signToken } from "@/lib/joseToken";
 import { sendVerificationEmail } from "@/lib/nodeMailer";
 import { Auth } from "@/models/auth";
 import { User } from "@/models/user";
 
-//crea o encuentra un usuario y envia un codigo al Email
-export async function createOrFindUser(email: string, password: string) {
-  const newCode = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000; // codigo aleatorio
+// Crea o encuentra un usuario y envía un código al Email
+export async function createOrFindUser(email, password) {
+  const newCode = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000; // Código aleatorio
   const [user, created] = await User.findOrCreate({
     where: { email },
     defaults: {
-        password: password,
-       
-      },
+      password: password,
+    },
   });
 
   const [auth, authCreated] = await Auth.findOrCreate({
-    where: { userId:user.get("id") },
+    where: { userId: user.get("id") },
     defaults: {
-        email,
-        verificationCode: newCode,
-        codeUsed: false,
-        userId: user.get("id")
-      },
+      email,
+      verificationCode: newCode,
+      codeUsed: false,
+      userId: user.get("id"),
+    },
   });
-  
 
   if (created && authCreated) {
-    console.log("CREADO"); 
-    sendVerificationEmail(email,newCode) 
-  }else if(auth){
-   generateNewCode(newCode,email)
+    console.log("CREADO");
+    sendVerificationEmail(email, newCode);
+  } else if (auth) {
+    generateNewCode(newCode, email);
   }
-
 }
 
-
-export async function generateNewCode(code:number,email:string){
+export async function generateNewCode(code, email) {
   await Auth.update(
     { codeUsed: false, verificationCode: code },
     {
       where: {
-        email
+        email,
       },
-    },
+    }
   );
 
-  sendVerificationEmail(email,code)
+  sendVerificationEmail(email, code);
 }
 
-export const validateCode = async (code: number, email: string) => {
+export const validateCode = async (code, email) => {
   const validate = await Auth.findOne({ where: { verificationCode: code } });
-  const authId = validate?.get("userId") as string;
+  const authId = validate?.get("userId");
   const validateUser = await User.findOne({ where: { id: authId } });
-  
+
   const validateUserData = validateUser?.get();
   console.log(validateUserData);
-  
-  if (!validate ||  !validateUser) {
+
+  if (!validate || !validateUser) {
     return { error: "❌ Código incorrecto" };
   }
 
@@ -66,8 +63,7 @@ export const validateCode = async (code: number, email: string) => {
   return { token }; // Devuelve el token si el código es válido
 };
 
-
-export const changeStatusCode = async (email: string) => {
+export const changeStatusCode = async (email) => {
   await Auth.update(
     { codeUsed: true },
     {
