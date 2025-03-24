@@ -35,7 +35,7 @@ export default function UserEditForm({
   const [showPhoneDropdown, setShowPhoneDropdown] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   console.log(activeTab);
-  const [cookie, __, removeCookie] = useCookies(["token"]);
+  const [cookie, _, removeCookie] = useCookies(["token"]);
   const [user, setUser] = useAtom(userAtom);
   const router = useRouter();
 
