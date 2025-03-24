@@ -1,14 +1,14 @@
 
 import { Resend } from 'resend';
 
-const resend = new Resend('re_52G6bK3U_5Nqf16iwycdABxV8wF5cBTAw');
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 
 
 
 export const sendVerificationEmail = async (email: string, code: number) => {
   try {
-    resend.emails.send({
+    await resend.emails.send({
       from: 'onboarding@resend.dev',
       to: email,
       subject: 'Tu código para iniciar sesión',
