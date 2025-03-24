@@ -6,10 +6,12 @@ import { User } from "@/models/user";
 export async function createOrFindUser(email, password) {
   const newCode = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
   try {
-    const [user, created] = await User.findOrCreate({
+    const [user, _] = await User.findOrCreate({
       where: { email },
       defaults: { password: password || null },
     });
+    console.log(_);
+    
 
     const [auth, authCreated] = await Auth.findOrCreate({
       where: { userId: user.get("id") },
