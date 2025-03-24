@@ -1,5 +1,5 @@
 
-import { createOrFindUser } from '@/app/controllers/authController';
+import { createOrFindUser, verifySuscriptionState } from '@/app/controllers/authController';
 import { Auth } from '@/models/auth';
 import { User } from '@/models/user';
 import { NextRequest, NextResponse } from 'next/server';
@@ -18,8 +18,8 @@ export async function POST(request: NextRequest) {
     }
 
     await createOrFindUser(email, password);
-
-    return NextResponse.json({ message: "Código enviado al correo" }, { status: 200 });
+    const subscriptionStatus = await verifySuscriptionState(email);
+    return NextResponse.json({ message: "Código enviado al correo",subscriptionStatus: subscriptionStatus }, { status: 200 });
   } catch {
     console.error("Error en signup:");
     return NextResponse.json(

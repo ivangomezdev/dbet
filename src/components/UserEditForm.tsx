@@ -30,17 +30,16 @@ export default function UserEditForm({
   onSubmit = () => {},
   onCancel = () => {},
 }: UserEditFormProps) {
-  const [activeTab] = useState("profile");
+ 
   const [phoneType, setPhoneType] = useState(initialData.phoneType || "Mobile");
   const [showPhoneDropdown, setShowPhoneDropdown] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  console.log(activeTab);
+
   const [cookie, _, removeCookie] = useCookies(["token"]);
   const [user, setUser] = useAtom(userAtom);
   const router = useRouter();
 
-  console.log(_);
-  
+
   useEffect(() => {
     const fetchUserData = async () => {
       if (!cookie.token) {
@@ -64,7 +63,7 @@ export default function UserEditForm({
         const data = await response.json();
         const dataForUser = data.userData.user;
         setUser(dataForUser);
-        console.log(data);
+        console.log(data, "ESTA ES LA  DATA");
       } catch (err) {
         console.log("Error en GET /me:", err);
       }
@@ -75,49 +74,47 @@ export default function UserEditForm({
     }
   }, [cookie.token, router, setUser, user]);
 
-  
-  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!isEditing) {
       setIsEditing(true);
       return;
     }
-  
+
     const formData = new FormData(e.target as HTMLFormElement);
     const data = Object.fromEntries(formData.entries());
-    
+
     // Usa user.email si está disponible, ya que el input está disabled
     const email = user;
-    console.log(email,"es el email");
-    
+    console.log(email, "es el email");
+
     if (!email) {
       console.log("Error: No hay email disponible en user");
       return;
     }
-  
+
     // Combinar los datos del formulario con el email de user
     const updatedData = {
       ...data,
       email: email.userId.email, // Asegura que email siempre esté presente
     };
-  
+
     try {
       console.log("Datos enviados al backend:", updatedData); // Para depurar
       const response = await fetch("/api/me", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${cookie.token}`,
+          Authorization: `Bearer ${cookie.token}`,
         },
         body: JSON.stringify(updatedData),
       });
-  
+
       if (!response.ok) {
         const errorText = await response.text();
         throw new Error(`Error ${response.status}: ${errorText}`);
       }
-  
+
       const result = await response.json();
       console.log("Respuesta del backend:", result);
       onSubmit(updatedData);
@@ -133,7 +130,9 @@ export default function UserEditForm({
   };
 
   const handleSession = () => {
-    removeCookie("token");
+    removeCookie("token", { path: "/" })
+    console.log("Deslogueado correctamente");
+    setUser(null); // Limpia el estado del usuario
     router.push("/auth/register");
   };
 

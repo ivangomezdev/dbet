@@ -7,28 +7,25 @@ import SubscriptionCard from "./SubscriptionCard";
 import { useCookies } from "react-cookie";
 import { useRouter } from "next/navigation";
 
-
 export default function SignupForm() {
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showCodeInput, setShowCodeInput] = useState(false);
-  const [errorCode, setErrorCode] = useState(false); // Corregí `serErrorCode` a `setErrorCode`
+  const [errorCode, setErrorCode] = useState(false);
   const [showSubscription, setShowSubscription] = useState(false);
   const [cookies, setCookie] = useCookies(["token"]);
+  const [subscriptionState, setSubscriptionState] = useState(null); // Valor inicial null
   const router = useRouter();
 
-
-  // Redirección basada en el token (cliente)
   useEffect(() => {
-    console.log("Token actual:", cookies.token); // Debug
-    if (cookies.token) {
+    console.log("Token actual:", cookies.token);
+    if (cookies.token && subscriptionState !== "inactive") {
       router.push("/me");
     }
-  }, [cookies.token, router]);
+  }, [cookies.token, router, subscriptionState]);
 
-  // Crear o buscar usuario y enviar código
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -37,19 +34,20 @@ export default function SignupForm() {
     try {
       const response = await fetch("/api/signup", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
       });
 
       const data = await response.json();
 
+      if (data.subscriptionStatus) {
+        setSubscriptionState(data.subscriptionStatus);
+      }
+
       if (!response.ok) {
         throw new Error(data.error || "Algo salió mal");
       }
 
-      // Bloquear email y mostrar campo de código
       setShowCodeInput(true);
     } catch (err) {
       setError(err.message);
@@ -58,41 +56,39 @@ export default function SignupForm() {
     }
   };
 
-  // Manejar código y tomar el token para pasarlo a las cookies
   const handleCodeSubmit = async (e) => {
     e.preventDefault();
     const codeVal = e.target.code.value;
     try {
       const response = await fetch("/api/signup/code", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ codeVal, email }),
       });
 
       if (!response.ok) {
-        setErrorCode(true); // Corregí `serErrorCode`
+        setErrorCode(true);
         throw new Error("Código inválido");
       }
 
       const { token } = await response.json();
-      setCookie("token", token, { path: "/" }); // Aseguro que la cookie sea accesible en todas las rutas
-      setShowSubscription(true);
-      setErrorCode(false); // Reinicio el error si el código es correcto
+      setCookie("token", token, { path: "/" });
+
+      if (subscriptionState === "inactive") {
+        setShowSubscription(true);
+      }
+
+      setErrorCode(false);
     } catch (err) {
       console.log("Error al verificar el código:", err);
     }
   };
 
-  // Renderizado principal
   return (
     <div className="signup">
       <div className="signup__container">
         <h1 className="signup__title">¡Bienvenido!</h1>
-        <p className="signup__social-text">
-          Regístrate con una de tus redes sociales
-        </p>
+        <p className="signup__social-text">Regístrate con una de tus redes sociales</p>
 
         <div className="signup__social-buttons">
           <button disabled className="signup__social-button signup__social-button--facebook">
@@ -110,15 +106,12 @@ export default function SignupForm() {
 
         {showSubscription ? (
           <SubscriptionCard
-            hrefAnual="/auth/register"
-            hrefMensual="/auth/register"
+            hrefAnual="/auth/registers"
+            hrefMensual="/auth/registesr"
             hrefFree="/auth/register"
           />
         ) : (
-          <form
-            className="signup__form"
-            onSubmit={showCodeInput ? handleCodeSubmit : handleSubmit}
-          >
+          <form className="signup__form" onSubmit={showCodeInput ? handleCodeSubmit : handleSubmit}>
             {error && <p className="signup__error">{error}</p>}
 
             <div className="signup__form-group">
@@ -141,15 +134,11 @@ export default function SignupForm() {
                 <label htmlFor="code" className="signup__label">
                   Ingresa el código enviado por email:
                 </label>
-                {errorCode && (
-                  <p style={{ color: "red" }}>
-                    El código ingresado es incorrecto
-                  </p>
-                )}
+                {errorCode && <p style={{ color: "red" }}>El código ingresado es incorrecto</p>}
                 <input
                   type="text"
                   id="code"
-                  name="code" // Aseguro que el name coincida con e.target.code
+                  name="code"
                   className="signup__input"
                   value={code}
                   onChange={(e) => setCode(e.target.value)}
@@ -159,11 +148,7 @@ export default function SignupForm() {
               </div>
             )}
 
-            <button
-              type="submit"
-              className="signup__submit-button"
-              disabled={loading}
-            >
+            <button type="submit" className="signup__submit-button" disabled={loading}>
               {loading
                 ? "Procesando..."
                 : showCodeInput
@@ -190,7 +175,7 @@ export default function SignupForm() {
 // Agregar SSR para manejar la redirección en el servidor
 export async function getServerSideProps(context) {
   const { req } = context;
-  const token = req.cookies.token; // Leer la cookie directamente en el servidor
+  const token = req.cookies.token;
 
   if (token) {
     return {
@@ -202,6 +187,6 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: {}, 
+    props: {},
   };
 }

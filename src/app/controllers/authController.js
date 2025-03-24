@@ -63,3 +63,12 @@ export const validateCode = async (code, email) => {
 export const changeStatusCode = async (email) => {
   await Auth.update({ codeUsed: true }, { where: { email } });
 };
+
+export const verifySuscriptionState = async(email) => {
+  const user = await User.findOne({ where: { email } });
+
+  const getSubscription = user.get("subscriptionStatus")
+
+  return getSubscription
+
+}
