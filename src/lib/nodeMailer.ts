@@ -1,10 +1,4 @@
 
-import { Resend } from 'resend';
-
-const resend = new Resend(process.env.RESEND_API_KEY);
-
-
-
 import nodemailer from 'nodemailer';
 
 const transporter = nodemailer.createTransport({
