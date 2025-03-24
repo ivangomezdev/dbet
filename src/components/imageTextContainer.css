@@ -29,6 +29,8 @@
 @media(max-width:570px) {
   .imageTextContainer__img{
     padding-top: 30px;
+    filter: drop-shadow(2px 2px 4px #64D792);
+    animation: shadowPulse 2s infinite; /* Animación infinita de 2 segundos */
   }
   .imageTextContainer__texts {
    font-size: 1.4rem;
@@ -44,6 +46,18 @@
 
 }
 
+@keyframes shadowPulse {
+  0% {
+    filter: drop-shadow(2px 2px 4px rgba(255, 234, 0, 0.654));
+  }
+  50% {
+    filter: drop-shadow(4px 4px 8px rgba(255, 234, 0, 0.3)); /* Más difusa y tenue */
+  }
+  100% {
+    filter: drop-shadow(2px 2px 4px rgba(255, 234, 0, 0.654)); /* Vuelve al original */
+  }
+}
+
 @media(max-width:420px) {
   .imageTextContainer__texts {
    font-size: 1.2rem;
@@ -54,6 +68,7 @@
     width: 330px;
     height: 270px;
     margin-bottom: 30px;
+
   }
 
   .imageTextContainer__link{

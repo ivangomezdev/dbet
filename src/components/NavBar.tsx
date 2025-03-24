@@ -12,27 +12,32 @@ import Container from "@mui/material/Container";
 import PersonIcon from "@mui/icons-material/Person";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
-import TelegramIcon from '@mui/icons-material/Telegram';
-import XIcon from '@mui/icons-material/X';
-import YouTubeIcon from '@mui/icons-material/YouTube';
+import TelegramIcon from "@mui/icons-material/Telegram";
+import XIcon from "@mui/icons-material/X";
+import YouTubeIcon from "@mui/icons-material/YouTube";
 import "./navBar.css";
 import Link from "next/link";
-const pages2= [{name:"Cómo funciona",src:"/#howWorks"},{name:"FAQS",src:"/#faqs"},{name:"Servicio Premium",src:"/premium"},{name:"Blog",src:"/blog"},{name:"Entrar",src:""}];
+import { useCookies } from "react-cookie";
+const pages2 = [
+  { name: "Cómo funciona", src: "/#howWorks" },
+  { name: "FAQS", src: "/#faqs" },
+  { name: "Servicio Premium", src: "/premium" },
+  { name: "Blog", src: "/blog" },
+  { name: "Entrar", src: "" },
+];
 function NavBar() {
+  const [cookies] = useCookies(["token"]); // Leer las cookies
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
-
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
 
-
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
-
 
   return (
     <AppBar position="static" className="navBar__bar">
@@ -84,10 +89,12 @@ function NavBar() {
               onClose={handleCloseNavMenu}
               sx={{ display: { xs: "block", md: "none" } }}
             >
-              {pages2.map((page,index) => (
+              {pages2.map((page, index) => (
                 <MenuItem key={index} onClick={handleCloseNavMenu}>
                   <Link href={page.src}>
-                  <Typography sx={{ textAlign: "center" }}>{page.name}</Typography>
+                    <Typography sx={{ textAlign: "center" }}>
+                      {page.name}
+                    </Typography>
                   </Link>
                 </MenuItem>
               ))}
@@ -113,11 +120,11 @@ function NavBar() {
             LOGO
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages2.map((page,index) => (
+            {pages2.map((page, index) => (
               <Link
                 className="navBar__link"
                 key={index}
-                style={{textDecoration:"none"}}
+                style={{ textDecoration: "none" }}
                 onClick={handleCloseNavMenu}
                 href={page.src}
               >
@@ -125,18 +132,27 @@ function NavBar() {
               </Link>
             ))}
           </Box>
-          <Link style={{textDecoration:"none"}} href={"/auth/register"}>
-          <button className="NavBar__RegisterBTN">
-            <PersonIcon />
-            REGÍSTRATE</button>
+          {cookies.token ? (
+            <Link style={{ textDecoration: "none" }} href={"/me"}>
+              <button className="NavBar__RegisterBTN">
+                <PersonIcon />
+                USUARIO
+              </button>
             </Link>
-            <div className="NavBar__SocialIcons">
-            <TelegramIcon fontSize="medium"/>
-            <YouTubeIcon fontSize="medium"/>
-            <XIcon fontSize="medium"/>
-        </div>
+          ) : (
+            <Link style={{ textDecoration: "none" }} href={"/auth/register"}>
+              <button className="NavBar__RegisterBTN">
+                <PersonIcon />
+                REGÍSTRATE
+              </button>
+            </Link>
+          )}
+          <div className="NavBar__SocialIcons">
+            <TelegramIcon fontSize="medium" />
+            <YouTubeIcon fontSize="medium" />
+            <XIcon fontSize="medium" />
+          </div>
         </Toolbar>
- 
       </Container>
     </AppBar>
   );

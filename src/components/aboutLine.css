@@ -14,5 +14,7 @@ color: whitesmoke;
 @media(max-width:460px){
   .aboutLine__q{
     font-size: 15px !important;
+    margin: 5%;
+   
   }
 }

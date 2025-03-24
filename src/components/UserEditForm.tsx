@@ -1,7 +1,13 @@
 "use client";
 
-import { useState } from 'react';
+import { useEffect, useState } from "react";
 import "./userEditForm.css";
+import { useCookies } from "react-cookie";
+import { useRouter } from "next/navigation";
+import { useAtom } from "jotai";
+import { userAtom } from "@/lib/atom";
+import { GetServerSidePropsContext } from "next"; // Importamos el tipo
+import Image from "next/image";
 
 interface UserEditFormProps {
   initialData?: {
@@ -19,29 +25,104 @@ interface UserEditFormProps {
   onCancel?: () => void;
 }
 
-export default function UserEditForm({ 
-  initialData = {}, 
-  onSubmit = () => {}, 
-  onCancel = () => {} 
+export default function UserEditForm({
+  initialData = {},
+  onSubmit = () => {},
+  onCancel = () => {},
 }: UserEditFormProps) {
-  const [activeTab] = useState('profile'); // Removed setActiveTab since we're only showing profile tab
-  const [phoneType, setPhoneType] = useState(initialData.phoneType || 'Mobile');
+  const [activeTab] = useState("profile");
+  const [phoneType, setPhoneType] = useState(initialData.phoneType || "Mobile");
   const [showPhoneDropdown, setShowPhoneDropdown] = useState(false);
-  const [isEditing, setIsEditing] = useState(false); // New state to track edit mode
-console.log(activeTab);
+  const [isEditing, setIsEditing] = useState(false);
+  console.log(activeTab);
+  const [cookie, __, removeCookie] = useCookies(["token"]);
+  const [user, setUser] = useAtom(userAtom);
+  const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  useEffect(() => {
+    const fetchUserData = async () => {
+      if (!cookie.token) {
+        console.log("No token disponible, omitiendo solicitud a /me");
+        return;
+      }
+
+      try {
+        const response = await fetch("/api/me", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${cookie.token}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("Error al obtener datos del usuario");
+        }
+
+        const data = await response.json();
+        const dataForUser = data.userData.user;
+        setUser(dataForUser);
+        console.log(data);
+      } catch (err) {
+        console.log("Error en GET /me:", err);
+      }
+    };
+
+    if (!user) {
+      fetchUserData();
+    }
+  }, [cookie.token, router, setUser, user]);
+
+  
+  
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!isEditing) {
-      // If not in edit mode, switch to edit mode
       setIsEditing(true);
       return;
     }
-    // If in edit mode, submit the form
+  
     const formData = new FormData(e.target as HTMLFormElement);
     const data = Object.fromEntries(formData.entries());
-    onSubmit(data);
-    setIsEditing(false); // Return to view mode after submit
+    
+    // Usa user.email si está disponible, ya que el input está disabled
+    const email = user;
+    console.log(email,"es el email");
+    
+    if (!email) {
+      console.log("Error: No hay email disponible en user");
+      return;
+    }
+  
+    // Combinar los datos del formulario con el email de user
+    const updatedData = {
+      ...data,
+      email: email.userId.email, // Asegura que email siempre esté presente
+    };
+  
+    try {
+      console.log("Datos enviados al backend:", updatedData); // Para depurar
+      const response = await fetch("/api/me", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${cookie.token}`,
+        },
+        body: JSON.stringify(updatedData),
+      });
+  
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Error ${response.status}: ${errorText}`);
+      }
+  
+      const result = await response.json();
+      console.log("Respuesta del backend:", result);
+      onSubmit(updatedData);
+      setIsEditing(false);
+    } catch (err) {
+      console.log("Error en el fetch:", err);
+    }
   };
 
   const handleCancel = () => {
@@ -49,16 +130,23 @@ console.log(activeTab);
     onCancel();
   };
 
+  const handleSession = () => {
+    removeCookie("token");
+    router.push("/auth/register");
+  };
+
+  
+
   return (
     <div className="user-edit-form">
       <div className="user-edit-form__header">
         <h2 className="user-edit-form__title">Tu información</h2>
-        <button 
-          className="user-edit-form__close" 
-          onClick={handleCancel}
+        <button
+          className="user-edit-form__close"
+          onClick={handleSession}
           aria-label="Close"
         >
-          ×
+          Cerrar sesión
         </button>
       </div>
 
@@ -66,19 +154,17 @@ console.log(activeTab);
         <div className="user-edit-form__banner">
           <div className="user-edit-form__profile-container">
             <div className="user-edit-form__profile">
-              <img 
-                src={initialData.profileImage || "/placeholder.svg?height=100&width=100"} 
-                alt="Profile" 
-                className="user-edit-form__profile-image" 
+              <Image
+                src={
+                  
+                  "https://res.cloudinary.com/dc5zbh38m/image/upload/v1742308305/spain_xcufym.png"
+                }
+                alt="Profile"
+                width={150}
+                height={150}
+                className="user-edit-form__profile-image"
               />
-              <button 
-                type="button" 
-                className="user-edit-form__profile-edit" 
-                aria-label="Edit profile picture"
-                disabled={!isEditing}
-              >
-                ✏️
-              </button>
+          
             </div>
           </div>
         </div>
@@ -86,22 +172,28 @@ console.log(activeTab);
         <div className="user-edit-form__fields">
           <div className="user-edit-form__field-group">
             <label className="user-edit-form__label">
-              Nombre completo <span className="user-edit-form__info-icon" title="Your full name">ℹ️</span>
+              Nombre completo{" "}
+              <span
+                className="user-edit-form__info-icon"
+                title="Your full name"
+              >
+                ℹ️
+              </span>
             </label>
             <div className="user-edit-form__name-fields">
-              <input 
-                type="text" 
-                name="firstName" 
-                className="user-edit-form__input user-edit-form__input--half" 
-                defaultValue={initialData.firstName || "Ella"}
+              <input
+                type="text"
+                name="name"
+                className="user-edit-form__input user-edit-form__input--half"
+                defaultValue={user?.userId.name || "Cargando..."}
                 placeholder="First name"
                 disabled={!isEditing}
               />
-              <input 
-                type="text" 
-                name="lastName" 
-                className="user-edit-form__input user-edit-form__input--half" 
-                defaultValue={initialData.lastName || "Lauda"}
+              <input
+                type="text"
+                name="surname"
+                className="user-edit-form__input user-edit-form__input--half"
+                value={user?.userId.surname || "Cargando..."}
                 placeholder="Last name"
                 disabled={!isEditing}
               />
@@ -109,66 +201,71 @@ console.log(activeTab);
           </div>
 
           <div className="user-edit-form__field-group">
-            <label htmlFor="email" className="user-edit-form__label">Email</label>
-            <input 
-              type="email" 
-              id="email" 
-              name="email" 
-              className="user-edit-form__input" 
-              defaultValue={initialData.email || "ella@site.com"}
+            <label htmlFor="email" className="user-edit-form__label">
+              Email
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              className="user-edit-form__input"
+              value={user?.userId.email || "Cargando..."}
               placeholder="Email address"
-              disabled // Email always disabled
+              disabled
             />
           </div>
 
           <div className="user-edit-form__field-group">
-            <label htmlFor="phone" className="user-edit-form__label">Teléfono (Opcional)</label>
+            <label htmlFor="phone" className="user-edit-form__label">
+              Teléfono (Opcional)
+            </label>
             <div className="user-edit-form__phone-container">
-              <input 
-                type="tel" 
-                id="phone" 
-                name="phone" 
-                className="user-edit-form__input user-edit-form__input--phone" 
-                defaultValue={initialData.phone || "+1(609) 972-22-22"}
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                className="user-edit-form__input user-edit-form__input--phone"
+                defaultValue={user?.userId.phone || "Cargando..."}
                 placeholder="Phone number"
                 disabled={!isEditing}
               />
               <div className="user-edit-form__dropdown">
-                <button 
-                  type="button" 
+                <button
+                  type="button"
                   className="user-edit-form__dropdown-toggle"
                   onClick={() => setShowPhoneDropdown(!showPhoneDropdown)}
                   disabled={!isEditing}
                 >
-                  {phoneType} <span className="user-edit-form__dropdown-arrow">▼</span>
+                  {phoneType}{" "}
+                  <span className="user-edit-form__dropdown-arrow">▼</span>
                 </button>
                 {showPhoneDropdown && (
                   <div className="user-edit-form__dropdown-menu">
-                    <button 
-                      type="button" 
+                    <button
+                      type="button"
                       className="user-edit-form__dropdown-item"
                       onClick={() => {
-                        setPhoneType('Mobile');
+                        setPhoneType("Mobile");
                         setShowPhoneDropdown(false);
                       }}
                     >
                       Celular
                     </button>
-                    <button 
-                      type="button" 
+                    <button
+                      type="button"
                       className="user-edit-form__dropdown-item"
                       onClick={() => {
-                        setPhoneType('Work');
+                        setPhoneType("Work");
                         setShowPhoneDropdown(false);
                       }}
                     >
                       Trabajo
                     </button>
-                    <button 
-                      type="button" 
+                    <button
+                      type="button"
                       className="user-edit-form__dropdown-item"
                       onClick={() => {
-                        setPhoneType('Home');
+                        setPhoneType("Home");
                         setShowPhoneDropdown(false);
                       }}
                     >
@@ -181,28 +278,30 @@ console.log(activeTab);
           </div>
 
           <div className="user-edit-form__field-group">
-            <label htmlFor="organization" className="user-edit-form__label">Dirección</label>
-            <input 
-              type="text" 
-              id="organization" 
-              name="organization" 
-              className="user-edit-form__input" 
-              defaultValue={initialData.organization || "Htmlstream"}
+            <label htmlFor="organization" className="user-edit-form__label">
+              Dirección
+            </label>
+            <input
+              type="text"
+              id="address"
+              name="address"
+              className="user-edit-form__input"
+              defaultValue={user?.userId.address || "Cargando..."}
               placeholder="Organization"
               disabled={!isEditing}
             />
           </div>
 
           <div className="user-edit-form__actions">
-            <button 
-              type="submit" 
+            <button
+              type="submit"
               className="user-edit-form__button user-edit-form__button--primary"
             >
               {isEditing ? "Guardar Cambios" : "Editar"}
             </button>
             {isEditing && (
-              <button 
-                type="button" 
+              <button
+                type="button"
                 className="user-edit-form__button user-edit-form__button--secondary"
                 onClick={handleCancel}
               >
@@ -214,4 +313,56 @@ console.log(activeTab);
       </form>
     </div>
   );
+}
+
+// Agregar SSR con tipado explícito
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const { req } = context;
+  const token = req.cookies.token;
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: "/auth/register",
+        permanent: false,
+      },
+    };
+  }
+
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/me`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Error al obtener datos del usuario");
+    }
+
+    const data = await response.json();
+    const userData = data.userData.user;
+
+    return {
+      props: {
+        initialData: {
+          email: userData.email,
+          firstName: userData.name || "Ella",
+          lastName: userData.surname || "Lauda",
+          phone: userData.phone || "+1(609) 972-22-22",
+          organization: userData.address || "Htmlstream",
+        },
+      },
+    };
+  } catch (err) {
+    console.log("Error en SSR:", err);
+    return {
+      redirect: {
+        destination: "/auth/register",
+        permanent: false,
+      },
+    };
+  }
 }

@@ -1,3 +1,4 @@
+// pages/signup.js
 "use client";
 
 import { useEffect, useState } from "react";
@@ -6,28 +7,28 @@ import SubscriptionCard from "./SubscriptionCard";
 import { useCookies } from "react-cookie";
 import { useRouter } from "next/navigation";
 
+
 export default function SignupForm() {
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showCodeInput, setShowCodeInput] = useState(false);
-  const [errorCode, serErrorCode] = useState(false);
+  const [errorCode, setErrorCode] = useState(false); // Corregí `serErrorCode` a `setErrorCode`
   const [showSubscription, setShowSubscription] = useState(false);
   const [cookies, setCookie] = useCookies(["token"]);
-  const router = useRouter(); // Add router
+  const router = useRouter();
 
+
+  // Redirección basada en el token (cliente)
   useEffect(() => {
-    console.log("Cookies:", cookies);
-    console.log("Token:", cookies.token);
-    if (cookies.token ) {
+    console.log("Token actual:", cookies.token); // Debug
+    if (cookies.token) {
       router.push("/me");
     }
   }, [cookies.token, router]);
 
-
-  
-  //crear o buscar usuario y enviar codigo
+  // Crear o buscar usuario y enviar código
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -57,14 +58,7 @@ export default function SignupForm() {
     }
   };
 
-  useEffect(() => {
-    if (cookies.token) {
-      //redirige si ya estoy logueado
-      router.push("/me");
-    }
-  }, [cookies.token]);
-
-  //manejar codigo y tomar el TOKEN para pasarlo a las cookies
+  // Manejar código y tomar el token para pasarlo a las cookies
   const handleCodeSubmit = async (e) => {
     e.preventDefault();
     const codeVal = e.target.code.value;
@@ -78,31 +72,20 @@ export default function SignupForm() {
       });
 
       if (!response.ok) {
-        serErrorCode(true);
+        setErrorCode(true); // Corregí `serErrorCode`
+        throw new Error("Código inválido");
       }
 
-      if (response.ok) {
-        const { token } = await response.json();
-        setCookie("token",token);
-        console.log(cookies);
-
-        setShowSubscription(true);
-      }
+      const { token } = await response.json();
+      setCookie("token", token, { path: "/" }); // Aseguro que la cookie sea accesible en todas las rutas
+      setShowSubscription(true);
+      setErrorCode(false); // Reinicio el error si el código es correcto
     } catch (err) {
-      console.log(err);
-    }
-
-    if (showSubscription) {
-      return (
-        <SubscriptionCard
-          hrefAnual="/auth/register"
-          hrefMensual="/auth/register"
-          hrefFree="/auth/register"
-        />
-      );
+      console.log("Error al verificar el código:", err);
     }
   };
 
+  // Renderizado principal
   return (
     <div className="signup">
       <div className="signup__container">
@@ -125,61 +108,70 @@ export default function SignupForm() {
 
         <p className="signup__divider">O utiliza tu email</p>
 
-        <form
-          className="signup__form"
-          onSubmit={showCodeInput ? handleCodeSubmit : handleSubmit}
-        >
-          {error && <p className="signup__error">{error}</p>}
+        {showSubscription ? (
+          <SubscriptionCard
+            hrefAnual="/auth/register"
+            hrefMensual="/auth/register"
+            hrefFree="/auth/register"
+          />
+        ) : (
+          <form
+            className="signup__form"
+            onSubmit={showCodeInput ? handleCodeSubmit : handleSubmit}
+          >
+            {error && <p className="signup__error">{error}</p>}
 
-          <div className="signup__form-group">
-            <label htmlFor="email" className="signup__label">
-              Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              className="signup__input"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              disabled={showCodeInput || loading}
-            />
-          </div>
-
-          {showCodeInput && (
             <div className="signup__form-group">
-              <label htmlFor="code" className="signup__label">
-                Ingresa el código enviado por email:
+              <label htmlFor="email" className="signup__label">
+                Email
               </label>
-              {errorCode && (
-                <p style={{ color: "red" }}>
-                  El código ingresado es incorrecto
-                </p>
-              )}
               <input
-                type="text"
-                id="code"
+                type="email"
+                id="email"
                 className="signup__input"
-                value={code}
-                onChange={(e) => setCode(e.target.value)}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
-                disabled={loading}
+                disabled={showCodeInput || loading}
               />
             </div>
-          )}
 
-          <button
-            type="submit"
-            className="signup__submit-button"
-            disabled={loading}
-          >
-            {loading
-              ? "Procesando..."
-              : showCodeInput
-              ? "Confirmar Código"
-              : "Regístrate"}
-          </button>
-        </form>
+            {showCodeInput && (
+              <div className="signup__form-group">
+                <label htmlFor="code" className="signup__label">
+                  Ingresa el código enviado por email:
+                </label>
+                {errorCode && (
+                  <p style={{ color: "red" }}>
+                    El código ingresado es incorrecto
+                  </p>
+                )}
+                <input
+                  type="text"
+                  id="code"
+                  name="code" // Aseguro que el name coincida con e.target.code
+                  className="signup__input"
+                  value={code}
+                  onChange={(e) => setCode(e.target.value)}
+                  required
+                  disabled={loading}
+                />
+              </div>
+            )}
+
+            <button
+              type="submit"
+              className="signup__submit-button"
+              disabled={loading}
+            >
+              {loading
+                ? "Procesando..."
+                : showCodeInput
+                ? "Confirmar Código"
+                : "Regístrate"}
+            </button>
+          </form>
+        )}
 
         <div className="signup__footer">
           <a href="#" className="signup__link">
@@ -193,4 +185,23 @@ export default function SignupForm() {
       </div>
     </div>
   );
+}
+
+// Agregar SSR para manejar la redirección en el servidor
+export async function getServerSideProps(context) {
+  const { req } = context;
+  const token = req.cookies.token; // Leer la cookie directamente en el servidor
+
+  if (token) {
+    return {
+      redirect: {
+        destination: "/me",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {}, 
+  };
 }

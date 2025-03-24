@@ -12,7 +12,7 @@ export async function POST(request:NextRequest){
         console.log(result.token);
         
         return NextResponse.json({ token: result.token });
-      } catch{
+      } catch (error) {
         return NextResponse.json({ error: "Error interno del servidor" }, { status: 500 });
       }
 

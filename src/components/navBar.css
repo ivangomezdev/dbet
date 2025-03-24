@@ -5,6 +5,22 @@
     background-color: #054F36 !important;
 }
 
+
+
+@keyframes shadowPulse {
+  0% {
+    filter: drop-shadow(2px 2px 4px rgba(255, 234, 0, 0.654));
+  }
+  50% {
+    filter: drop-shadow(4px 4px 8px rgba(255, 234, 0, 0.3)); /* Más difusa y tenue */
+  }
+  100% {
+    filter: drop-shadow(2px 2px 4px rgba(255, 234, 0, 0.654)); /* Vuelve al original */
+  }
+}
+
+
+
 .NavBar__RegisterBTN{
     background: linear-gradient(to bottom, rgba(200, 200, 200, 0.3), #054F36);
     display: flex;
@@ -16,6 +32,8 @@
     align-items: center;
     color: white;
     cursor: pointer;
+    filter: drop-shadow(2px 2px 4px #64D792);
+animation: shadowPulse 2s infinite; /* Animación infinita de 2 segundos */
 }
 
 .navBar__link{
@@ -72,5 +90,10 @@
     .NavBar__SocialIcons{
     display: none;
      
+     }
+
+     .NavBar__RegisterBTN{
+        filter: drop-shadow(2px 2px 4px #64d79200);
+        animation: none
      }
  }

@@ -1,28 +1,68 @@
-
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from "../lib/db";
 
-export class User extends Model {}
+// Define la interfaz para las propiedades del modelo User
+interface UserAttributes {
+  id: number;
+  email: string;
+  password: string | null;
+  subscriptionStatus: "active" | "inactive" | "pending";
+  name: string | null;
+  surname: string | null;
+  phone: string | null;
+  address: string | null;
+}
+
+// Extiende la clase User con la interfaz
+export class User extends Model<UserAttributes> implements UserAttributes {
+  public id!: number;
+  public email!: string;
+  public password!: string | null;
+  public subscriptionStatus!: "active" | "inactive" | "pending";
+  public name!: string | null;
+  public surname!: string | null;
+  public phone!: string | null;
+  public address!: string | null;
+}
 
 User.init(
   {
-  id: {
-    type: DataTypes.INTEGER,
-    autoIncrement: true,
-    primaryKey: true,
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    email: {
+      type: DataTypes.STRING,
+      unique: true,
+      allowNull: false,
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    subscriptionStatus: {
+      type: DataTypes.ENUM("active", "inactive", "pending"),
+      defaultValue: "inactive",
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    surname: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    phone: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    address: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
   },
-  email: {
-    type: DataTypes.STRING,
-    unique: true,
-    allowNull: false,
-  },
-  password: {
-    type: DataTypes.STRING,
-    allowNull: true,
-  },
-  subscriptionStatus: {
-    type: DataTypes.ENUM('active', 'inactive', 'pending'),
-    defaultValue: 'inactive',
-  },
-  
-} , { sequelize, modelName: "User" });
+  { sequelize, modelName: "User" }
+);
+
+export default User;

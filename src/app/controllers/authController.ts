@@ -50,14 +50,19 @@ export async function generateNewCode(code:number,email:string){
 
 export const validateCode = async (code: number, email: string) => {
   const validate = await Auth.findOne({ where: { verificationCode: code } });
-  if (!validate) {
+  const authId = validate?.get("userId") as string;
+  const validateUser = await User.findOne({ where: { id: authId } });
+  
+  const validateUserData = validateUser?.get();
+  console.log(validateUserData);
+  
+  if (!validate ||  !validateUser) {
     return { error: "❌ Código incorrecto" };
   }
 
-  const authId = validate.get("id") as string;
   await changeStatusCode(email);
 
-  const token = await signToken(authId);
+  const token = await signToken(validateUserData);
   return { token }; // Devuelve el token si el código es válido
 };
 

@@ -1,4 +1,7 @@
+import { User } from "@/models/user";
 import { SignJWT, jwtVerify } from "jose";
+
+
 
 export const signToken = async (userId:string) => {
     const secret = new TextEncoder().encode(process.env.SECRET)
@@ -27,13 +30,26 @@ export const verifyToken = async (token: string) => {
   };    
 
 
-  export async function getUserIdFromToken(token: string): Promise<string | null> {
+  export async function getUserIdFromToken(token: string) {
     try {
-      const secret = new TextEncoder().encode(process.env.SECRET); // Convierte el secreto a Uint8Array
-      const { payload } = await jwtVerify(token,secret);
-      return payload.userId as string;
+      const secret = new TextEncoder().encode(process.env.SECRET);
+      const { payload } = await jwtVerify(token, secret);
+      
+      return payload
     } catch (error) {
       console.error("Token inválido:", error);
-      return null; // Si el token no es válido, retorna null
+      return null; 
+    }
+  }
+
+  export async function getUserFromIdAuth(id: number): Promise<any | null> {
+    try {
+      console.log("Buscando usuario con id:", id, "tipo:", typeof id); // Depuración
+      const user = await User.findOne({ where: { id: id } });
+      console.log("Resultado de la búsqueda:", user); // Depuración
+      return user ? user : null;
+    } catch (error) {
+      console.error("Error al buscar usuario:", error);
+      return null;
     }
   }
