@@ -5,19 +5,29 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 
 
+import nodemailer from 'nodemailer';
+
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
+});
+
 
 export const sendVerificationEmail = async (email: string, code: number) => {
   try {
-    await resend.emails.send({
-      from: 'onboarding@resend.dev',
+    const response = await transporter.sendMail({
+      from: process.env.GMAIL_USER,
       to: email,
       subject: 'Tu código para iniciar sesión',
-      html: `<p>Tu código es <strong>${code}</strong>!</p>`
+      html: `<p>Tu código es <strong>${code}</strong>!</p>`,
     });
-
-   
+    console.log('Email enviado:', response);
+    return response;
   } catch (error) {
-    console.error("Error general al enviar email:", error);
+    console.error('Error al enviar email:', error);
     throw error;
   }
 };
