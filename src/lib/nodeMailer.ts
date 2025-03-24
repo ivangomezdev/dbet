@@ -1,6 +1,6 @@
 import nodemailer from "nodemailer";
 
-export const sendVerificationEmail = async (email:string, code:number) => {
+export const sendVerificationEmail = async (email: string, code: number) => {
   try {
     const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
@@ -12,21 +12,32 @@ export const sendVerificationEmail = async (email:string, code:number) => {
       },
     });
 
-    // Verifica la conexión primero (opcional, para depuración)
     await transporter.verify();
     console.log("Conexión SMTP verificada");
 
-    const info = await transporter.sendMail({
-      from: process.env.EMAIL_USER,
-      to: email,
-      subject: "Tu código de verificación",
-      text: `Tu código de verificación es: ${code}`,
+    const info = await new Promise((resolve, reject) => {
+      transporter.sendMail(
+        {
+          from: process.env.EMAIL_USER,
+          to: email,
+          subject: "Tu código de verificación",
+          text: `Tu código de verificación es: ${code}`,
+        },
+        (err, info) => {
+          if (err) {
+            console.error("Error enviando email:", err);
+            reject(err);
+          } else {
+            console.log("Email enviado:", info.messageId);
+            resolve(info);
+          }
+        }
+      );
     });
 
-    console.log("Email enviado:", info.messageId);
     return info;
   } catch (error) {
-    console.error("Error enviando email:", error);
-    throw error; // Lanza el error para que la API lo maneje
+    console.error("Error general al enviar email:", error);
+    throw error;
   }
 };
