@@ -1,17 +1,32 @@
-import { sendVerificationEmail } from "@/lib/nodeMailer";
+// src/app/api/pruebas/route.js
+import { sendVerificationEmail } from "@/lib/nodeMailer"; // Ajusta la ruta según tu estructura
+import { NextResponse } from "next/server"; // Para devolver respuestas
 
-export default async function handler(req, res) {
-    if (req.method !== "POST") {
-      return res.status(405).json({ message: "Método no permitido" });
+export async function POST(request) {
+  try {
+    // Lee el cuerpo de la solicitud
+    const { email, code } = await request.json();
+
+    // Valida los datos
+    if (!email || !code) {
+      return NextResponse.json(
+        { message: "Faltan email o code" },
+        { status: 400 }
+      );
     }
-  
-    const { email, code } = req.body;
-  
-    try {
-      await sendVerificationEmail(email, code);
-      return res.status(200).json({ message: "Correo enviado con éxito" });
-    } catch (error) {
-      console.error("Error en la API:", error);
-      return res.status(500).json({ message: "Error al enviar correo", error: error.message });
-    }
+
+    // Envía el correo
+    await sendVerificationEmail(email, code);
+
+    return NextResponse.json(
+      { message: "Correo enviado con éxito" },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("Error en la API:", error);
+    return NextResponse.json(
+      { message: "Error al enviar correo", error: error.message },
+      { status: 500 }
+    );
   }
+}
