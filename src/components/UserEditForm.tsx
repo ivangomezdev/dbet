@@ -39,6 +39,8 @@ export default function UserEditForm({
   const [user, setUser] = useAtom(userAtom);
   const router = useRouter();
 
+  console.log(_);
+  
   useEffect(() => {
     const fetchUserData = async () => {
       if (!cookie.token) {
