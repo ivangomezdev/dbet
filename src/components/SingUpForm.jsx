@@ -95,13 +95,13 @@ export default function SignupForm() {
         </p>
 
         <div className="signup__social-buttons">
-          <button className="signup__social-button signup__social-button--facebook">
+          <button disabled className="signup__social-button signup__social-button--facebook">
             <span className="signup__social-icon">f</span>
           </button>
-          <button className="signup__social-button signup__social-button--twitter">
+          <button disabled className="signup__social-button signup__social-button--twitter">
             <span className="signup__social-icon">X</span>
           </button>
-          <button className="signup__social-button signup__social-button--google">
+          <button disabled className="signup__social-button signup__social-button--google">
             <span className="signup__social-icon">G</span>
           </button>
         </div>
