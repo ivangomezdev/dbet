@@ -1,3 +1,4 @@
+// pages/signup.js
 "use client";
 
 import { useEffect, useState } from "react";
@@ -6,24 +7,28 @@ import SubscriptionCard from "./SubscriptionCard";
 import { useCookies } from "react-cookie";
 import { useRouter } from "next/navigation";
 
+
 export default function SignupForm() {
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showCodeInput, setShowCodeInput] = useState(false);
-  const [errorCode, setErrorCode] = useState(false);
+  const [errorCode, setErrorCode] = useState(false); // Corregí `serErrorCode` a `setErrorCode`
   const [showSubscription, setShowSubscription] = useState(false);
   const [cookies, setCookie] = useCookies(["token"]);
   const router = useRouter();
 
+
+  // Redirección basada en el token (cliente)
   useEffect(() => {
-    console.log("Token actual:", cookies.token);
+    console.log("Token actual:", cookies.token); // Debug
     if (cookies.token) {
       router.push("/me");
     }
   }, [cookies.token, router]);
 
+  // Crear o buscar usuario y enviar código
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -35,17 +40,17 @@ export default function SignupForm() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email }), // Password no se envía, ajusta si es necesario
+        body: JSON.stringify({ email }),
       });
 
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || "Error al enviar el código");
+        throw new Error(data.error || "Algo salió mal");
       }
 
-      console.log("Respuesta de signup:", data); // Debug
-      setShowCodeInput(true); // Muestra el campo de código
+      // Bloquear email y mostrar campo de código
+      setShowCodeInput(true);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -53,38 +58,34 @@ export default function SignupForm() {
     }
   };
 
+  // Manejar código y tomar el token para pasarlo a las cookies
   const handleCodeSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    setErrorCode(false);
-
+    const codeVal = e.target.code.value;
     try {
       const response = await fetch("/api/signup/code", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ codeVal: code, email }), // Usa `code` del estado
+        body: JSON.stringify({ codeVal, email }),
       });
 
-      const data = await response.json();
-
       if (!response.ok) {
-        setErrorCode(true);
-        throw new Error(data.error || "Código inválido");
+        setErrorCode(true); // Corregí `serErrorCode`
+        throw new Error("Código inválido");
       }
 
-      const { token } = data;
-      setCookie("token", token, { path: "/" });
+      const { token } = await response.json();
+      setCookie("token", token, { path: "/" }); // Aseguro que la cookie sea accesible en todas las rutas
       setShowSubscription(true);
+      setErrorCode(false); // Reinicio el error si el código es correcto
     } catch (err) {
-      console.error("Error al verificar el código:", err);
-      setError(err.message);
-    } finally {
-      setLoading(false);
+      console.log("Error al verificar el código:", err);
     }
   };
 
+  // Renderizado principal
   return (
     <div className="signup">
       <div className="signup__container">
@@ -148,7 +149,7 @@ export default function SignupForm() {
                 <input
                   type="text"
                   id="code"
-                  name="code"
+                  name="code" // Aseguro que el name coincida con e.target.code
                   className="signup__input"
                   value={code}
                   onChange={(e) => setCode(e.target.value)}
@@ -186,9 +187,10 @@ export default function SignupForm() {
   );
 }
 
+// Agregar SSR para manejar la redirección en el servidor
 export async function getServerSideProps(context) {
   const { req } = context;
-  const token = req.cookies.token;
+  const token = req.cookies.token; // Leer la cookie directamente en el servidor
 
   if (token) {
     return {
@@ -199,5 +201,7 @@ export async function getServerSideProps(context) {
     };
   }
 
-  return { props: {} };
+  return {
+    props: {}, 
+  };
 }

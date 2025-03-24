@@ -1,4 +1,3 @@
-
 import { signToken } from "@/lib/joseToken";
 import { sendVerificationEmail } from "@/lib/nodeMailer";
 import { Auth } from "@/models/auth";
@@ -9,39 +8,36 @@ export async function createOrFindUser(email, password) {
   try {
     const [user, created] = await User.findOrCreate({
       where: { email },
-      defaults: {
-        password: password || null, // Ajusta si password es opcional
-      },
+      defaults: { password: password || null },
     });
 
     const [auth, authCreated] = await Auth.findOrCreate({
       where: { userId: user.get("id") },
-      defaults: {
-        email,
-        verificationCode: newCode,
-        codeUsed: false,
-        userId: user.get("id"),
-      },
+      defaults: { email, verificationCode: newCode, codeUsed: false, userId: user.get("id") },
     });
 
-    if (created && authCreated) {
-      console.log("CREADO");
-      await sendVerificationEmail(email, newCode);
-    } else if (auth) {
-      await generateNewCode(newCode, email); // Añadí await aquí
+    if (!authCreated) {
+      // Si el registro de autenticación ya existe, actualiza el código
+      await Auth.update({ verificationCode: newCode, codeUsed: false }, { where: { userId: user.get("id") } });
     }
+
+    await sendVerificationEmail(email, newCode);
+
+    return { user, auth };
   } catch (error) {
     console.error("Error en createOrFindUser:", error);
-    throw error; // Propaga el error a la ruta
+    throw error;
   }
 }
 
 export async function generateNewCode(code, email) {
-  await Auth.update(
-    { codeUsed: false, verificationCode: code },
-    { where: { email } }
-  );
-  await sendVerificationEmail(email, code); // Añadí await
+  try {
+    await Auth.update({ codeUsed: false, verificationCode: code }, { where: { email } });
+    await sendVerificationEmail(email, code);
+  } catch (error) {
+    console.error("Error en generateNewCode:", error);
+    throw error;
+  }
 }
 
 export const validateCode = async (code, email) => {
@@ -59,16 +55,9 @@ export const validateCode = async (code, email) => {
   await changeStatusCode(email);
 
   const token = await signToken(validateUserData);
-  return { token }; // Devuelve el token si el código es válido
+  return { token };
 };
 
 export const changeStatusCode = async (email) => {
-  await Auth.update(
-    { codeUsed: true },
-    {
-      where: {
-        email: email,
-      },
-    }
-  );
+  await Auth.update({ codeUsed: true }, { where: { email } });
 };
