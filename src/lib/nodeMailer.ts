@@ -4,8 +4,8 @@ export const sendVerificationEmail = async (email: string, code: number) => {
   try {
     const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
-      port: 587,
-      secure: false, // TLS en puerto 587
+      port: 465,
+      secure: true, // TLS en puerto 587
       auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
