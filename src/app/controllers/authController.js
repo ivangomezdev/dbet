@@ -26,7 +26,7 @@ export async function createOrFindUser(email, password) {
 
   if (created && authCreated) {
     console.log("CREADO");
-    sendVerificationEmail(email, newCode);
+    await sendVerificationEmail(email, newCode);
   } else if (auth) {
     generateNewCode(newCode, email);
   }
