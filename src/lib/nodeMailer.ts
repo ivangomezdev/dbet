@@ -1,4 +1,4 @@
-import nodemailer from "nodemailer";
+
 import { Resend } from 'resend';
 
 const resend = new Resend('re_52G6bK3U_5Nqf16iwycdABxV8wF5cBTAw');
