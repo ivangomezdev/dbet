@@ -34,7 +34,9 @@ export async function POST(request: NextRequest) {
   try {
     await User.sync({ alter: true });
     const body = await request.json();
-    await editUser(body.email); // Usa body.email como parámetro
+    
+    
+    await editUser(body); 
     console.log("Usuario editado con email:", body.email);
     
     return NextResponse.json({ message: "Edit OK" });

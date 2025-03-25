@@ -6,7 +6,7 @@ interface UserAttributes {
   id: number;
   email: string;
   password: string | null;
-  subscriptionStatus: "GRATIS" | "MONTHLY" | "YEAR" | "inactive";
+  subscriptionStatus: "FREE" | "MONTHLY" | "YEAR" | "inactive";
   name: string | null;
   surname: string | null;
   phone: string | null;
@@ -18,7 +18,7 @@ export class User extends Model<UserAttributes> implements UserAttributes {
   public id!: number;
   public email!: string;
   public password!: string | null;
-  public subscriptionStatus!: "GRATIS" | "MONTHLY" | "YEAR" | "inactive";
+  public subscriptionStatus!: "FREE" | "MONTHLY" | "YEAR" | "inactive";
   public name!: string | null;
   public surname!: string | null;
   public phone!: string | null;

@@ -30,7 +30,6 @@ export default function UserEditForm({
   onSubmit = () => {},
   onCancel = () => {},
 }: UserEditFormProps) {
- 
   const [phoneType, setPhoneType] = useState(initialData.phoneType || "Mobile");
   const [showPhoneDropdown, setShowPhoneDropdown] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -38,7 +37,25 @@ export default function UserEditForm({
   const [cookie, _, removeCookie] = useCookies(["token"]);
   const [user, setUser] = useAtom(userAtom);
   const router = useRouter();
+  const [formData, setFormData] = useState({
+    name: user?.userId?.name || "",
+    surname: user?.userId?.surname || "",
+    email: user?.userId?.email || "",
+    phone: user?.userId?.phone || "",
+    address: user?.userId?.address || "",
+  });
 
+  useEffect(() => {
+    if (user?.userId) {
+      setFormData({
+        name: user.userId.name || "",
+        surname: user.userId.surname || "",
+        email: user.userId.email || "",
+        phone: user.userId.phone || "",
+        address: user.userId.address || "",
+      });
+    }
+  }, [user]);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -130,16 +147,13 @@ export default function UserEditForm({
   };
 
   const handleSession = () => {
-    removeCookie("token", { path: "/" })
+    removeCookie("token", { path: "/" });
     console.log("Deslogueado correctamente");
     setUser(null); // Limpia el estado del usuario
     router.push("/auth/register");
   };
 
   console.log(_);
-  
-
-  
 
   return (
     <div className="user-edit-form">
@@ -160,7 +174,6 @@ export default function UserEditForm({
             <div className="user-edit-form__profile">
               <Image
                 src={
-                  
                   "https://res.cloudinary.com/dc5zbh38m/image/upload/v1742308305/spain_xcufym.png"
                 }
                 alt="Profile"
@@ -168,7 +181,6 @@ export default function UserEditForm({
                 height={150}
                 className="user-edit-form__profile-image"
               />
-          
             </div>
           </div>
         </div>
@@ -189,7 +201,7 @@ export default function UserEditForm({
                 type="text"
                 name="name"
                 className="user-edit-form__input user-edit-form__input--half"
-                defaultValue={user?.userId.name || "Cargando..."}
+                defaultValue={formData.name || "Cargando..."}
                 placeholder="First name"
                 disabled={!isEditing}
               />
@@ -197,7 +209,7 @@ export default function UserEditForm({
                 type="text"
                 name="surname"
                 className="user-edit-form__input user-edit-form__input--half"
-                value={user?.userId.surname || "Cargando..."}
+                defaultValue={formData.surname}
                 placeholder="Last name"
                 disabled={!isEditing}
               />
@@ -213,7 +225,7 @@ export default function UserEditForm({
               id="email"
               name="email"
               className="user-edit-form__input"
-              value={user?.userId.email || "Cargando..."}
+              value={user?.userId.email}
               placeholder="Email address"
               disabled
             />
@@ -229,7 +241,7 @@ export default function UserEditForm({
                 id="phone"
                 name="phone"
                 className="user-edit-form__input user-edit-form__input--phone"
-                defaultValue={user?.userId.phone || "Cargando..."}
+                defaultValue={formData.phone}
                 placeholder="Phone number"
                 disabled={!isEditing}
               />
@@ -290,7 +302,7 @@ export default function UserEditForm({
               id="address"
               name="address"
               className="user-edit-form__input"
-              defaultValue={user?.userId.address || "Cargando..."}
+              defaultValue={formData.address}
               placeholder="Organization"
               disabled={!isEditing}
             />
@@ -338,7 +350,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     });
 
