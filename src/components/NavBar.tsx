@@ -20,10 +20,10 @@ import Link from "next/link";
 import { useCookies } from "react-cookie";
 const pages2 = [
   { name: "Cómo funciona", src: "/#howWorks" },
-  { name: "FAQS", src: "/#faqs" },
+  { name: "Guías", src: "/guides" },
   { name: "Servicio Premium", src: "/premium" },
   { name: "Blog", src: "/blog" },
-  { name: "Entrar", src: "" },
+  { name: "Bonos", src: "/bonos" },
 ];
 function NavBar() {
   const [cookies] = useCookies(["token"]); // Leer las cookies

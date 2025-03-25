@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import "./userBono.css";
+import Link from "next/link";
 
 
 type BonosData = {
@@ -68,10 +69,8 @@ export default function UserBono({ bonosData }: UserBonoProps) {
       <div className="user-bono__header">
         <div className="user-bono__ninja"></div>
         <div className="user-bono__welcome">
-          <h1 className="user-bono__title">BIENVENIDA</h1>
-          <p className="user-bono__subtitle">
-            sigue el orden de arriba a abajo
-          </p>
+          <h1 className="user-bono__title">BONOS</h1>
+      
           <div className="user-bono__divider"></div>
         </div>
       </div>
@@ -184,9 +183,9 @@ export default function UserBono({ bonosData }: UserBonoProps) {
           {promociones.map((promo) => (
             <div key={promo.id} className="user-bono__promo">
               <h3 className="user-bono__promo-title">{promo.titulo}</h3>
-              <a href={promo.link} className="user-bono__promo-link">
+              <Link href={promo.link} className="user-bono__promo-link">
                 {promo.alt}
-              </a>
+              </Link>
             </div>
           ))}
         </div>
@@ -197,31 +196,18 @@ export default function UserBono({ bonosData }: UserBonoProps) {
 
 const promociones = [
   {
-    id: 1,
+    id:1,
     titulo: "¡También estamos en Telegram!",
     imagen: "/placeholder.svg?height=150&width=150",
-    alt: "Telegram",
+    alt: "App móvil",
     link: "https://t.me/bonoscasino",
   },
-  {
-    id: 2,
-    titulo: "INVITA TUS AMIGOS & GANA",
-    imagen: "/placeholder.svg?height=150&width=150",
-    alt: "Invita amigos",
-    link: "/referidos",
-  },
+
   {
     id: 3,
-    titulo: "DESCARGA NUESTRA APP",
-    imagen: "/placeholder.svg?height=150&width=150",
-    alt: "App móvil",
-    link: "/app",
-  },
-  {
-    id: 4,
     titulo: "GUÍA DE BONOS 2024",
     imagen: "/placeholder.svg?height=150&width=150",
     alt: "Guía de bonos",
-    link: "/guia-bonos",
+    link: "/blog",
   },
 ];

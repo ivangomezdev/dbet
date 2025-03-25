@@ -22,7 +22,7 @@
 
 
 .NavBar__RegisterBTN{
-    background: linear-gradient(to bottom, rgba(200, 200, 200, 0.3), #054F36);
+    background: linear-gradient(to bottom, rgba(200, 200, 200, 0.106), #054f3650);
     display: flex;
     gap: 5px;
     border: none;
@@ -32,7 +32,13 @@
     align-items: center;
     color: white;
     cursor: pointer;
-    filter: drop-shadow(2px 2px 4px #64D792);
+  
+animation: shadowPulse 2s infinite; /* Animación infinita de 2 segundos */
+}
+
+.NavBar__RegisterBTN:hover{
+  
+  filter: drop-shadow(2px 2px 4px #64D792);
 animation: shadowPulse 2s infinite; /* Animación infinita de 2 segundos */
 }
 

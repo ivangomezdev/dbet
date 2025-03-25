@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-
+import VerifiedIcon from '@mui/icons-material/Verified';
 import "./videos.css";
 
 // Datos de ejemplo para simular la API
@@ -126,14 +126,11 @@ export default function Videos() {
             <h1 className="guides__profile-name">
               {channelData.name}
               {channelData.isVerified && (
-                <span className="guides__profile-verified">•</span>
+                <span className="guides__profile-verified"><VerifiedIcon sx={{color:"#8FC799"}}/></span>
               )}
             </h1>
           </div>
 
-          <div className="guides__profile-description">
-            <p>{channelData.description}</p>
-          </div>
 
           <div style={{ padding: "10px" }} className="article__share">
             <span className="article__share-label">Compartir:</span>

@@ -31,16 +31,17 @@
   }
   
   .user-bono__title {
-    font-size: 32px;
+    font-size: 42px;
     font-weight: bold;
     color: #00b3a6;
     margin: 0;
+ 
     text-transform: uppercase;
   }
   
   .user-bono__subtitle {
     font-size: 14px;
-    color: #ff9a9a;
+    color: #ffffff;
     margin: 5px 0 15px;
   }
   
@@ -89,7 +90,7 @@
   .user-bono__tabs {
     display: flex;
     margin-bottom: 20px;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #ffffff;
   }
   
   .user-bono__tab {
@@ -99,7 +100,7 @@
     font-size: 16px;
     cursor: pointer;
     position: relative;
-    color: #666;
+    color: #ffffff;
   }
   
   .user-bono__tab--active {
@@ -126,6 +127,7 @@
   
   .user-bono__item {
     display: flex;
+    background-color: white;
     border: 1px solid #eee;
     border-radius: 5px;
     padding: 20px;
@@ -260,28 +262,34 @@
     font-size: 16px;
     color: #00b3a6;
     margin-bottom: 10px;
+    border-radius: 5px;
+  }
+  
+  .user-bono__promo:nth-child(1) .user-bono__promo-title {
+    color: white;
+    background-color: #0b845c;
+    padding: 10px;
+    font-size: 14px;
   }
   
   .user-bono__promo:nth-child(2) .user-bono__promo-title {
     color: white;
-    background-color: #ff5a5a;
+    background-color: #1ea075;
     padding: 10px;
     font-size: 14px;
+  }
+
+  .user-bono__promo-link{
+    text-decoration: none;
+    color: white;
+  }
+
+  .user-bono__promo-link:hover{
+    text-decoration: none;
+    color: #0B845C;
   }
   
-  .user-bono__promo:nth-child(3) .user-bono__promo-title {
-    color: white;
-    background-color: #3b5998;
-    padding: 10px;
-    font-size: 14px;
-  }
-  
-  .user-bono__promo:nth-child(4) .user-bono__promo-title {
-    color: white;
-    background-color: #00b3a6;
-    padding: 10px;
-    font-size: 14px;
-  }
+ 
   
   /* Estilos para bonos completados */
   .user-bono__item--completed {
