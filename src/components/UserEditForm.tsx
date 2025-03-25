@@ -136,6 +136,9 @@ export default function UserEditForm({
     router.push("/auth/register");
   };
 
+  console.log(_);
+  
+
   
 
   return (
