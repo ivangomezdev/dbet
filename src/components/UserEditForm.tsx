@@ -46,6 +46,7 @@ export default function UserEditForm({
   });
 
   useEffect(() => {
+
     if (user?.userId) {
       setFormData({
         name: user.userId.name || "",
@@ -80,7 +81,7 @@ export default function UserEditForm({
         const data = await response.json();
         const dataForUser = data.userData.user;
         setUser(dataForUser);
-        console.log(data, "ESTA ES LA  DATA");
+      
       } catch (err) {
         console.log("Error en GET /me:", err);
       }
@@ -170,7 +171,10 @@ export default function UserEditForm({
 
       <form className="user-edit-form__form" onSubmit={handleSubmit}>
         <div className="user-edit-form__banner">
+        <p className="user-edit-form__plan">PLAN <span>{user?.userId.subscriptionStatus}</span> </p>
+       
           <div className="user-edit-form__profile-container">
+            
             <div className="user-edit-form__profile">
               <Image
                 src={
@@ -182,9 +186,11 @@ export default function UserEditForm({
                 className="user-edit-form__profile-image"
               />
             </div>
+            
           </div>
+          
         </div>
-
+        <p className="user-edit-form__planUpgrade">Mejorar plan</p>
         <div className="user-edit-form__fields">
           <div className="user-edit-form__field-group">
             <label className="user-edit-form__label">
@@ -193,7 +199,7 @@ export default function UserEditForm({
                 className="user-edit-form__info-icon"
                 title="Your full name"
               >
-                ℹ️
+                
               </span>
             </label>
             <div className="user-edit-form__name-fields">
@@ -225,7 +231,7 @@ export default function UserEditForm({
               id="email"
               name="email"
               className="user-edit-form__input"
-              value={user?.userId.email}
+              value={formData.email || "Loading..."}
               placeholder="Email address"
               disabled
             />

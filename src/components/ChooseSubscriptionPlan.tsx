@@ -1,5 +1,8 @@
 
+import Router from "next/router";
 import "./subscriptionCard.css";
+import Swal from 'sweetalert2'
+
 
 interface SubscriptionCardProps {
   cardsData: CardData[];
@@ -23,8 +26,27 @@ interface CardData {
 export default function ChooseSubscriptionPlan({ cardsData, onPlanSelect }: SubscriptionCardProps) {
   const handleButtonClick = (planName: string) => {
     onPlanSelect(planName);
-   
+    console.log("click");
     
+ 
+
+Swal.fire({
+  title: 'Confirmar plan',
+  text: '¿Estás seguro de que quieres adquirir este plan?',
+  icon: 'question',
+  showCancelButton: true,
+  confirmButtonText: 'Sí, seleccionar',
+  cancelButtonText: 'Cancelar',
+}).then((result) => {
+  if (result.isConfirmed) {
+    // Lógica para procesar la compra si el usuario confirma
+    Swal.fire('¡Elección realizada!', 'Tu compra ha sido procesada.', 'success');
+    Router.push("/me");
+  } else if (result.dismiss === Swal.DismissReason.cancel) {
+    // Lógica si el usuario cancela
+    Swal.fire('Cancelado', 'La elección ha sido cancelada.', 'error');
+  }
+});
   };
 
   return (

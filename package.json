@@ -34,7 +34,8 @@
     "react-cookie": "^8.0.1",
     "react-dom": "^19.0.0",
     "resend": "^4.1.2",
-    "sequelize": "^6.37.6"
+    "sequelize": "^6.37.6",
+    "sweetalert2": "^11.17.2"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
