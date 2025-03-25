@@ -4,6 +4,8 @@ import React, { useEffect } from 'react'
 import { useCookies } from 'react-cookie';
 import UserEditForm from "../../components/UserEditForm"
 import NavBar from "@/components/NavBar";
+import { useAtomValue } from "jotai";
+import { userAtom } from "@/lib/atom";
 
 
 
@@ -25,8 +27,9 @@ const Page = () => {
     
   const [cookies] = useCookies(["token"]); // Leer las cookies
   const router = useRouter()
-
-
+  const userDataAtom = useAtomValue(userAtom)
+  console.log(userDataAtom?.userId.subscriptionStatus,"VALOR DEL SUBSC");
+  
 
 
 

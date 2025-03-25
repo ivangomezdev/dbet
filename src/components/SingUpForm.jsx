@@ -3,9 +3,60 @@
 
 import { useEffect, useState } from "react";
 import "./singUpForm.css";
-import SubscriptionCard from "./SubscriptionCard";
 import { useCookies } from "react-cookie";
 import { useRouter } from "next/navigation";
+import ChooseSubscriptionPlan from "./ChooseSubscriptionPlan";
+import { useSetAtom } from "jotai";
+import { userAtom } from "@/lib/atom";
+
+const subscriptionCardsData = [
+  {
+    planType: "FREE",
+    price: "0€",
+    features: [
+      "Gana 120€/15US$ Sin Riesgos",
+      "Acceso a 3 Guías",
+      "Acceso a 3 Video Guías",
+      "Versión Limitada de las Herramientas",
+    ],
+    buttonTextSpain: "REGÍSTRATE GRATIS",
+    buttonTextLatam: "REGÍSTRATE GRATIS",
+    hrefSpain: "/free-spain",
+    hrefLatam: "/free-latam",
+  },
+  {
+    planType: "PREMIUM MENSUAL",
+    price: "14.99€",
+    period: "/ Mes",
+    features: [
+      "Gana hasta 500 €/US$ al Mes",
+      "Acceso a todas las Guías",
+      "Versión Completa de las Herramientas",
+      "Cancela cuando quieras la suscripción",
+    ],
+    tools: ["NinjaClub", "Oddsmatcher", "Dutcher", "Calculador", "Favor-Favor", "Multiplicador", "Profit Tracker"],
+    buttonTextSpain: "OBTÉN PREMIUM – ESPAÑA",
+    buttonTextLatam: "OBTÉN PREMIUM – LATINOAMÉRICA",
+    hrefSpain: "/premium-mensual-spain",
+    hrefLatam: "/premium-mensual-latam",
+  },
+  {
+    planType: "PREMIUM ANUAL",
+    price: "10€",
+    period: "/ Mes",
+    features: [
+      "Gana hasta 500 €/US$ al Mes",
+      "Acceso a todas las Guías",
+      "Versión Completa de las Herramientas",
+      "Paga 120€ y Ahorra 60€",
+    ],
+    tools: ["NinjaClub", "Oddsmatcher", "Dutcher", "Calculador", "Favor-Favor", "Multiplicador", "Profit Tracker"],
+    buttonTextSpain: "OBTÉN PREMIUM – ESPAÑA",
+    buttonTextLatam: "OBTÉN PREMIUM – LATINOAMÉRICA",
+    hrefSpain: "/premium-anual-spain",
+    hrefLatam: "/premium-anual-latam",
+  },
+];
 
 export default function SignupForm() {
   const [email, setEmail] = useState("");
@@ -16,11 +67,47 @@ export default function SignupForm() {
   const [errorCode, setErrorCode] = useState(false);
   const [showSubscription, setShowSubscription] = useState(false);
   const [cookies, setCookie] = useCookies(["token"]);
-  const [subscriptionState, setSubscriptionState] = useState(null); // Valor inicial null
+  const [subscriptionState, setSubscriptionState] = useState(null);
   const router = useRouter();
+  const [selectedPlan, setSelectedPlan] = useState("");
+  const [showInitialForm, setShowInitialForm] = useState(true); // Nuevo estado
+  const setUserData = useSetAtom(userAtom)
+  
+  const handlePlanSelection = (planName) => {
+    setSelectedPlan(planName);
+  
+  };
+
+  const updateSubscription = async (plan,email) =>{
+    try {
+      const response = await fetch('/api/me/subscription', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${cookies.token}`,
+        },
+        body: JSON.stringify({
+         plan,
+         email
+        }),
+      });
+      const data = await response.json();
+       console.log(data);
+       
+    } catch {
+      setError("err.message");
+    }
+  
+  }
+
 
   useEffect(() => {
-    console.log("Token actual:", cookies.token);
+    if (selectedPlan === "FREE") {
+      updateSubscription("FREE",email)
+    }
+  }, [selectedPlan]);
+
+  useEffect(() => {
     if (cookies.token && subscriptionState !== "inactive") {
       router.push("/me");
     }
@@ -42,6 +129,9 @@ export default function SignupForm() {
 
       if (data.subscriptionStatus) {
         setSubscriptionState(data.subscriptionStatus);
+        setUserData(data.subscriptionStatus)
+      
+        
       }
 
       if (!response.ok) {
@@ -76,6 +166,7 @@ export default function SignupForm() {
 
       if (subscriptionState === "inactive") {
         setShowSubscription(true);
+        setShowInitialForm(false); // Ocultar elementos iniciales
       }
 
       setErrorCode(false);
@@ -87,29 +178,29 @@ export default function SignupForm() {
   return (
     <div className="signup">
       <div className="signup__container">
-        <h1 className="signup__title">¡Bienvenido!</h1>
-        <p className="signup__social-text">Regístrate con una de tus redes sociales</p>
+        {showInitialForm && (
+          <>
+            <h1 className="signup__title">¡Bienvenido!</h1>
+            <p className="signup__social-text">Regístrate con una de tus redes sociales</p>
 
-        <div className="signup__social-buttons">
-          <button disabled className="signup__social-button signup__social-button--facebook">
-            <span className="signup__social-icon">f</span>
-          </button>
-          <button disabled className="signup__social-button signup__social-button--twitter">
-            <span className="signup__social-icon">X</span>
-          </button>
-          <button disabled className="signup__social-button signup__social-button--google">
-            <span className="signup__social-icon">G</span>
-          </button>
-        </div>
+            <div className="signup__social-buttons">
+              <button disabled className="signup__social-button signup__social-button--facebook">
+                <span className="signup__social-icon">f</span>
+              </button>
+              <button disabled className="signup__social-button signup__social-button--twitter">
+                <span className="signup__social-icon">X</span>
+              </button>
+              <button disabled className="signup__social-button signup__social-button--google">
+                <span className="signup__social-icon">G</span>
+              </button>
+            </div>
 
-        <p className="signup__divider">O utiliza tu email</p>
+            <p className="signup__divider">O utiliza tu email</p>
+          </>
+        )}
 
         {showSubscription ? (
-          <SubscriptionCard
-            hrefAnual="/auth/registers"
-            hrefMensual="/auth/registesr"
-            hrefFree="/auth/register"
-          />
+          <ChooseSubscriptionPlan cardsData={subscriptionCardsData} onPlanSelect={handlePlanSelection} />
         ) : (
           <form className="signup__form" onSubmit={showCodeInput ? handleCodeSubmit : handleSubmit}>
             {error && <p className="signup__error">{error}</p>}
@@ -149,11 +240,7 @@ export default function SignupForm() {
             )}
 
             <button type="submit" className="signup__submit-button" disabled={loading}>
-              {loading
-                ? "Procesando..."
-                : showCodeInput
-                ? "Confirmar Código"
-                : "Regístrate"}
+              {loading ? "Procesando..." : showCodeInput ? "Confirmar Código" : "Regístrate"}
             </button>
           </form>
         )}
@@ -171,7 +258,6 @@ export default function SignupForm() {
     </div>
   );
 }
-
 // Agregar SSR para manejar la redirección en el servidor
 export async function getServerSideProps(context) {
   const { req } = context;

@@ -6,7 +6,7 @@ interface UserAttributes {
   id: number;
   email: string;
   password: string | null;
-  subscriptionStatus: "active" | "inactive" | "pending";
+  subscriptionStatus: "GRATIS" | "MONTHLY" | "YEAR" | "inactive";
   name: string | null;
   surname: string | null;
   phone: string | null;
@@ -18,7 +18,7 @@ export class User extends Model<UserAttributes> implements UserAttributes {
   public id!: number;
   public email!: string;
   public password!: string | null;
-  public subscriptionStatus!: "active" | "inactive" | "pending";
+  public subscriptionStatus!: "GRATIS" | "MONTHLY" | "YEAR" | "inactive";
   public name!: string | null;
   public surname!: string | null;
   public phone!: string | null;
@@ -42,7 +42,7 @@ User.init(
       allowNull: true,
     },
     subscriptionStatus: {
-      type: DataTypes.ENUM("active", "inactive", "pending"),
+      type: DataTypes.ENUM("MONTHLY", "FREE", "YEAR", "inactive"),
       defaultValue: "inactive",
     },
     name: {

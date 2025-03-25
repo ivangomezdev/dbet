@@ -8,6 +8,11 @@ interface UserData {
   surname?: string;
   phone?: string;
   address?: string;
+  subscriptionStatus?: "GRATIS" | "MONTHLY" | "YEAR" | "inactive"  ;
+}
+
+type UserPlan = {
+  plan: "GRATIS" | "MONTHLY" | "YEAR" | "inactive";
 }
 
 export const editUser = async (data: UserData) => {
@@ -17,6 +22,19 @@ export const editUser = async (data: UserData) => {
       surname: data.surname,
       phone: data.phone,
       address: data.address,
+    },
+    {
+      where: { email: data.email },
+    }
+  );
+};
+
+export const editSubscription = async (data: UserData, plan: UserPlan) => {
+  console.log(plan.plan,"ESTA ES LA DATA");
+  
+  await User.update(
+    {
+      subscriptionStatus: plan.plan, // Extraer el valor de plan
     },
     {
       where: { email: data.email },
