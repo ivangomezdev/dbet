@@ -1,19 +1,19 @@
 import type { NextConfig } from "next";
 
-const nextConfig: NextConfig = {
+const nextConfig = {
   images: {
     remotePatterns: [
       {
         protocol: "https",
         hostname: "res.cloudinary.com",
-        port: "", 
-        pathname: "/**", 
+        port: "",
+        pathname: "/**",
       },
       {
         protocol: "https",
-        hostname: "images.ctfassets.net", // Añadir Contentful
-        port: "", 
-        pathname: "/**", 
+        hostname: "images.ctfassets.net",
+        port: "",
+        pathname: "/**",
       },
     ],
   },

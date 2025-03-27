@@ -30,12 +30,14 @@
     "passport-google-oauth20": "^2.0.0",
     "pg": "^8.14.1",
     "pg-hstore": "^2.3.4",
+    "puppeteer": "^24.4.0",
     "react": "^19.0.0",
     "react-cookie": "^8.0.1",
     "react-dom": "^19.0.0",
     "resend": "^4.1.2",
     "sequelize": "^6.37.6",
-    "sweetalert2": "^11.17.2"
+    "sweetalert2": "^11.17.2",
+    "zod": "^3.24.2"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
