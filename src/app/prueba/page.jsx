@@ -1,6 +1,5 @@
 "use client";
-import {  useState } from "react";
-import Image from "next/image";
+
 import "./casino-background.css";
 
 
@@ -50,18 +49,10 @@ const bookies = {
 
 export default function BettingTable() {
 
-  const [currentPage, setCurrentPage] = useState(1); // Página actual
 
 
- 
-  // Funciones para navegar entre páginas
-  const handlePreviousPage = () => {
-    if (currentPage > 1) setCurrentPage(currentPage - 1);
-  };
 
-  const handleNextPage = () => {
-    if (currentPage < totalPages) setCurrentPage(currentPage + 1);
-  };
+
 
   return (
     <div className="me__content betting-table-container">
@@ -88,32 +79,10 @@ export default function BettingTable() {
       </div>
 
       {/* Controles de paginación */}
-      <div className="pagination-controls" style={{ marginTop: "10px", textAlign: "center" }}>
-        <button
-          onClick={handlePreviousPage}
-          disabled={currentPage === 1}
-          style={{ marginRight: "10px" }}
-        >
-          Anterior
-        </button>
-        <span>
-          Página {currentPage} de {totalPages}
-        </span>
-        <button
-          onClick={handleNextPage}
-          disabled={currentPage === totalPages}
-          style={{ marginLeft: "10px" }}
-        >
-          Siguiente
-        </button>
-      </div>
+     
 
-      {loading && <div className="loading-indicator">Cargando más datos...</div>}
-      {!loading && data.length < 500 && (
-        <div className="warning">
-          Solo se encontraron {data.length} apuestas únicas de las 500 deseadas tras revisar la API.
-        </div>
-      )}
+      
+      
     </div>
   );
 }

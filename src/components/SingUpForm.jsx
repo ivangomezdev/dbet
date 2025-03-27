@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import ChooseSubscriptionPlan from "./ChooseSubscriptionPlan";
 import { useSetAtom } from "jotai";
 import { userAtom } from "@/lib/atom";
+import GoogleSignInButton from "./GoogleSignButton";
 
 const subscriptionCardsData = [
   {
@@ -188,9 +189,7 @@ export default function SignupForm() {
 
             <div className="signup__social-buttons">
         
-              <button disabled className="signup__social-button signup__social-button--google">
-                <span className="signup__social-icon">G</span>
-              </button>
+            <GoogleSignInButton/>
             </div>
 
             <p className="signup__divider">O utiliza tu email</p>
