@@ -82,35 +82,7 @@ export default function BettingTable() {
             </tr>
           </thead>
           <tbody>
-            {paginatedData.map((item, index) => (
-              <tr key={index}>
-                <td>{formatDate(item.open_date)}</td>
-                <td>{item.event}</td>
-                <td>{item.selection}</td>
-                <td>{Number.parseFloat(item.rating).toFixed(2)}</td>
-                <td>
-                  <Image
-                    src={bookies[item.bookie_id]}
-                    alt={`bookie-${item.bookie_id}`}
-                    width={66}
-                    height={20}
-                  />
-                </td>
-                <td>{item.back_odd}</td>
-                <td>
-                  <Image
-                    src={
-                      "https://res.cloudinary.com/dc5zbh38m/image/upload/v1742972626/betfair_qlonut.gif"
-                    }
-                    alt="bfair"
-                    width={66}
-                    height={20}
-                  />
-                </td>
-                <td>{item.lay_odd}</td>
-                <td>€{Number.parseFloat(item.availability).toFixed(2)}</td>
-              </tr>
-            ))}
+          
           </tbody>
         </table>
       </div>

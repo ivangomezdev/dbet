@@ -184,7 +184,7 @@ export default function SignupForm() {
         {showInitialForm && (
           <>
             <h1 className="signup__title">¡Bienvenido!</h1>
-            <p className="signup__social-text">Regístrate con una de tus redes sociales</p>
+            <p className="signup__social-text">Regístrate con GOOGLE</p>
 
             <div className="signup__social-buttons">
         
