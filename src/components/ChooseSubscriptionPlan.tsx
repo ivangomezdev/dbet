@@ -1,6 +1,6 @@
 
 "use client"
-import Router, { useRouter } from "next/router";
+import  { useRouter } from "next/router";
 import "./subscriptionCard.css";
 import Swal from 'sweetalert2'
 

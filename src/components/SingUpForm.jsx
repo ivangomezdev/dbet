@@ -187,12 +187,7 @@ export default function SignupForm() {
             <p className="signup__social-text">Regístrate con una de tus redes sociales</p>
 
             <div className="signup__social-buttons">
-              <button disabled className="signup__social-button signup__social-button--facebook">
-                <span className="signup__social-icon">f</span>
-              </button>
-              <button disabled className="signup__social-button signup__social-button--twitter">
-                <span className="signup__social-icon">X</span>
-              </button>
+        
               <button disabled className="signup__social-button signup__social-button--google">
                 <span className="signup__social-icon">G</span>
               </button>
