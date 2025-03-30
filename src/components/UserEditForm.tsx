@@ -8,6 +8,7 @@ import { useAtom } from "jotai";
 import { userAtom } from "@/lib/atom";
 import { GetServerSidePropsContext } from "next"; // Importamos el tipo
 import Image from "next/image";
+import Link from "next/link";
 
 interface UserEditFormProps {
   initialData?: {
@@ -190,7 +191,7 @@ export default function UserEditForm({
           </div>
           
         </div>
-        <p className="user-edit-form__planUpgrade">Mejorar plan</p>
+       <Link style={{textDecoration:"none"}} href="/changePlan"> <p className="user-edit-form__planUpgrade">Mejorar plan</p> </Link>
         <div className="user-edit-form__fields">
           <div className="user-edit-form__field-group">
             <label className="user-edit-form__label">
