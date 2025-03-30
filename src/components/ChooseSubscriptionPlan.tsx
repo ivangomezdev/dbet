@@ -1,9 +1,11 @@
-
-"use client"
-import  { useRouter } from "next/router";
+"use client";
+import { useRouter } from "next/navigation";
 import "./subscriptionCard.css";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
+import { loadStripe } from "@stripe/stripe-js";
+import { STRIPE_PUBLISHABLE_KEY } from "@/lib/stripe";
 
+const stripePromise = loadStripe(STRIPE_PUBLISHABLE_KEY);
 
 interface SubscriptionCardProps {
   cardsData: CardData[];
@@ -26,36 +28,78 @@ interface CardData {
 
 export default function ChooseSubscriptionPlan({ cardsData, onPlanSelect }: SubscriptionCardProps) {
   const router = useRouter();
-  const handleButtonClick = (planName: string) => {
-    onPlanSelect(planName);
-    console.log("click");
-    
- 
 
-Swal.fire({
-  title: 'Confirmar plan',
-  text: '¿Estás seguro de que quieres adquirir este plan?',
-  icon: 'question',
-  showCancelButton: true,
-  confirmButtonText: 'Sí, seleccionar',
-  cancelButtonText: 'Cancelar',
-}).then((result) => {
-  if (result.isConfirmed) {
-    // Lógica para procesar la compra si el usuario confirma
-    Swal.fire('¡Elección realizada!', 'Tu compra ha sido procesada.', 'success');
-    router.push("/me");
-  } else if (result.dismiss === Swal.DismissReason.cancel) {
-    // Lógica si el usuario cancela
-    Swal.fire('Cancelado', 'La elección ha sido cancelada.', 'error');
-  }
-});
+  const handleButtonClick = async (planName: string) => {
+    onPlanSelect(planName);
+
+    if (planName === "FREE") {
+      Swal.fire({
+        title: "Confirmar plan",
+        text: "¿Estás seguro de que quieres adquirir este plan?",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonText: "Sí, seleccionar",
+        cancelButtonText: "Cancelar",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire("¡Elección realizada!", "Tu plan gratuito ha sido activado.", "success");
+          router.push("/me");
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          Swal.fire("Cancelado", "La elección ha sido cancelada.", "error");
+        }
+      });
+    } else {
+      // Planes premium con Stripe
+      Swal.fire({
+        title: "Confirmar plan",
+        text: `¿Estás seguro de que quieres adquirir el plan ${planName}?`,
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonText: "Sí, proceder al pago",
+        cancelButtonText: "Cancelar",
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          try {
+            // Obtener el token desde las cookies (react-cookies o similar)
+            const token = document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1];
+            if (!token) throw new Error("No se encontró el token de autenticación");
+
+            // Crear la sesión de pago en el backend
+            const response = await fetch("/api/create-checkout-session", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+              body: JSON.stringify({ planName }),
+            });
+
+            const { sessionId } = await response.json();
+            const stripe = await stripePromise;
+
+            if (!stripe) throw new Error("Error al cargar Stripe");
+
+            // Redirigir al checkout de Stripe
+            const { error } = await stripe.redirectToCheckout({ sessionId });
+            if (error) {
+              Swal.fire("Error", error.message, "error");
+            }
+          } catch (error) {
+            Swal.fire("Error", "Hubo un problema al procesar el pago", "error");
+            console.error(error);
+          }
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          Swal.fire("Cancelado", "La elección ha sido cancelada.", "error");
+        }
+      });
+    }
   };
 
   return (
     <div style={{ display: "flex" }}>
       <div className="premium-content">
-        <h1 style={{color:"#054F36"}} className="premium-title">Escoge tu plan</h1>
-        <p style={{color:"gray"}} className="premium-subtitle">Puedes cancelar la renovación de la suscripción cuando quieras.</p>
+        <h1 style={{ color: "#054F36" }} className="premium-title">Escoge tu plan</h1>
+        <p style={{ color: "gray" }} className="premium-subtitle">Puedes cancelar la renovación de la suscripción cuando quieras.</p>
 
         <div className="pricing-cards">
           {cardsData.map((card, index) => (

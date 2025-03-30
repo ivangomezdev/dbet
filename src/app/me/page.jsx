@@ -5,6 +5,7 @@ import { useCookies } from "react-cookie";
 import UserEditForm from "../../components/UserEditForm";
 import NavBar from "@/components/NavBar";
 import "./mePage.css";
+import { useSession } from "next-auth/react";
 
 // Example of initial data you could pass to the component
 const userData = {
@@ -20,12 +21,14 @@ const userData = {
 };
 
 const Page = () => {
+  const { data: session, status } = useSession();
   const [cookies] = useCookies(["token"]); // Leer las cookies
   const router = useRouter();
 
   //MiddleWare para asegurar la ruta
   useEffect(() => {
-    if (!cookies.token) {
+    if (status === "loading") return;
+    if (!cookies.token && !session) {
       router.push("/auth/register");
     }
   }, [cookies.token, router]);

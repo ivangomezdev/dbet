@@ -3,8 +3,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { initDB } from '../lib/init-db.js';
-import ClientProvider from "./ClientProvider";
-import { Provider } from "jotai";
+import AllProviders from "./AllProviders"
+
 initDB();
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,11 +29,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-      <ClientProvider>
-        <Provider>
-        {children}
-        </Provider>
-        </ClientProvider>
+      <AllProviders>
+          {children}
+          </AllProviders>
       </body>
     </html>
   );

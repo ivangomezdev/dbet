@@ -1,8 +1,3 @@
-import NextAuth from "next-auth";
-import GoogleProvider from "next-auth/providers/google";
-import { User } from "@/models/user";
-import { Auth } from "@/models/auth";
-
 export const authOptions = {
   providers: [
     GoogleProvider({
@@ -12,10 +7,15 @@ export const authOptions = {
   ],
   callbacks: {
     async signIn({ profile }) {
-      if (!profile?.email) return false;
+      console.log("Perfil de Google recibido:", profile);
+      
+      if (!profile?.email) {
+        console.error("No se recibió correo electrónico");
+        return false;
+      }
 
       try {
-        // Find or create user
+        // Tu lógica actual de inicio de sesión
         const [user, created] = await User.findOrCreate({
           where: { email: profile.email },
           defaults: {
@@ -27,45 +27,29 @@ export const authOptions = {
           }
         });
 
-        // Create or update auth record
-        await Auth.findOrCreate({
-          where: { userId: user.get('id') },
-          defaults: {
-            email: profile.email,
-            userId: user.get('id'),
-            verificationCode: null,
-            codeUsed: true
-          }
-        });
+        console.log(`Usuario ${created ? 'creado' : 'encontrado'}:`, user.get('id'));
 
         return true;
       } catch (error) {
-        console.error("Error in OAuth signin:", error);
+        console.error("Error detallado en OAuth signin:", error);
+        // Registra el error completo para debugging
         return false;
       }
     },
-    async session({ session, token }) {
-      if (token.sub) {
-        const user = await User.findOne({ 
-          where: { email: session.user.email },
-          attributes: ['id', 'email', 'subscriptionStatus', 'name', 'surname']
-        });
-
-        if (user) {
-          session.user.id = user.get('id');
-          session.user.subscriptionStatus = user.get('subscriptionStatus');
-        }
-      }
-      return session;
+    // Resto de tu configuración...
+  },
+  events: {
+    // Añade manejo de eventos para más información
+    async signIn(message) {
+      console.log("Evento de inicio de sesión:", message);
     },
-    async jwt({ token, user }) {
-      return token;
+    async error(message) {
+      console.error("Evento de error de autenticación:", message);
     }
   },
+  // Configura páginas de error personalizada
   pages: {
     signIn: '/auth/signin',
     error: '/auth/error'
   }
 };
-
-export default NextAuth(authOptions);
