@@ -36,10 +36,10 @@ export async function POST(request) {
     let subscriptionStatus;
 
     if (planName === "PREMIUM MENSUAL") {
-      priceId = "price_1R8B1qQO2yiuJACCAZYkd1tn"; // Tu Price ID real de "PREMIUM MENSUAL"
+      priceId = "price_1R8B1qQO2yiuJACCAZYkd1tn"; // Tu Price ID real
       subscriptionStatus = "MONTHLY";
     } else if (planName === "PREMIUM ANUAL") {
-      priceId = "price_1R8B1qQO2yiuJACCAZYkd1tn"; // Tu Price ID real de "PREMIUM ANUAL"
+      priceId = "price_1R8B1qQO2yiuJACCAZYkd1tn"; // Tu Price ID real
       subscriptionStatus = "YEAR";
     } else {
       return NextResponse.json({ error: "Invalid plan" }, { status: 400 });
@@ -50,13 +50,12 @@ export async function POST(request) {
       mode: "subscription",
       payment_method_types: ["card"],
       line_items: [{ price: priceId, quantity: 1 }],
-      success_url: `${request.headers.get("origin")}/me?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${request.headers.get("origin")}/choose-subscription`,
-      metadata: { userId: user.id.toString(), planName, subscriptionStatus }, // Guardamos subscriptionStatus en metadata
+      success_url: `${request.headers.get("origin")}/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${request.headers.get("origin")}/failed?session_id={CHECKOUT_SESSION_ID}`,
+      metadata: { userId: user.id.toString(), planName, subscriptionStatus },
     });
     console.log("Sesión de Stripe creada:", session.id);
 
-    // NO actualizamos el usuario aquí, esperamos al webhook
     return NextResponse.json({ sessionId: session.id });
   } catch (error) {
     console.error("Error en /api/create-checkout-session:", error);
