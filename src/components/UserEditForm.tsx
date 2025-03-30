@@ -171,7 +171,7 @@ export default function UserEditForm({
 
       <form className="user-edit-form__form" onSubmit={handleSubmit}>
         <div className="user-edit-form__banner">
-        <p className="user-edit-form__plan">PLAN <span>{user?.userId.subscriptionStatus}</span> </p>
+        <p className="user-edit-form__plan">PLAN <span>{user?.userId?.subscriptionStatus}</span> </p>
        
           <div className="user-edit-form__profile-container">
             

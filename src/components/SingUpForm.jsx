@@ -95,8 +95,7 @@ export default function SignupForm() {
         }),
       });
       const data = await response.json();
-       console.log(plan,email, "ESTO LE ESTOY PASANDO DESDE UPDATE  SUBSCRIPT");
-      console.log(data,"RESPUESTA DEL SERVIDOR");
+
       
     } catch {
       setError("err.message");

@@ -18,7 +18,6 @@ export default function GoogleSignInButton() {
         callbackUrl: "/me"
       });
 
-      console.log("Resultado de signIn:", result);
 
       if (result) {
        
@@ -46,7 +45,7 @@ export default function GoogleSignInButton() {
         className="signup__social-button signup__social-button--google"
       >
         <span className="signup__social-icon">G</span>
-        {isLoading ? "Cargando..." : "Iniciar sesión con Google"}
+        {isLoading ? "Cargando..." : ""}
       </button>
      
     </div>

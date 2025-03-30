@@ -39,6 +39,11 @@ function NavBar() {
     setAnchorElNav(null);
   };
 
+  // Filtrar las páginas para mostrar "Servicio Premium" solo si no hay token
+  const filteredPages = pages2.filter((page) =>
+    page.name === "Servicio Premium" ? !cookies.token : true
+  );
+
   return (
     <AppBar position="static" className="navBar__bar">
       <Container maxWidth="xl">
@@ -89,7 +94,7 @@ function NavBar() {
               onClose={handleCloseNavMenu}
               sx={{ display: { xs: "block", md: "none" } }}
             >
-              {pages2.map((page, index) => (
+              {filteredPages.map((page, index) => (
                 <MenuItem key={index} onClick={handleCloseNavMenu}>
                   <Link href={page.src}>
                     <Typography sx={{ textAlign: "center" }}>
