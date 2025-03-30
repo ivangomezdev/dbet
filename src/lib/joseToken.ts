@@ -34,6 +34,7 @@ export const verifyToken = async (token: string) => {
     try {
       const secret = new TextEncoder().encode(process.env.SECRET);
       const { payload } = await jwtVerify(token, secret);
+      console.log("ESTE ES EL PAYLOAD",payload);
       
       return payload
     } catch (error) {
