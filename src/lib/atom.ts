@@ -10,7 +10,8 @@ interface User {
   createdAt?: string;
   updatedAt?: string;
   iat?: number;
-  userId?: any; // Ajusta esto si userId tiene un tipo más específico
+  userId?: any; 
 }
 // Átomo para el estado global 
 export const userAtom = atom<User | null>(null);
+export const oAuthAtom = atom(null);

@@ -1,20 +1,30 @@
-
-.aboutLine__q{
-margin-left: 3%;
-font-size: 20px;
-color: whitesmoke;
+.aboutLine__q {
+  margin-left: 3%;
+  font-size: 20px;
+  color: whitesmoke;
+  background-color: black;
 }
 
-.aboutLine__cont{
-  background: linear-gradient(to right, #122720, black);
+.aboutLine__cont {
+border: solid 3px black;
+  background-color: black !important;
   padding: 10px;
+  padding-top: 30px;
+  opacity: 5;
+  z-index: 9999;
   margin: 0;
 }
 
-@media(max-width:460px){
-  .aboutLine__q{
+@media (max-width: 460px) {
+  .aboutLine__q {
     font-size: 15px !important;
     margin: 5%;
-   
+  }
+}
+
+@media (max-width:1050px){
+  .aboutLine__q {
+    font-size: 18px !important;
+    margin: 5%;
   }
 }

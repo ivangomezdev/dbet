@@ -1,14 +1,14 @@
 "use client";
-
 import { useEffect, useState } from "react";
 import "./userEditForm.css";
 import { useCookies } from "react-cookie";
 import { useRouter } from "next/navigation";
 import { useAtom } from "jotai";
 import { userAtom } from "@/lib/atom";
-import { GetServerSidePropsContext } from "next"; // Importamos el tipo
+import useUserData from "../app/controllers/userUserData";
 import Image from "next/image";
 import Link from "next/link";
+import { signOut, useSession } from "next-auth/react";
 
 interface UserEditFormProps {
   initialData?: {
@@ -34,64 +34,46 @@ export default function UserEditForm({
   const [phoneType, setPhoneType] = useState(initialData.phoneType || "Mobile");
   const [showPhoneDropdown, setShowPhoneDropdown] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-
+  const [isLoading, setIsLoading] = useState(false); // Nuevo estado para el loading
   const [cookie, _, removeCookie] = useCookies(["token"]);
   const [user, setUser] = useAtom(userAtom);
   const router = useRouter();
   const [formData, setFormData] = useState({
-    name: user?.userId?.name || "",
-    surname: user?.userId?.surname || "",
-    email: user?.userId?.email || "",
-    phone: user?.userId?.phone || "",
-    address: user?.userId?.address || "",
+    name: "",
+    surname: "",
+    email: "",
+    phone: "",
+    address: "",
   });
 
-  useEffect(() => {
+    
+  const [initialFormData, setInitialFormData] = useState(formData);
 
-    if (user?.userId) {
-      setFormData({
-        name: user.userId.name || "",
-        surname: user.userId.surname || "",
-        email: user.userId.email || "",
-        phone: user.userId.phone || "",
-        address: user.userId.address || "",
-      });
+  
+  useUserData(cookie, setUser, router);
+
+  useEffect(() => {
+    if (user) {
+      console.log("Actualizando formData con:", user);
+      const newData = {
+        name: user.name || "",
+        surname: user.surname || "",
+        email: user.email || "",
+        phone: user.phone || "",
+        address: user.address || "",
+      };
+      setFormData(newData);
+      setInitialFormData(newData);
     }
   }, [user]);
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      if (!cookie.token) {
-        console.log("No token disponible, omitiendo solicitud a /me");
-        return;
-      }
-
-      try {
-        const response = await fetch("/api/me", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${cookie.token}`,
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error("Error al obtener datos del usuario");
-        }
-
-        const data = await response.json();
-        const dataForUser = data.userData.user;
-        setUser(dataForUser);
-      
-      } catch (err) {
-        console.log("Error en GET /me:", err);
-      }
-    };
-
-    if (!user) {
-      fetchUserData();
-    }
-  }, [cookie.token, router, setUser, user]);
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -100,26 +82,15 @@ export default function UserEditForm({
       return;
     }
 
-    const formData = new FormData(e.target as HTMLFormElement);
-    const data = Object.fromEntries(formData.entries());
+    setIsLoading(true); // Activar el loading
 
-    // Usa user.email si está disponible, ya que el input está disabled
-    const email = user;
-    console.log(email, "es el email");
-
-    if (!email) {
-      console.log("Error: No hay email disponible en user");
-      return;
-    }
-
-    // Combinar los datos del formulario con el email de user
     const updatedData = {
-      ...data,
-      email: email.userId.email, // Asegura que email siempre esté presente
+      ...formData,
+      email: user?.email || formData.email,
     };
 
     try {
-      console.log("Datos enviados al backend:", updatedData); // Para depurar
+      console.log("Datos enviados al backend:", updatedData);
       const response = await fetch("/api/me", {
         method: "POST",
         headers: {
@@ -137,25 +108,28 @@ export default function UserEditForm({
       const result = await response.json();
       console.log("Respuesta del backend:", result);
       onSubmit(updatedData);
+      setInitialFormData(updatedData);
       setIsEditing(false);
     } catch (err) {
       console.log("Error en el fetch:", err);
+    } finally {
+      setIsLoading(false); // Desactivar el loading pase lo que pase
     }
   };
 
   const handleCancel = () => {
+    setFormData(initialFormData);
     setIsEditing(false);
     onCancel();
   };
 
   const handleSession = () => {
     removeCookie("token", { path: "/" });
+    signOut({ callbackUrl: '/auth/register' });
     console.log("Deslogueado correctamente");
-    setUser(null); // Limpia el estado del usuario
+    setUser(null);
     router.push("/auth/register");
   };
-
-  console.log(_);
 
   return (
     <div className="user-edit-form">
@@ -172,10 +146,10 @@ export default function UserEditForm({
 
       <form className="user-edit-form__form" onSubmit={handleSubmit}>
         <div className="user-edit-form__banner">
-        <p className="user-edit-form__plan">PLAN <span>{user?.userId?.subscriptionStatus}</span> </p>
-       
+          <p className="user-edit-form__plan">
+            PLAN <span>{user?.subscriptionStatus || "Cargando..."}</span>
+          </p>
           <div className="user-edit-form__profile-container">
-            
             <div className="user-edit-form__profile">
               <Image
                 src={
@@ -187,28 +161,24 @@ export default function UserEditForm({
                 className="user-edit-form__profile-image"
               />
             </div>
-            
           </div>
-          
         </div>
-       <Link style={{textDecoration:"none"}} href="/changePlan"> <p className="user-edit-form__planUpgrade">Mejorar plan</p> </Link>
+        <Link style={{ textDecoration: "none" }} href="/changePlan">
+          <p className="user-edit-form__planUpgrade">Mejorar plan</p>
+        </Link>
         <div className="user-edit-form__fields">
           <div className="user-edit-form__field-group">
             <label className="user-edit-form__label">
               Nombre completo{" "}
-              <span
-                className="user-edit-form__info-icon"
-                title="Your full name"
-              >
-                
-              </span>
+              <span className="user-edit-form__info-icon" title="Your full name"></span>
             </label>
             <div className="user-edit-form__name-fields">
               <input
                 type="text"
                 name="name"
                 className="user-edit-form__input user-edit-form__input--half"
-                defaultValue={formData.name || "Cargando..."}
+                value={formData.name || "Cargando..."}
+                onChange={handleInputChange}
                 placeholder="First name"
                 disabled={!isEditing}
               />
@@ -216,7 +186,8 @@ export default function UserEditForm({
                 type="text"
                 name="surname"
                 className="user-edit-form__input user-edit-form__input--half"
-                defaultValue={formData.surname}
+                value={formData.surname || "Cargando..."}
+                onChange={handleInputChange}
                 placeholder="Last name"
                 disabled={!isEditing}
               />
@@ -232,7 +203,7 @@ export default function UserEditForm({
               id="email"
               name="email"
               className="user-edit-form__input"
-              value={formData.email || "Loading..."}
+              value={formData.email || "Cargando..."}
               placeholder="Email address"
               disabled
             />
@@ -248,7 +219,8 @@ export default function UserEditForm({
                 id="phone"
                 name="phone"
                 className="user-edit-form__input user-edit-form__input--phone"
-                defaultValue={formData.phone}
+                value={formData.phone || "Cargando..."}
+                onChange={handleInputChange}
                 placeholder="Phone number"
                 disabled={!isEditing}
               />
@@ -301,7 +273,7 @@ export default function UserEditForm({
           </div>
 
           <div className="user-edit-form__field-group">
-            <label htmlFor="organization" className="user-edit-form__label">
+            <label htmlFor="address" className="user-edit-form__label">
               Dirección
             </label>
             <input
@@ -309,24 +281,32 @@ export default function UserEditForm({
               id="address"
               name="address"
               className="user-edit-form__input"
-              defaultValue={formData.address}
-              placeholder="Organization"
+              value={formData.address || "Cargando..."}
+              onChange={handleInputChange}
+              placeholder="Address"
               disabled={!isEditing}
             />
           </div>
 
           <div className="user-edit-form__actions">
-            <button
-              type="submit"
-              className="user-edit-form__button user-edit-form__button--primary"
-            >
-              {isEditing ? "Guardar Cambios" : "Editar"}
-            </button>
+            <div className="user-edit-form__button-container">
+              <button
+                type="submit"
+                className="user-edit-form__button user-edit-form__button--primary"
+                disabled={isLoading} // Deshabilitar botón mientras carga
+              >
+                {isEditing ? "Guardar Cambios" : "Editar"}
+              </button>
+              {isLoading && (
+                <span className="user-edit-form__loading-spinner"></span>
+              )}
+            </div>
             {isEditing && (
               <button
                 type="button"
                 className="user-edit-form__button user-edit-form__button--secondary"
                 onClick={handleCancel}
+                disabled={isLoading} // Deshabilitar Cancelar mientras carga
               >
                 Cancelar
               </button>
@@ -336,56 +316,4 @@ export default function UserEditForm({
       </form>
     </div>
   );
-}
-
-// Agregar SSR con tipado explícito
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const { req } = context;
-  const token = req.cookies.token;
-
-  if (!token) {
-    return {
-      redirect: {
-        destination: "/auth/register",
-        permanent: false,
-      },
-    };
-  }
-
-  try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/me`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error("Error al obtener datos del usuario");
-    }
-
-    const data = await response.json();
-    const userData = data.userData.user;
-
-    return {
-      props: {
-        initialData: {
-          email: userData.email,
-          firstName: userData.name || "Ella",
-          lastName: userData.surname || "Lauda",
-          phone: userData.phone || "+1(609) 972-22-22",
-          organization: userData.address || "Htmlstream",
-        },
-      },
-    };
-  } catch (err) {
-    console.log("Error en SSR:", err);
-    return {
-      redirect: {
-        destination: "/auth/register",
-        permanent: false,
-      },
-    };
-  }
 }

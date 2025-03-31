@@ -69,7 +69,13 @@ export default function UserBono({ bonosData }: UserBonoProps) {
       <div className="user-bono__header">
         <div className="user-bono__ninja"></div>
         <div className="user-bono__welcome">
-          <h1 className="user-bono__title">BONOS</h1>
+    
+      <span className="letter b">B</span>
+      <span className="letter o1">O</span>
+      <span className="letter n">N</span>
+      <span className="letter o2">O</span>
+      <span className="letter s">S</span>
+
       
           <div className="user-bono__divider"></div>
         </div>

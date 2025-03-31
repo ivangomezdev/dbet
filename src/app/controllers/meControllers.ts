@@ -12,17 +12,15 @@ interface UserData {
 }
 
 export const editUser = async (data: UserData) => {
-  await User.update(
-    {
-      name: data.name,
-      surname: data.surname,
-      phone: data.phone,
-      address: data.address,
-    },
-    {
-      where: { email: data.email },
-    }
+// backend/controllers/meControllers.js
+
+  const { name, surname, email, phone, address } = data;
+  const [_, [updatedUser]] = await User.update(
+    { name, surname, email, phone, address },
+    { where: { email }, returning: true } // Devuelve el registro actualizado
   );
+  return updatedUser;
+
 };
 
 export const editSubscription = async (data: UserData) => {

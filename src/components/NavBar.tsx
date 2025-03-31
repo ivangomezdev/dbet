@@ -18,6 +18,10 @@ import YouTubeIcon from "@mui/icons-material/YouTube";
 import "./navBar.css";
 import Link from "next/link";
 import { useCookies } from "react-cookie";
+import { useAtom } from "jotai";
+import { oAuthAtom } from "@/lib/atom";
+import { useSession } from "next-auth/react";
+
 const pages2 = [
   { name: "Cómo funciona", src: "/#howWorks" },
   { name: "Guías", src: "/guides" },
@@ -26,10 +30,17 @@ const pages2 = [
   { name: "Bonos", src: "/bonos" },
 ];
 function NavBar() {
+
   const [cookies] = useCookies(["token"]); // Leer las cookies
+
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
+  
+  const { data: session, status } = useSession();
+  console.log(session,"ES LA SESION");
+  
+  
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -137,7 +148,7 @@ function NavBar() {
               </Link>
             ))}
           </Box>
-          {cookies.token ? (
+          {cookies.token || session ? (
             <Link style={{ textDecoration: "none" }} href={"/me"}>
               <button className="NavBar__RegisterBTN">
                 <PersonIcon />

@@ -14,7 +14,7 @@ const subscriptionCardsData = [
         "Versión Limitada de las Herramientas",
       ],
       buttonTextSpain: "REGÍSTRATE GRATIS",
-      buttonTextLatam: "REGÍSTRATE GRATIS",
+     
       hrefSpain: "/free-spain",
       hrefLatam: "/free-latam",
     },

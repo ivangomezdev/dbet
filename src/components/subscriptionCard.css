@@ -76,9 +76,16 @@
     display: flex;
     justify-content: center;
     gap: 20px;
-    flex-wrap: wrap;
+    margin-bottom: 70px;
   }
   
+
+  @media (max-width:950px) {
+    .pricing-cards{
+      flex-wrap: wrap !important;
+    }
+    
+  }
   .pricing-card {
     background-color: white;
     border-radius: 8px;

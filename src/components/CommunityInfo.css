@@ -76,7 +76,9 @@
   position: relative;
  
   min-height: 100vh;
-  background: linear-gradient(135deg, #044a32 0%, #022218 50%, #000000 100%);
+  background: linear-gradient(to bottom, #000000, #11251F);
+
+
   overflow: hidden;
   display: flex;
   justify-content: center;
@@ -91,22 +93,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: radial-gradient(circle at 10% 20%, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0) 20%),
-    radial-gradient(circle at 90% 80%, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0) 20%),
-    linear-gradient(
-      45deg,
-      rgba(0, 0, 0, 0) 48%,
-      rgba(255, 255, 255, 0.02) 49%,
-      rgba(255, 255, 255, 0.02) 51%,
-      rgba(0, 0, 0, 0) 52%
-    ),
-    linear-gradient(
-      -45deg,
-      rgba(0, 0, 0, 0) 48%,
-      rgba(255, 255, 255, 0.02) 49%,
-      rgba(255, 255, 255, 0.02) 51%,
-      rgba(0, 0, 0, 0) 52%
-    );
+ 
   background-size: 100% 100%, 100% 100%, 60px 60px, 60px 60px;
 }
 
@@ -693,4 +680,31 @@ width: 330px !important;
 
  }
 
+}
+
+@keyframes neonAnim {
+  from {
+      text-shadow:
+        0 0 15px rgba(7, 232, 138, .7),
+        0 0 45px rgba(7, 232, 138, .7),
+        0 0 105px rgba(7, 232, 138, .7);
+    }
+    to {
+      text-shadow:
+        0 0 10px rgba(7, 232, 138, .7),
+        0 0 25px rgba(7, 232, 138, .7),
+        0 0 65px rgba(7, 232, 138, .7);
+    }
+}
+
+.communityInfo__text  h1{
+
+  animation: neonAnim 2s alternate-reverse infinite;
+  color: #07E88A;
+}
+
+.communityInfo__quantity h1{
+  
+  animation: neonAnim 2s alternate-reverse infinite;
+  color: #07E88A;
 }

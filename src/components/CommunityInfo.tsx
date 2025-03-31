@@ -10,60 +10,6 @@ const CommunityInfo = () => {
     <div className="betting-background">
       <div className="background-overlay"></div>
 
-      {/* Trofeos */}
-      <div className="trophy trophy-large">
-        <Image
-          src="https://res.cloudinary.com/dc5zbh38m/image/upload/v1742345817/thropy-removebg-preview_xhqa4y.png"
-          alt="Trofeo dorado"
-          width={100}
-          height={150}
-          className="trophy-image"
-        />
-      </div>
-
-      <div className="trophy trophy-medium">
-        <Image
-          src="https://res.cloudinary.com/dc5zbh38m/image/upload/v1742345817/thropy-removebg-preview_xhqa4y.png"
-          alt="Trofeo plata"
-          width={80}
-          height={120}
-          className="trophy-image"
-        />
-      </div>
-
-      <div className="trophy trophy-small">
-        <Image
-          src="https://res.cloudinary.com/dc5zbh38m/image/upload/v1742345817/thropy-removebg-preview_xhqa4y.png"
-          alt="Trofeo bronce"
-          width={60}
-          height={90}
-          className="trophy-image"
-        />
-      </div>
-
-      {/* Elementos de dinero */}
-      <div className="money-elements">
-        <div className="coin coin-1"></div>
-
-        <div className="coin coin-5"></div>
-        <div className="coin coin-6"></div>
-
-        <div className="bill bill-1"></div>
-        <div className="bill bill-2"></div>
-        <div className="bill bill-3"></div>
-
-        <div className="chip chip-1"></div>
-
-        <div className="chip chip-3"></div>
-      </div>
-
-      {/* Elementos deportivos */}
-      <div className="sports-elements">
-        <div className="ball football"></div>
-        <div className="ball basketball"></div>
-
-        <div className="ball baseball"></div>
-      </div>
 
       <div className="placeholder-content">
         <div className="communityInfo__cont">

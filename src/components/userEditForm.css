@@ -18,7 +18,33 @@
      margin-bottom: 80px; 
      border-top: #03704c 10px solid;
   }
-  
+  /* Contenedor para alinear el botón y el spinner */
+.user-edit-form__button-container {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Espacio entre el botón y el spinner */
+}
+
+/* Estilo del spinner */
+.user-edit-form__loading-spinner {
+  width: 16px; /* Tamaño pequeño */
+  height: 16px;
+  border: 2px solid #ccc; /* Borde gris claro */
+  border-top: 2px solid #007bff; /* Borde superior azul para el efecto de giro */
+  border-radius: 50%;
+  animation: spin 1s linear infinite; /* Animación de rotación */
+}
+
+/* Animación de rotación */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
   /* Header */
   .user-edit-form__header {
     display: flex;

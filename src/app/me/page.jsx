@@ -7,6 +7,7 @@ import NavBar from "@/components/NavBar";
 import "./mePage.css";
 import { useSession } from "next-auth/react";
 
+
 // Example of initial data you could pass to the component
 const userData = {
   name: "Ella",
@@ -20,18 +21,20 @@ const userData = {
   // You could also pass a banner image URL
 };
 
-const Page = () => {
+const Page = () => {  
+
   const { data: session, status } = useSession();
   const [cookies] = useCookies(["token"]); // Leer las cookies
   const router = useRouter();
 
-  //MiddleWare para asegurar la ruta
+
   useEffect(() => {
     if (status === "loading") return;
-    if (!cookies.token && !session) {
+
+    if (status === "unauthenticated" && !cookies.token) {
       router.push("/auth/register");
     }
-  }, [cookies.token, router]);
+  }, [status, cookies.token, router]);
 
   return (
     <div>

@@ -4,13 +4,7 @@ import "./infoBet.css"
 export default function InfoBet() {
   return (
     <div className="info-bet-container">
-      {/* Background dots */}
-      <div className="dot dot-1"></div>
-      <div className="dot dot-2"></div>
-      <div className="dot dot-3"></div>
-      <div className="dot dot-4"></div>
-      <div className="dot dot-5"></div>
-      <div className="dot dot-6"></div>
+      
 
       {/* Wave background at bottom */}
       <div className="wave-background"></div>
@@ -18,7 +12,7 @@ export default function InfoBet() {
       <div className="content-container">
         {/* Header */}
         <div className="header">
-          <h1 style={{color:"#054F36"}}>xxxx Te Ofrece Todas Las Herramientas</h1>
+          <h1 className="thirdline">xxxx Te Ofrece Todas Las Herramientas</h1>
           <p>que necesitas para ganar dinero online de manera rápida y eficiente</p>
         </div>
 
@@ -140,7 +134,7 @@ export default function InfoBet() {
 
         {/* NinjaClub */}
         <div className="ninja-club">
-          <h2>El xxxx Club (beta)</h2>
+          <h2 className="thirdline">El xxxx Club (beta)</h2>
           <p>
             Únete a nuestra comunidad de apostadores y comparte tus estrategias y consejos. Aprende de los mejores y
             mejora tus resultados.

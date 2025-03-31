@@ -2,18 +2,15 @@
   position: relative;
   background-color: black;
   color: white;
-  padding: 3rem 0;
+  padding: 1rem 0;
   overflow: hidden;
 
 
-  background:
-  radial-gradient(at 80% 80%,#090808 25.4%,#0000 26%),
-  radial-gradient(at 20% 80%,#090808 25.4%,#0000 26%),
-  conic-gradient(from -45deg at 50% 41%,#090808 90deg,#000000 0) 
-    10px 0;
-background-size: 20px 20px;
 
+}
 
+.info-bet-h1 {
+  font-size: 40px !important;
 }
 
 /* Background dots */
@@ -123,7 +120,7 @@ background-size: 20px 20px;
 }
 
 .feature-item h3{
-  color:#054F36
+color:"white"
 }
 
 @media (min-width: 769px) {
@@ -258,4 +255,50 @@ background-size: 20px 20px;
  .images-container{
   flex-direction: column;
  }
+}
+
+.feature-item img {
+  position: relative;
+  border: 2px solid #ffffff;
+  padding: 20px;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden; /* Para que el efecto no se salga del contenedor */
+}
+
+/* Pseudo-elemento para el efecto de fuego neón */
+.feature-item img::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(2, 119, 53, 0.6), /* #027735 con opacidad */
+    rgba(255, 255, 255, 0.8), /* Blanco con opacidad */
+    rgba(2, 119, 53, 0.6),
+    transparent
+  );
+  animation: neonFire 3s linear infinite;
+}
+
+/* Animación para el movimiento */
+@keyframes neonFire {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Efecto neón estático con box-shadow */
+.feature-item img {
+  box-shadow: 
+    0 0 10px #027735,
+    0 0 20px #027735,
+    0 0 30px #027735;
 }

@@ -61,7 +61,7 @@ const Faqs = () => {
   ];
   return (
     <div className="faqs__container" id="faqs">
-      <h1 className="faqs__title">Preguntas Frecuentes</h1>
+      <h1 className="faqs__title thirdline">Preguntas Frecuentes</h1>
 
       <AccordionTransition data={dataForAcordion} />
     </div>

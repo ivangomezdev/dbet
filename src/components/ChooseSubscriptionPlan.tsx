@@ -24,8 +24,6 @@ interface CardData {
   hrefLatam: string;
 }
 
-
-
 export default function ChooseSubscriptionPlan({ cardsData, onPlanSelect }: SubscriptionCardProps) {
   const router = useRouter();
 
@@ -60,11 +58,9 @@ export default function ChooseSubscriptionPlan({ cardsData, onPlanSelect }: Subs
       }).then(async (result) => {
         if (result.isConfirmed) {
           try {
-            // Obtener el token desde las cookies (react-cookies o similar)
             const token = document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1];
             if (!token) throw new Error("No se encontró el token de autenticación");
 
-            // Crear la sesión de pago en el backend
             const response = await fetch("/api/create-checkout-session", {
               method: "POST",
               headers: {
@@ -79,7 +75,6 @@ export default function ChooseSubscriptionPlan({ cardsData, onPlanSelect }: Subs
 
             if (!stripe) throw new Error("Error al cargar Stripe");
 
-            // Redirigir al checkout de Stripe
             const { error } = await stripe.redirectToCheckout({ sessionId });
             if (error) {
               Swal.fire("Error", error.message, "error");
@@ -130,16 +125,31 @@ export default function ChooseSubscriptionPlan({ cardsData, onPlanSelect }: Subs
               </div>
 
               <div className="card-footer">
-                <button
-                  style={{ marginBottom: "10px" }}
-                  className="btn btn-premium"
-                  onClick={() => handleButtonClick(card.planType)}
-                >
-                  {card.buttonTextSpain}
-                </button>
-                <button className="btn btn-premium" onClick={() => handleButtonClick(card.planType)}>
-                  {card.buttonTextLatam}
-                </button>
+                {card.planType === "FREE" ? (
+                  <button
+                    style={{ marginBottom: "10px" }}
+                    className="btn btn-premium"
+                    onClick={() => handleButtonClick(card.planType)}
+                  >
+                    {card.buttonTextSpain} {/* Solo un botón para FREE */}
+                  </button>
+                ) : (
+                  <>
+                    <button
+                      style={{ marginBottom: "10px" }}
+                      className="btn btn-premium"
+                      onClick={() => handleButtonClick(card.planType)}
+                    >
+                      {card.buttonTextSpain}
+                    </button>
+                    <button
+                      className="btn btn-premium"
+                      onClick={() => handleButtonClick(card.planType)}
+                    >
+                      {card.buttonTextLatam}
+                    </button>
+                  </>
+                )}
               </div>
             </div>
           ))}

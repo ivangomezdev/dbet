@@ -38,7 +38,7 @@
   }
 
   .worldFlags__container{
-    background: linear-gradient(to right, #122720, black);
+    background: linear-gradient(to bottom, #10241E, #044D35);
   }
 
   @media(max-width:977px){

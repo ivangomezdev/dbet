@@ -19,8 +19,8 @@ export default function Home() {
       <NavBar />
       </header>
       <main>
-        
         <ImageTextContainer />
+        
         <AboutLine/>
         <CommunityInfo/>
         <WorldFlags/>

@@ -4,7 +4,7 @@ import "./footballfield.css"
 export default function FootballField() {
   return (
     <div className="football-field-container">
-          <h2 className="logos-title">Gente que habla de matched betting:</h2>
+          <h2 className="logos-title thirdline">Gente que habla de matched betting:</h2>
       {/* Campo de fútbol */}
       <div className="football-field">
         {/* Líneas del campo */}

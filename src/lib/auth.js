@@ -1,3 +1,7 @@
+import { useSetAtom } from "jotai";
+import { oAuthAtom } from "./atom";
+import { signToken } from "./joseToken";
+
 export const authOptions = {
   providers: [
     GoogleProvider({
@@ -15,7 +19,7 @@ export const authOptions = {
       }
 
       try {
-        // Tu lógica actual de inicio de sesión
+        // Guardar sesión en DB
         const [user, created] = await User.findOrCreate({
           where: { email: profile.email },
           defaults: {
@@ -23,12 +27,14 @@ export const authOptions = {
             name: profile.given_name || null,
             surname: profile.family_name || null,
             password: null,
-            subscriptionStatus: "FREE"
+            subscriptionStatus: "inactive"
           }
         });
 
         console.log(`Usuario ${created ? 'creado' : 'encontrado'}:`, user.get('id'));
-
+   
+        const myToken = await signToken(user.get("id"))
+    
         return true;
       } catch (error) {
         console.error("Error detallado en OAuth signin:", error);
@@ -49,7 +55,7 @@ export const authOptions = {
   },
   // Configura páginas de error personalizada
   pages: {
-    signIn: '/auth/signin',
-    error: '/auth/error'
+    signIn: '/me',
+    error: '/auth/register'
   }
 };

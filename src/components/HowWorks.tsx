@@ -38,7 +38,7 @@ const HowWorks = () => {
   ];
   return (
     <div className="howWorks__content" id="howWorks">
-      <h1>¿Cómo Funciona xxxx?</h1>
+      <h1 className="thirdline">¿Cómo Funciona xxxx?</h1>
       <div className="howWorks__cards">
       <Card cardContent={howWorksCards}/>
   

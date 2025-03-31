@@ -7,18 +7,23 @@ import "./bonos.css";
 import { useCookies } from "react-cookie";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-
+import { useSession } from "next-auth/react";
+import Loaders from "../../components/Loaders.jsx"
 const Page = () => {
   const [bonosData, setBonosData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const { data: session , status } = useSession()
   const [cookies] = useCookies(["token"]); 
   const router = useRouter();
+  const [loading, setLoading] = useState(true); // Estado de carga
+
 
   // Middleware para asegurar la ruta
   useEffect(() => {
-    if (!cookies.token) {
+    if (status === "loading") return;
+
+    if (!cookies.token && !session) {
       router.push("/auth/register");
     }
   }, [cookies.token, router]);
@@ -41,7 +46,7 @@ const Page = () => {
     fetchBonos();
   }, []);
 
-  if (isLoading) return <div>Cargando...</div>;
+  if (isLoading) return <Loaders/>;
   if (error) return <div>Error: {error}</div>;
 
   return (
