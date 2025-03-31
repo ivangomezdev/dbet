@@ -18,7 +18,7 @@ export const setUserData = async (token, setUser) => {
     const data = await response.json();
 
     
-    const dataForUser = data.userData.user;
+   
     console.log("Datos recibidos de /api/me:", data);
     setUser(data);
   } catch (err) {
