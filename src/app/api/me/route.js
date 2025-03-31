@@ -4,7 +4,7 @@ import {  getUserIdFromToken } from '@/lib/joseToken';
 import { Auth } from '@/models/auth';
 import { User } from '@/models/user';
 import { getServerSession } from 'next-auth';
-import { NextRequest, NextResponse } from 'next/server';
+import {  NextResponse } from 'next/server';
 
 
 export async function GET(request) {

@@ -4,7 +4,7 @@ import "./imageTextContainer.css";
 import PersonIcon from "@mui/icons-material/Person";
 import Link from "next/link";
 import FogEffect from "./ImageTextContainerPrueba"; // Assuming this is the correct import path
-import LightningEffect from "./Lightining";
+
 
 const ImageTextContainer = () => {
   return (

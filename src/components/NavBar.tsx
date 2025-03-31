@@ -18,8 +18,7 @@ import YouTubeIcon from "@mui/icons-material/YouTube";
 import "./navBar.css";
 import Link from "next/link";
 import { useCookies } from "react-cookie";
-import { useAtom } from "jotai";
-import { oAuthAtom } from "@/lib/atom";
+
 import { useSession } from "next-auth/react";
 
 const pages2 = [
@@ -37,7 +36,7 @@ function NavBar() {
     null
   );
   
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   console.log(session,"ES LA SESION");
   
   

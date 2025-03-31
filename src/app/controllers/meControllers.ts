@@ -19,6 +19,8 @@ export const editUser = async (data: UserData) => {
     { name, surname, email, phone, address },
     { where: { email }, returning: true } // Devuelve el registro actualizado
   );
+  console.log(_);
+  
   return updatedUser;
 
 };

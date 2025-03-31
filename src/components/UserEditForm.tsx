@@ -8,7 +8,7 @@ import { userAtom } from "@/lib/atom";
 import useUserData from "../app/controllers/userUserData";
 import Image from "next/image";
 import Link from "next/link";
-import { signOut, useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 
 interface UserEditFormProps {
   initialData?: {
@@ -46,6 +46,7 @@ export default function UserEditForm({
     address: "",
   });
 
+    console.log(_);
     
   const [initialFormData, setInitialFormData] = useState(formData);
 
@@ -116,6 +117,7 @@ export default function UserEditForm({
       setIsLoading(false); // Desactivar el loading pase lo que pase
     }
   };
+
 
   const handleCancel = () => {
     setFormData(initialFormData);

@@ -1,6 +1,4 @@
-import { useSetAtom } from "jotai";
-import { oAuthAtom } from "./atom";
-import { signToken } from "./joseToken";
+
 
 export const authOptions = {
   providers: [
@@ -33,7 +31,6 @@ export const authOptions = {
 
         console.log(`Usuario ${created ? 'creado' : 'encontrado'}:`, user.get('id'));
    
-        const myToken = await signToken(user.get("id"))
     
         return true;
       } catch (error) {
