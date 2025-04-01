@@ -9,7 +9,7 @@ const HowWorks = () => {
       
       title: "¿QUÉ ES EL MATCHED BETTING?",
       description:
-        "Cada año, los sitios de apuestas distribuyen millones de euros en bonos para incrementar las apuestas de sus usuarios. El Matched Betting (o Come Bonus) es una técnica matemática utilizada para convertir estos bonos en dinero real.",
+        "El Matched Betting (o Come Bonus) es una técnica matemática utilizada para convertir estos bonos (de las casas de apuestas) en dinero real.",
     },
     {
       src: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1742334433/Dise%C3%B1o_sin_t%C3%ADtulo__37_-removebg-preview_wzfouo.png",

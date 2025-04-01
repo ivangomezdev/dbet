@@ -1,140 +1,138 @@
-.card-container{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+.card-container {
+  display: grid;
+ grid-template-columns: 1fr 1fr;
+ row-gap: 60px;
+ column-gap: 100px;
 }
 
-@media (max-width:1030px){
-
-  .card-container {
-    display: grid !important;
-    grid-template-columns: 1fr 1fr !important;
-    gap: 80px;
-    
-  }
-
-}
-
-
-@media (max-width:760px){
-
-  .card-container {
- 
-    gap: 20px;
-    
-  }
-
-}
-
-
-@media (max-width:700px){
-
-  .card-container {
- grid-template-columns: 1fr !important;
-    
-  }
-
-}
+.card {
+  position: relative;
+  width: 380px;
+  height: 230px;
+  background: linear-gradient(220deg, rgba(0, 0, 0, 0.395) 45%, rgba(0, 0, 0, 0.573) 55%);
+  border-top: 2px solid #343434;
+  border-right: 1px solid rgba(255,255,255,0.65);
+  border-bottom: 2px solid #524e4e;
+  border-left: 1px solid rgba(255,255,255,0.48);
+  border-radius: 16px;
+  padding:10px;
+  overflow: hidden;
   
-  .card {
-    max-width: 320px;
-    height: 500px;
-    background-color: #fff;
-    border-radius: 16px;
+  display: flex;
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
 
-    display: flex;
+.side-bar {
+  padding: 16px;
+}
+
+.icon-container {
+  width: 36px;
+  height: 36px;
+  background-color: rgba(0, 255, 128, 0.1);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(0, 255, 128, 0.3);
+}
+
+.icon {
+  color: #00ff80;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.card-content {
+  flex: 1;
+  padding: 16px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-title {
+  font-size: 23px;
+  margin: 0;
+  font-weight: 500;
+}
+
+.card-description {
+  font-size: 15px;
+  margin-top: 4px;
+  padding: 5px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.center-square {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.card-registerBtn {
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  margin-top: auto;
+  transition: all 0.2s ease;
+}
+
+.card-registerBtn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.button-container {
+  margin-top: auto;
+}
+
+@media(max-width:993px){
+  .card-container {
    
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-    border: 8px solid #054F36;
+   row-gap: 60px;
+   column-gap: 30px;
   }
-  
-  .side-bar {
-    width: 40px;
-    background-color: #005d2565;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .gravity-text {
-    color: #fff;
-    font-weight: bold;
-    writing-mode: vertical-rl;
-    text-orientation: upright;
-    letter-spacing: 2px;
-    font-size: 14px;
-    transform: rotate(360deg);
-  }
-  
-  .card-content {
-    flex: 1;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .card-title {
-    font-size: 20px;
-    font-weight: bold;
-    margin: 0 0 15px 0;
-    color: #333;
-    text-align: center;
-  }
-  
-  .profile-image-container {
-    width: 90px;
-    height: 90px;
-    border-radius: 50%;
-    overflow: hidden;
-    background-color: #0a8a5f;
-    margin-bottom: 15px;
-  }
-  
-  .profile-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
- 
-  
-  .info-row {
-    width: 100%;
-    display: flex;
-    margin-bottom: 8px;
-    font-size: 14px;
-    align-items: center;
-  }
-  
-  .info-label {
-    font-weight: bold;
-    color: #333;
-    margin-right: 5px;
-  }
-  
-  .info-value {
-    color: #555;
-  }
-  
-  .seat-dob-separator {
-    margin-left: 20px;
-  }
+}
 
-  .card-description{
-    width: 200px;
-  }
-  
 
-  
-  .card-registerBtn{
-    background-color: #4bab72;
-    display: flex;
-    gap: 5px;
-  
-    border-radius: 5px;
-    font-weight: bold;
-    padding: 10px;
-    align-items: center;
-    color: white;
+
+@media(max-width:864px){
+  .card-container {
+  grid-template-columns: 1fr !important;
+
   }
+}
+
+
+
+
+@media(max-width:864px){
+  .card-container {
+  grid-template-columns: 1fr !important;
+
+  }
+}
+
+
+
+@media(max-width:432px){
+  .card {
+
+    width: 300px;
+    height: 300px;
+   
+  
+    
+
+
+  }
+}

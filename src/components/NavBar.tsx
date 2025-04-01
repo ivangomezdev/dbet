@@ -22,7 +22,6 @@ import { useCookies } from "react-cookie";
 import { useSession } from "next-auth/react";
 
 const pages2 = [
-  { name: "Cómo funciona", src: "/#howWorks" },
   { name: "Guías", src: "/guides" },
   { name: "Servicio Premium", src: "/premium" },
   { name: "Blog", src: "/blog" },

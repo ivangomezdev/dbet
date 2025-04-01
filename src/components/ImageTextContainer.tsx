@@ -17,8 +17,8 @@ const ImageTextContainer = () => {
           "https://res.cloudinary.com/dc5zbh38m/image/upload/v1743412711/jugador-futbol-americano-juego-accion-fondo-estadio-futbol_741910-17466-removebg-preview_qi1nwx.png"
         }
         alt=""
-        width={700}
-        height={600}
+        width={650}
+        height={550}
       />
       <div className="imageTextContainer__text">
         <div className="imageTextContainer__texts">

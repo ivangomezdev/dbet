@@ -1,7 +1,7 @@
 import React from "react";
 import AccordionTransition from "./Accordion";
 import "./faqs.css"
-
+import FAQ  from "./CarousellCompo";
 const Faqs = () => {
   const dataForAcordion = [
     {
@@ -61,9 +61,9 @@ const Faqs = () => {
   ];
   return (
     <div className="faqs__container" id="faqs">
-      <h1 className="faqs__title thirdline">Preguntas Frecuentes</h1>
-
-      <AccordionTransition data={dataForAcordion} />
+    
+    <FAQ/>
+    
     </div>
   );
 };

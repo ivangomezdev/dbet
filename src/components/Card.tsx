@@ -1,4 +1,5 @@
-import Image from "next/image";
+"use client"
+
 import "./card.css";
 import Link from "next/link";
 
@@ -17,36 +18,34 @@ interface CardProps {
 
 export default function Card({ cardContent }: CardProps) {
   return (
-    <div className="card-container">
-      {cardContent.map((i, index) => {
-        return (
-          <div key={index} className="card">
-            <div className="side-bar">
-              <div className="gravity-text">LOGO O NOMBRE</div>
-            </div>
-            <div className="card-content">
-              <h2 className="card-title">{i.title}</h2>
-
-              <div className="profile-image-container">
-                <Image
-                  src={i.src}
-                  alt={i.alt}
-                  width={150}
-                  height={150}
-                  className="profile-image"
-                />
-              </div>
-
-              <p className="card-description">{i.description}</p>
-
-              <div className="school-logo">
-                {i.buttonText ? <Link style={{textDecoration:"none"}} href={"/auth/register"}> <button style={{cursor:"pointer"}} className="card-registerBtn">{i.buttonText}</button> </Link> : <></>}
-                
-              </div>
+<div className="card-container">
+      {cardContent.map((card, index) => (
+        <div key={index} className="card">
+          <div className="side-bar">
+            <div className="icon-container">
+              <span className="icon">¿?</span>
             </div>
           </div>
-        );
-      })}
+          <div className="card-content">
+            <h2 className="card-title">{card.title}</h2>
+
+            <p className="card-description">{card.description}</p>
+
+            <div className="center-square"></div>
+
+            {card.buttonText && (
+              <div className="button-container">
+                <Link href="/auth/register" style={{ textDecoration: "none" }}>
+                  <button className="card-registerBtn">{card.buttonText}</button>
+                </Link>
+              </div>
+            )}
+          </div>
+        </div>
+      ))}
+
+      
     </div>
-  );
+  )
 }
+
