@@ -1,5 +1,5 @@
 "use client"
-import { useState } from "react";
+
 import "./CarousellComp.css"
 import AccordionTransition from "./Accordion";
 const FAQ = () => {
@@ -59,11 +59,8 @@ const FAQ = () => {
             "Estamos siempre disponibles para aclarar cualquier pregunta sobre nuestra plataforma o sobre el Matched Betting. Para cualquier pregunta sobre el matched betting o sobre Ninjabet, pueden escribirnos un email a info@ninjabet.es, contactarnos a través del chat de nuestro sitio o también escribirnos en el NinjaClub (el foro de NinjaBet).",
         },
       ];
-  const [activeIndex, setActiveIndex] = useState(null);
 
-  const toggleFAQ = (index) => {
-    setActiveIndex(activeIndex === index ? null : index);
-  };
+
 
   const faqs = [
     "Lorem ipsum dolor sit amet?",
