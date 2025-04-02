@@ -5,7 +5,8 @@ const API_KEY = '56d93ddeafadd00bb99a29d3914e2825';
 
 export async function GET(request: Request, { params }: { params: { tournamentId: string } }) {
   const { tournamentId } = params;
-
+    console.log(request);
+    
   try {
     const url = `https://api.oddspapi.io/api/v3.5/events?tournamentId=${tournamentId}&media=false&API-Key=${API_KEY}`;
     console.log(`Solicitando datos para tournamentId: ${tournamentId}`);
