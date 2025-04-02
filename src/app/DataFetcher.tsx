@@ -9,7 +9,7 @@ import {
   errorAtom,
   TournamentResponse,
   OddsResponse,
-  Event,
+  
 } from "../lib/atom";
 
 export default function DataFetcher() {
@@ -22,6 +22,8 @@ export default function DataFetcher() {
     1024, 155, 325, 18, 24, 34, 35, 679, 7, 480, 384, 498, 132,
   ];
 
+  console.log(tournamentsData);
+  
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -84,16 +86,18 @@ export default function DataFetcher() {
         const oddsResults: { eventId: string; odds: OddsResponse }[] = await Promise.all(
           oddsPromises
         );
+        console.log(oddsResults);
         console.log("Todas las odds cargadas:", oddsData);
       } catch (error: unknown) {
         const errorMessage = error instanceof Error ? error.message : "Error desconocido";
         console.error("Error en la carga de datos:", error);
         setError(errorMessage);
       } finally {
-        setLoading(false);
-      }
+          setLoading(false);
+        }
     };
-
+    
+    
     fetchData();
   }, [setTournamentsData, setOddsData, setLoading, setError]);
 
