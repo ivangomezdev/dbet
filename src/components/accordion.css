@@ -1,8 +1,9 @@
 .accordion__wrapper {
-    width: 90%;
-    margin: 0 auto;
-    padding-top: 10px; /* Elimina padding del contenedor */
-  }
+  width: 90%;
+  max-width: 600px; /* Ajusta un ancho máximo fijo */
+  margin: 0 auto;
+  padding-top: 10px;
+}
   
   .accordion__content {
     width: 100%;
@@ -11,13 +12,16 @@
   }
 
 
-  .accordion__content{
-    background-color: #033826 !important; /* Fondo verde */
-    position: relative !important; /* Para permitir pseudo-elementos o capas */
-    overflow: hidden; /* Evita desbordamiento */
+  .accordion__content {
+    width: 100%;
+    max-width: 100%; /* Evita que se expanda más allá de su contenedor */
+    margin: 0;
+    padding: 10px;
+    background-color: #033826 !important;
     color: white !important;
- 
+    transition: none !important; /* Elimina transiciones que puedan afectar el tamaño */
   }
+  
 
 
   @media(max-width:1030px){
@@ -39,7 +43,7 @@
   @media(max-width:591px){
     .accordion__wrapper {
       margin: 0 auto;
-      width: 400px !important;
+      width: 370px !important;
 
     }
   }
@@ -60,10 +64,19 @@
     }
   }
 
-  @media(max-width:350px){
+  @media(max-width:390px){
     .accordion__wrapper {
      
       width: 270px !important;
+
+    }
+  }
+
+
+  @media(max-width:366px){
+    .accordion__wrapper {
+     
+      width: 240px !important;
 
     }
   }

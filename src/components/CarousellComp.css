@@ -3,8 +3,8 @@
   }
   
   .faq_3 .container-block {
-    min-height: 75px;
-    height: fit-content;
+
+
     width: 100%;
     display: block;
     padding-top: 10px;
@@ -22,8 +22,7 @@
   }
   
   .faq_3 .responsive-container-block {
-    min-height: 75px;
-    height: fit-content;
+
     width: 100%;
     display: flex;
     flex-wrap: wrap;
@@ -74,7 +73,7 @@
   .faq_3 .responsive-container-block.faqheading-bg {
     background-image: url("https://res.cloudinary.com/dc5zbh38m/image/upload/v1743491222/blob-scene-haikei_3_ivr7aj.svg");
     background-size: cover;
-    height: 500px;
+    height: max-content;
     flex-direction: column;
     text-align: center;
     color: white;
@@ -89,6 +88,10 @@
     margin-right: 0px;
     margin-bottom: 28px;
     margin-left: 0px;
+    background: linear-gradient(to right, white 50%, #07E88A 60%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: bold;
   }
   
   .faq_3 .text-blk.faq-subhead {
@@ -364,5 +367,10 @@
       margin-right: 0px;
       margin-bottom: 100px;
       margin-left: 0px;
+     
     }
+
+   
+
   }
+

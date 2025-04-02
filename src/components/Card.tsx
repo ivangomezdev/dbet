@@ -31,8 +31,6 @@ export default function Card({ cardContent }: CardProps) {
 
             <p className="card-description">{card.description}</p>
 
-            <div className="center-square"></div>
-
             {card.buttonText && (
               <div className="button-container">
                 <Link href="/auth/register" style={{ textDecoration: "none" }}>

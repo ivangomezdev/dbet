@@ -8,8 +8,8 @@ import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
+import Button from "./Button"
 
-import PersonIcon from "@mui/icons-material/Person";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import TelegramIcon from "@mui/icons-material/Telegram";
@@ -148,17 +148,11 @@ function NavBar() {
           </Box>
           {cookies.token || session ? (
             <Link style={{ textDecoration: "none" }} href={"/me"}>
-              <button className="NavBar__RegisterBTN">
-                <PersonIcon />
-                USUARIO
-              </button>
+        <Button text={"USUARIO"}/>
             </Link>
           ) : (
             <Link style={{ textDecoration: "none" }} href={"/auth/register"}>
-              <button className="NavBar__RegisterBTN">
-                <PersonIcon />
-                REGÍSTRATE
-              </button>
+                   <Button text={"REGISTRO"}/>
             </Link>
           )}
           <div className="NavBar__SocialIcons">

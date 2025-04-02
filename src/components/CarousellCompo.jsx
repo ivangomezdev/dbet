@@ -79,15 +79,10 @@ const FAQ = () => {
              Lo mejor si tenes dudas acerca del matchbetting o sobre nosotros. en caso de no suplir tu duda podes contactarnos al correo
             </p>
 
-          </div>
-        </div>
-        <div className="responsive-container-block dropdown-container-wrapper">
-          <div className="responsive-container-block dropdown-container">
-          
               <AccordionTransition data={dataForAcordion} />
-          
           </div>
         </div>
+       
       </div>
     </div>
   );

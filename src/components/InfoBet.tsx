@@ -21,11 +21,13 @@ export default function InfoBet() {
           {/* Bonos */}
           <div className="feature-item">
             <div className="feature-text">
-              <div className="feature-number">
-                <div className="number-circle">1</div>
-              </div>
+
+              
               <div>
-                <h3>Bonos</h3>
+                
+              
+                <h3 > <span className="number-circle">2</span> Bonos</h3>
+              
                 <p>
                   Encuentra todos los bonos de bienvenida y promociones disponibles para nuevos usuarios de forma rápida
                   y sencilla. Compara las ofertas de las diferentes casas de apuestas y elige la mejor.
@@ -37,15 +39,15 @@ export default function InfoBet() {
                 <Image
                   src="https://res.cloudinary.com/dc5zbh38m/image/upload/v1742504453/bonoshome2_rj0quy.png"
                   alt="Bonos de bienvenida"
-                  width={250}
-                  height={150}
+                  width={220}
+                  height={130}
                   className="feature-image"
                 />
                 <Image
                   src="https://res.cloudinary.com/dc5zbh38m/image/upload/v1742504453/bonos-home_vjgtl4.png"
                   alt="Promociones"
-                  width={250}
-                  height={150}
+                  width={220}
+                  height={130}
                   className="feature-image"
                 />
               </div>
@@ -55,11 +57,10 @@ export default function InfoBet() {
           {/* Oddscrawler y Oddminer */}
           <div className="feature-item">
             <div className="feature-text">
-              <div className="feature-number">
-                <div className="number-circle">2</div>
-              </div>
+
               <div>
-                <h3>El Oddscrawler y El Oddminer</h3>
+             
+                <h3>  <span className="number-circle">2</span> El Oddscrawler y El Oddminer</h3>
                 <p>
                   Utiliza nuestras herramientas de comparación de cuotas para encontrar las mejores oportunidades de
                   valor en el mercado. Te permite ver las cuotas de diferentes casas de apuestas para un mismo evento y
@@ -71,8 +72,8 @@ export default function InfoBet() {
               <Image
                 src="https://res.cloudinary.com/dc5zbh38m/image/upload/v1742504530/oddsmatcher-home_kgou3x.png"
                 alt="Comparador de cuotas"
-                width={530}
-                height={150}
+                width={430}
+                height={130}
                 className="feature-image-quotes"
                 style={{border:"none"}}
               />
@@ -82,11 +83,12 @@ export default function InfoBet() {
           {/* Calculadora y Multiplicador */}
           <div className="feature-item">
             <div className="feature-text">
-              <div className="feature-number">
-                <div className="number-circle">3</div>
-              </div>
+
+         
+         
               <div>
-                <h3>El Calculador y El Multiplicador</h3>
+            
+                  <h3> <span className="number-circle">2</span>  El Calculador y El Multiplicador</h3>
                 <p>
                   Optimiza tus apuestas y calcula el valor de tus cuotas utilizando nuestra calculadora de apuestas
                   avanzada. Perfecto para el lay y hedge betting para obtener ganancias garantizadas.
@@ -97,8 +99,8 @@ export default function InfoBet() {
               <Image
                 src="https://res.cloudinary.com/dc5zbh38m/image/upload/v1742504530/calculador-home_walwvi.png"
                 alt="Calculadora de apuestas"
-                width={300}
-                height={150}
+                width={220}
+                height={130}
                 className="feature-image"
                   style={{border:"none"}}
               />
@@ -108,11 +110,11 @@ export default function InfoBet() {
           {/* Profit Tracker */}
           <div className="feature-item">
             <div className="feature-text">
-              <div className="feature-number">
-                <div className="number-circle">4</div>
-              </div>
+
+              
+       
               <div>
-                <h3>El Profit Tracker</h3>
+                <h3> <span className="number-circle">2</span> El Profit Tracker</h3>
                 <p>
                   Controla tus ganancias y mantén un registro detallado de todas tus apuestas. Analiza tus resultados y
                   mejora tu estrategia con el seguimiento de tus ganancias y pérdidas en tiempo real.
@@ -123,8 +125,8 @@ export default function InfoBet() {
               <Image
                 src="https://res.cloudinary.com/dc5zbh38m/image/upload/v1742504528/profit-tracker-ninjabet-es_f1tyg0.png"
                 alt="Seguimiento de ganancias"
-                width={300}
-                height={150}
+                width={220}
+                height={130}
                 className="feature-image"
                 style={{border:"none"}}
               />
