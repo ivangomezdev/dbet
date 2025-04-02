@@ -1,16 +1,16 @@
 import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server'; // Importamos el tipo correcto para request
 
-// Definimos las constantes fuera de la función
 const API_KEY = '56d93ddeafadd00bb99a29d3914e2825';
 const BOOKMAKERS =
   'bet365,pokerstars.es,paf.es,marcaapuestas,leovegas.es,winamax.es,bwin.es,interwetten,betway,tonybet,betfair-ex';
 
-// Tipamos explícitamente el handler GET según la App Router
+// Usamos NextRequest y tipamos params como un objeto dinámico
 export async function GET(
-  request: Request,
-  context: { params: { eventId: string } }
+  request: NextRequest,
+  { params }: { params: { eventId: string } } // Mantenemos params específico para eventId
 ) {
-  const { eventId } = context.params;
+  const { eventId } = params;
     console.log(request);
     
   try {
