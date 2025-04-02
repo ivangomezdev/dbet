@@ -1,13 +1,18 @@
-// app/api/odds/[eventId]/route.ts
 import { NextResponse } from 'next/server';
 
+// Definimos las constantes fuera de la función
 const API_KEY = '56d93ddeafadd00bb99a29d3914e2825';
 const BOOKMAKERS =
   'bet365,pokerstars.es,paf.es,marcaapuestas,leovegas.es,winamax.es,bwin.es,interwetten,betway,tonybet,betfair-ex';
 
-export async function GET(request: Request, { params }: { params: { eventId: string } }) {
-  const { eventId } = params;
-
+// Tipamos explícitamente el handler GET según la App Router
+export async function GET(
+  request: Request,
+  context: { params: { eventId: string } }
+) {
+  const { eventId } = context.params;
+    console.log(request);
+    
   try {
     const url = `https://api.oddspapi.io/api/v3.5/odds?eventId=${eventId}&bookmakers=${BOOKMAKERS}&API-Key=${API_KEY}`;
     console.log(`Solicitando odds para eventId: ${eventId}`);
