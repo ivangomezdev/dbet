@@ -1,16 +1,24 @@
-// app/api/tournaments/[tournamentId]/route.ts
 import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
 
 const API_KEY = '56d93ddeafadd00bb99a29d3914e2825';
 
-export async function GET(request: Request, { params }: { params: { tournamentId: string } }) {
-  const { tournamentId } = params;
-    console.log(request);
-    
+export async function GET(request: NextRequest) {
+  // Extraemos el tournamentId de la URL
+  const url = new URL(request.url);
+  const tournamentId = url.pathname.split('/').pop(); // Obtiene el último segmento de la ruta
+
+  if (!tournamentId) {
+    return NextResponse.json(
+      { error: 'No se proporcionó tournamentId en la URL' },
+      { status: 400 }
+    );
+  }
+
   try {
-    const url = `https://api.oddspapi.io/api/v3.5/events?tournamentId=${tournamentId}&media=false&API-Key=${API_KEY}`;
+    const apiUrl = `https://api.oddspapi.io/api/v3.5/events?tournamentId=${tournamentId}&media=false&API-Key=${API_KEY}`;
     console.log(`Solicitando datos para tournamentId: ${tournamentId}`);
-    const response = await fetch(url);
+    const response = await fetch(apiUrl);
 
     if (!response.ok) {
       return NextResponse.json(
