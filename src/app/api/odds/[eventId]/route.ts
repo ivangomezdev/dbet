@@ -1,22 +1,27 @@
 import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server'; // Importamos el tipo correcto para request
+import type { NextRequest } from 'next/server';
 
 const API_KEY = '56d93ddeafadd00bb99a29d3914e2825';
 const BOOKMAKERS =
   'bet365,pokerstars.es,paf.es,marcaapuestas,leovegas.es,winamax.es,bwin.es,interwetten,betway,tonybet,betfair-ex';
 
-// Usamos NextRequest y tipamos params como un objeto dinámico
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { eventId: string } } // Mantenemos params específico para eventId
-) {
-  const { eventId } = params;
-    console.log(request);
-    
+// Solo usamos request para obtener el eventId de la URL
+export async function GET(request: NextRequest) {
+  // Extraemos el eventId de la URL
+  const url = new URL(request.url);
+  const eventId = url.pathname.split('/').pop(); // Obtiene el último segmento de la ruta
+
+  if (!eventId) {
+    return NextResponse.json(
+      { error: 'No se proporcionó eventId en la URL' },
+      { status: 400 }
+    );
+  }
+
   try {
-    const url = `https://api.oddspapi.io/api/v3.5/odds?eventId=${eventId}&bookmakers=${BOOKMAKERS}&API-Key=${API_KEY}`;
+    const apiUrl = `https://api.oddspapi.io/api/v3.5/odds?eventId=${eventId}&bookmakers=${BOOKMAKERS}&API-Key=${API_KEY}`;
     console.log(`Solicitando odds para eventId: ${eventId}`);
-    const response = await fetch(url);
+    const response = await fetch(apiUrl);
 
     if (!response.ok) {
       return NextResponse.json(
