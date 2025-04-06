@@ -13,13 +13,15 @@ const Page = () => {
     const { data: session, status } = useSession();
     const [cookies] = useCookies(["token"]); // Leer las cookies
     const router = useRouter();
-  
+
     
     useEffect(() => {
       if (status === "loading") return;
-  
+      
       if (status === "authenticated" || cookies.token) {
         router.push("/me");
+        console.log(session);
+        
       }
     }, [status, cookies.token, router]);
   return (

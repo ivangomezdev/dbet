@@ -33,6 +33,8 @@ export default function ChooseSubscriptionPlan({ cardsData, onPlanSelect }: Subs
     onPlanSelect(planName);
 
     if (planName === "FREE") {
+      console.log(status);
+      
       Swal.fire({
         title: "Confirmar plan",
         text: "¿Estás seguro de que quieres adquirir este plan?",

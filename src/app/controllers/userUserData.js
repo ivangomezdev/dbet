@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import { useSession, signIn } from "next-auth/react";
-import { getToken } from "next-auth/jwt"; // Para obtener el token en el cliente
+import { useSession } from "next-auth/react";
+
 
 export const setUserData = async (token, setUser) => {
   try {
