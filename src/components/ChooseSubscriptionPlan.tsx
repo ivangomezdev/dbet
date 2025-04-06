@@ -100,7 +100,7 @@ export default function ChooseSubscriptionPlan({ cardsData, onPlanSelect }: Subs
               Swal.fire("Error", error.message, "error");
             }
           } catch (error) {
-            Swal.fire("Error", error.message || "Hubo un problema al procesar el pago", "error");
+            Swal.fire("Hubo un problema al procesar el pago", "error");
             console.error("Error al procesar el pago:", error);
           }
         } else if (result.dismiss === Swal.DismissReason.cancel) {
