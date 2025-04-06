@@ -5,15 +5,15 @@ import { collection, onSnapshot } from "firebase/firestore";
 
 
 // Átomos sin tipos
-const tournamentsDataAtom = atom([]);
-const oddsDataAtom = atom({});
-const loadingAtom = atom(true);
-const errorAtom = atom(null);
-const userAtom = atom(null);
-const oAuthAtom = atom(null);
+export const tournamentsDataAtom = atom([]);
+export const oddsDataAtom = atom({});
+export const loadingAtom = atom(true);
+export const errorAtom = atom(null);
+export const userAtom = atom(null);
+export const oAuthAtom = atom(null);
 
 // Función para cargar datos de Firebase
-const fetchDataFromFirebase = (set) => {
+export const fetchDataFromFirebase = (set) => {
   try {
     // Escuchar cambios en la colección 'tournaments'
     const tournamentsRef = collection(db, "tournaments");
@@ -43,15 +43,4 @@ const fetchDataFromFirebase = (set) => {
     set(errorAtom, err instanceof Error ? err.message : "Error desconocido");
     set(loadingAtom, false);
   }
-};
-
-// Exportaciones
-module.exports = {
-  tournamentsDataAtom,
-  oddsDataAtom,
-  loadingAtom,
-  errorAtom,
-  userAtom,
-  oAuthAtom,
-  fetchDataFromFirebase,
 };
