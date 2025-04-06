@@ -10,31 +10,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { signOut } from "next-auth/react";
 
-interface UserEditFormProps {
-  initialData?: {
-    firstName?: string;
-    lastName?: string;
-    email?: string;
-    phone?: string;
-    phoneType?: string;
-    organization?: string;
-    department?: string;
-    profileImage?: string;
-    bannerImage?: string;
-  };
-  onSubmit?: (data: any) => void;
-  onCancel?: () => void;
-}
-
 export default function UserEditForm({
   initialData = {},
   onSubmit = () => {},
   onCancel = () => {},
-}: UserEditFormProps) {
+}) {
   const [phoneType, setPhoneType] = useState(initialData.phoneType || "Mobile");
   const [showPhoneDropdown, setShowPhoneDropdown] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const [isLoading, setIsLoading] = useState(false); // Nuevo estado para el loading
+  const [isLoading, setIsLoading] = useState(false);
   const [cookie, _, removeCookie] = useCookies(["token"]);
   const [user, setUser] = useAtom(userAtom);
   const router = useRouter();
@@ -46,11 +30,10 @@ export default function UserEditForm({
     address: "",
   });
 
-    console.log(_);
-    
+  console.log(_);
+
   const [initialFormData, setInitialFormData] = useState(formData);
 
-  
   useUserData(cookie, setUser, router);
 
   useEffect(() => {
@@ -68,7 +51,7 @@ export default function UserEditForm({
     }
   }, [user]);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -76,14 +59,14 @@ export default function UserEditForm({
     }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!isEditing) {
       setIsEditing(true);
       return;
     }
 
-    setIsLoading(true); // Activar el loading
+    setIsLoading(true);
 
     const updatedData = {
       ...formData,
@@ -114,10 +97,9 @@ export default function UserEditForm({
     } catch (err) {
       console.log("Error en el fetch:", err);
     } finally {
-      setIsLoading(false); // Desactivar el loading pase lo que pase
+      setIsLoading(false);
     }
   };
-
 
   const handleCancel = () => {
     setFormData(initialFormData);
@@ -127,7 +109,7 @@ export default function UserEditForm({
 
   const handleSession = () => {
     removeCookie("token", { path: "/" });
-    signOut({ callbackUrl: '/auth/register' });
+    signOut({ callbackUrl: "/auth/register" });
     console.log("Deslogueado correctamente");
     setUser(null);
     router.push("/auth/register");
@@ -154,9 +136,7 @@ export default function UserEditForm({
           <div className="user-edit-form__profile-container">
             <div className="user-edit-form__profile">
               <Image
-                src={
-                  "https://res.cloudinary.com/dc5zbh38m/image/upload/v1742308305/spain_xcufym.png"
-                }
+                src="https://res.cloudinary.com/dc5zbh38m/image/upload/v1742308305/spain_xcufym.png"
                 alt="Profile"
                 width={150}
                 height={150}
@@ -295,7 +275,7 @@ export default function UserEditForm({
               <button
                 type="submit"
                 className="user-edit-form__button user-edit-form__button--primary"
-                disabled={isLoading} // Deshabilitar botón mientras carga
+                disabled={isLoading}
               >
                 {isEditing ? "Guardar Cambios" : "Editar"}
               </button>
@@ -308,7 +288,7 @@ export default function UserEditForm({
                 type="button"
                 className="user-edit-form__button user-edit-form__button--secondary"
                 onClick={handleCancel}
-                disabled={isLoading} // Deshabilitar Cancelar mientras carga
+                disabled={isLoading}
               >
                 Cancelar
               </button>
