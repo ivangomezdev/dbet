@@ -26,6 +26,7 @@ const pages2 = [
   { name: "Servicio Premium", src: "/premium" },
   { name: "Blog", src: "/blog" },
   { name: "Bonos", src: "/bonos" },
+  { name: "OddsMatcher", src: "/prueba" },
 ];
 function NavBar() {
 

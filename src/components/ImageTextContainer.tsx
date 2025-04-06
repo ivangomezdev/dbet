@@ -10,7 +10,7 @@ const ImageTextContainer = () => {
   return (
     <div className="imageTextContainer__cont">
       {/* FogEffect is now inside the container */}
-      <FogEffect />
+
       <Image
         className="imageTextContainer__img"
         src={
