@@ -130,6 +130,14 @@ export default function DataDisplay() {
               return;
             }
 
+            // Verificar si betfair-ex existe y tiene precio
+            if (!data?.bookmakers?.["betfair-ex"]?.price) {
+              console.log(
+                `No hay betfair-ex para ${bookmaker} en el evento ${event.eventId}`
+              );
+              return;
+            }
+
             const eventName =
               `${event.participant1} vs ${event.participant2}`.toLowerCase();
             const sportType = sportImages.footballIds.includes(
@@ -156,8 +164,8 @@ export default function DataDisplay() {
               apuesta: name,
               rating: fullTimeResult.payouts?.[bookmaker] || "-",
               favor: data.bookmakers[bookmaker].price,
-              contra: data.bookmakers["betfair-ex"]?.price || "-",
-              liquidez: data.bookmakers["betfair-ex"]?.limit || "-gallery",
+              contra: data.bookmakers["betfair-ex"].price,
+              liquidez: data.bookmakers["betfair-ex"].limit || "-gallery",
               sportType,
             });
           });
@@ -329,7 +337,7 @@ export default function DataDisplay() {
                             width={80}
                             height={80}
                             style={{ objectFit: "contain" }}
-                          />
+                            />
                         </td>
                         <td>{formatPrice(contra)}</td>
                         <td>{formatPrice(liquidez)}</td>
