@@ -1,7 +1,8 @@
 // lib/atom.js
-const { atom } = require("jotai");
-const { db } = require("../lib/firebase"); 
-const { collection, onSnapshot } = require("firebase/firestore");
+import { atom } from "jotai";
+import { db } from "../lib/firebase";
+import { collection, onSnapshot } from "firebase/firestore";
+
 
 // Átomos sin tipos
 const tournamentsDataAtom = atom([]);

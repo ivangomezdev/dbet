@@ -344,7 +344,7 @@ export default function DataDisplay() {
             <button
               onClick={goToPreviousPage}
               disabled={currentPage === 1}
-              style={{ marginRight: "10px", padding: "5px 10px" }}
+              style={{backgroundColor:"rgba(12, 187, 91, 0.497)", color:"white", marginRight: "10px", padding: "5px 10px" }}
             >
               Anterior
             </button>
@@ -354,7 +354,7 @@ export default function DataDisplay() {
             <button
               onClick={goToNextPage}
               disabled={currentPage === totalPages}
-              style={{ marginLeft: "10px", padding: "5px 10px" }}
+              style={{ backgroundColor:"rgba(12, 187, 91, 0.497)", color:"white", marginLeft: "10px", padding: "5px 10px" }}
             >
               Siguiente
             </button>

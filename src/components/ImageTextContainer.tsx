@@ -3,7 +3,7 @@ import React from "react";
 import "./imageTextContainer.css";
 import PersonIcon from "@mui/icons-material/Person";
 import Link from "next/link";
-import FogEffect from "./ImageTextContainerPrueba"; // Assuming this is the correct import path
+
 
 
 const ImageTextContainer = () => {
