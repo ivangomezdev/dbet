@@ -1,58 +1,43 @@
+import { getServerSession } from "next-auth";
+import { getUserIdFromToken } from "@/lib/joseToken";
+import { User } from "@/models/user";
+import { authOptions } from "@/lib/authOptions";
 
-
-export const authOptions = {
-  providers: [
-    GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    }),
-  ],
-  callbacks: {
-    async signIn({ profile }) {
-      console.log("Perfil de Google recibido:", profile);
-      
-      if (!profile?.email) {
-        console.error("No se recibió correo electrónico");
-        return false;
-      }
-
-      try {
-        // Guardar sesión en DB
-        const [user, created] = await User.findOrCreate({
-          where: { email: profile.email },
-          defaults: {
-            email: profile.email,
-            name: profile.given_name || null,
-            surname: profile.family_name || null,
-            password: null,
-            subscriptionStatus: "inactive"
-          }
-        });
-
-        console.log(`Usuario ${created ? 'creado' : 'encontrado'}:`, user.get('id'));
-   
-    
-        return true;
-      } catch (error) {
-        console.error("Error detallado en OAuth signin:", error);
-        // Registra el error completo para debugging
-        return false;
-      }
-    },
-    // Resto de tu configuración...
-  },
-  events: {
-    // Añade manejo de eventos para más información
-    async signIn(message) {
-      console.log("Evento de inicio de sesión:", message);
-    },
-    async error(message) {
-      console.error("Evento de error de autenticación:", message);
+export async function getAuthenticatedUser(request) {
+  console.log("Iniciando getAuthenticatedUser");
+  try {
+    // Verificar sesión de NextAuth
+    console.log("Obteniendo sesión de NextAuth");
+    const session = await getServerSession(authOptions);
+    console.log("Sesión obtenida:", session);
+    if (session?.user?.id) {
+      console.log("Buscando usuario por ID:", session.user.id);
+      const user = await User.findOne({ where: { id: session.user.id } });
+      console.log("Usuario encontrado por sesión:", user);
+      if (user) return user;
     }
-  },
-  // Configura páginas de error personalizada
-  pages: {
-    signIn: '/me',
-    error: '/auth/register'
+
+    // Verificar token JOSE
+    console.log("Verificando token JOSE");
+    const authHeader = request.headers.get("authorization");
+    console.log("Authorization header:", authHeader);
+    if (authHeader?.startsWith("Bearer ")) {
+      const token = authHeader.split(" ")[1];
+      console.log("Token extraído:", token);
+      const userByToken = await getUserIdFromToken(token);
+      console.log("Resultado de getUserIdFromToken:", userByToken);
+      if (userByToken?.userId?.email) {
+        console.log("Buscando usuario por email:", userByToken.userId.email);
+        const user = await User.findOne({ where: { email: userByToken.userId.email } });
+        console.log("Usuario encontrado por token:", user);
+        if (user) return user;
+      }
+    }
+
+    console.log("No se encontró usuario autenticado");
+    return null;
+  } catch (error) {
+    console.error("Error en getAuthenticatedUser:", error);
+    throw error;
   }
-};
+}

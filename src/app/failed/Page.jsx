@@ -37,7 +37,7 @@ export default function Failed() {
           <h1>Pago erroneo!</h1>
           <p>Tu transacción tuvo un error, contacta con la entidad emisora de tu tarjeta o cambia el medio de pago.</p>
 
-          <button className="goTo__button" onClick={() => router.push("/register")}>
+          <button className="goTo__button" onClick={() => router.push("/auth/register")}>
             Volver
           </button>
         </div>

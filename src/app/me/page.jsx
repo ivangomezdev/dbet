@@ -27,7 +27,8 @@ const Page = () => {
   const [cookies] = useCookies(["token"]); // Leer las cookies
   const router = useRouter();
 
-
+  console.log(status);
+  
   useEffect(() => {
     if (status === "loading") return;
 

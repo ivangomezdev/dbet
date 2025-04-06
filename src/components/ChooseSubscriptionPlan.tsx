@@ -4,6 +4,7 @@ import "./subscriptionCard.css";
 import Swal from "sweetalert2";
 import { loadStripe } from "@stripe/stripe-js";
 import { STRIPE_PUBLISHABLE_KEY } from "@/lib/stripe";
+import { useSession } from "next-auth/react"; // Importar useSession
 
 const stripePromise = loadStripe(STRIPE_PUBLISHABLE_KEY);
 
@@ -26,6 +27,7 @@ interface CardData {
 
 export default function ChooseSubscriptionPlan({ cardsData, onPlanSelect }: SubscriptionCardProps) {
   const router = useRouter();
+  const { data: session, status } = useSession(); // Obtener la sesión de NextAuth
 
   const handleButtonClick = async (planName: string) => {
     onPlanSelect(planName);
@@ -58,17 +60,33 @@ export default function ChooseSubscriptionPlan({ cardsData, onPlanSelect }: Subs
       }).then(async (result) => {
         if (result.isConfirmed) {
           try {
-            const token = document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1];
-            if (!token) throw new Error("No se encontró el token de autenticación");
+            // Intentar obtener el token JOSE de las cookies
+            const token = document.cookie
+              .split("; ")
+              .find((row) => row.startsWith("token="))
+              ?.split("=")[1];
+
+            // Configurar los headers según el método de autenticación
+            const headers: Record<string, string> = {
+              "Content-Type": "application/json",
+            };
+            if (token) {
+              headers["Authorization"] = `Bearer ${token}`; // JOSE
+            } else if (!session) {
+              throw new Error("No estás autenticado");
+            }
+            // Si hay sesión de NextAuth, no necesitamos enviar token; el backend lo manejará
 
             const response = await fetch("/api/create-checkout-session", {
               method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-              },
+              headers,
               body: JSON.stringify({ planName }),
             });
+
+            if (!response.ok) {
+              const errorData = await response.json();
+              throw new Error(errorData.error || "Error al procesar el pago");
+            }
 
             const { sessionId } = await response.json();
             const stripe = await stripePromise;
@@ -80,8 +98,8 @@ export default function ChooseSubscriptionPlan({ cardsData, onPlanSelect }: Subs
               Swal.fire("Error", error.message, "error");
             }
           } catch (error) {
-            Swal.fire("Error", "Hubo un problema al procesar el pago", "error");
-            console.error(error);
+            Swal.fire("Error", error.message || "Hubo un problema al procesar el pago", "error");
+            console.error("Error al procesar el pago:", error);
           }
         } else if (result.dismiss === Swal.DismissReason.cancel) {
           Swal.fire("Cancelado", "La elección ha sido cancelada.", "error");
@@ -131,7 +149,7 @@ export default function ChooseSubscriptionPlan({ cardsData, onPlanSelect }: Subs
                     className="btn btn-premium"
                     onClick={() => handleButtonClick(card.planType)}
                   >
-                    {card.buttonTextSpain} {/* Solo un botón para FREE */}
+                    {card.buttonTextSpain}
                   </button>
                 ) : (
                   <>

@@ -1,60 +1,74 @@
 import { NextResponse, NextRequest } from "next/server";
 import { verifyToken } from "./src/lib/joseToken";
-import { JWTPayload } from "jose";
-import { getSession } from "next-auth/react"; // O la importación correcta según tu versión de NextAuth
-import type { Session } from "next-auth";
-import type { IncomingMessage } from "http";
+import { getServerSession } from "next-auth";
+import { authOptions } from "./src/lib/authOptions"; // Asegúrate de que la ruta sea correcta
 
 export async function middleware(request: NextRequest) {
-  // Obtener el token del encabezado Authorization (para JOSE)
-  const header = request.headers;
-  const token = header.get("Authorization")?.replace("Bearer ", "");
+  const { pathname } = request.nextUrl;
 
+  // Obtener el token JOSE del encabezado Authorization
+  const token = request.headers.get("Authorization")?.replace("Bearer ", "");
+
+  // Obtener la sesión de NextAuth
+  const session = await getServerSession(authOptions);
+
+  // Verificar autenticación
+  let isAuthenticated = false;
   let userId: string | null = null;
 
-  // 1. Verificar token JOSE si existe
+  // 1. Verificar token JOSE
   if (token) {
     try {
-      const verifiedToken = (await verifyToken(token)) as JWTPayload & { userId?: string };
-      userId = verifiedToken?.userId ?? null;
-
+      const verifiedToken = await verifyToken(token);
+      userId = session.user.id as string;
       if (userId) {
-        const requestHeaders = new Headers(request.headers);
-        requestHeaders.set("x-user-id", userId);
-        return NextResponse.next({
-          request: {
-            headers: requestHeaders,
-          },
-        });
+        isAuthenticated = true;
       }
     } catch (error) {
       console.error("Error verificando token JOSE:", error);
     }
   }
 
-  // 2. Si no hay token JOSE o falla, intentar con la sesión de NextAuth
-  try {
-    const session = (await getSession({ req: { headers: Object.fromEntries(request.headers.entries()) } as IncomingMessage })) as Session | null;
-    if (session && session.user && "id" in session.user) {
-      userId = session.user.id as string;
-
-      const requestHeaders = new Headers(request.headers);
-      requestHeaders.set("x-user-id", userId);
-      return NextResponse.next({
-        request: {
-          headers: requestHeaders,
-        },
-      });
-    }
-  } catch (error) {
-    console.error("Error obteniendo sesión de NextAuth:", error);
+  // 2. Verificar sesión de NextAuth
+  if (session && session.user && session.user.id) {
+    userId = session.user.id;
+    isAuthenticated = true;
   }
 
-  // 3. Si no hay ni token JOSE ni sesión válida, denegar acceso
-  return NextResponse.json({ error: "No autorizado" }, { status: 401 });
+  // Definir rutas públicas y protegidas
+  const publicPaths = ["/auth/register", "/auth/signin"];
+  const protectedPaths = ["/me"];
+  const isPublicPath = publicPaths.includes(pathname);
+  const isProtectedPath = protectedPaths.includes(pathname);
+
+  // Redirigir si está autenticado y accede a una ruta pública
+  if (isAuthenticated && isPublicPath) {
+    console.log(`Usuario autenticado (${userId}) intentó acceder a ${pathname}, redirigiendo a /me`);
+    return NextResponse.redirect(new URL("/me", request.url));
+  }
+
+  // Redirigir si no está autenticado y accede a una ruta protegida
+  if (!isAuthenticated && isProtectedPath) {
+    console.log(`Usuario no autenticado intentó acceder a ${pathname}, redirigiendo a /auth/register`);
+    return NextResponse.redirect(new URL("/auth/register", request.url));
+  }
+
+  // Si está autenticado, agregar el userId al header para rutas API
+  if (isAuthenticated && pathname.startsWith("/api/me")) {
+    const requestHeaders = new Headers(request.headers);
+    requestHeaders.set("x-user-id", userId as string);
+    return NextResponse.next({
+      request: {
+        headers: requestHeaders,
+      },
+    });
+  }
+
+  // Continuar con la solicitud si no hay redirección
+  return NextResponse.next();
 }
 
 // Configuración para aplicar el middleware a rutas específicas
 export const config = {
-  matcher: ["/api/me/:path*"],
+  matcher: ["/auth/register", "/auth/signin", "/me", "/api/me/:path*"],
 };

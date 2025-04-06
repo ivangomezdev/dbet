@@ -1,31 +1,23 @@
 import { NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
-import { getUserIdFromToken } from "@/lib/joseToken";
+import { getAuthenticatedUser } from "@/lib/auth"; // Importamos la función unificada
 import { User } from "@/models/user";
 import { Subscription } from "@/models/subscription";
 
 export async function POST(request) {
   try {
     console.log("Iniciando POST /api/create-checkout-session");
+
+    // Sincronizar modelos (si es necesario, aunque podrías mover esto a un inicio global)
     await User.sync({ alter: true });
     await Subscription.sync({ alter: true });
 
-    const authHeader = request.headers.get("authorization");
-    console.log("Authorization header recibido:", authHeader);
+    // Obtener el usuario autenticado (soporta NextAuth y JOSE)
+    const user = await getAuthenticatedUser(request);
+    console.log("Usuario autenticado:", user);
 
-    if (!authHeader || !authHeader.startsWith("Bearer ")) {
-      return NextResponse.json({ error: "No token provided" }, { status: 401 });
-    }
-
-    const token = authHeader.split(" ")[1];
-    console.log("Token extraído:", token);
-
-    const tokenData = await getUserIdFromToken(token);
-    console.log("Resultado de getUserIdFromToken:", tokenData);
-
-    const user = tokenData?.userId;
     if (!user || !user.id) {
-      return NextResponse.json({ error: "Invalid token or user not found" }, { status: 401 });
+      return NextResponse.json({ error: "No autenticado o usuario no encontrado" }, { status: 401 });
     }
 
     const body = await request.json();
@@ -39,10 +31,10 @@ export async function POST(request) {
       priceId = "price_1R8B1qQO2yiuJACCAZYkd1tn"; // Tu Price ID real
       subscriptionStatus = "MONTHLY";
     } else if (planName === "PREMIUM ANUAL") {
-      priceId = "price_1R8B1qQO2yiuJACCAZYkd1tn"; // Tu Price ID real
+      priceId = "price_1R8B1qQO2yiuJACCAZYkd1tn"; // Tu Price ID real (parece que usaste el mismo, ajusta si es diferente)
       subscriptionStatus = "YEAR";
     } else {
-      return NextResponse.json({ error: "Invalid plan" }, { status: 400 });
+      return NextResponse.json({ error: "Plan no válido" }, { status: 400 });
     }
     console.log("Price ID:", priceId);
 
@@ -59,6 +51,9 @@ export async function POST(request) {
     return NextResponse.json({ sessionId: session.id });
   } catch (error) {
     console.error("Error en /api/create-checkout-session:", error);
-    return NextResponse.json({ error: "Internal Server Error", details: error.message }, { status: 500 });
+    return NextResponse.json(
+      { error: "Internal Server Error", details: error.message },
+      { status: 500 }
+    );
   }
 }

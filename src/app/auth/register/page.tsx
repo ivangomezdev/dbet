@@ -1,10 +1,27 @@
+"use client"
 import NavBar from '@/components/NavBar'
 import SignupForm from '@/components/SingUpForm'
-import React from 'react'
+import React, { useEffect } from 'react'
 import "./register.css"
 import Footer from '@/components/Footer'
+import { useRouter } from 'next/navigation'
+import { useCookies } from 'react-cookie'
+import { useSession } from 'next-auth/react'
 
 const Page = () => {
+  
+    const { data: session, status } = useSession();
+    const [cookies] = useCookies(["token"]); // Leer las cookies
+    const router = useRouter();
+  
+    
+    useEffect(() => {
+      if (status === "loading") return;
+  
+      if (status === "authenticated" || cookies.token) {
+        router.push("/me");
+      }
+    }, [status, cookies.token, router]);
   return (
     <>
       <header>

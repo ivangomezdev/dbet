@@ -201,7 +201,7 @@ export default function UserEditForm({
                 id="phone"
                 name="phone"
                 className="user-edit-form__input user-edit-form__input--phone"
-                value={formData.phone || "Cargando..."}
+                value={formData.phone}
                 onChange={handleInputChange}
                 placeholder="Phone number"
                 disabled={!isEditing}
@@ -263,7 +263,7 @@ export default function UserEditForm({
               id="address"
               name="address"
               className="user-edit-form__input"
-              value={formData.address || "Cargando..."}
+              value={formData.address}
               onChange={handleInputChange}
               placeholder="Address"
               disabled={!isEditing}

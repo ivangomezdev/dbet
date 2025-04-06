@@ -1,5 +1,6 @@
 import { useEffect } from "react";
-import { useSession } from "next-auth/react"; // Para obtener la sesión en el cliente
+import { useSession, signIn } from "next-auth/react";
+import { getToken } from "next-auth/jwt"; // Para obtener el token en el cliente
 
 export const setUserData = async (token, setUser) => {
   try {
@@ -7,7 +8,7 @@ export const setUserData = async (token, setUser) => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        ...(token && { Authorization: `Bearer ${token}` }), // Solo añade el header si hay token
+        ...(token && { Authorization: `Bearer ${token}` }),
       },
     });
 
@@ -16,37 +17,64 @@ export const setUserData = async (token, setUser) => {
     }
 
     const data = await response.json();
-
-    
-   
-    console.log("Datos recibidos de /api/me:", data);
-    setUser(data);
+    setUser(data.userData);
   } catch (err) {
     console.log("Error en GET /me:", err);
     throw err;
   }
 };
 
+// Nueva función para solicitudes autenticadas
+export const editUserData = async (token, data) => {
+  const response = await fetch("/api/me", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      ...(token && { Authorization: `Bearer ${token}` }),
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (!response.ok) {
+    throw new Error("Error al editar datos");
+  }
+
+  return await response.json();
+};
+
+export const editSubscriptionData = async (token, data) => {
+  const response = await fetch("/api/me/subscription", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      ...(token && { Authorization: `Bearer ${token}` }),
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (!response.ok) {
+    throw new Error("Error al editar suscripción");
+  }
+
+  return await response.json();
+};
+
 function useUserData(cookie, setUser, router) {
-  const { data: session, status } = useSession(); // Obtener la sesión de NextAuth
+  const { data: session, status } = useSession();
 
   useEffect(() => {
     const fetchUserData = async () => {
-      // Si hay token JOSE en la cookie, usarlo
       if (cookie?.token) {
         await setUserData(cookie.token, setUser);
-      }
-      // Si no hay token pero hay sesión de NextAuth, usar los datos de la sesión
-      else if (status === "authenticated" && session?.user) {
-        console.log("Usando datos de la sesión de NextAuth:", session.user);
-        setUser(session.user);
+      } else if (status === "authenticated" && session?.user) {
+        await setUserData(null, setUser); // NextAuth manejará la autenticación en el servidor
       }
     };
 
     fetchUserData();
   }, [cookie?.token, session, status, setUser, router]);
 
-  return status; // Opcional: puedes devolver el estado para usarlo en el componente
+  return { status, session };
 }
 
 export default useUserData;
