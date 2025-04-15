@@ -1,0 +1,397 @@
+/* Styles for the modal overlay */
+.calculator__modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Dark, semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensure it appears above other content */
+  overflow-y: auto; /* Allow scrolling if content overflows */
+  color: white;
+}
+
+/* Calculator container */
+.calculator__container {
+  position: relative;
+  width: 100%;
+  max-width: 1100px;
+  margin: 20px;
+  font-family: Arial, sans-serif;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #000000dd;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.819);
+  z-index: 1001;
+}
+
+.calculator__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  background-color: #f0f0f0;
+  border-bottom: 1px solid #ddd;
+}
+
+.calculator__title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+.calculator__close-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #666;
+}
+
+.calculator__content {
+  display: flex;
+  flex-direction: row;
+}
+
+.calculator__left-panel {
+  flex: 0 0 40%;
+  padding: 15px;
+  border-right: 1px solid #ddd;
+}
+
+.calculator__right-panel {
+  width: 100%;
+  padding: 15px;
+}
+
+.calculator__info-row {
+  display: flex;
+  margin-bottom: 10px;
+  align-items: center;
+}
+
+.calculator__label {
+  flex: 0 0 40%;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+
+.calculator__value {
+  flex: 0 0 60%;
+}
+
+.calculator__icon {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-right: 5px;
+  background-color: #ccc;
+  border-radius: 50%;
+}
+
+.calculator__input {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.calculator__odds-container {
+  margin-top: 20px;
+}
+
+.calculator__odds-header {
+  display: flex;
+}
+
+.calculator__odds-header-favor {
+  flex: 1;
+  text-align: center;
+  padding: 10px;
+  background-color: #00b3a1c0;
+  color: white;
+  font-weight: bold;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.calculator__odds-header-contra {
+  flex: 1;
+  text-align: center;
+  padding: 10px;
+  background-color: rgba(255, 85, 85, 0.774);
+  color: white;
+  font-weight: bold;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.calculator__odds-content {
+  display: flex;
+}
+
+.calculator__odds-column {
+  flex: 1;
+  padding: 10px;
+  text-align: center;
+}
+
+.calculator__odds-title {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.calculator__odds-value {
+  font-size: 20px;
+  font-weight: bold;
+  padding: 15px;
+  margin: 10px auto;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+}
+
+.calculator__odds-value--favor {
+  background-color: #00b3a1b8;
+  color: white;
+}
+
+.calculator__odds-value--contra {
+  background-color: rgba(255, 85, 85, 0.762);
+  color: white;
+}
+
+.calculator__liquidity {
+  font-size: 12px;
+  color: #666;
+  margin: 5px 0;
+}
+
+.calculator__bookmaker {
+  margin-top: 10px;
+}
+
+.calculator__bookmaker-logo {
+  max-width: 100px;
+  height: auto;
+}
+
+.calculator__bet-types {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 15px;
+}
+
+.calculator__input-group {
+  display: flex;
+  width: 100% !important;
+  margin: 0 auto !important;
+  align-items: center;
+
+  margin-bottom: 10px;
+  align-items: center;
+}
+
+.calculator__input-label {
+  flex: 0 0 40%;
+  font-weight: bold;
+  font-size: 13px;
+  color: white;
+  margin: 0 auto;
+}
+
+.calculator__input-container {
+  flex: 0 0 60%;
+  display: flex;
+
+  align-items: center;
+  position: relative;
+
+}
+
+.calculator__input-container input{
+  background-color: #ddd;
+  border-radius: 5px;
+  
+}
+
+.calculator__currency {
+  position: absolute;
+  left: 90px;
+  color: #fcfcfc;
+}
+
+.calculator__input-container .calculator__input {
+  padding-left: 20px;
+ 
+}
+
+.calculator__percentage {
+  position: absolute;
+  right: 5px;
+  color: #666;
+}
+
+.calculator__action-buttons {
+  margin-top: 20px;
+}
+
+.calculator__action-favor {
+  background-color: #00b3a1c6;
+  border-radius: 5px;
+  color: white;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2px;
+  font-size: 14px;
+}
+
+.calculator__action-contra {
+  background-color: rgba(255, 85, 85, 0.8);
+  border-radius: 5px;
+  color: white;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2px;
+  font-size: 14px;
+}
+
+.calculator__risk {
+  background-color: rgba(255, 85, 85, 0.762);
+  width: 240px;
+  border-radius: 5px;
+  color: white;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.calculator__profit {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.calculator__profit-label {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.calculator__profit-amount {
+  font-size: 24px;
+  font-weight: bold;
+  color: #f55;
+}
+
+.calculator__rating {
+  text-align: center;
+  margin: 10px 0;
+  color: #666;
+}
+
+.calculator__results-table {
+  margin-top: 20px;
+  border: 1px solid #ddd;
+}
+
+.calculator__results-header {
+  display: flex;
+  background-color: #f0f0f0;
+  font-weight: bold;
+}
+
+.calculator__results-cell {
+  flex: 1;
+  padding: 8px;
+  font-size: 12px;
+  text-align: center;
+  background-color: rgb(42, 42, 42);
+  border-right: 1px solid #ddd;
+}
+
+.calculator__results-cell:last-child {
+  border-right: none;
+}
+
+.calculator__results-row {
+  display: flex;
+  border-top: 1px solid #ddd;
+}
+
+.calculator__results-cell--favor {
+  background-color: #00b3a1;
+  color: white;
+}
+
+.calculator__results-cell--contra {
+  background-color: #f55;
+  color: white;
+}
+
+.calculator__results-cell--positive {
+  color: green;
+  font-weight: bold;
+}
+
+.calculator__results-cell--negative {
+  color: red;
+  font-weight: bold;
+}
+
+/* Prevent background scrolling */
+body.calculator-open {
+  overflow: hidden;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .calculator__content {
+    flex-direction: column;
+  }
+
+  .calculator__left-panel,
+  .calculator__right-panel {
+    flex: 1 0 auto;
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .calculator__container {
+    margin: 10px;
+    max-width: 90%;
+  }
+
+  .calculator__modal-overlay {
+    align-items: flex-start;
+  }
+
+  .calculator__action-favor,
+  .calculator__action-contra {
+    flex-wrap: wrap;
+  }
+
+  .calculator__action-bet,
+  .calculator__action-amount,
+  .calculator__action-odds,
+  .calculator__action-odds-value {
+    flex: 1 0 30%;
+    text-align: center;
+    margin: 2px 0;
+  }
+}

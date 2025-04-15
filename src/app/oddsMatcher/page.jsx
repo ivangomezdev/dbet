@@ -11,6 +11,7 @@ import {
   errorAtom,
 } from "../../lib/atom";
 import NavBar from "@/components/NavBar";
+import Calculator from "@/components/Calculator";
 
 export default function DataDisplay() {
   const [tournamentsData] = useAtom(tournamentsDataAtom);
@@ -22,6 +23,7 @@ export default function DataDisplay() {
   const [eventFilter, setEventFilter] = useState("");
   const [sportFilter, setSportFilter] = useState("");
   const [bookmakerFilter, setBookmakerFilter] = useState("");
+  const [selectedEvent, setSelectedEvent] = useState(null); // State to store selected event data
   const itemsPerPage = 15;
 
   const bookmakerImages = {
@@ -75,7 +77,6 @@ export default function DataDisplay() {
           return;
         }
 
-        // Determinar el ID del mercado según el deporte
         const marketId = sportImages.basketballIds.includes(
           tournament.tournamentId
         )
@@ -89,7 +90,6 @@ export default function DataDisplay() {
           return;
         }
 
-        // Definir resultados según el deporte
         const outcomes = sportImages.basketballIds.includes(
           tournament.tournamentId
         )
@@ -130,7 +130,6 @@ export default function DataDisplay() {
               return;
             }
 
-            // Verificar si betfair-ex existe y tiene precio
             if (!data?.bookmakers?.["betfair-ex"]?.price) {
               console.log(
                 `No hay betfair-ex para ${bookmaker} en el evento ${event.eventId}`
@@ -210,6 +209,25 @@ export default function DataDisplay() {
     (b) => b !== "betfair-ex"
   );
 
+  // Function to handle opening the calculator
+  const handleOpenCalculator = (item) => {
+    setSelectedEvent({
+      date: item.date,
+      event: `${item.event.participant1} vs ${item.event.participant2}`,
+      bookmaker: item.bookmaker,
+      favor: item.favor,
+      contra: item.contra,
+      rating: item.rating,
+      bookmakerImage: bookmakerImages[item.bookmaker], // Add bookmaker image URL
+      betfairImage: bookmakerImages["betfair-ex"],   // Add betfair-ex image URL
+    });
+  };
+
+  // Function to handle closing the calculator
+  const handleCloseCalculator = () => {
+    setSelectedEvent(null);
+  };
+
   return (
     <div className="oddsMatcher__cont">
       <NavBar />
@@ -266,6 +284,7 @@ export default function DataDisplay() {
                   <th>DEPORTE</th>
                   <th>EVENTO</th>
                   <th>APUESTA</th>
+                  <th>CALC</th> {/* New column */}
                   <th>RATING (%)</th>
                   <th>BOOKMAKER</th>
                   <th>FAVOR</th>
@@ -312,6 +331,32 @@ export default function DataDisplay() {
                         <td>{`${event.participant1} vs ${event.participant2}`}</td>
                         <td>{apuesta}</td>
                         <td>
+                          <button
+                            onClick={() =>
+                              handleOpenCalculator({
+                                event,
+                                bookmaker,
+                                date,
+                                tournamentId,
+                                apuesta,
+                                rating,
+                                favor,
+                                contra,
+                                liquidez,
+                              })
+                            }
+                            style={{
+                              backgroundColor: "rgba(12, 187, 91, 0.497)",
+                              color: "white",
+                              padding: "5px 10px",
+                              border: "none",
+                              cursor: "pointer",
+                            }}
+                          >
+                            Calc
+                          </button>
+                        </td>
+                        <td>
                           {typeof rating === "number"
                             ? `${rating.toFixed(2)}%`
                             : "-"}
@@ -337,7 +382,7 @@ export default function DataDisplay() {
                             width={80}
                             height={80}
                             style={{ objectFit: "contain" }}
-                            />
+                          />
                         </td>
                         <td>{formatPrice(contra)}</td>
                         <td>{formatPrice(liquidez)}</td>
@@ -352,7 +397,12 @@ export default function DataDisplay() {
             <button
               onClick={goToPreviousPage}
               disabled={currentPage === 1}
-              style={{backgroundColor:"rgba(12, 187, 91, 0.497)", color:"white", marginRight: "10px", padding: "5px 10px" }}
+              style={{
+                backgroundColor: "rgba(12, 187, 91, 0.497)",
+                color: "white",
+                marginRight: "10px",
+                padding: "5px 10px",
+              }}
             >
               Anterior
             </button>
@@ -362,7 +412,12 @@ export default function DataDisplay() {
             <button
               onClick={goToNextPage}
               disabled={currentPage === totalPages}
-              style={{ backgroundColor:"rgba(12, 187, 91, 0.497)", color:"white", marginLeft: "10px", padding: "5px 10px" }}
+              style={{
+                backgroundColor: "rgba(12, 187, 91, 0.497)",
+                color: "white",
+                marginLeft: "10px",
+                padding: "5px 10px",
+              }}
             >
               Siguiente
             </button>
@@ -372,6 +427,13 @@ export default function DataDisplay() {
             </p>
           </div>
         </div>
+        {/* Conditionally render Calculator */}
+        {selectedEvent && (
+          <Calculator
+            eventData={selectedEvent}
+            onClose={handleCloseCalculator}
+          />
+        )}
       </>
     </div>
   );
