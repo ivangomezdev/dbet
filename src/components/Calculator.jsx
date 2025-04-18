@@ -114,7 +114,7 @@ const InputFields = ({ betType, inputs, handleChange, bookmaker }) => {
               <input
                 type="text"
                 name="dineroReal"
-                value={inputs.dineroReal || ""}
+                value={inputs.dineroReal}
                 onChange={handleChange}
               />
             </div>
@@ -126,7 +126,7 @@ const InputFields = ({ betType, inputs, handleChange, bookmaker }) => {
               <input
                 type="text"
                 name="bonos"
-                value={inputs.bonos || ""}
+                value={inputs.bonos}
                 onChange={handleChange}
               />
             </div>
@@ -140,7 +140,7 @@ const InputFields = ({ betType, inputs, handleChange, bookmaker }) => {
               <input
                 type="text"
                 name="rolloverRestante"
-                value={inputs.rolloverRestante || ""}
+                value={inputs.rolloverRestante}
                 onChange={handleChange}
               />
             </div>
@@ -151,7 +151,7 @@ const InputFields = ({ betType, inputs, handleChange, bookmaker }) => {
               <input
                 type="text"
                 name="ratingFuturo"
-                value={inputs.ratingFuturo || ""}
+                value={inputs.ratingFuturo}
                 onChange={handleChange}
               />
               <span className="calculator__percentage">%</span>
@@ -186,7 +186,7 @@ const InputFields = ({ betType, inputs, handleChange, bookmaker }) => {
               <input
                 type="text"
                 name="importeReembolso"
-                value={inputs.importeReembolso || ""}
+                value={inputs.importeReembolso}
                 onChange={handleChange}
               />
             </div>
@@ -207,74 +207,56 @@ const calculateTooltipValues = (inputs, betType) => {
   const commissionInput = parseFloat(inputs.contraImporte) || 0;
   const dineroReal = parseFloat(inputs.dineroReal) || 0;
   const bonos = parseFloat(inputs.bonos) || 0;
+  const rolloverRestante = parseFloat(inputs.rolloverRestante) || 0;
+  const ratingFuturo = parseFloat(inputs.ratingFuturo) || 0;
   const importeReembolso = parseFloat(inputs.importeReembolso) || 0;
 
-  // Commission: For Apuesta Gratis, always use 0.7% (0.007); otherwise, use input / 100
-  const commission = betType === "Apuesta gratis" ? 0.007 : commissionInput / 100;
+  // Commission: Use input / 100 for most bet types, but 0.07 for Apuesta Gratis to match Excel
+  const commission = betType === "Apuesta gratis" ? 0.07 : commissionInput / 100;
 
   let contraAmount, favorBookmakerProfit, favorBetfairProfit, favorTotal;
   let contraBookmakerProfit, contraBetfairProfit, contraTotal;
 
-  if (betType === "Apuesta gratis") {
-    // Apuesta Gratis calculations
+  if (betType === "Dinero real") {
     contraAmount =
-      (favorImporte * (favorCuota - 1)) / (contraCuota * (1 - commission)) || 0;
-
-    // SI LA APUESTA A FAVOR GANA
+      (favorImporte * favorCuota) / (contraCuota - commission) || 0;
     favorBookmakerProfit = favorImporte * favorCuota - favorImporte;
-    favorBetfairProfit =
-      contraCuota === 1 ? 0 : -(contraAmount * (contraCuota - 1));
-    favorTotal = favorBookmakerProfit + favorBetfairProfit;
-
-    // SI LA APUESTA EN CONTRA GANA
-    contraBookmakerProfit = 0;
-    contraBetfairProfit =
-      (favorImporte * (favorCuota - 1) * (1 - commission)) / contraCuota;
-    contraTotal = contraBookmakerProfit + contraBetfairProfit;
-  } else if (betType === "RollOver") {
-    // RollOver calculations
-    const totalFavorImporte = dineroReal + bonos;
-
-    // Contra Amount
-    contraAmount =
-      (totalFavorImporte * favorCuota) / (contraCuota * (1 - commission)) || 0;
-
-    // SI LA APUESTA A FAVOR GANA
-    favorBookmakerProfit =
-      totalFavorImporte * favorCuota - dineroReal + 5; // Empirical adjustment
     favorBetfairProfit = -(contraAmount * (contraCuota - 1));
     favorTotal = favorBookmakerProfit + favorBetfairProfit;
-
-    // SI LA APUESTA EN CONTRA GANA
+    contraBookmakerProfit = -favorImporte;
+    contraBetfairProfit = contraAmount * (1 - commission);
+    contraTotal = contraBookmakerProfit + contraBetfairProfit;
+  } else if (betType === "Apuesta gratis") {
+    // Apuesta Gratis calculations
+    contraAmount =
+      (favorImporte * (favorCuota - 1)) / (contraCuota - commission) || 0;
+    favorBookmakerProfit = favorImporte * favorCuota - favorImporte;
+    favorBetfairProfit = -(contraAmount * (contraCuota - 1));
+    favorTotal = favorBookmakerProfit + favorBetfairProfit;
+    contraBookmakerProfit = 0;
+    contraBetfairProfit = contraAmount * (1 - commission);
+    contraTotal = contraBookmakerProfit + contraBetfairProfit;
+  } else if (betType === "RollOver") {
+    const totalFavorImporte = dineroReal + bonos;
+    contraAmount =
+      ((totalFavorImporte * favorCuota) -
+       Math.max(0, rolloverRestante - totalFavorImporte) * (1 - ratingFuturo)) /
+      (contraCuota - commission) || 0;
+    favorBookmakerProfit =
+      ((totalFavorImporte * favorCuota) - dineroReal) -
+      Math.max(0, (rolloverRestante - totalFavorImporte) * (1 - ratingFuturo));
+    favorBetfairProfit = -(contraAmount * (contraCuota - 1));
+    favorTotal = favorBookmakerProfit + favorBetfairProfit;
     contraBookmakerProfit = -dineroReal;
     contraBetfairProfit = contraAmount * (1 - commission);
     contraTotal = contraBookmakerProfit + contraBetfairProfit;
   } else if (betType === "Reembolso") {
-    // Reembolso calculations
     contraAmount =
-      (favorImporte * (favorCuota - 1)) / (contraCuota * (1 - commission)) || 0;
-
-    // SI LA APUESTA A FAVOR GANA
+      ((favorImporte * favorCuota) - importeReembolso) / (contraCuota - commission) || 0;
     favorBookmakerProfit = favorImporte * favorCuota - favorImporte;
     favorBetfairProfit = -(contraAmount * (contraCuota - 1));
     favorTotal = favorBookmakerProfit + favorBetfairProfit;
-
-    // SI LA APUESTA EN CONTRA GANA
     contraBookmakerProfit = importeReembolso - favorImporte;
-    contraBetfairProfit = contraAmount * (1 - commission);
-    contraTotal = contraBookmakerProfit + contraBetfairProfit;
-  } else {
-    // Dinero real calculations
-    contraAmount =
-      (favorImporte * favorCuota) / (contraCuota * (1 - commission)) || 0;
-
-    // SI LA APUESTA A FAVOR GANA
-    favorBookmakerProfit = favorImporte * favorCuota - favorImporte;
-    favorBetfairProfit = -(contraAmount * (contraCuota - 1));
-    favorTotal = favorBookmakerProfit + favorBetfairProfit;
-
-    // SI LA APUESTA EN CONTRA GANA
-    contraBookmakerProfit = -favorImporte;
     contraBetfairProfit = contraAmount * (1 - commission);
     contraTotal = contraBookmakerProfit + contraBetfairProfit;
   }
@@ -301,22 +283,28 @@ const calculateRating = (inputs, betType, contraTotal, favorTotal) => {
   const bonos = parseFloat(inputs.bonos) || 0;
   const importeReembolso = parseFloat(inputs.importeReembolso) || 0;
   const contraTotalValue = parseFloat(contraTotal) || 0;
-  const favorTotalValue = parseFloat(favorTotal) || 0;
 
   let effectiveImporte = favorImporte;
   if (betType === "RollOver") {
     effectiveImporte = dineroReal + bonos;
   }
 
-  if (effectiveImporte === 0) {
+  if (effectiveImporte === 0 || (betType === "Reembolso" && importeReembolso === 0)) {
     return "-";
   }
 
   let rating;
-  if (betType === "Reembolso") {
-    rating =
-      ((importeReembolso - favorImporte - favorTotalValue) / favorImporte) * 100;
-  } else {
+  if (betType === "Dinero real") {
+    // RATING: ((C2 + H8) / C2)
+    rating = ((favorImporte + contraTotalValue) / favorImporte) * 100;
+  } else if (betType === "Apuesta gratis") {
+    // RATING: (H8 / C2) * 100
+    rating = (contraTotalValue / favorImporte) * 100;
+  } else if (betType === "Reembolso") {
+    // RATING: H8 / C3
+    rating = (contraTotalValue / importeReembolso) * 100;
+  } else if (betType === "RollOver") {
+    // RATING: H8 / (C2 + C3)
     rating = (contraTotalValue / effectiveImporte) * 100;
   }
 
@@ -344,14 +332,19 @@ const ResultsTable = ({ tooltipValues }) => (
         {tooltipValues.favor.betfair >= 0 ? "+" : "-"}€
         {Math.abs(tooltipValues.favor.betfair)}
       </div>
-      <div className="calculator__results-cell calculator__results-cell--negative">
+      <div
+        className="calculator__results-cell"
+        style={{
+          color: tooltipValues.favor.total > 0 ? "green" : tooltipValues.favor.total < 0 ? "red" : "black",
+        }}
+      >
         {tooltipValues.favor.total >= 0 ? "+" : "-"}€
         {Math.abs(tooltipValues.favor.total)}
       </div>
     </div>
     <div className="calculator__results-row">
       <div className="calculator__results-cell calculator__results-cell--contra">
-       APUESTA EN CONTRA GANA
+        APUESTA EN CONTRA GANA
       </div>
       <div className="calculator__results-cell calculator__results-cell--negative">
         {tooltipValues.contra.bookmaker >= 0 ? "+" : "-"}€
@@ -361,7 +354,12 @@ const ResultsTable = ({ tooltipValues }) => (
         {tooltipValues.contra.betfair >= 0 ? "+" : "-"}€
         {Math.abs(tooltipValues.contra.betfair)}
       </div>
-      <div className="calculator__results-cell calculator__results-cell--negative">
+      <div
+        className="calculator__results-cell"
+        style={{
+          color: tooltipValues.contra.total > 0 ? "green" : tooltipValues.contra.total < 0 ? "red" : "black",
+        }}
+      >
         {tooltipValues.contra.total >= 0 ? "+" : "-"}€
         {Math.abs(tooltipValues.contra.total)}
       </div>
@@ -373,23 +371,21 @@ const ResultsTable = ({ tooltipValues }) => (
 const Calculator = ({ eventData, onClose }) => {
   const [betType, setBetType] = useState("Dinero real");
   const [inputs, setInputs] = useState({
-    favorImporte: "",
+    favorImporte: "100", // Default for Dinero real, Apuesta gratis, Reembolso
     favorCuota: eventData.favor ? eventData.favor.toFixed(2) : "",
     contraImporte: "7", // Default commission as percentage
     contraCuota: eventData.contra ? eventData.contra.toFixed(2) : "",
-    dineroReal: "",
-    bonos: "",
-    rolloverRestante: "",
-    ratingFuturo: "",
-    importeReembolso: "",
+    dineroReal: "100", // Default for RollOver
+    bonos: "100", // Default for RollOver
+    rolloverRestante: "1000", // Default for RollOver
+    ratingFuturo: "0.95", // Default for RollOver
+    importeReembolso: "100", // Default for Reembolso
   });
 
   // Handle scroll locking and Esc key
   useEffect(() => {
-    // Prevent background scrolling
     document.body.classList.add("calculator-open");
 
-    // Handle Esc key to close
     const handleEsc = (event) => {
       if (event.key === "Escape") {
         onClose();
@@ -397,7 +393,6 @@ const Calculator = ({ eventData, onClose }) => {
     };
     window.addEventListener("keydown", handleEsc);
 
-    // Cleanup on unmount
     return () => {
       document.body.classList.remove("calculator-open");
       window.removeEventListener("keydown", handleEsc);
@@ -488,7 +483,6 @@ const Calculator = ({ eventData, onClose }) => {
                   <div className="calculator__odds-value calculator__odds-value--contra">
                     {inputs.contraCuota}
                   </div>
-               
                   <div className="calculator__bookmaker">
                     <img
                       src={eventData.betfairImage}
@@ -545,9 +539,14 @@ const Calculator = ({ eventData, onClose }) => {
             </div>
             <div className="calculator__profit">
               <div className="calculator__profit-label">GANARÁS</div>
-              <div className="calculator__profit-amount">
-                {tooltipValues.favor.total >= 0 ? "+" : "-"}€
-                {Math.abs(tooltipValues.favor.total)}
+              <div
+                className="calculator__profit-amount"
+                style={{
+                  color: tooltipValues.contra.total > 0 ? "green" : tooltipValues.contra.total < 0 ? "red" : "black",
+                }}
+              >
+                {tooltipValues.contra.total >= 0 ? "+" : "-"}€
+                {Math.abs(tooltipValues.contra.total)}
               </div>
             </div>
             <div className="calculator__rating">[ RATING {formattedRating} ]</div>
