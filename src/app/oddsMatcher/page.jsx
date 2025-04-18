@@ -23,7 +23,20 @@ export default function DataDisplay() {
   const [eventFilter, setEventFilter] = useState("");
   const [sportFilter, setSportFilter] = useState("");
   const [bookmakerFilter, setBookmakerFilter] = useState("");
-  const [selectedEvent, setSelectedEvent] = useState(null); // State to store selected event data
+  const [selectedEvent, setSelectedEvent] = useState(null);
+  const [ratingModalOpen, setRatingModalOpen] = useState(false);
+  const [selectedBetType, setSelectedBetType] = useState("Dinero real");
+  const [ratingInputs, setRatingInputs] = useState({
+    favorImporte: "100",
+    contraImporte: "7",
+    dineroReal: "100",
+    bonos: "100",
+    rolloverRestante: "100",
+    ratingFuturo: "0.95",
+    importeReembolso: "100",
+  });
+  const [tempRatingInputs, setTempRatingInputs] = useState({ ...ratingInputs });
+  const [activeTab, setActiveTab] = useState("Dinero real");
   const itemsPerPage = 15;
 
   const bookmakerImages = {
@@ -52,47 +65,131 @@ export default function DataDisplay() {
       "https://res.cloudinary.com/dc5zbh38m/image/upload/v1743784289/BASKET_hrcizl.png",
   };
 
+  // Calculations Logic from Calculator.jsx
+  const calculateTooltipValues = (inputs, betType, favorCuota, contraCuota) => {
+    const favorImporte = parseFloat(inputs.favorImporte) || 0;
+    const favorCuotaValue = parseFloat(favorCuota) || 0;
+    const contraCuotaValue = parseFloat(contraCuota) || 0;
+    const commissionInput = parseFloat(inputs.contraImporte) || 0;
+    const dineroReal = parseFloat(inputs.dineroReal) || 0;
+    const bonos = parseFloat(inputs.bonos) || 0;
+    const rolloverRestante = parseFloat(inputs.rolloverRestante) || 0;
+    const ratingFuturo = parseFloat(inputs.ratingFuturo) || 0;
+    const importeReembolso = parseFloat(inputs.importeReembolso) || 0;
+
+    const commission = betType === "Apuesta gratis" ? 0.07 : commissionInput / 100;
+
+    let contraAmount, favorBookmakerProfit, favorBetfairProfit, favorTotal;
+    let contraBookmakerProfit, contraBetfairProfit, contraTotal;
+
+    if (betType === "Dinero real") {
+      contraAmount =
+        (favorImporte * favorCuotaValue) / (contraCuotaValue - commission) || 0;
+      favorBookmakerProfit = favorImporte * favorCuotaValue - favorImporte;
+      favorBetfairProfit = -(contraAmount * (contraCuotaValue - 1));
+      favorTotal = favorBookmakerProfit + favorBetfairProfit;
+      contraBookmakerProfit = -favorImporte;
+      contraBetfairProfit = contraAmount * (1 - commission);
+      contraTotal = contraBookmakerProfit + contraBetfairProfit;
+    } else if (betType === "Apuesta gratis") {
+      contraAmount =
+        (favorImporte * (favorCuotaValue - 1)) / (contraCuotaValue - commission) || 0;
+      favorBookmakerProfit = favorImporte * favorCuotaValue - favorImporte;
+      favorBetfairProfit = -(contraAmount * (contraCuotaValue - 1));
+      favorTotal = favorBookmakerProfit + favorBetfairProfit;
+      contraBookmakerProfit = 0;
+      contraBetfairProfit = contraAmount * (1 - commission);
+      contraTotal = contraBookmakerProfit + contraBetfairProfit;
+    } else if (betType === "RollOver") {
+      const totalFavorImporte = dineroReal + bonos;
+      contraAmount =
+        ((totalFavorImporte * favorCuotaValue) -
+         Math.max(0, rolloverRestante - totalFavorImporte) * (1 - ratingFuturo)) /
+        (contraCuotaValue - commission) || 0;
+      favorBookmakerProfit =
+        ((totalFavorImporte * favorCuotaValue) - dineroReal) -
+        Math.max(0, (rolloverRestante - totalFavorImporte) * (1 - ratingFuturo));
+      favorBetfairProfit = -(contraAmount * (contraCuotaValue - 1));
+      favorTotal = favorBookmakerProfit + favorBetfairProfit;
+      contraBookmakerProfit = -dineroReal;
+      contraBetfairProfit = contraAmount * (1 - commission);
+      contraTotal = contraBookmakerProfit + contraBetfairProfit;
+    } else if (betType === "Reembolso") {
+      contraAmount =
+        ((favorImporte * favorCuotaValue) - importeReembolso) / (contraCuotaValue - commission) || 0;
+      favorBookmakerProfit = favorImporte * favorCuotaValue - favorImporte;
+      favorBetfairProfit = -(contraAmount * (contraCuotaValue - 1));
+      favorTotal = favorBookmakerProfit + favorBetfairProfit;
+      contraBookmakerProfit = importeReembolso - favorImporte;
+      contraBetfairProfit = contraAmount * (1 - commission);
+      contraTotal = contraBookmakerProfit + contraBetfairProfit;
+    }
+
+    return {
+      contraAmount: isNaN(contraAmount) ? 0 : contraAmount.toFixed(2),
+      favor: {
+        bookmaker: isNaN(favorBookmakerProfit) ? 0 : favorBookmakerProfit.toFixed(2),
+        betfair: isNaN(favorBetfairProfit) ? 0 : favorBetfairProfit.toFixed(2),
+        total: isNaN(favorTotal) ? 0 : favorTotal.toFixed(2),
+      },
+      contra: {
+        bookmaker: isNaN(contraBookmakerProfit) ? 0 : contraBookmakerProfit.toFixed(2),
+        betfair: isNaN(contraBetfairProfit) ? 0 : contraBetfairProfit.toFixed(2),
+        total: isNaN(contraTotal) ? 0 : contraTotal.toFixed(2),
+      },
+    };
+  };
+
+  const calculateRating = (inputs, betType, contraTotal, favorTotal, favorCuota, contraCuota) => {
+    const favorImporte = parseFloat(inputs.favorImporte) || 0;
+    const dineroReal = parseFloat(inputs.dineroReal) || 0;
+    const bonos = parseFloat(inputs.bonos) || 0;
+    const importeReembolso = parseFloat(inputs.importeReembolso) || 0;
+    const contraTotalValue = parseFloat(contraTotal) || 0;
+
+    let effectiveImporte = favorImporte;
+    if (betType === "RollOver") {
+      effectiveImporte = dineroReal + bonos;
+    }
+
+    if (effectiveImporte === 0 || (betType === "Reembolso" && importeReembolso === 0)) {
+      return "-";
+    }
+
+    let rating;
+    if (betType === "Dinero real") {
+      rating = ((favorImporte + contraTotalValue) / favorImporte) * 100;
+    } else if (betType === "Apuesta gratis") {
+      rating = (contraTotalValue / favorImporte) * 100;
+    } else if (betType === "Reembolso") {
+      rating = (contraTotalValue / importeReembolso) * 100;
+    } else if (betType === "RollOver") {
+      rating = (contraTotalValue / effectiveImporte) * 100;
+    }
+
+    return isNaN(rating) ? "-" : rating.toFixed(2);
+  };
+
   const getEventBookmakerOutcomeTriples = () => {
     const triples = [];
     let eventCount = 0;
 
     tournamentsData.forEach((tournament) => {
-      console.log(`Procesando torneo ${tournament.tournamentId}`);
-      if (tournament.tournamentId === 132) {
-        console.log("Eventos en torneo 132:", tournament.events);
-      }
       const events = tournament.events || {};
       Object.values(events).forEach((event) => {
         eventCount++;
         const eventOdds = oddsData[event.eventId];
-        if (!eventOdds) {
-          console.log(
-            `No hay odds para el evento ${event.eventId} del torneo ${tournament.tournamentId}`
-          );
+        if (!eventOdds || !eventOdds.bookmakers) {
           return;
         }
 
-        if (!eventOdds.bookmakers) {
-          console.log(`Faltan bookmakers para el evento ${event.eventId}`);
-          return;
-        }
-
-        const marketId = sportImages.basketballIds.includes(
-          tournament.tournamentId
-        )
-          ? 111
-          : 101;
+        const marketId = sportImages.basketballIds.includes(tournament.tournamentId) ? 111 : 101;
         const fullTimeResult = eventOdds.markets?.[marketId];
         if (!fullTimeResult) {
-          console.log(
-            `No hay market ${marketId} para el evento ${event.eventId}`
-          );
           return;
         }
 
-        const outcomes = sportImages.basketballIds.includes(
-          tournament.tournamentId
-        )
+        const outcomes = sportImages.basketballIds.includes(tournament.tournamentId)
           ? [
               {
                 id: "111",
@@ -123,25 +220,12 @@ export default function DataDisplay() {
           if (bookmaker === "betfair" || bookmaker === "betfair-ex") return;
 
           outcomes.forEach(({ id, name, data }) => {
-            if (!data?.bookmakers?.[bookmaker]?.price) {
-              console.log(
-                `No hay precio para ${bookmaker} en el evento ${event.eventId}`
-              );
+            if (!data?.bookmakers?.[bookmaker]?.price || !data?.bookmakers?.["betfair-ex"]?.price) {
               return;
             }
 
-            if (!data?.bookmakers?.["betfair-ex"]?.price) {
-              console.log(
-                `No hay betfair-ex para ${bookmaker} en el evento ${event.eventId}`
-              );
-              return;
-            }
-
-            const eventName =
-              `${event.participant1} vs ${event.participant2}`.toLowerCase();
-            const sportType = sportImages.footballIds.includes(
-              tournament.tournamentId
-            )
+            const eventName = `${event.participant1} vs ${event.participant2}`.toLowerCase();
+            const sportType = sportImages.footballIds.includes(tournament.tournamentId)
               ? "football"
               : sportImages.basketballIds.includes(tournament.tournamentId)
                 ? "basketball"
@@ -155,13 +239,25 @@ export default function DataDisplay() {
               return;
             }
 
+            const favorCuota = data.bookmakers[bookmaker].price;
+            const contraCuota = data.bookmakers["betfair-ex"].price;
+            const tooltipValues = calculateTooltipValues(ratingInputs, selectedBetType, favorCuota, contraCuota);
+            const rating = calculateRating(
+              ratingInputs,
+              selectedBetType,
+              tooltipValues.contra.total,
+              tooltipValues.favor.total,
+              favorCuota,
+              contraCuota
+            );
+
             triples.push({
               event,
               bookmaker,
               date: eventOdds.date,
               tournamentId: tournament.tournamentId,
               apuesta: name,
-              rating: fullTimeResult.payouts?.[bookmaker] || "-",
+              rating: rating === "-" ? -Infinity : parseFloat(rating),
               favor: data.bookmakers[bookmaker].price,
               contra: data.bookmakers["betfair-ex"].price,
               liquidez: data.bookmakers["betfair-ex"].limit || "-gallery",
@@ -172,9 +268,8 @@ export default function DataDisplay() {
       });
     });
 
-    console.log("Total eventos procesados:", eventCount);
-    console.log("Total triples generados:", triples.length);
-    console.log("Triples generados (primeros 10):", triples.slice(0, 10));
+    // Sort by rating in descending order
+    triples.sort((a, b) => b.rating - a.rating);
     return triples;
   };
 
@@ -209,7 +304,6 @@ export default function DataDisplay() {
     (b) => b !== "betfair-ex"
   );
 
-  // Function to handle opening the calculator
   const handleOpenCalculator = (item) => {
     setSelectedEvent({
       date: item.date,
@@ -217,224 +311,408 @@ export default function DataDisplay() {
       bookmaker: item.bookmaker,
       favor: item.favor,
       contra: item.contra,
-      rating: item.rating,
-      bookmakerImage: bookmakerImages[item.bookmaker], // Add bookmaker image URL
-      betfairImage: bookmakerImages["betfair-ex"],   // Add betfair-ex image URL
+      rating: item.rating === -Infinity ? "-" : `${item.rating.toFixed(2)}%`,
+      bookmakerImage: bookmakerImages[item.bookmaker],
+      betfairImage: bookmakerImages["betfair-ex"],
     });
   };
 
-  // Function to handle closing the calculator
   const handleCloseCalculator = () => {
     setSelectedEvent(null);
   };
 
+  const handleOpenRatingModal = () => {
+    setTempRatingInputs({ ...ratingInputs });
+    setActiveTab(selectedBetType);
+    setRatingModalOpen(true);
+  };
+
+  const handleCloseRatingModal = () => {
+    setRatingModalOpen(false);
+  };
+
+  const handleApplyRating = () => {
+    setRatingInputs({ ...tempRatingInputs });
+    setSelectedBetType(activeTab);
+    setCurrentPage(1); // Reset to first page after applying
+    setRatingModalOpen(false);
+  };
+
+  const handleRatingInputChange = (e) => {
+    const { name, value } = e.target;
+    setTempRatingInputs((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const RatingModal = () => (
+    <div className="modal-overlay" style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, backgroundColor: "rgba(0,0,0,0.5)", display: "flex", justifyContent: "center", alignItems: "center", zIndex: 1000 }}>
+      <div className="modal-content" style={{ backgroundColor: "white", padding: "20px", borderRadius: "5px", width: "400px", maxWidth: "90%" }} onClick={(e) => e.stopPropagation()}>
+        <h2 style={{ marginBottom: "10px" }}>Configurar Rating</h2>
+        <div className="tabs" style={{ display: "flex", marginBottom: "10px" }}>
+          {["Dinero real", "Apuesta gratis", "RollOver", "Reembolso"].map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              style={{
+                flex: 1,
+                padding: "10px",
+                backgroundColor: activeTab === tab ? "#00A500" : "#f0f0f0",
+                color: activeTab === tab ? "white" : "black",
+                border: "none",
+                cursor: "pointer",
+              }}
+            >
+              {tab}
+            </button>
+          ))}
+        </div>
+        <div className="tab-content" style={{ marginBottom: "20px" }}>
+          {activeTab === "Dinero real" && (
+            <div>
+              <label style={{ display: "block", marginBottom: "10px" }}>
+                Importe Apuesta (€)
+                <input
+                  type="text"
+                  name="favorImporte"
+                  value={tempRatingInputs.favorImporte}
+                  onChange={handleRatingInputChange}
+                  style={{ width: "100%", padding: "5px", marginTop: "5px" }}
+                />
+              </label>
+            </div>
+          )}
+          {activeTab === "Apuesta gratis" && (
+            <div>
+              <label style={{ display: "block", marginBottom: "10px" }}>
+                Importe Apuesta (€)
+                <input
+                  type="text"
+                  name="favorImporte"
+                  value={tempRatingInputs.favorImporte}
+                  onChange={handleRatingInputChange}
+                  style={{ width: "100%", padding: "5px", marginTop: "5px" }}
+                />
+              </label>
+            </div>
+          )}
+          {activeTab === "RollOver" && (
+            <div>
+              <label style={{ display: "block", marginBottom: "10px" }}>
+                Dinero Real (€)
+                <input
+                  type="text"
+                  name="dineroReal"
+                  value={tempRatingInputs.dineroReal}
+                  onChange={handleRatingInputChange}
+                  style={{ width: "100%", padding: "5px", marginTop: "5px" }}
+                />
+              </label>
+              <label style={{ display: "block", marginBottom: "10px" }}>
+                Bonos (€)
+                <input
+                  type="text"
+                  name="bonos"
+                  value={tempRatingInputs.bonos}
+                  onChange={handleRatingInputChange}
+                  style={{ width: "100%", padding: "5px", marginTop: "5px" }}
+                />
+              </label>
+              <label style={{ display: "block", marginBottom: "10px" }}>
+                Rollover Restante (€)
+                <input
+                  type="text"
+                  name="rolloverRestante"
+                  value={tempRatingInputs.rolloverRestante}
+                  onChange={handleRatingInputChange}
+                  style={{ width: "100%", padding: "5px", marginTop: "5px" }}
+                />
+              </label>
+              <label style={{ display: "block", marginBottom: "10px" }}>
+                Rating Futuro (%)
+                <input
+                  type="text"
+                  name="ratingFuturo"
+                  value={tempRatingInputs.ratingFuturo}
+                  onChange={handleRatingInputChange}
+                  style={{ width: "100%", padding: "5px", marginTop: "5px" }}
+                />
+              </label>
+            </div>
+          )}
+          {activeTab === "Reembolso" && (
+            <div>
+              <label style={{ display: "block", marginBottom: "10px" }}>
+                Importe Apuesta (€)
+                <input
+                  type="text"
+                  name="favorImporte"
+                  value={tempRatingInputs.favorImporte}
+                  onChange={handleRatingInputChange}
+                  style={{ width: "100%", padding: "5px", marginTop: "5px" }}
+                />
+              </label>
+              <label style={{ display: "block", marginBottom: "10px" }}>
+                Importe Reembolso (€)
+                <input
+                  type="text"
+                  name="importeReembolso"
+                  value={tempRatingInputs.importeReembolso}
+                  onChange={handleRatingInputChange}
+                  style={{ width: "100%", padding: "5px", marginTop: "5px" }}
+                />
+              </label>
+            </div>
+          )}
+        </div>
+        <div className="modal-buttons" style={{ display: "flex", justifyContent: "flex-end" }}>
+          <button
+            onClick={handleCloseRatingModal}
+            style={{
+              padding: "10px 20px",
+              marginRight: "10px",
+              backgroundColor: "#ccc",
+              border: "none",
+              cursor: "pointer",
+            }}
+          >
+            Cancelar
+          </button>
+          <button
+            onClick={handleApplyRating}
+            style={{
+              padding: "10px 20px",
+              backgroundColor: "#00A500",
+              color: "white",
+              border: "none",
+              cursor: "pointer",
+            }}
+          >
+            Aplicar
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <div className="oddsMatcher__cont">
       <NavBar />
+      <div className="me__content betting-table-container">
+        <h2 className="betting-table-title">OddsMatcher</h2>
 
-      <>
-        <div className="me__content betting-table-container">
-          <h2 className="betting-table-title">OddsMatcher</h2>
-
-          {/* Filtros */}
-          <div className="oddsmatcher__filterData">
-            <label className="oddsMatcher__label">
-              Evento
-              <input
-                type="text"
-                value={eventFilter}
-                onChange={(e) => setEventFilter(e.target.value)}
-                placeholder="Ej: Rosario vs Andes"
-                style={{ marginLeft: "5px", padding: "5px" }}
-              />
-            </label>
-            <label className="oddsMatcher__label">
-              Deporte
-              <select
-                value={sportFilter}
-                onChange={(e) => setSportFilter(e.target.value)}
-                style={{ marginLeft: "5px", padding: "5px" }}
-              >
-                <option value="">Todos</option>
-                <option value="football">Fútbol</option>
-                <option value="basketball">Baloncesto</option>
-              </select>
-            </label>
-            <label>
-              Bookmaker
-              <select
-                value={bookmakerFilter}
-                onChange={(e) => setBookmakerFilter(e.target.value)}
-                className="oddsMatcher__label"
-              >
-                <option value="">Todos</option>
-                {availableBookmakers.map((bookmaker) => (
-                  <option key={bookmaker} value={bookmaker}>
-                    {bookmaker}
-                  </option>
-                ))}
-              </select>
-            </label>
-          </div>
-          <div className="table-wrapper">
-            <table className="betting-table">
-              <thead>
-                <tr>
-                  <th>FECHA/HORA</th>
-                  <th>DEPORTE</th>
-                  <th>EVENTO</th>
-                  <th>APUESTA</th>
-                  <th>CALC</th> {/* New column */}
-                  <th>RATING (%)</th>
-                  <th>BOOKMAKER</th>
-                  <th>FAVOR</th>
-                  <th>EXCHANGE</th>
-                  <th>CONTRA</th>
-                  <th>LIQUIDEZ</th>
-                </tr>
-              </thead>
-              <tbody>
-                {currentItems.map(
-                  (
-                    {
-                      event,
-                      bookmaker,
-                      date,
-                      tournamentId,
-                      apuesta,
-                      rating,
-                      favor,
-                      contra,
-                      liquidez,
-                    },
-                    index
-                  ) => {
-                    const sportImage = getSportImage(tournamentId);
-                    return (
-                      <tr
-                        key={`${event.eventId}-${bookmaker}-${apuesta}-${index}`}
-                      >
-                        <td>{date}</td>
-                        <td>
-                          {sportImage ? (
-                            <Image
-                              src={sportImage}
-                              alt="Sport"
-                              width={20}
-                              height={20}
-                              style={{ objectFit: "contain" }}
-                            />
-                          ) : (
-                            "-"
-                          )}
-                        </td>
-                        <td>{`${event.participant1} vs ${event.participant2}`}</td>
-                        <td>{apuesta}</td>
-                        <td>
-                          <button
-                            onClick={() =>
-                              handleOpenCalculator({
-                                event,
-                                bookmaker,
-                                date,
-                                tournamentId,
-                                apuesta,
-                                rating,
-                                favor,
-                                contra,
-                                liquidez,
-                              })
-                            }
-                            style={{
-                              backgroundColor: "rgba(12, 187, 91, 0.497)",
-                              color: "white",
-                              padding: "5px 10px",
-                              border: "none",
-                              cursor: "pointer",
-                            }}
-                          >
-                            Calc
-                          </button>
-                        </td>
-                        <td>
-                          {typeof rating === "number"
-                            ? `${rating.toFixed(2)}%`
-                            : "-"}
-                        </td>
-                        <td>
-                          {bookmakerImages[bookmaker] ? (
-                            <Image
-                              src={bookmakerImages[bookmaker]}
-                              alt={bookmaker}
-                              width={80}
-                              height={80}
-                              style={{ objectFit: "contain" }}
-                            />
-                          ) : (
-                            bookmaker
-                          )}
-                        </td>
-                        <td>{formatPrice(favor)}</td>
-                        <td>
+        {/* Filtros */}
+        <div className="oddsmatcher__filterData" style={{ display: "flex", gap: "10px" }}>
+          <label className="oddsMatcher__label">
+            Evento
+            <input
+              type="text"
+              value={eventFilter}
+              onChange={(e) => setEventFilter(e.target.value)}
+              placeholder="Ej: Rosario vs Andes"
+              style={{ marginLeft: "5px", padding: "5px" }}
+            />
+          </label>
+          <label className="oddsMatcher__label">
+            Deporte
+            <select
+              value={sportFilter}
+              onChange={(e) => setSportFilter(e.target.value)}
+              style={{ marginLeft: "5px", padding: "5px" }}
+            >
+              <option value="">Todos</option>
+              <option value="football">Fútbol</option>
+              <option value="basketball">Baloncesto</option>
+            </select>
+          </label>
+          <label className="oddsMatcher__label">
+            Bookmaker
+            <select
+              value={bookmakerFilter}
+              onChange={(e) => setBookmakerFilter(e.target.value)}
+            >
+              <option value="">Todos</option>
+              {availableBookmakers.map((bookmaker) => (
+                <option key={bookmaker} value={bookmaker}>
+                  {bookmaker}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label className="oddsMatcher__label">
+            Rating
+            <button
+              onClick={handleOpenRatingModal}
+              style={{
+                marginLeft: "5px",
+                padding: "5px 10px",
+                backgroundColor: "rgba(12, 187, 91, 0.497)",
+                color: "white",
+                border: "none",
+                cursor: "pointer",
+              }}
+            >
+              Configurar
+            </button>
+          </label>
+        </div>
+        <div className="table-wrapper">
+          <table className="betting-table">
+            <thead>
+              <tr>
+                <th>FECHA/HORA</th>
+                <th>DEPORTE</th>
+                <th>EVENTO</th>
+                <th>APUESTA</th>
+                <th>CALC</th>
+                <th>RATING (%)</th>
+                <th>BOOKMAKER</th>
+                <th>FAVOR</th>
+                <th>EXCHANGE</th>
+                <th>CONTRA</th>
+                <th>LIQUIDEZ</th>
+              </tr>
+            </thead>
+            <tbody>
+              {currentItems.map(
+                (
+                  {
+                    event,
+                    bookmaker,
+                    date,
+                    tournamentId,
+                    apuesta,
+                    rating,
+                    favor,
+                    contra,
+                    liquidez,
+                  },
+                  index
+                ) => {
+                  const sportImage = getSportImage(tournamentId);
+                  return (
+                    <tr
+                      key={`${event.eventId}-${bookmaker}-${apuesta}-${index}`}
+                    >
+                      <td>{date}</td>
+                      <td>
+                        {sportImage ? (
                           <Image
-                            src={bookmakerImages["betfair-ex"]}
-                            alt="Betfair Exchange"
+                            src={sportImage}
+                            alt="Sport"
+                            width={20}
+                            height={20}
+                            style={{ objectFit: "contain" }}
+                          />
+                        ) : (
+                          "-"
+                        )}
+                      </td>
+                      <td>{`${event.participant1} vs ${event.participant2}`}</td>
+                      <td>{apuesta}</td>
+                      <td>
+                        <button
+                          onClick={() =>
+                            handleOpenCalculator({
+                              event,
+                              bookmaker,
+                              date,
+                              tournamentId,
+                              apuesta,
+                              rating,
+                              favor,
+                              contra,
+                              liquidez,
+                            })
+                          }
+                          style={{
+                            backgroundColor: "rgba(12, 187, 91, 0.497)",
+                            color: "white",
+                            padding: "5px 10px",
+                            border: "none",
+                            cursor: "pointer",
+                          }}
+                        >
+                          Calc
+                        </button>
+                      </td>
+                      <td>
+                        {rating === -Infinity ? "-" : `${rating.toFixed(2)}%`}
+                      </td>
+                      <td>
+                        {bookmakerImages[bookmaker] ? (
+                          <Image
+                            src={bookmakerImages[bookmaker]}
+                            alt={bookmaker}
                             width={80}
                             height={80}
                             style={{ objectFit: "contain" }}
                           />
-                        </td>
-                        <td>{formatPrice(contra)}</td>
-                        <td>{formatPrice(liquidez)}</td>
-                      </tr>
-                    );
-                  }
-                )}
-              </tbody>
-            </table>
-          </div>
-          <div style={{ marginTop: "20px", textAlign: "center" }}>
-            <button
-              onClick={goToPreviousPage}
-              disabled={currentPage === 1}
-              style={{
-                backgroundColor: "rgba(12, 187, 91, 0.497)",
-                color: "white",
-                marginRight: "10px",
-                padding: "5px 10px",
-              }}
-            >
-              Anterior
-            </button>
-            <span>
-              Página {currentPage} de {totalPages}
-            </span>
-            <button
-              onClick={goToNextPage}
-              disabled={currentPage === totalPages}
-              style={{
-                backgroundColor: "rgba(12, 187, 91, 0.497)",
-                color: "white",
-                marginLeft: "10px",
-                padding: "5px 10px",
-              }}
-            >
-              Siguiente
-            </button>
-            <p style={{ marginTop: "10px" }}>
-              Mostrando {startIndex + 1} - {Math.min(endIndex, totalItems)} de{" "}
-              {totalItems} resultados
-            </p>
-          </div>
+                        ) : (
+                          bookmaker
+                        )}
+                      </td>
+                      <td>{formatPrice(favor)}</td>
+                      <td>
+                        <Image
+                          src={bookmakerImages["betfair-ex"]}
+                          alt="Betfair Exchange"
+                          width={80}
+                          height={80}
+                          style={{ objectFit: "contain" }}
+                        />
+                      </td>
+                      <td>{formatPrice(contra)}</td>
+                      <td>{formatPrice(liquidez)}</td>
+                    </tr>
+                  );
+                }
+              )}
+            </tbody>
+          </table>
         </div>
-        {/* Conditionally render Calculator */}
-        {selectedEvent && (
-          <Calculator
-            eventData={selectedEvent}
-            onClose={handleCloseCalculator}
-          />
-        )}
-      </>
+        <div style={{ marginTop: "20px", textAlign: "center" }}>
+          <button
+            onClick={goToPreviousPage}
+            disabled={currentPage === 1}
+            style={{
+              backgroundColor: "rgba(12, 187, 91, 0.497)",
+              color: "white",
+              marginRight: "10px",
+              padding: "5px 10px",
+            }}
+          >
+            Anterior
+          </button>
+          <span>
+            Página {currentPage} de {totalPages}
+          </span>
+          <button
+            onClick={goToNextPage}
+            disabled={currentPage === totalPages}
+            style={{
+              backgroundColor: "rgba(12, 187, 91, 0.497)",
+              color: "white",
+              marginLeft: "10px",
+              padding: "5px 10px",
+            }}
+          >
+            Siguiente
+          </button>
+          <p style={{ marginTop: "10px" }}>
+            Mostrando {startIndex + 1} - {Math.min(endIndex, totalItems)} de{" "}
+            {totalItems} resultados
+          </p>
+        </div>
+      </div>
+      {selectedEvent && (
+        <Calculator
+          eventData={selectedEvent}
+          onClose={handleCloseCalculator}
+        />
+      )}
+      {ratingModalOpen && <RatingModal />}
     </div>
   );
 }
