@@ -12,6 +12,9 @@ import {
 } from "../../lib/atom";
 import NavBar from "@/components/NavBar";
 import Calculator from "@/components/Calculator";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { StarRate, AccountBalance, FilterList } from "@mui/icons-material";
 
 export default function DataDisplay() {
   const [tournamentsData] = useAtom(tournamentsDataAtom);
@@ -25,6 +28,8 @@ export default function DataDisplay() {
   const [bookmakerFilter, setBookmakerFilter] = useState("");
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [ratingModalOpen, setRatingModalOpen] = useState(false);
+  const [commissionModalOpen, setCommissionModalOpen] = useState(false);
+  const [filterModalOpen, setFilterModalOpen] = useState(false);
   const [selectedBetType, setSelectedBetType] = useState("Dinero real");
   const [ratingInputs, setRatingInputs] = useState({
     favorImporte: "100",
@@ -37,7 +42,22 @@ export default function DataDisplay() {
   });
   const [tempRatingInputs, setTempRatingInputs] = useState({ ...ratingInputs });
   const [activeTab, setActiveTab] = useState("Dinero real");
+  const [sortConfig, setSortConfig] = useState({ key: "rating", direction: "desc" });
   const itemsPerPage = 15;
+
+  // Estados para filtros
+  const [commission, setCommission] = useState(0.7);
+  const [tempCommission, setTempCommission] = useState(commission);
+  const [filterInputs, setFilterInputs] = useState({
+    ratingMin: "",
+    ratingMax: "",
+    oddsMin: "",
+    oddsMax: "",
+    dateStart: null,
+    dateEnd: null,
+    minLiquidity: "",
+  });
+  const [tempFilterInputs, setTempFilterInputs] = useState({ ...filterInputs });
 
   const bookmakerImages = {
     bet365:
@@ -65,63 +85,72 @@ export default function DataDisplay() {
       "https://res.cloudinary.com/dc5zbh38m/image/upload/v1743784289/BASKET_hrcizl.png",
   };
 
-  // Calculations Logic from Calculator.jsx
+  // Lógica de ordenamiento
+  const handleSort = (key) => {
+    setSortConfig((prev) => {
+      if (prev.key === key && prev.direction === "asc") {
+        return { key, direction: "desc" };
+      } else {
+        return { key, direction: "asc" };
+      }
+    });
+  };
+
+  // Cálculos
   const calculateTooltipValues = (inputs, betType, favorCuota, contraCuota) => {
     const favorImporte = parseFloat(inputs.favorImporte) || 0;
     const favorCuotaValue = parseFloat(favorCuota) || 0;
     const contraCuotaValue = parseFloat(contraCuota) || 0;
-    const commissionInput = parseFloat(inputs.contraImporte) || 0;
+    const commissionInput = betType === "Apuesta gratis" ? 0.07 : parseFloat(inputs.contraImporte) / 100;
     const dineroReal = parseFloat(inputs.dineroReal) || 0;
     const bonos = parseFloat(inputs.bonos) || 0;
     const rolloverRestante = parseFloat(inputs.rolloverRestante) || 0;
     const ratingFuturo = parseFloat(inputs.ratingFuturo) || 0;
     const importeReembolso = parseFloat(inputs.importeReembolso) || 0;
 
-    const commission = betType === "Apuesta gratis" ? 0.07 : commissionInput / 100;
-
     let contraAmount, favorBookmakerProfit, favorBetfairProfit, favorTotal;
     let contraBookmakerProfit, contraBetfairProfit, contraTotal;
 
     if (betType === "Dinero real") {
       contraAmount =
-        (favorImporte * favorCuotaValue) / (contraCuotaValue - commission) || 0;
+        (favorImporte * favorCuotaValue) / (contraCuotaValue - commissionInput) || 0;
       favorBookmakerProfit = favorImporte * favorCuotaValue - favorImporte;
       favorBetfairProfit = -(contraAmount * (contraCuotaValue - 1));
       favorTotal = favorBookmakerProfit + favorBetfairProfit;
       contraBookmakerProfit = -favorImporte;
-      contraBetfairProfit = contraAmount * (1 - commission);
+      contraBetfairProfit = contraAmount * (1 - commissionInput);
       contraTotal = contraBookmakerProfit + contraBetfairProfit;
     } else if (betType === "Apuesta gratis") {
       contraAmount =
-        (favorImporte * (favorCuotaValue - 1)) / (contraCuotaValue - commission) || 0;
+        (favorImporte * (favorCuotaValue - 1)) / (contraCuotaValue - commissionInput) || 0;
       favorBookmakerProfit = favorImporte * favorCuotaValue - favorImporte;
       favorBetfairProfit = -(contraAmount * (contraCuotaValue - 1));
       favorTotal = favorBookmakerProfit + favorBetfairProfit;
       contraBookmakerProfit = 0;
-      contraBetfairProfit = contraAmount * (1 - commission);
+      contraBetfairProfit = contraAmount * (1 - commissionInput);
       contraTotal = contraBookmakerProfit + contraBetfairProfit;
     } else if (betType === "RollOver") {
       const totalFavorImporte = dineroReal + bonos;
       contraAmount =
         ((totalFavorImporte * favorCuotaValue) -
          Math.max(0, rolloverRestante - totalFavorImporte) * (1 - ratingFuturo)) /
-        (contraCuotaValue - commission) || 0;
+        (contraCuotaValue - commissionInput) || 0;
       favorBookmakerProfit =
         ((totalFavorImporte * favorCuotaValue) - dineroReal) -
         Math.max(0, (rolloverRestante - totalFavorImporte) * (1 - ratingFuturo));
       favorBetfairProfit = -(contraAmount * (contraCuotaValue - 1));
       favorTotal = favorBookmakerProfit + favorBetfairProfit;
       contraBookmakerProfit = -dineroReal;
-      contraBetfairProfit = contraAmount * (1 - commission);
+      contraBetfairProfit = contraAmount * (1 - commissionInput);
       contraTotal = contraBookmakerProfit + contraBetfairProfit;
     } else if (betType === "Reembolso") {
       contraAmount =
-        ((favorImporte * favorCuotaValue) - importeReembolso) / (contraCuotaValue - commission) || 0;
+        ((favorImporte * favorCuotaValue) - importeReembolso) / (contraCuotaValue - commissionInput) || 0;
       favorBookmakerProfit = favorImporte * favorCuotaValue - favorImporte;
       favorBetfairProfit = -(contraAmount * (contraCuotaValue - 1));
       favorTotal = favorBookmakerProfit + favorBetfairProfit;
       contraBookmakerProfit = importeReembolso - favorImporte;
-      contraBetfairProfit = contraAmount * (1 - commission);
+      contraBetfairProfit = contraAmount * (1 - commissionInput);
       contraTotal = contraBookmakerProfit + contraBetfairProfit;
     }
 
@@ -171,7 +200,7 @@ export default function DataDisplay() {
   };
 
   const getEventBookmakerOutcomeTriples = () => {
-    const triples = [];
+    let triples = [];
     let eventCount = 0;
 
     tournamentsData.forEach((tournament) => {
@@ -241,6 +270,7 @@ export default function DataDisplay() {
 
             const favorCuota = data.bookmakers[bookmaker].price;
             const contraCuota = data.bookmakers["betfair-ex"].price;
+            const liquidez = data.bookmakers["betfair-ex"].limit || "-";
             const tooltipValues = calculateTooltipValues(ratingInputs, selectedBetType, favorCuota, contraCuota);
             const rating = calculateRating(
               ratingInputs,
@@ -251,6 +281,15 @@ export default function DataDisplay() {
               contraCuota
             );
 
+            // Aplicar filtros
+            if (rating !== "-" && filterInputs.ratingMin && parseFloat(rating) < parseFloat(filterInputs.ratingMin)) return;
+            if (rating !== "-" && filterInputs.ratingMax && parseFloat(rating) > parseFloat(filterInputs.ratingMax)) return;
+            if (filterInputs.oddsMin && favorCuota < parseFloat(filterInputs.oddsMin)) return;
+            if (filterInputs.oddsMax && favorCuota > parseFloat(filterInputs.oddsMax)) return;
+            if (filterInputs.dateStart && new Date(eventOdds.date) < filterInputs.dateStart) return;
+            if (filterInputs.dateEnd && new Date(eventOdds.date) > filterInputs.dateEnd) return;
+            if (filterInputs.minLiquidity && liquidez !== "-" && parseFloat(liquidez) < parseFloat(filterInputs.minLiquidity)) return;
+
             triples.push({
               event,
               bookmaker,
@@ -258,9 +297,9 @@ export default function DataDisplay() {
               tournamentId: tournament.tournamentId,
               apuesta: name,
               rating: rating === "-" ? -Infinity : parseFloat(rating),
-              favor: data.bookmakers[bookmaker].price,
-              contra: data.bookmakers["betfair-ex"].price,
-              liquidez: data.bookmakers["betfair-ex"].limit || "-gallery",
+              favor: favorCuota,
+              contra: contraCuota,
+              liquidez,
               sportType,
             });
           });
@@ -268,8 +307,27 @@ export default function DataDisplay() {
       });
     });
 
-    // Sort by rating in descending order
-    triples.sort((a, b) => b.rating - a.rating);
+    // Ordenar según sortConfig
+    triples.sort((a, b) => {
+      let aValue = a[sortConfig.key];
+      let bValue = b[sortConfig.key];
+
+      if (sortConfig.key === "date") {
+        aValue = new Date(aValue).getTime();
+        bValue = new Date(bValue).getTime();
+      } else if (sortConfig.key === "liquidez") {
+        aValue = aValue === "-" ? -Infinity : parseFloat(aValue);
+        bValue = bValue === "-" ? -Infinity : parseFloat(bValue);
+      } else if (sortConfig.key === "event") {
+        aValue = `${a.event.participant1} vs ${a.event.participant2}`.toLowerCase();
+        bValue = `${b.event.participant1} vs ${b.event.participant2}`.toLowerCase();
+      }
+
+      if (aValue < bValue) return sortConfig.direction === "asc" ? -1 : 1;
+      if (aValue > bValue) return sortConfig.direction === "asc" ? 1 : -1;
+      return 0;
+    });
+
     return triples;
   };
 
@@ -334,13 +392,51 @@ export default function DataDisplay() {
   const handleApplyRating = () => {
     setRatingInputs({ ...tempRatingInputs });
     setSelectedBetType(activeTab);
-    setCurrentPage(1); // Reset to first page after applying
+    setCurrentPage(1);
     setRatingModalOpen(false);
   };
 
   const handleRatingInputChange = (e) => {
     const { name, value } = e.target;
     setTempRatingInputs((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleOpenCommissionModal = () => {
+    setTempCommission(commission);
+    setCommissionModalOpen(true);
+  };
+
+  const handleCloseCommissionModal = () => {
+    setCommissionModalOpen(false);
+  };
+
+  const handleApplyCommission = () => {
+    setCommission(tempCommission);
+    setCurrentPage(1);
+    setCommissionModalOpen(false);
+  };
+
+  const handleOpenFilterModal = () => {
+    setTempFilterInputs({ ...filterInputs });
+    setFilterModalOpen(true);
+  };
+
+  const handleCloseFilterModal = () => {
+    setFilterModalOpen(false);
+  };
+
+  const handleApplyFilter = () => {
+    setFilterInputs({ ...tempFilterInputs });
+    setCurrentPage(1);
+    setFilterModalOpen(false);
+  };
+
+  const handleFilterInputChange = (e) => {
+    const { name, value } = e.target;
+    setTempFilterInputs((prev) => ({
       ...prev,
       [name]: value,
     }));
@@ -496,51 +592,170 @@ export default function DataDisplay() {
     </div>
   );
 
+  const CommissionModal = () => (
+    <div className="modal-overlay" style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, backgroundColor: "rgba(0,0,0,0.5)", display: "flex", justifyContent: "center", alignItems: "center", zIndex: 1000 }}>
+      <div className="modal-content" style={{ backgroundColor: "white", padding: "20px", borderRadius: "5px", width: "400px", maxWidth: "90%" }} onClick={(e) => e.stopPropagation()}>
+        <h2 style={{ marginBottom: "10px" }}>Configurar Comisión</h2>
+        <div className="tab-content" style={{ marginBottom: "20px" }}>
+          <label style={{ display: "block", marginBottom: "10px" }}>
+            Comisión (%)
+            <input
+              type="text"
+              value={tempCommission}
+              onChange={(e) => setTempCommission(e.target.value)}
+              style={{ width: "100%", padding: "5px", marginTop: "5px" }}
+            />
+          </label>
+        </div>
+        <div className="modal-buttons" style={{ display: "flex", justifyContent: "flex-end" }}>
+          <button
+            onClick={handleCloseCommissionModal}
+            style={{
+              padding: "10px 20px",
+              marginRight: "10px",
+              backgroundColor: "#ccc",
+              border: "none",
+              cursor: "pointer",
+            }}
+          >
+            Cancelar
+          </button>
+          <button
+            onClick={handleApplyCommission}
+            style={{
+              padding: "10px 20px",
+              backgroundColor: "#00A500",
+              color: "white",
+              border: "none",
+              cursor: "pointer",
+            }}
+          >
+            Aplicar
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+
+  const FilterModal = () => (
+    <div className="modal-overlay" style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, backgroundColor: "rgba(0,0,0,0.5)", display: "flex", justifyContent: "center", alignItems: "center", zIndex: 1000 }}>
+      <div className="modal-content" style={{ backgroundColor: "white", padding: "20px", borderRadius: "5px", width: "400px", maxWidth: "90%" }} onClick={(e) => e.stopPropagation()}>
+        <h2 style={{ marginBottom: "10px" }}>Configurar Filtros</h2>
+        <div className="tab-content" style={{ marginBottom: "20px" }}>
+          <label style={{ display: "block", marginBottom: "10px" }}>
+            Rating (%) desde
+            <div style={{ display: "flex", gap: "5px" }}>
+              <input
+                type="text"
+                name="ratingMin"
+                value={tempFilterInputs.ratingMin}
+                onChange={handleFilterInputChange}
+                placeholder="Mín"
+                style={{ width: "50%", padding: "5px", marginTop: "5px" }}
+              />
+              <input
+                type="text"
+                name="ratingMax"
+                value={tempFilterInputs.ratingMax}
+                onChange={handleFilterInputChange}
+                placeholder="Máx"
+                style={{ width: "50%", padding: "5px", marginTop: "5px" }}
+              />
+            </div>
+          </label>
+          <label style={{ display: "block", marginBottom: "10px" }}>
+            Cuotas Bookmaker desde
+            <div style={{ display: "flex", gap: "5px" }}>
+              <input
+                type="text"
+                name="oddsMin"
+                value={tempFilterInputs.oddsMin}
+                onChange={handleFilterInputChange}
+                placeholder="Mín"
+                style={{ width: "50%", padding: "5px", marginTop: "5px" }}
+              />
+              <input
+                type="text"
+                name="oddsMax"
+                value={tempFilterInputs.oddsMax}
+                onChange={handleFilterInputChange}
+                placeholder="Máx"
+                style={{ width: "50%", padding: "5px", marginTop: "5px" }}
+              />
+            </div>
+          </label>
+          <label style={{ display: "block", marginBottom: "10px" }}>
+            Fecha/Hora desde
+            <div style={{ display: "flex", gap: "5px" }}>
+              <DatePicker
+                selected={tempFilterInputs.dateStart}
+                onChange={(date) => setTempFilterInputs({ ...tempFilterInputs, dateStart: date })}
+                showTimeSelect
+                dateFormat="Pp"
+                placeholderText="Desde"
+                style={{ width: "50%", padding: "5px", marginTop: "5px" }}
+              />
+              <DatePicker
+                selected={tempFilterInputs.dateEnd}
+                onChange={(date) => setTempFilterInputs({ ...tempFilterInputs, dateEnd: date })}
+                showTimeSelect
+                dateFormat="Pp"
+                placeholderText="A"
+                style={{ width: "50%", padding: "5px", marginTop: "5px" }}
+              />
+            </div>
+          </label>
+          <label style={{ display: "block", marginBottom: "10px" }}>
+            Liquidez mínima (€)
+            <input
+              type="text"
+              name="minLiquidity"
+              value={tempFilterInputs.minLiquidity}
+              onChange={handleFilterInputChange}
+              placeholder="Mín €"
+              style={{ width: "100%", padding: "5px", marginTop: "5px" }}
+            />
+          </label>
+        </div>
+        <div className="modal-buttons" style={{ display: "flex", justifyContent: "flex-end" }}>
+          <button
+            onClick={handleCloseFilterModal}
+            style={{
+              padding: "10px 20px",
+              marginRight: "10px",
+              backgroundColor: "#ccc",
+              border: "none",
+              cursor: "pointer",
+            }}
+          >
+            Cancelar
+          </button>
+          <button
+            onClick={handleApplyFilter}
+            style={{
+              padding: "10px 20px",
+              backgroundColor: "#00A500",
+              color: "white",
+              border: "none",
+              cursor: "pointer",
+            }}
+          >
+            Aplicar
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <div className="oddsMatcher__cont">
       <NavBar />
       <div className="me__content betting-table-container">
         <h2 className="betting-table-title">OddsMatcher</h2>
 
-        {/* Filtros */}
-        <div className="oddsmatcher__filterData" style={{ display: "flex", gap: "10px" }}>
-          <label className="oddsMatcher__label">
-            Evento
-            <input
-              type="text"
-              value={eventFilter}
-              onChange={(e) => setEventFilter(e.target.value)}
-              placeholder="Ej: Rosario vs Andes"
-              style={{ marginLeft: "5px", padding: "5px" }}
-            />
-          </label>
-          <label className="oddsMatcher__label">
-            Deporte
-            <select
-              value={sportFilter}
-              onChange={(e) => setSportFilter(e.target.value)}
-              style={{ marginLeft: "5px", padding: "5px" }}
-            >
-              <option value="">Todos</option>
-              <option value="football">Fútbol</option>
-              <option value="basketball">Baloncesto</option>
-            </select>
-          </label>
-          <label className="oddsMatcher__label">
-            Bookmaker
-            <select
-              value={bookmakerFilter}
-              onChange={(e) => setBookmakerFilter(e.target.value)}
-            >
-              <option value="">Todos</option>
-              {availableBookmakers.map((bookmaker) => (
-                <option key={bookmaker} value={bookmaker}>
-                  {bookmaker}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label className="oddsMatcher__label">
+        {/* Filtros Superiores */}
+        <div className="oddsmatcher__filterData" style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+          <label className="oddsMatcher__label" style={{ width: "150px" }}>
             Rating
             <button
               onClick={handleOpenRatingModal}
@@ -551,27 +766,136 @@ export default function DataDisplay() {
                 color: "white",
                 border: "none",
                 cursor: "pointer",
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
               }}
             >
-              Configurar
+              <StarRate style={{ marginRight: "5px" }} />
+              Rating
+            </button>
+          </label>
+          <label className="oddsMatcher__label" style={{ width: "150px" }}>
+            Comisión
+            <button
+              onClick={handleOpenCommissionModal}
+              style={{
+                marginLeft: "5px",
+                padding: "5px 10px",
+                backgroundColor: "rgba(12, 187, 91, 0.497)",
+                color: "white",
+                border: "none",
+                cursor: "pointer",
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <AccountBalance style={{ marginRight: "5px" }} />
+              Comisión ({commission}%)
+            </button>
+          </label>
+          <label className="oddsMatcher__label" style={{ width: "150px" }}>
+            Filtro
+            <button
+              onClick={handleOpenFilterModal}
+              style={{
+                marginLeft: "5px",
+                padding: "5px 10px",
+                backgroundColor: "rgba(12, 187, 91, 0.497)",
+                color: "white",
+                border: "none",
+                cursor: "pointer",
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <FilterList style={{ marginRight: "5px" }} />
+              Filtro
             </button>
           </label>
         </div>
+
+        {/* Filtros Inferiores */}
+        <div className="oddsmatcher__filterData" style={{ display: "flex", gap: "10px" }}>
+          <label className="oddsMatcher__label" style={{ width: "150px" }}>
+            Evento
+            <input
+              type="text"
+              value={eventFilter}
+              onChange={(e) => setEventFilter(e.target.value)}
+              placeholder="Ej: Rosario vs Andes"
+              style={{ marginLeft: "5px", padding: "5px", width: "100%" }}
+            />
+          </label>
+          <label className="oddsMatcher__label" style={{ width: "150px" }}>
+            Deporte
+            <select
+              value={sportFilter}
+              onChange={(e) => setSportFilter(e.target.value)}
+              style={{ marginLeft: "5px", padding: "5px", width: "100%" }}
+            >
+              <option value="">Todos</option>
+              <option value="football">Fútbol</option>
+              <option value="basketball">Baloncesto</option>
+            </select>
+          </label>
+          <label className="oddsMatcher__label" style={{ width: "150px" }}>
+            Bookmaker
+            <select
+              value={bookmakerFilter}
+              onChange={(e) => setBookmakerFilter(e.target.value)}
+              style={{ marginLeft: "5px", padding: "5px", width: "100%" }}
+            >
+              <option value="">Todos</option>
+              {availableBookmakers.map((bookmaker) => (
+                <option key={bookmaker} value={bookmaker}>
+                  {bookmaker}
+                </option>
+              ))}
+            </select>
+          </label>
+        </div>
+
         <div className="table-wrapper">
           <table className="betting-table">
             <thead>
               <tr>
-                <th>FECHA/HORA</th>
-                <th>DEPORTE</th>
-                <th>EVENTO</th>
-                <th>APUESTA</th>
+                <th onClick={() => handleSort("date")} style={{ cursor: "pointer" }}>
+                  FECHA/HORA {sortConfig.key === "date" && (sortConfig.direction === "asc" ? "↑" : "↓")}
+                </th>
+                <th onClick={() => handleSort("sportType")} style={{ cursor: "pointer" }}>
+                  DEPORTE {sortConfig.key === "sportType" && (sortConfig.direction === "asc" ? "↑" : "↓")}
+                </th>
+                <th onClick={() => handleSort("event")} style={{ cursor: "pointer" }}>
+                  EVENTO {sortConfig.key === "event" && (sortConfig.direction === "asc" ? "↑" : "↓")}
+                </th>
+                <th onClick={() => handleSort("apuesta")} style={{ cursor: "pointer" }}>
+                  APUESTA {sortConfig.key === "apuesta" && (sortConfig.direction === "asc" ? "↑" : "↓")}
+                </th>
                 <th>CALC</th>
-                <th>RATING (%)</th>
-                <th>BOOKMAKER</th>
-                <th>FAVOR</th>
-                <th>EXCHANGE</th>
-                <th>CONTRA</th>
-                <th>LIQUIDEZ</th>
+                <th onClick={() => handleSort("rating")} style={{ cursor: "pointer" }}>
+                  RATING (%) {sortConfig.key === "rating" && (sortConfig.direction === "asc" ? "↑" : "↓")}
+                </th>
+                <th onClick={() => handleSort("bookmaker")} style={{ cursor: "pointer" }}>
+                  BOOKMAKER {sortConfig.key === "bookmaker" && (sortConfig.direction === "asc" ? "↑" : "↓")}
+                </th>
+                <th onClick={() => handleSort("favor")} style={{ cursor: "pointer" }}>
+                  FAVOR {sortConfig.key === "favor" && (sortConfig.direction === "asc" ? "↑" : "↓")}
+                </th>
+                <th onClick={() => handleSort("exchange")} style={{ cursor: "pointer" }}>
+                  EXCHANGE {sortConfig.key === "exchange" && (sortConfig.direction === "asc" ? "↑" : "↓")}
+                </th>
+                <th onClick={() => handleSort("contra")} style={{ cursor: "pointer" }}>
+                  CONTRA {sortConfig.key === "contra" && (sortConfig.direction === "asc" ? "↑" : "↓")}
+                </th>
+                <th onClick={() => handleSort("liquidez")} style={{ cursor: "pointer" }}>
+                  LIQUIDEZ {sortConfig.key === "liquidez" && (sortConfig.direction === "asc" ? "↑" : "↓")}
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -713,6 +1037,8 @@ export default function DataDisplay() {
         />
       )}
       {ratingModalOpen && <RatingModal />}
+      {commissionModalOpen && <CommissionModal />}
+      {filterModalOpen && <FilterModal />}
     </div>
   );
 }

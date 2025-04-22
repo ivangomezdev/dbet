@@ -39,6 +39,7 @@
     "puppeteer": "^24.4.0",
     "react": "^19.0.0",
     "react-cookie": "^8.0.1",
+    "react-datepicker": "^8.3.0",
     "react-dom": "^19.0.0",
     "react-material-ui-carousel": "^3.4.2",
     "resend": "^4.1.2",
