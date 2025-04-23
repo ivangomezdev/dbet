@@ -149,7 +149,7 @@ function NavBar() {
           </Box>
           {cookies.token || session ? (
             <Link style={{ textDecoration: "none" }} href={"/me"}>
-         <button style={{backgroundColor:" rgba(0, 0, 0, 0.408)",borderColor:" rgba(0, 0, 0, 0.408)",color:"white",fontWeight:"bold",borderRadius:"15px",marginRight:"30px",borderRadius:"5px"}}><AccountCircleIcon/></button>
+         <button style={{backgroundColor:" rgba(0, 0, 0, 0.408)",borderColor:" rgba(0, 0, 0, 0.408)",color:"white",fontWeight:"bold",marginRight:"30px",borderRadius:"5px"}}><AccountCircleIcon/></button>
             </Link>
           ) : (
             <Link style={{ textDecoration: "none" }} href={"/auth/register"}>
