@@ -5,8 +5,8 @@ const AboutLine = () => {
     <div className="aboutLine__cont">
 
     <q className="aboutLine__q">
-        El matched betting es una técnica matemática que te permite de ganar
-        dinero convirtiendo los bonos de los corredores de apuestas en dinero
+        El matched betting es una técnica que permite ganar
+        dinero convirtiendo los bonos de los corredores en dinero
         real.
       </q>
     </div>

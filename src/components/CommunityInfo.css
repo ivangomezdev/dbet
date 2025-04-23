@@ -666,7 +666,7 @@ width: 330px !important;
 
  .communityInfo__quantity h1{
   font-size: 30px;
-  
+  text-shadow: 1px 1px 2px #ffffff;
  }
 
 
@@ -676,8 +676,8 @@ width: 330px !important;
 
  
  .communityInfo__text button{
- background-color: #054e3483;
-
+ background-color: #054e34;
+ text-shadow: 1px 1px 2px #ffffff;
  }
 
 }
@@ -699,12 +699,13 @@ width: 330px !important;
 
 .communityInfo__text  h1{
 
-  animation: neonAnim 2s alternate-reverse infinite;
+  text-shadow: 1px 1px 2px #07E88A;
   color: #07E88A;
 }
 
 .communityInfo__quantity h1{
   
-  animation: neonAnim 2s alternate-reverse infinite;
+ 
+  text-shadow: 1px 1px 2px #07E88A;
   color: #07E88A;
 }
