@@ -6,7 +6,7 @@ import Footer from "@/components/Footer";
 import HowWorks from "@/components/HowWorks";
 import ImageTextContainer from "@/components/ImageTextContainer";
 import InfoBet from "@/components/InfoBet";
-import NavBar from "@/components/NavBar";
+
 import SubscriptionCard from "@/components/SubscriptionCard";
 import WorldFlags from "@/components/WorldFlags";
 
@@ -16,7 +16,7 @@ export default function Home() {
   return (
     <>
     <header>
-      <NavBar />
+      
       </header>
       <main>
         <ImageTextContainer />

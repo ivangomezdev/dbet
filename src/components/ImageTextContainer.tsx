@@ -3,6 +3,7 @@ import React from "react";
 import "./imageTextContainer.css";
 import PersonIcon from "@mui/icons-material/Person";
 import Link from "next/link";
+import NavBar from "./HeroNavBar";
 
 
 
@@ -10,7 +11,17 @@ const ImageTextContainer = () => {
   return (
     <div className="imageTextContainer__cont">
       {/* FogEffect is now inside the container */}
-
+        <NavBar/>
+      <div className="background-video-container">
+    <video
+    autoPlay
+    muted
+    loop
+    src="https://res.cloudinary.com/dc5zbh38m/video/upload/v1745374454/Gen-4_Turbo_quiero_que_el_video_se_mantenga_quieto_en_posicionamiento_solo_quiero_que_las_luces_parpadeen_desde_la_grada_3825668609_v2zd6c.mp4"
+    className="background-video"
+    />
+     
+  </div>
       <Image
         className="imageTextContainer__img"
         src={

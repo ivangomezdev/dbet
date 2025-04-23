@@ -1,7 +1,7 @@
 
 
 .navBar__bar{
-
+  opacity: 0.9;
     background-color: #054F36 !important;
 }
 
@@ -18,7 +18,26 @@
     filter: drop-shadow(2px 2px 4px rgba(255, 234, 0, 0.654)); /* Vuelve al original */
   }
 }
+.NavBarHero__SocialIcons {
+  background-color: black;
+  display: flex;
+  gap: 10px;
+}
 
+.NavBarHero__SocialIcons svg {
+  padding: 5px;
+  border: solid 1px gray;
+  border-radius: 50%;
+}
+
+.navBar__barHero {
+  background-color: rgba(0, 0, 0, 0.408) !important; /* Fondo negro semitransparente */
+  position: fixed !important; /* Asegura que esté en la parte superior */
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 999999999; /* Asegura que esté por encima del video */
+}
 
 
 .NavBar__RegisterBTN{
