@@ -13,6 +13,8 @@ import AdbIcon from "@mui/icons-material/Adb";
 import TelegramIcon from "@mui/icons-material/Telegram";
 import XIcon from "@mui/icons-material/X";
 import YouTubeIcon from "@mui/icons-material/YouTube";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import HowToRegIcon from '@mui/icons-material/HowToReg';
 import "./navBar.css";
 import Link from "next/link";
 import { useCookies } from "react-cookie";
@@ -147,11 +149,11 @@ function NavBar() {
           </Box>
           {cookies.token || session ? (
             <Link style={{ textDecoration: "none" }} href={"/me"}>
-         <button style={{backgroundColor:"black",color:"white",border:"solid 1px gray",width:"80px",height:"30px",fontWeight:"bold",borderRadius:"5px",marginRight:"30px"}}>Usuario</button>
+         <button style={{backgroundColor:" rgba(0, 0, 0, 0.408)",borderColor:" rgba(0, 0, 0, 0.408)",color:"white",fontWeight:"bold",borderRadius:"15px",marginRight:"30px",borderRadius:"5px"}}><AccountCircleIcon/></button>
             </Link>
           ) : (
             <Link style={{ textDecoration: "none" }} href={"/auth/register"}>
-         <button style={{backgroundColor:"black",color:"white",border:"solid 1px gray",width:"80px",height:"30px",fontWeight:"bold",borderRadius:"5px",marginRight:"30px"}}>Registro</button>
+         <button style={{backgroundColor:" rgba(0, 0, 0, 0.408)",borderColor:" rgba(0, 0, 0, 0.408)",padding:"5px",color:"white",fontWeight:"bold",marginRight:"30px",borderRadius:"5px"}}><HowToRegIcon/></button>
             </Link>
           )}
           <div className="NavBarHero__SocialIcons">
