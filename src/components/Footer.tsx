@@ -28,9 +28,7 @@ const Footer = () => {
           <a href="/affiliates">AFILIADOS</a>
         </div>
 
-        <div className="payment-methods">
-          <Image src={"https://res.cloudinary.com/dc5zbh38m/image/upload/v1742344121/cards-e1469282911634_idl3g5.png"} alt="tc" height={45} width={250} />
-        </div>
+       
       </div>
 
       <div className="social-contact">

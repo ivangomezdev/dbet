@@ -55,7 +55,7 @@ export default async function BlogPage() {
       <main className="blog__main" >
           <h1 className="blog__title">BLOG</h1>
      
-          <p className="blog__subtitle">Atención: Si sigues leyendo este blog vas a ser expuesto a informaciones que te permitirán de convertirte en un xxxx con el Matched Betting. 😀</p>
+          <p className="blog__subtitle">Atención: Si sigues leyendo este blog vas a ser expuesto a informaciones que te permitirán de convertirte en un ZeroBetter con el Matched Betting. 😀</p>
           <div className="custom-shape-divider-bottom-1742425093">
     <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
         <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" className="shape-fill"></path>

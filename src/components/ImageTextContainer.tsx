@@ -33,10 +33,10 @@ const ImageTextContainer = () => {
       />
       <div className="imageTextContainer__text">
         <div className="imageTextContainer__texts">
-          <h1>Ganar Dinero Online</h1>
+          <h1>¿Aun no ganas dinero </h1>
           <h1 style={{ textAlign: "center" }}>Usando el</h1>
           <h1 className="thirdline" style={{ textAlign: "center" }}>
-            Matched Betting
+            Matched Betting?
           </h1>
         </div>
         <div className="imageTextContainer__btnAnda">

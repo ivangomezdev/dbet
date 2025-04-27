@@ -12,8 +12,9 @@ export default function InfoBet() {
       <div className="content-container">
         {/* Header */}
         <div className="header">
-          <h1 className="thirdline">xxxx Te Ofrece Todas Las Herramientas</h1>
-          <p>que necesitas para ganar dinero online de manera rápida y eficiente</p>
+          <h1 className="thirdline">ZeroBet Te Ofrece Todas Las Herramientas</h1>
+          <p>para empezar a ganar dinero online ahora de la forma mas facil!
+          </p>
         </div>
 
         {/* Features */}
@@ -54,31 +55,7 @@ export default function InfoBet() {
             </div>
           </div>
 
-          {/* Oddscrawler y Oddminer */}
-          <div className="feature-item">
-            <div className="feature-text">
 
-              <div>
-             
-                <h3>  <span className="number-circle">2</span> El Oddscrawler y El Oddminer</h3>
-                <p>
-                  Utiliza nuestras herramientas de comparación de cuotas para encontrar las mejores oportunidades de
-                  valor en el mercado. Te permite ver las cuotas de diferentes casas de apuestas para un mismo evento y
-                  elegir la mejor opción.
-                </p>
-              </div>
-            </div>
-            <div className="feature-images">
-              <Image
-                src="https://res.cloudinary.com/dc5zbh38m/image/upload/v1742504530/oddsmatcher-home_kgou3x.png"
-                alt="Comparador de cuotas"
-                width={430}
-                height={130}
-                className="feature-image-quotes"
-                style={{border:"none"}}
-              />
-            </div>
-          </div>
 
           {/* Calculadora y Multiplicador */}
           <div className="feature-item">
@@ -135,23 +112,8 @@ export default function InfoBet() {
         </div>
 
         {/* NinjaClub */}
-        <div className="ninja-club">
-          <h2 className="thirdline">El xxxx Club (beta)</h2>
-          <p>
-            Únete a nuestra comunidad de apostadores y comparte tus estrategias y consejos. Aprende de los mejores y
-            mejora tus resultados.
-          </p>
-
-          <div className="club-image-container">
-            <Image
-              src="/placeholder.svg?height=300&width=600"
-              alt="community"
-              width={600}
-              height={300}
-              className="club-image"
-            />
-          </div>
-        </div>
+       
+       
       </div>
     </div>
   )

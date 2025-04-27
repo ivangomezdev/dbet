@@ -8,8 +8,7 @@ import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
-import Button from "./Button"
-
+import Button from "./Button";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import TelegramIcon from "@mui/icons-material/Telegram";
@@ -18,7 +17,6 @@ import YouTubeIcon from "@mui/icons-material/YouTube";
 import "./navBar.css";
 import Link from "next/link";
 import { useCookies } from "react-cookie";
-
 import { useSession } from "next-auth/react";
 
 const pages2 = [
@@ -28,6 +26,7 @@ const pages2 = [
   { name: "Bonos", src: "/bonos" },
   { name: "OddsMatcher", src: "/oddsMatcher" },
 ];
+
 function NavBar() {
 
   const [cookies] = useCookies(["token"]); // Leer las cookies
@@ -74,7 +73,9 @@ function NavBar() {
               textDecoration: "none",
             }}
           >
-            LOGO
+          <Link style={{textDecoration:"none",color:"inherit",letterSpacing:"normal"}} href={"/"}>
+            ZeroBet
+            </Link>
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -132,7 +133,9 @@ function NavBar() {
               textDecoration: "none",
             }}
           >
-            LOGO
+            <Link style={{textDecoration:"none",color:"inherit",letterSpacing:"normal"}} href={"/"}>
+            ZeroBet
+            </Link>
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages2.map((page, index) => (

@@ -74,7 +74,9 @@ function NavBar() {
               textDecoration: "none",
             }}
           >
-            LOGO
+            <Link style={{textDecoration:"none",color:"inherit",letterSpacing:"normal"}} href={"/"}>
+            ZeroBet
+            </Link>
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -132,7 +134,9 @@ function NavBar() {
               textDecoration: "none",
             }}
           >
-            LOGO
+      <Link style={{textDecoration:"none",color:"inherit",letterSpacing:"normal"}} href={"/"}>
+                 ZeroBet
+                 </Link>
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages2.map((page, index) => (

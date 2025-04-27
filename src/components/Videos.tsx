@@ -114,7 +114,7 @@ export default function Videos() {
         <div className="guides__profile-avatar">
           <Image
             src={channelData.profileImage || "/placeholder.svg"}
-            alt={`XXXX LOGO`}
+            alt={`ZeroBet LOGO`}
             width={120}
             height={120}
             className="guides__profile-image"

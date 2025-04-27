@@ -32,14 +32,13 @@ const CommunityInfo = () => {
             />
           </div>
           <div className="communityInfo__text">
-            <h1>¡Únete a la Community de xxxx!</h1>
+            <h1>¡Únete a la Community de ZeroBet!</h1>
             <p>
-              xxxx es la primera community en España y Latinoamérica que te
-              ayuda a ganar un sueldo alternativo gracias al Matched Betting.
+              ZeroBet es la mejor comunidad en españa y latinoamerica que te ayuda a ganar un sueldo extra con el matched betting.
             </p>
             <p>
-              Regístrate gratis y gana tus primeros 120€ en España o 15US$ en
-              Latinoamérica.
+            Registrate gratis y gana tus primeros 1000€ hoy.
+
             </p>
             <strong>¡Garantizados!</strong>
             <Link  href={"/auth/register"}>
@@ -50,7 +49,7 @@ const CommunityInfo = () => {
             </Link>
           </div>
           <div className="communityInfo__quantity">
-            <h1>100,000,000€+</h1>
+            <h1>5.000.000€+</h1>
             <p>
               Generados por nuestros usuarios 😉{" "}
               <a href="">

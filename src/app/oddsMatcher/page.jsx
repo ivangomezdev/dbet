@@ -7,20 +7,16 @@ import Image from "next/image";
 import {
   tournamentsDataAtom,
   oddsDataAtom,
-  loadingAtom,
-  errorAtom,
 } from "../../lib/atom";
 import NavBar from "@/components/NavBar";
 import Calculator from "@/components/Calculator";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { StarRate, AccountBalance, FilterList } from "@mui/icons-material";
+import { StarRate, AccountBalance, FilterList, Calculate } from "@mui/icons-material";
 
 export default function DataDisplay() {
   const [tournamentsData] = useAtom(tournamentsDataAtom);
   const [oddsData] = useAtom(oddsDataAtom);
-  const [loading] = useAtom(loadingAtom);
-  const [error] = useAtom(errorAtom);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [eventFilter, setEventFilter] = useState("");
@@ -55,34 +51,38 @@ export default function DataDisplay() {
     oddsMax: "",
     dateStart: null,
     dateEnd: null,
-    minLiquidity: "",
   });
   const [tempFilterInputs, setTempFilterInputs] = useState({ ...filterInputs });
 
+  // Updated bookmakerImages, excluding bet365, Betfair Sportsbook, and Betfair Exchange
   const bookmakerImages = {
-    bet365:
-      "https://res.cloudinary.com/dc5zbh38m/image/upload/v1743783285/36_w0vbhc.gif",
-    "betfair-ex":
-      "https://res.cloudinary.com/dc5zbh38m/image/upload/v1742972626/betfair_qlonut.gif",
-    betway:
+    Bet365:"https://res.cloudinary.com/dc5zbh38m/image/upload/v1743783285/36_w0vbhc.gif",
+    Betway:
       "https://res.cloudinary.com/dc5zbh38m/image/upload/v1743783285/way_guaro0.png",
-    "leovegas.es":
+    "LeoVegas ES":
       "https://res.cloudinary.com/dc5zbh38m/image/upload/v1742972625/71_ij3po0.png",
-    "paf.es":
+    "PAF ES":
       "https://res.cloudinary.com/dc5zbh38m/image/upload/v1742972626/paf_r32yqs.png",
-    tonybet:
+    TonyBet:
       "https://res.cloudinary.com/dc5zbh38m/image/upload/v1742972625/105_kjtrkr.png",
     marcaapuestas:
       "https://res.cloudinary.com/dc5zbh38m/image/upload/v1742972622/marcaapuestas.png",
+    "Winamax FR":
+      "https://res.cloudinary.com/dc5zbh38m/image/upload/v1745713210/wiina_ntkzce.png",
   };
 
+  // Updated sportImages to use dynamic sport value from oddsData
   const sportImages = {
-    footballIds: [1024, 155, 325, 18, 24, 34, 35, 679, 7, 480, 384, 498],
-    basketballIds: [132],
-    footballImage:
-      "https://res.cloudinary.com/dc5zbh38m/image/upload/v1743784233/FOTBAL_wprepx.png",
-    basketballImage:
-      "https://res.cloudinary.com/dc5zbh38m/image/upload/v1743784289/BASKET_hrcizl.png",
+    Football: {
+      tournamentIds: [1024, 155, 325, 18, 24, 34, 35, 679, 7, 480, 384, 498],
+      image:
+        "https://res.cloudinary.com/dc5zbh38m/image/upload/v1743784233/FOTBAL_wprepx.png",
+    },
+    Basketball: {
+      tournamentIds: [132],
+      image:
+        "https://res.cloudinary.com/dc5zbh38m/image/upload/v1743784289/BASKET_hrcizl.png",
+    },
   };
 
   // Lógica de ordenamiento
@@ -96,7 +96,7 @@ export default function DataDisplay() {
     });
   };
 
-  // Cálculos
+  // Cálculos (from Calculator component)
   const calculateTooltipValues = (inputs, betType, favorCuota, contraCuota) => {
     const favorImporte = parseFloat(inputs.favorImporte) || 0;
     const favorCuotaValue = parseFloat(favorCuota) || 0;
@@ -158,7 +158,7 @@ export default function DataDisplay() {
       contraAmount: isNaN(contraAmount) ? 0 : contraAmount.toFixed(2),
       favor: {
         bookmaker: isNaN(favorBookmakerProfit) ? 0 : favorBookmakerProfit.toFixed(2),
-        betfair: isNaN(favorBetfairProfit) ? 0 : favorBetfairProfit.toFixed(2),
+        betfair: isNaN(favorBetfairProfit) ? 0 : favorBookmakerProfit.toFixed(2),
         total: isNaN(favorTotal) ? 0 : favorTotal.toFixed(2),
       },
       contra: {
@@ -169,7 +169,7 @@ export default function DataDisplay() {
     };
   };
 
-  const calculateRating = (inputs, betType, contraTotal, favorTotal, favorCuota, contraCuota) => {
+  const calculateRating = (inputs, betType, contraTotal, favorTotal) => {
     const favorImporte = parseFloat(inputs.favorImporte) || 0;
     const dineroReal = parseFloat(inputs.dineroReal) || 0;
     const bonos = parseFloat(inputs.bonos) || 0;
@@ -196,118 +196,102 @@ export default function DataDisplay() {
       rating = (contraTotalValue / effectiveImporte) * 100;
     }
 
-    return isNaN(rating) ? "-" : rating.toFixed(2);
+    return isNaN(rating) ? "-" : rating.toFixed(2) + "%";
   };
 
   const getEventBookmakerOutcomeTriples = () => {
     let triples = [];
-    let eventCount = 0;
 
-    tournamentsData.forEach((tournament) => {
-      const events = tournament.events || {};
-      Object.values(events).forEach((event) => {
-        eventCount++;
-        const eventOdds = oddsData[event.eventId];
-        if (!eventOdds || !eventOdds.bookmakers) {
-          return;
-        }
+    // List of bookmakers to exclude
+    const excludedBookmakers = ["Bet365 (no latency)", "Betfair Sportsbook", "Betfair Exchange"];
 
-        const marketId = sportImages.basketballIds.includes(tournament.tournamentId) ? 111 : 101;
-        const fullTimeResult = eventOdds.markets?.[marketId];
-        if (!fullTimeResult) {
-          return;
-        }
+    Object.values(oddsData).forEach((eventOdds) => {
+      const eventId = eventOdds.eventId;
+      const eventDate = eventOdds.date;
+      const sport = eventOdds.sport || "Football"; // Default to Football if sport is undefined
+      const homeTeam = eventOdds.home || eventOdds.participant1 || "Team 1";
+      const awayTeam = eventOdds.away || eventOdds.participant2 || "Team 2";
+      const eventName = `${homeTeam} vs ${awayTeam}`.toLowerCase();
 
-        const outcomes = sportImages.basketballIds.includes(tournament.tournamentId)
-          ? [
-              {
-                id: "111",
-                name: event.participant1,
-                data: fullTimeResult.outcomes[111],
-              },
-              {
-                id: "112",
-                name: event.participant2,
-                data: fullTimeResult.outcomes[112],
-              },
-            ]
-          : [
-              {
-                id: "101",
-                name: event.participant1,
-                data: fullTimeResult.outcomes[101],
-              },
-              { id: "102", name: "Empate", data: fullTimeResult.outcomes[102] },
-              {
-                id: "103",
-                name: event.participant2,
-                data: fullTimeResult.outcomes[103],
-              },
-            ];
+      if (!eventOdds.bookmakers) return;
 
-        Object.entries(eventOdds.bookmakers).forEach(([bookmaker]) => {
-          if (bookmaker === "betfair" || bookmaker === "betfair-ex") return;
+      const outcomes = [
+        { id: "101", name: homeTeam, key: "home" },
+        { id: "102", name: "Empate", key: "draw" },
+        { id: "103", name: awayTeam, key: "away" },
+      ];
 
-          outcomes.forEach(({ id, name, data }) => {
-            if (!data?.bookmakers?.[bookmaker]?.price || !data?.bookmakers?.["betfair-ex"]?.price) {
-              return;
-            }
+      Object.entries(eventOdds.bookmakers).forEach(([bookmakerName, bookmakerData]) => {
+        // Skip excluded bookmakers
+        if (excludedBookmakers.includes(bookmakerName)) return;
 
-            const eventName = `${event.participant1} vs ${event.participant2}`.toLowerCase();
-            const sportType = sportImages.footballIds.includes(tournament.tournamentId)
-              ? "football"
-              : sportImages.basketballIds.includes(tournament.tournamentId)
-                ? "basketball"
-                : "unknown";
+        const marketData = bookmakerData.find((market) => market.name === "ML");
+        if (!marketData || !marketData.odds || !marketData.odds[0]) return;
 
-            if (
-              (eventFilter && !eventName.includes(eventFilter.toLowerCase())) ||
-              (sportFilter && sportFilter !== sportType) ||
-              (bookmakerFilter && bookmakerFilter !== bookmaker)
-            ) {
-              return;
-            }
+        const betfairData = eventOdds.bookmakers["Betfair Exchange"]?.find(
+          (market) => market.name === "ML"
+        );
+        if (!betfairData || !betfairData.odds || !betfairData.odds[0]) return;
 
-            const favorCuota = data.bookmakers[bookmaker].price;
-            const contraCuota = data.bookmakers["betfair-ex"].price;
-            const liquidez = data.bookmakers["betfair-ex"].limit || "-";
-            const tooltipValues = calculateTooltipValues(ratingInputs, selectedBetType, favorCuota, contraCuota);
-            const rating = calculateRating(
-              ratingInputs,
-              selectedBetType,
-              tooltipValues.contra.total,
-              tooltipValues.favor.total,
-              favorCuota,
-              contraCuota
-            );
+        outcomes.forEach((outcome) => {
+          const favorOdds = parseFloat(marketData.odds[0][outcome.key]);
+          const contraOdds = parseFloat(betfairData.odds[0][outcome.key]);
 
-            // Aplicar filtros
-            if (rating !== "-" && filterInputs.ratingMin && parseFloat(rating) < parseFloat(filterInputs.ratingMin)) return;
-            if (rating !== "-" && filterInputs.ratingMax && parseFloat(rating) > parseFloat(filterInputs.ratingMax)) return;
-            if (filterInputs.oddsMin && favorCuota < parseFloat(filterInputs.oddsMin)) return;
-            if (filterInputs.oddsMax && favorCuota > parseFloat(filterInputs.oddsMax)) return;
-            if (filterInputs.dateStart && new Date(eventOdds.date) < filterInputs.dateStart) return;
-            if (filterInputs.dateEnd && new Date(eventOdds.date) > filterInputs.dateEnd) return;
-            if (filterInputs.minLiquidity && liquidez !== "-" && parseFloat(liquidez) < parseFloat(filterInputs.minLiquidity)) return;
+          if (isNaN(favorOdds) || isNaN(contraOdds)) return;
 
-            triples.push({
-              event,
-              bookmaker,
-              date: eventOdds.date,
-              tournamentId: tournament.tournamentId,
-              apuesta: name,
-              rating: rating === "-" ? -Infinity : parseFloat(rating),
-              favor: favorCuota,
-              contra: contraCuota,
-              liquidez,
-              sportType,
-            });
+          if (
+            (eventFilter && !eventName.includes(eventFilter.toLowerCase())) ||
+            (sportFilter && sportFilter !== sport) ||
+            (bookmakerFilter && bookmakerFilter !== bookmakerName)
+          ) {
+            return;
+          }
+
+          const tooltipValues = calculateTooltipValues(
+            ratingInputs,
+            selectedBetType,
+            favorOdds,
+            contraOdds
+          );
+          const rating = calculateRating(
+            ratingInputs,
+            selectedBetType,
+            tooltipValues.contra.total,
+            tooltipValues.favor.total
+          );
+
+          if (
+            rating !== "-" &&
+            filterInputs.ratingMin &&
+            parseFloat(rating) < parseFloat(filterInputs.ratingMin)
+          )
+            return;
+          if (
+            rating !== "-" &&
+            filterInputs.ratingMax &&
+            parseFloat(rating) > parseFloat(filterInputs.ratingMax)
+          )
+            return;
+          if (filterInputs.oddsMin && favorOdds < parseFloat(filterInputs.oddsMin)) return;
+          if (filterInputs.oddsMax && favorOdds > parseFloat(filterInputs.oddsMax)) return;
+          if (filterInputs.dateStart && new Date(eventDate) < filterInputs.dateStart) return;
+          if (filterInputs.dateEnd && new Date(eventDate) > filterInputs.dateEnd) return;
+
+          triples.push({
+            event: { participant1: homeTeam, participant2: awayTeam, eventId },
+            bookmaker: bookmakerName,
+            date: eventDate,
+            tournamentId: sport === "Football" ? 155 : 132,
+            apuesta: outcome.name,
+            rating: rating === "-" ? -Infinity : parseFloat(rating),
+            favor: favorOdds,
+            contra: contraOdds,
+            sportType: sport,
           });
         });
       });
     });
 
-    // Ordenar según sortConfig
     triples.sort((a, b) => {
       let aValue = a[sortConfig.key];
       let bValue = b[sortConfig.key];
@@ -315,9 +299,6 @@ export default function DataDisplay() {
       if (sortConfig.key === "date") {
         aValue = new Date(aValue).getTime();
         bValue = new Date(bValue).getTime();
-      } else if (sortConfig.key === "liquidez") {
-        aValue = aValue === "-" ? -Infinity : parseFloat(aValue);
-        bValue = bValue === "-" ? -Infinity : parseFloat(bValue);
       } else if (sortConfig.key === "event") {
         aValue = `${a.event.participant1} vs ${a.event.participant2}`.toLowerCase();
         bValue = `${b.event.participant1} vs ${b.event.participant2}`.toLowerCase();
@@ -350,17 +331,16 @@ export default function DataDisplay() {
     typeof price === "number" ? price.toFixed(2) : "-";
 
   const getSportImage = (tournamentId) => {
-    if (sportImages.footballIds.includes(tournamentId)) {
-      return sportImages.footballImage;
-    } else if (sportImages.basketballIds.includes(tournamentId)) {
-      return sportImages.basketballImage;
+    // Find the sport whose tournamentIds include the given tournamentId
+    for (const [sport, { tournamentIds, image }] of Object.entries(sportImages)) {
+      if (tournamentIds.includes(tournamentId)) {
+        return image;
+      }
     }
     return null;
   };
 
-  const availableBookmakers = Object.keys(bookmakerImages).filter(
-    (b) => b !== "betfair-ex"
-  );
+  const availableBookmakers = Object.keys(bookmakerImages);
 
   const handleOpenCalculator = (item) => {
     setSelectedEvent({
@@ -369,9 +349,10 @@ export default function DataDisplay() {
       bookmaker: item.bookmaker,
       favor: item.favor,
       contra: item.contra,
-      rating: item.rating === -Infinity ? "-" : `${item.rating.toFixed(2)}%`,
+      rating: item.rating === -Infinity ? "-" : `${item.rating}`,
       bookmakerImage: bookmakerImages[item.bookmaker],
-      betfairImage: bookmakerImages["betfair-ex"],
+      betfairImage: bookmakerImages["Betfair Exchange"],
+      apuesta: item.apuesta,
     });
   };
 
@@ -705,17 +686,6 @@ export default function DataDisplay() {
               />
             </div>
           </label>
-          <label style={{ display: "block", marginBottom: "10px" }}>
-            Liquidez mínima (€)
-            <input
-              type="text"
-              name="minLiquidity"
-              value={tempFilterInputs.minLiquidity}
-              onChange={handleFilterInputChange}
-              placeholder="Mín €"
-              style={{ width: "100%", padding: "5px", marginTop: "5px" }}
-            />
-          </label>
         </div>
         <div className="modal-buttons" style={{ display: "flex", justifyContent: "flex-end" }}>
           <button
@@ -840,8 +810,8 @@ export default function DataDisplay() {
               style={{ marginLeft: "5px", padding: "5px", width: "100%" }}
             >
               <option value="">Todos</option>
-              <option value="football">Fútbol</option>
-              <option value="basketball">Baloncesto</option>
+              <option value="Football">Fútbol</option>
+              <option value="Basketball">Baloncesto</option>
             </select>
           </label>
           <label className="oddsMatcher__label" style={{ width: "150px" }}>
@@ -893,9 +863,6 @@ export default function DataDisplay() {
                 <th onClick={() => handleSort("contra")} style={{ cursor: "pointer" }}>
                   CONTRA {sortConfig.key === "contra" && (sortConfig.direction === "asc" ? "↑" : "↓")}
                 </th>
-                <th onClick={() => handleSort("liquidez")} style={{ cursor: "pointer" }}>
-                  LIQUIDEZ {sortConfig.key === "liquidez" && (sortConfig.direction === "asc" ? "↑" : "↓")}
-                </th>
               </tr>
             </thead>
             <tbody>
@@ -910,7 +877,6 @@ export default function DataDisplay() {
                     rating,
                     favor,
                     contra,
-                    liquidez,
                   },
                   index
                 ) => {
@@ -919,7 +885,7 @@ export default function DataDisplay() {
                     <tr
                       key={`${event.eventId}-${bookmaker}-${apuesta}-${index}`}
                     >
-                      <td>{date}</td>
+                      <td>{new Date(date).toLocaleString()}</td>
                       <td>
                         {sportImage ? (
                           <Image
@@ -930,7 +896,7 @@ export default function DataDisplay() {
                             style={{ objectFit: "contain" }}
                           />
                         ) : (
-                          "-"
+                          "Football"
                         )}
                       </td>
                       <td>{`${event.participant1} vs ${event.participant2}`}</td>
@@ -947,7 +913,6 @@ export default function DataDisplay() {
                               rating,
                               favor,
                               contra,
-                              liquidez,
                             })
                           }
                           style={{
@@ -956,13 +921,16 @@ export default function DataDisplay() {
                             padding: "5px 10px",
                             border: "none",
                             cursor: "pointer",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
                           }}
                         >
-                          Calc
+                          <Calculate style={{ fontSize: "20px" }} />
                         </button>
                       </td>
                       <td>
-                        {rating === -Infinity ? "-" : `${rating.toFixed(2)}%`}
+                        {rating === -Infinity ? "-" : rating}
                       </td>
                       <td>
                         {bookmakerImages[bookmaker] ? (
@@ -980,7 +948,7 @@ export default function DataDisplay() {
                       <td>{formatPrice(favor)}</td>
                       <td>
                         <Image
-                          src={bookmakerImages["betfair-ex"]}
+                          src="https://res.cloudinary.com/dc5zbh38m/image/upload/v1742972626/betfair_qlonut.gif"
                           alt="Betfair Exchange"
                           width={80}
                           height={80}
@@ -988,7 +956,6 @@ export default function DataDisplay() {
                         />
                       </td>
                       <td>{formatPrice(contra)}</td>
-                      <td>{formatPrice(liquidez)}</td>
                     </tr>
                   );
                 }

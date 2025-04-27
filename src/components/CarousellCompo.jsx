@@ -10,7 +10,7 @@ const FAQ = () => {
             "Si! Yes! Oui! Ja! Ayo! Lo repetimos en todos los idiomas del mundo si es necesario, ¡las apuestas combinadas ( Matched Betting) realmente funcionan! ? Te sugerimos que eches un vistazo a las ganancias generadas por nuestros usuarios.",
         },
         {
-          title: "¿Cuánto dinero puedo ganar online con xxxx?",
+          title: "¿Cuánto dinero puedo ganar online con ZeroBet?",
           description:
             "Depende de cuánto tiempo dediques a esta actividad. Muchos usuarios han llegado a ganar alrededor de 500€ al mes en España y 500US$ al mes en Latinoamérica. Echa un vistazo a esta publicación que explica en detalle las ganancias que puedes generar con NinjaBet.",
         },
@@ -20,7 +20,7 @@ const FAQ = () => {
             "Visto que apostarás a todos los resultados posibles, estás eliminando efectivamente cualquier riesgo aleatorio. El único riesgo es el error humano, como por ejemplo hacer una apuesta incorrecta. Pero si sigues nuestras instrucciones online, no podrás hacer nada más que ganar.",
         },
         {
-          title: "¿Quién puede ganar online con xxxx?",
+          title: "¿Quién puede ganar online con ZeroBet?",
           description:
             "Si vives en España o Latinoamérica y tienes más de 18 años, puedes ganar dinero online usando nuestra plataforma. ¡Lo único que realmente importa es la determinación!",
         },
@@ -51,7 +51,7 @@ const FAQ = () => {
         },
         {
           title: "¿Es gratis o de pago?",
-          description: "Registrarse a xxxx es gratuito",
+          description: "Registrarse a ZeroBet es gratuito",
         },
         {
           title: "Tengo más preguntas, ¿Con quién puedo contactar?",
