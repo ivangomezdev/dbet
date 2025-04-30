@@ -6,10 +6,10 @@ import Footer from "@/components/Footer";
 import HowWorks from "@/components/HowWorks";
 import ImageTextContainer from "@/components/ImageTextContainer";
 import InfoBet from "@/components/InfoBet";
-
+import CommunitySocials from "@/components/CommunitySocials";
 import SubscriptionCard from "@/components/SubscriptionCard";
-
-
+import BetInfoVideo from "@/components/bet-info-video";
+import ReviewsBet from "@/components/ReviewsBet";
 import { initDB } from '../lib/init-db';
 initDB();
 export default function Home() {
@@ -18,11 +18,14 @@ export default function Home() {
     <header>
       
       </header>
-      <main>
         <ImageTextContainer />
+      <main>
         
         <AboutLine/>
+        <BetInfoVideo/>
         <CommunityInfo/>
+        <ReviewsBet/>
+        <CommunitySocials/>
 
       </main>
       <section className="communityFaqs">

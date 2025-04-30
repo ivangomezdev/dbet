@@ -1,0 +1,246 @@
+.community-socials {
+    background-color: #0A2035;
+    color: white;
+    padding: 40px 20px;
+    font-family: Arial, sans-serif;
+    
+    overflow: hidden;
+  }
+  
+  .community-socials__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 40px;
+  }
+  
+  .community-socials__chat-section {
+    position: relative;
+    flex: 1;
+    max-width: 500px;
+  }
+  
+  .community-socials__chat-messages {
+    position: relative;
+    z-index: 1;
+  }
+  
+  .community-socials__message {
+    background-color: #1e2235;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 15px;
+    display: flex;
+    gap: 10px;
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .community-socials__message--ed {
+    margin-left: 30px;
+    margin-top: -10px;
+  }
+  
+  .community-socials__message--arsenal {
+    margin-left: 60px;
+    margin-top: -10px;
+  }
+  
+  .community-socials__avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  
+  .community-socials__avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .community-socials__avatar--todd {
+    background-color: #ff4040;
+  }
+  
+  .community-socials__avatar--ed {
+    background-color: #5865f2;
+  }
+  
+  .community-socials__avatar--arsenal {
+    background-color: #ffcc00;
+  }
+  
+  .community-socials__message-content {
+    flex: 1;
+  }
+  
+  .community-socials__user-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+  
+  .community-socials__username {
+
+    font-size: 14px;
+  }
+  
+  .community-socials__username--todd {
+    color: #ff4040;
+  }
+  
+  .community-socials__timestamp {
+    font-size: 12px;
+    color: #a0a0a0;
+  }
+  
+  .community-socials__text {
+    font-size: 18px;
+    line-height: 1.4;
+    margin: 0;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .community-socials__heart-emoji {
+    position: absolute;
+    left: 20px;
+    top: 80px;
+    font-size: 30px;
+    z-index: 2;
+  }
+  
+  .community-socials__thumbs-up {
+    position: absolute;
+    right: 20px;
+    top: 180px;
+    font-size: 30px;
+    z-index: 2;
+  }
+  
+  .community-socials__discord-logo {
+    position: absolute;
+    right: 0;
+    top: 37%;
+    transform: translateY(-50%);
+    width: 50px;
+    height: 50px;
+    background-color: #5865f2;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+  }
+  
+  .community-socials__discord-logo img {
+    width: 60%;
+    height: 60%;
+    object-fit: contain;
+  }
+  
+  .community-socials__content {
+    flex: 1;
+    max-width: 600px;
+  }
+  
+  .community-socials__title {
+    font-size: 32px;
+  
+    margin-bottom: 20px;
+    line-height: 1.2;
+  }
+  
+  .community-socials__description {
+    font-size: 21px;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    color: rgba(255, 255, 255, 0.9);
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .community-socials__buttons {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .community-socials__button {
+    display: inline-block;
+    padding: 12px 30px;
+    border-radius: 6px;
+ 
+    text-decoration: none;
+    text-align: center;
+    transition: background-color 0.3s, transform 0.2s;
+    min-width: 150px;
+  }
+  
+  .community-socials__button:hover {
+    transform: translateY(-2px);
+  }
+  
+  .community-socials__button--facebook {
+    background-color: #3b5998;
+    color: white;
+  }
+  
+  .community-socials__button--facebook:hover {
+    background-color: #344e86;
+  }
+  
+  .community-socials__button--discord {
+    background-color: #5865f2;
+    color: white;
+  }
+  
+  .community-socials__button--discord:hover {
+    background-color: #4752c4;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 992px) {
+    .community-socials__container {
+      flex-direction: column;
+    }
+  
+    .community-socials__chat-section,
+    .community-socials__content {
+      max-width: 100%;
+    }
+  
+    .community-socials__content {
+      text-align: center;
+    }
+  
+    .community-socials__buttons {
+      justify-content: center;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .community-socials__title {
+      font-size: 24px;
+    }
+  
+    .community-socials__buttons {
+      flex-direction: column;
+      gap: 10px;
+    }
+  
+    .community-socials__button {
+      width: 100%;
+    }
+  
+    .community-socials__message--ed {
+      margin-left: 15px;
+    }
+  
+    .community-socials__message--arsenal {
+      margin-left: 30px;
+    }
+  }
+  

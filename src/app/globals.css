@@ -1,11 +1,48 @@
 
 body{
-    font-family: var(--font-geist-sans), sans-serif;
+  
     padding: 0px;
     margin:0px;
+    font-weight: 100;
+  }
 
+  main{
+
+    background-image: url("https://res.cloudinary.com/dllkefj8m/image/upload/v1746036791/Dise%C3%B1o_sin_t%C3%ADtulo_1_fuoksf.png");
+    background-size: 1900px;
+    background-position: 0px 300px;
+  }
+  
+
+* {
+
+  box-sizing: border-box;
+ 
+  font-weight: normal;  /* Asegúrate de resetear el peso de la fuente */
+  font-style: normal; /* Asegúrate de resetear el estilo de la fuente */
+  text-decoration: none; /* Elimina decoraciones de texto como el subrayado */
+  color: inherit; /* Reseta el color del texto para que herede del padre */
+  background-color: transparent; /* Reseta el color de fondo */
+  font-weight: 100;
+ 
 }
 
 .communityFaqs{
-    background: linear-gradient(to bottom, #054F36, #000000);
+    background: #0A2035 !important;
 }
+
+
+  
+  /* Optional: Define the font-family for Gagalin if not defined by default */
+  @font-face {
+    font-family: 'Gagalin'; /* Use the name you want */
+    src: url('/fonts/Gagalin-Regular.otf') format('opentype'); /* Specify the format */
+    font-weight: 400; /* Or the appropriate weight */
+    font-style: normal;
+    font-display: swap;
+  }
+  
+  body {
+    font-family: var(--font-gagalin); /* Apply Gagalin to the body or any other element */
+  }
+  

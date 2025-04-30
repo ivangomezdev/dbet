@@ -3,11 +3,9 @@ import "./aboutLine.css";
 const AboutLine = () => {
   return (
     <div className="aboutLine__cont">
-
+        
     <q className="aboutLine__q">
-        El matched betting es una técnica que permite ganar
-        dinero convirtiendo los bonos de los corredores en dinero
-        real.
+    <span style={{color:"#037239"}}>¡</span> Descubre el <span style={{color:"#FE9610"}}>Match Betting</span>: El Método exacto para Ganar Dinero Sin Apostar a la Suerte  <span style={{color:"#037239"}}>!</span>
       </q>
     </div>
   );

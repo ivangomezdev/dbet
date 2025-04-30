@@ -1,11 +1,8 @@
-
-
 .navBar__bar{
   opacity: 0.9;
-    background-color: #054F36 !important;
+    background-color:#0A2035 !important;
+  
 }
-
-
 
 @keyframes shadowPulse {
   0% {
@@ -18,27 +15,52 @@
     filter: drop-shadow(2px 2px 4px rgba(255, 234, 0, 0.654)); /* Vuelve al original */
   }
 }
+
+@keyframes bounceAdbIcon {
+  0% {
+    transform: translateY(0); /* Posición inicial */
+  }
+  50% {
+    transform: translateY(4px); /* Baja 10px */
+  }
+  100% {
+    transform: translateY(0); /* Vuelve a la posición inicial */
+  }
+}
+
+.adbIconWrapper {
+  animation: bounceAdbIcon 6s ease-in-out infinite; /* Animación suave de 2 segundos */
+}
+
 .NavBarHero__SocialIcons {
-  
+  color: black;
+  margin-left: 50px;
   display: flex;
   gap: 10px;
 }
 
 .NavBarHero__SocialIcons svg {
   padding: 5px;
-  border: solid 1px rgba(128, 128, 128, 0);
+  border: solid 2px #8F25A9;
+  box-shadow: 1px 2px 3px #8F25A9;
   border-radius: 50%;
 }
 
+.box__style{
+  display: flex;
+  margin-left: 500px;
+}
+
 .navBar__barHero {
-  background-color: rgba(0, 0, 0, 0.408) !important; /* Fondo negro semitransparente */
+  background-color:#000000 !important; /* Fondo negro semitransparente */
   position: fixed !important; /* Asegura que esté en la parte superior */
+  height: 90px;
   top: 0;
   left: 0;
+  font-weight: 100;
   width: 100%;
   z-index: 999999999; /* Asegura que esté por encima del video */
 }
-
 
 .NavBar__RegisterBTN{
     background: linear-gradient(to bottom, rgba(200, 200, 200, 0.106), #00000065);
@@ -55,70 +77,89 @@
 animation: shadowPulse 2s infinite; /* Animación infinita de 2 segundos */
 }
 
-.NavBar__RegisterBTN:hover{
+.navBar__link {
+  text-decoration: none;
+  color: white !important;
   
-  filter: drop-shadow(2px 2px 4px #64D792);
-animation: shadowPulse 2s infinite; /* Animación infinita de 2 segundos */
+  border-radius: 40px;
+  font-size: 22px;
+  margin-top: 25px;
+  padding: 10px 10px;
+  margin-left: 30px;
+  position: relative;
+  z-index: 1;
+  overflow: hidden; /* Importante para contener el pseudo-elemento */
+  transition: color 0.3s ease-in-out; /* Transición para el cambio de color del texto */
 }
 
-.navBar__link{
-    text-decoration: none;
-    color: white;
-    margin-left: 30px;
-    transition: text-decoration 0.3s ease-in-out;
-    position: relative;
-    padding: 5px;
+/* Pseudo-elemento para la animación del fondo */
+.navBar__link::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0; /* Inicialmente sin ancho */
+  height: 100%;
+  background-color: #FF9500;
+  transition: width 0.3s ease-in-out; /* Transición para el ancho */
+  z-index: -1; /* Detrás del texto */
 }
 
-.navBar__link::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    height: 2px;
-    background-color: white;
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.3s ease-in-out;
-  }
-  
-  .navBar__link:hover::after {
-    transform: scaleX(1);
-  }
+/* Cuando se hace hover, el pseudo-elemento se expande */
+.navBar__link:hover::before {
+  width: 100%; /* Se expande al 100% del ancho */
+}
+
+/* Cambio de color del texto cuando se hace hover */
+.navBar__link:hover {
+  color: white; /* El texto cambia a blanco para mejor contraste */
+}
 
 .NavBar__SocialIcons{
     display: flex;
     gap: 5px;
     font-size: 20px;
     margin-left: 30px;
-    
 }
 
 .NavBar__SocialIcons svg{
-
-   border: solid 1px gray;
+   border: solid 1px rgb(0, 0, 0);
    padding: 5px;
-   background-color: #64d79291;
+   background-color: #00ff66;
    border-radius: 50%;
    margin-left: 6px;
-   color: rgba(245, 245, 220, 0.44);
+   color: rgba(0, 0, 0, 0.44);
    transition: background-color 0.5s ease-in;
 }
 
 .NavBar__SocialIcons svg:hover{
     background-color: #64d792;
- 
- }
+}
 
- @media (max-width:490px){
+@media (max-width:490px){
     .NavBar__SocialIcons{
     display: none;
-     
-     }
+    }
 
-     .NavBar__RegisterBTN{
+    .NavBar__RegisterBTN{
         filter: drop-shadow(2px 2px 4px #64d79200);
         animation: none
-     }
- }
+    }
+}
+
+.logButton{
+  background-color: #089158;
+  margin-left: 60px;
+  margin-top: 25px;
+  border-radius: 10px;
+  color: white;
+  border: solid 2px #0A2035;
+}
+
+.heroLogo{
+  position: absolute;
+  left: -100px;
+  bottom: -40px;
+  width: 160px !important;
+  height:115px !important;
+}

@@ -1,21 +1,42 @@
 .aboutLine__q {
-  margin-left: 13%;
-  font-size: 20px;
-  color: whitesmoke;
-  background-color: #cfcfcf11;
-  padding: 5px;
-  text-shadow: 1px 1px 2px whitesmoke;
+  text-align: center;
+  font-size: 2.3rem;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: black;
+  position: relative;
+  z-index: 1;
+  font-family: Gagalin;
+  
+  margin: 0 auto;
+  display: block; /* Asegura que el elemento se comporte como bloque y respete el centrado */
+  width: 100%; /* Asegura que el elemento ocupe todo el ancho disponible para el centrado del texto */
+}
+/* Opcional: Añadir un borde con efecto grunge */
+.aboutLine__q::before {
+  content: "";
+  
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+
+  z-index: -1;
+  pointer-events: none;
 }
 
-.aboutLine__cont {
-border: solid 3px black;
-  background-color: black !important;
 
+
+.aboutLine__cont {
+  
+  margin:0px auto;
   padding: 10px;
-  padding-top: 30px;
+  
   opacity: 5;
   z-index: 9999;
-  margin: 0;
+
 }
 
 @media (max-width: 460px) {

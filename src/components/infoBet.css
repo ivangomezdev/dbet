@@ -1,6 +1,6 @@
 .info-bet-container {
   position: relative;
-  background-color: black;
+  background-color: #0A2035;
   color: white;
   padding: 1rem 0;
   overflow: hidden;
@@ -311,7 +311,7 @@ color:"white"
     rgba(2, 119, 53, 0.6),
     transparent
   );
-  animation: neonFire 3s linear infinite;
+
 }
 
 /* Animación para el movimiento */

@@ -18,6 +18,7 @@ import "./navBar.css";
 import Link from "next/link";
 import { useCookies } from "react-cookie";
 import { useSession } from "next-auth/react";
+import Image from "next/image";
 
 const pages2 = [
   { name: "Guías", src: "/guides" },
@@ -74,7 +75,7 @@ function NavBar() {
             }}
           >
           <Link style={{textDecoration:"none",color:"inherit",letterSpacing:"normal"}} href={"/"}>
-            ZeroBet
+          <Image alt="logo" src={"https://res.cloudinary.com/dllkefj8m/image/upload/v1745859382/WinBet420_yxohne.png"} width={100} height={100}/>
             </Link>
           </Typography>
 
@@ -151,19 +152,20 @@ function NavBar() {
             ))}
           </Box>
           {cookies.token || session ? (
-            <Link style={{ textDecoration: "none" }} href={"/me"}>
+            <Link style={{ textDecoration: "none" ,color:"black"}} href={"/me"}>
         <Button text={"USUARIO"}/>
             </Link>
           ) : (
-            <Link style={{ textDecoration: "none" }} href={"/auth/register"}>
+            <Link style={{ textDecoration: "none", }} href={"/auth/register"}>
                    <Button text={"REGISTRO"}/>
             </Link>
           )}
-          <div className="NavBar__SocialIcons">
+      {/*   <div className="NavBar__SocialIcons">
             <TelegramIcon fontSize="medium" />
             <YouTubeIcon fontSize="medium" />
             <XIcon fontSize="medium" />
           </div>
+          */ }
         </Toolbar>
       </Container>
     </AppBar>

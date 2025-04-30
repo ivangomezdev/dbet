@@ -25,18 +25,21 @@ const ImageTextContainer = () => {
       <Image
         className="imageTextContainer__img"
         src={
-          "https://res.cloudinary.com/dc5zbh38m/image/upload/v1743412711/jugador-futbol-americano-juego-accion-fondo-estadio-futbol_741910-17466-removebg-preview_qi1nwx.png"
+          "https://res.cloudinary.com/dllkefj8m/image/upload/v1745946034/image__1_-removebg_1_zo5t3f.png"
         }
         alt=""
         width={650}
         height={550}
       />
+    
+     
       <div className="imageTextContainer__text">
+     
         <div className="imageTextContainer__texts">
-          <h1>¿Aun no ganas dinero </h1>
-          <h1 style={{ textAlign: "center" }}>Usando el</h1>
+          <h1>¿Aun no ganas dinero? </h1>
+          <h1 style={{ textAlign: "center" }}><span style={{color:"#F1F1F1",marginTop:"100px"}}>Prueba </span> </h1>
           <h1 className="thirdline" style={{ textAlign: "center" }}>
-            Matched Betting?
+            Matched Betting
           </h1>
         </div>
         <div className="imageTextContainer__btnAnda">

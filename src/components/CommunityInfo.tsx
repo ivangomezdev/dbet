@@ -1,79 +1,63 @@
 import React from "react";
 import "./CommunityInfo.css";
-import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
+import Top3Cards from "./Top3Cards.jsx";
 import Image from "next/image";
 
-import Link from "next/link";
+
 const CommunityInfo = () => {
 
   return (
-    <div className="betting-background">
-      <div className="background-overlay"></div>
+    <main className="community-container">
+      <section className="community-hero">
+        <div className="community-hero-content">
+          <h1 className="community-title">
+            <span className="community-title-primary">Match Betting <span style={{color:"white"}}>Inteligente</span>
+            </span>
+            <span className="community-title-secondary">¿Quieres apostar como todos… o quieres ganar como nadie?</span>
+          </h1>
 
+          <p className="community-paragraph">
+            Mientras el 95% de los apostadores pierde con emoción, tú puedes ganar con estructura.
+            WinBet420 es la única plataforma potenciada por IA que analiza en tiempo real las oportunidades de Match Betting, comparando cuotas, promociones, mercados y riesgos para decirte cuándo actuar con precisión quirúrgica.
 
-      <div className="placeholder-content">
-        <div className="communityInfo__cont">
-          <div
-          className="howToImgDiv"
-            style={{
-              width: "500px",
-              height: "300px",
-              backgroundColor: "rgba(119, 119, 119, 0.338)",
-            }}
-          >
-            <Image
-              src={
-                "https://res.cloudinary.com/dc5zbh38m/image/upload/v1742499694/hqdefault_inax8c.jpg"
-              }
-              alt="howTo"
-              width={500}
-              height={350}
-              className="howToImg"
-            />
-          </div>
-          <div className="communityInfo__text">
-            <h1>¡Únete a la Community de ZeroBet!</h1>
-            <p>
-              ZeroBet es la mejor comunidad en españa y latinoamerica que te ayuda a ganar un sueldo extra con el matched betting.
-            </p>
-            <p>
-            Registrate gratis y gana tus primeros 1000€ hoy.
+          </p>
 
-            </p>
-            <strong>¡Garantizados!</strong>
-            <Link  href={"/auth/register"}>
-            <button style={{cursor:"pointer"}}>
-              {" "}
-              COMIENZA AHORA <ArrowCircleRightIcon fontSize="medium" />{" "}
-            </button>
-            </Link>
-          </div>
-          <div className="communityInfo__quantity">
-            <h1>5.000.000€+</h1>
-            <p>
-              Generados por nuestros usuarios 😉{" "}
-              <a href="">
-                Haz clic aquí para ver las ganancias de nuestros usuarios ►
-              </a>
-            </p>
-          </div>
-
-          <div className="communityInfo__info">
-            <Image
-              src={
-                "https://res.cloudinary.com/dc5zbh38m/image/upload/v1742344752/asd-removebg-preview_1_xo7fir.png"
-              }
-              width={200}
-              height={200}
-              alt="Latam"
-            />
-            <p>
-              La primera plataforma de Matched Betting en España y Latinoamérica
-            </p>
-          </div>
+          <p className="community-paragraph">
+            Por eso, hemos diseñado un software líder en la industria para eliminar el trabajo pesado de la conversión
+            de promociones e incluimos una biblioteca de guías y atención al cliente experta para que ganar dinero con
+            las promociones sea muy fácil, sin importar su nivel de experiencia.
+          </p>
         </div>
+
+        <div className="community-hero-image">
+          <Image
+            src="https://res.cloudinary.com/dllkefj8m/image/upload/v1746043067/Imagen_de_WhatsApp_2025-04-30_a_las_14.55.08_a4a4994f-removebg-preview_bqylct.png"
+            alt="Software con métricas financieras"
+            width={390}
+            height={250}
+            className="community-main-image"
+          />
+          <span className="community-price-badge" style={{ top: "80px", right: "100px" }}>
+            +$270
+          </span>
+          <span className="community-price-badge" style={{ top: "150px", right: "30px" }}>
+            +$100
+          </span>
+          <span className="community-price-badge" style={{ bottom: "100px", left: "50px" }}>
+            +$450
+          </span>
+          <span className="community-price-badge" style={{ bottom: "50px", right: "150px" }}>
+            +$80
+          </span>
+        </div>
+      </section>
+
+      <section className="community-features">
+      <div className="community-feature-card">
+      <Top3Cards/>
       </div>
-    </div>
+      </section>
+    </main>
   );
 };
 
