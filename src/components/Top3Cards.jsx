@@ -307,7 +307,7 @@ export default function TopEventsCards() {
           </div>
           <img
             src="https://res.cloudinary.com/dllkefj8m/image/upload/v1746043395/Sin_t%C3%ADtulo-removebg-preview_pt6cpz.png"
-            style={{ filter: "drop-shadow(1px 1px 3px black)", width: "120px", height: "150px", position: "relative" }}
+            style={{  width: "120px", height: "150px", position: "relative" }}
             alt=""
           />
         </div>
@@ -357,6 +357,7 @@ export default function TopEventsCards() {
           width: 30px;
           height: 30px;
           object-fit: contain;
+          margin-right:15px;
         }
 
         .team-logo-placeholder {
@@ -377,7 +378,9 @@ export default function TopEventsCards() {
 
         .vs {
           font-size: 12px;
-          color: #333;
+          color: #FE9610;
+          margin-left:6px;
+          font-weight:bold
         }
 
         .bookmaker {

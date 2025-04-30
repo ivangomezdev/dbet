@@ -57,11 +57,11 @@
   }
   
   .premium-title {
-    font-size: 42px;
+    font-size: 62px;
     color: white;
+    font-family: "gagalin";
     margin-bottom: 10px;
-    font-weight: 600;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+ 
   }
   
   .premium-subtitle {
@@ -117,8 +117,8 @@
   
   .amount {
     font-size: 42px;
-    font-weight: 700;
-    color: #333;
+    font-family: "gagalin";
+    color: #FF9305;
   }
   
   .period {

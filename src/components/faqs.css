@@ -2,17 +2,18 @@
    background-color: #f8f9fa;
    padding: 60px 20px;
    font-family: Arial, sans-serif;
+   background-image: url("https://res.cloudinary.com/dllkefj8m/image/upload/v1746036791/Dise%C3%B1o_sin_t%C3%ADtulo_1_fuoksf.png");
  }
  
  .faqs__container {
-   max-width: 1000px;
+   max-width: 700px;
    margin: 0 auto;
  }
  
  .faqs__title {
-   color: #2d3654;
-   font-size: 32px;
-   font-weight: bold;
+   color: #02743C;
+   font-size: 52px;
+   font-family:"gagalin" ;
    text-align: center;
    margin-bottom: 40px;
    text-transform: uppercase;
@@ -27,8 +28,8 @@
  .faqs__item {
    border-radius: 8px;
    overflow: hidden;
-   border: 1px solid #e0e0e0;
-   background-color: white;
+   
+   background-color: rgba(0, 0, 0, 0.534);
    transition: box-shadow 0.3s ease;
  }
  
@@ -40,10 +41,11 @@
    width: 100%;
    background: none;
    border: none;
-   padding: 20px;
-   font-size: 18px;
+   padding: 10px;
+   font-size: 13px;
    font-weight: 500;
-   color: #2d3654;
+   color: white;
+   
    text-align: left;
    cursor: pointer;
    display: flex;
@@ -53,12 +55,12 @@
  }
  
  .faqs__question:hover {
-   background-color: #f5f5f5;
+   background-color: #FE930C;
  }
  
  .faqs__icon {
    font-size: 24px;
-   color: #ff0099;
+   color: green;
    transition: transform 0.3s;
  }
  

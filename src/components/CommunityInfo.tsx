@@ -31,7 +31,7 @@ const CommunityInfo = () => {
 
         <div className="community-hero-image">
           <Image
-            src="https://res.cloudinary.com/dllkefj8m/image/upload/v1746043067/Imagen_de_WhatsApp_2025-04-30_a_las_14.55.08_a4a4994f-removebg-preview_bqylct.png"
+            src="https://res.cloudinary.com/dllkefj8m/image/upload/v1746051078/easda_ou1mtr.png"
             alt="Software con métricas financieras"
             width={390}
             height={250}

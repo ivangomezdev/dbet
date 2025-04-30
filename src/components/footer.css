@@ -24,6 +24,7 @@
   
   .footer-links {
     display: flex;
+    font-family: "BrunoAce";
     flex-wrap: wrap;
     align-items: center;
     gap: 5px;
@@ -72,7 +73,7 @@
     justify-content: center;
     width: 36px;
     height: 36px;
-    background-color: #10b981;
+    background-color: #037239;
     border-radius: 50%;
     color: #ffffff;
     text-decoration: none;
@@ -80,7 +81,7 @@
   }
   
   .social-icon:hover {
-    background-color: #0d9668;
+    background-color: #037239;
   }
   
   .icon {
@@ -94,7 +95,7 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    background-color: #10b981;
+    background-color: #037239;
     color: #ffffff;
     border: none;
     border-radius: 30px;

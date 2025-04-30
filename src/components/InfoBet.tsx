@@ -12,7 +12,7 @@ export default function InfoBet() {
       <div className="content-container">
         {/* Header */}
         <div className="header">
-          <h1 className="thirdline">ZeroBet Te Ofrece Todas Las Herramientas</h1>
+          <h1 className="thirdlineColor">Te Ofrece Todas Las Herramientas</h1>
           <p>para empezar a ganar dinero online ahora de la forma mas facil!
           </p>
         </div>
@@ -79,7 +79,7 @@ export default function InfoBet() {
                 width={220}
                 height={130}
                 className="feature-image"
-                  style={{border:"none"}}
+                 
               />
             </div>
           </div>

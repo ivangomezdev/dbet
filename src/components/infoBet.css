@@ -16,7 +16,7 @@
     box-shadow: 0 0 5px #39ff14, 0 0 10px #39ff14;
   }
   50% {
-    transform: scale(1.2);
+    transform: scale(1.1);
     box-shadow: 0 0 10px #39ff14, 0 0 15px #39ff14;
   }
   100% {
@@ -104,6 +104,24 @@
   padding: 0 1rem;
 }
 
+.content-container p{
+  font-size: 20px;
+ 
+}
+
+.thirdlineColor{
+  font-weight: 100; 
+  color: white;
+  
+}
+
+.content-container h1{
+ font-family: "gagalin";
+ font-weight: 100;
+ letter-spacing: 1.5px;
+ font-size: 50px!important;
+}
+
 /* Header */
 .header {
   margin-top: 130px;
@@ -113,7 +131,7 @@
 
 .header h1 {
   font-size: 2.2rem;
-  font-weight: 700;
+  font-weight: 100;
   margin-bottom: 0.5rem;
 }
 
@@ -129,6 +147,11 @@
   display: flex;
   flex-direction: column;
   gap: 3rem;
+}
+
+.features h3{
+  font-family: "gagalin";
+  font-size: 36px;
 }
 
 .feature-item {
@@ -173,14 +196,14 @@ color:"white"
 }
 
 .number-circle {
-  background-color: #e1e1e1;
+  background-color: green;
   border-radius: 50%;
   width: 15px;
   height: 15px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #e1e1e1;;
+  color: green;
   font-size: 0.75rem;
   animation: latido 1.5s infinite ease-in-out;
 
@@ -188,13 +211,14 @@ color:"white"
 
 
 .feature-text h3 {
-  font-weight: 600;
-  margin-bottom: 0.25rem;
+  font-weight: 100;
+  margin-bottom:1rem;
   font-size: 1.6rem;
-  background: linear-gradient(to right, white 50%, #07E88A 60%);
+  background: linear-gradient(to right, white 50%, #037239 60%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  font-weight: bold;
+
+ 
 }
 
 .feature-text p {
@@ -221,7 +245,7 @@ color:"white"
 
 .ninja-club h2 {
   font-size: 1.4rem;
-  font-weight: 600;
+  font-weight: 100;
   margin-bottom: 0.5rem;
 }
 
@@ -303,26 +327,10 @@ color:"white"
   left: -50%;
   width: 200%;
   height: 200%;
-  background: linear-gradient(
-    to right,
-    transparent,
-    rgba(2, 119, 53, 0.6), /* #027735 con opacidad */
-    rgba(255, 255, 255, 0.8), /* Blanco con opacidad */
-    rgba(2, 119, 53, 0.6),
-    transparent
-  );
+  
 
 }
 
-/* Animación para el movimiento */
-@keyframes neonFire {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(100%);
-  }
-}
 
 /* Efecto neón estático con box-shadow */
 .feature-item img {

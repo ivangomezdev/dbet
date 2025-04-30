@@ -5,6 +5,7 @@ const Footer = () => {
   return (
     <>
     <div className="footer">
+      <img style={{marginLeft:'240px',marginBottom:"30px"}} src="https://res.cloudinary.com/dllkefj8m/image/upload/v1746049880/Screenshot-removebg-preview_ukah2o.png" alt="" />
     <div className="footer-container">
       <div className="footer-content">
         <div className="footer-links">
