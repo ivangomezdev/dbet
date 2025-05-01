@@ -159,25 +159,27 @@
   }
   
   .user-bono__item-title {
-    font-size: 18px;
+    font-size: 19px;
     margin: 0 0 10px;
-    font-weight: bold;
+    font-family: "Gagalin";
   }
   
   .user-bono__offer-type {
     font-size: 14px;
+    font-family: "Gagalin";
     margin: 0 0 5px;
   }
   
   .user-bono__offer-value {
     color: #054F36;
-    font-weight: bold;
+   
   }
   
   .user-bono__promo {
     color: #ff0000;
     font-size: 14px;
     margin: 0 0 15px;
+    font-weight: bold;
   }
   
   .user-bono__meta {
@@ -214,7 +216,7 @@
   }
   
   .user-bono__button--show {
-    background-color: #00b3a6;
+    background-color: #054F36;
   }
   
   .user-bono__button--complete {
@@ -225,8 +227,9 @@
     position: absolute;
     right: -15px;
     top: 20px;
-    background-color: #00b3a6;
+    background-color: #FD910E;
     color: white;
+    font-family: "Gagalin";
     padding: 10px 15px;
     text-align: center;
     border-radius: 5px;
@@ -268,9 +271,10 @@
   
   .user-bono__promo-title {
     font-size: 16px;
-    color: #054F36 !important;
+    font-family: "Gagalin";
+    
     margin-bottom: 10px;
-    color: black !important;
+    color: white !important;
     border-radius: 5px;
   }
   
