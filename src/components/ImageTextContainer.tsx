@@ -36,7 +36,7 @@ const ImageTextContainer = () => {
       <div className="imageTextContainer__text">
      
         <div className="imageTextContainer__texts">
-          <h1>¿Aun no ganas dinero? </h1>
+          <h1>¿Aun no ganas dinero en internet? </h1>
           <h1 style={{ textAlign: "center" }}><span style={{color:"#F1F1F1",marginTop:"100px"}}>Prueba </span> </h1>
           <h1 className="thirdline" style={{ textAlign: "center" }}>
             Matched Betting
@@ -53,7 +53,7 @@ const ImageTextContainer = () => {
             className="imageTextContainer__link"
             href={"#howWorks"}
           >
-            Más detalles ▼
+            Empieza ahora ▼
           </Link>
         </div>
       </div>

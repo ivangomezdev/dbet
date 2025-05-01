@@ -33,7 +33,7 @@ const HowWorks = () => {
       buttonText:"COMIENZA AHORA ➡",
       title: "¿CÓMO PUEDO PROBARLO?",
       description:
-        "¡Puedes registrarse gratis y comenzar a ganar tus primeros 120€ en España o 15US$ en Latinoamérica sin ningún compromiso! No tienes nada que perder, pero muchísimo que ganar. ¡Únete a nuestra comunidad ahora y conviértete en un Ninja!",
+        "¡Puedes registrarse gratis y comenzar a ganar tus primeros 120€ en España sin ningún compromiso! No tienes nada que perder, pero muchísimo que ganar. ¡Únete a nuestra comunidad ahora y conviértete en un WinBetter!",
     },
   ];
   return (

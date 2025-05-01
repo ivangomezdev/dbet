@@ -30,7 +30,7 @@
 .icon-container {
   width: 36px;
   height: 36px;
-  background-color:#0A2035;
+  background-color:#3343;
   border-radius: 8px;
   display: flex;
   align-items: center;
@@ -56,10 +56,11 @@
   font-size: 23px;
   margin: 0;
   font-weight: 500;
-  background: linear-gradient(to right, white 50%,rgb(22, 138, 247) 60%);
+  background: linear-gradient(to right, white 50%,#037339 60%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  font-weight: bold;
+  font-family: "gagalin";
+  
   
 }
 
@@ -81,6 +82,7 @@
   font-size: 12px;
   margin-top: auto;
   transition: all 0.2s ease;
+  font-family: "gagalin";
 }
 
 .card-registerBtn:hover {

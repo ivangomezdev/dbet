@@ -303,6 +303,10 @@ export default function TopEventsCards() {
               Rating: <span style={{ fontWeight: "bold", color: "#FE9610" }}>
                 {rating === -Infinity ? "-" : `${rating}%`}
               </span>
+              
+            </div>
+            <div>
+         
             </div>
           </div>
           <img
