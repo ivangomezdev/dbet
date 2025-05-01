@@ -1,7 +1,8 @@
 import { NextResponse, NextRequest } from "next/server";
 import { verifyToken } from "./src/lib/joseToken";
-import { getServerSession } from "next-auth";
-import { authOptions } from "./src/lib/authOptions"; // Asegúrate de que la ruta sea correcta
+import { getServerSession } from "next-auth/next";
+import type { NextAuthOptions } from "next-auth";
+import { authOptions } from "./src/lib/authOptions";
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -10,7 +11,7 @@ export async function middleware(request: NextRequest) {
   const token = request.headers.get("Authorization")?.replace("Bearer ", "");
 
   // Obtener la sesión de NextAuth
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession(authOptions as NextAuthOptions);
 
   // Verificar autenticación
   let isAuthenticated = false;
@@ -20,7 +21,7 @@ export async function middleware(request: NextRequest) {
   if (token) {
     try {
       const verifiedToken = await verifyToken(token);
-      userId = session.user.id as string;
+      userId = verifiedToken?.userId; // Asegúrate que `verifyToken` devuelva un objeto con `userId`
       if (userId) {
         isAuthenticated = true;
       }
