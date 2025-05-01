@@ -1,7 +1,7 @@
 import GoogleProvider from "next-auth/providers/google";
 import { User } from "@/models/user";
 import { Auth } from "@/models/auth";
-import { NextAuthOptions } from "next-auth";
+
 
 export const authOptions = {
   providers: [
@@ -11,7 +11,7 @@ export const authOptions = {
     }),
   ],
   callbacks: {
-    async signIn({ user, account, profile, email, credentials }) {
+    async signIn({  profile }) {
       console.log("Perfil de Google recibido:", profile);
 
       if (!profile?.email) {
