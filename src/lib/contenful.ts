@@ -2,8 +2,8 @@
 import { createClient } from "contentful";
 
 const client = createClient({
-  space: process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID_1!,
-  accessToken: process.env.NEXT_PUBLIC_CONTENTFUL_ACCESS_TOKEN_1!,
+  space: process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID_1! ,
+  accessToken: process.env.NEXT_PUBLIC_CONTENTFUL_ACCESS_TOKEN_1! ,
 });
 console.log(client,"ESTE ES CLIENT");
 

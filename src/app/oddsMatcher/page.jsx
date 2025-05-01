@@ -726,7 +726,7 @@ export default function DataDisplay() {
         {/* Filtros Superiores */}
         <div className="oddsmatcher__filterData" style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
           <label className="oddsMatcher__label" style={{ width: "150px" }}>
-            Rating
+           
             <button
               onClick={handleOpenRatingModal}
               style={{
@@ -739,6 +739,7 @@ export default function DataDisplay() {
                 width: "100%",
                 display: "flex",
                 alignItems: "center",
+                borderRadius:"5px",
                 justifyContent: "center",
               }}
             >
@@ -747,7 +748,7 @@ export default function DataDisplay() {
             </button>
           </label>
           <label className="oddsMatcher__label" style={{ width: "150px" }}>
-            Comisión
+           
             <button
               onClick={handleOpenCommissionModal}
               style={{
@@ -757,6 +758,7 @@ export default function DataDisplay() {
                 color: "white",
                 border: "none",
                 cursor: "pointer",
+                borderRadius:"5px",
                 width: "100%",
                 display: "flex",
                 alignItems: "center",
@@ -768,7 +770,7 @@ export default function DataDisplay() {
             </button>
           </label>
           <label className="oddsMatcher__label" style={{ width: "150px" }}>
-            Filtro
+            
             <button
               onClick={handleOpenFilterModal}
               style={{
@@ -777,6 +779,7 @@ export default function DataDisplay() {
                 backgroundColor: "rgba(12, 187, 91, 0.497)",
                 color: "white",
                 border: "none",
+                borderRadius:"5px",
                 cursor: "pointer",
                 width: "100%",
                 display: "flex",
@@ -792,38 +795,38 @@ export default function DataDisplay() {
 
         {/* Filtros Inferiores */}
         <div className="oddsmatcher__filterData" style={{ display: "flex", gap: "10px" }}>
-          <label className="oddsMatcher__label" style={{ width: "150px" }}>
+          <label className="oddsMatcher__label" style={{ width: "150px",fontWeight:"bold",marginBottom:"5px" }}>
             Evento
             <input
               type="text"
               value={eventFilter}
               onChange={(e) => setEventFilter(e.target.value)}
               placeholder="Ej: Rosario vs Andes"
-              style={{ marginLeft: "5px", padding: "5px", width: "100%" }}
+              style={{ marginLeft: "5px", padding: "5px", width: "100%",borderRadius:"5px",marginTop:"5px",marginLeft:"-1px" }}
             />
           </label>
-          <label className="oddsMatcher__label" style={{ width: "150px" }}>
+          <label className="oddsMatcher__label" style={{ width: "150px",fontWeight:"bold",marginBottom:"5px" }}>
             Deporte
             <select
               value={sportFilter}
               onChange={(e) => setSportFilter(e.target.value)}
-              style={{ marginLeft: "5px", padding: "5px", width: "100%" }}
+              style={{ marginLeft: "5px",backgroundColor:"#0B7348", padding: "5px", width: "100%", borderRadius:"5px",marginTop:"5px",marginLeft:"-1px" }}
             >
               <option value="">Todos</option>
               <option value="Football">Fútbol</option>
               <option value="Basketball">Baloncesto</option>
             </select>
           </label>
-          <label className="oddsMatcher__label" style={{ width: "150px" }}>
+          <label className="oddsMatcher__label" style={{ width: "150px",fontWeight:"bold",marginBottom:"5px" }}>
             Bookmaker
             <select
               value={bookmakerFilter}
               onChange={(e) => setBookmakerFilter(e.target.value)}
-              style={{ marginLeft: "5px", padding: "5px", width: "100%" }}
+              style={{  padding: "5px", width: "100%",marginTop:"5px",marginLeft:"-1px",borderRadius:"5px" }}
             >
               <option value="">Todos</option>
               {availableBookmakers.map((bookmaker) => (
-                <option key={bookmaker} value={bookmaker}>
+                <option style={{color:"black"}} key={bookmaker} value={bookmaker}>
                   {bookmaker}
                 </option>
               ))}
@@ -833,7 +836,7 @@ export default function DataDisplay() {
 
         <div className="table-wrapper">
           <table className="betting-table">
-            <thead>
+            <thead className="betting-thead">
               <tr>
                 <th onClick={() => handleSort("date")} style={{ cursor: "pointer" }}>
                   FECHA/HORA {sortConfig.key === "date" && (sortConfig.direction === "asc" ? "↑" : "↓")}
@@ -916,17 +919,18 @@ export default function DataDisplay() {
                             })
                           }
                           style={{
-                            backgroundColor: "rgba(12, 187, 91, 0.497)",
+                         
                             color: "white",
-                            padding: "5px 10px",
+                            padding: "10px 10px",
                             border: "none",
                             cursor: "pointer",
                             display: "flex",
                             alignItems: "center",
                             justifyContent: "center",
+                            borderRadius: "4px"
                           }}
                         >
-                          <Calculate style={{ fontSize: "20px" }} />
+                          <Calculate style={{ fontSize: "30px",marginLeft:"30px" }} />
                         </button>
                       </td>
                       <td>
@@ -938,6 +942,7 @@ export default function DataDisplay() {
                             src={bookmakerImages[bookmaker]}
                             alt={bookmaker}
                             width={80}
+                           
                             height={80}
                             style={{ objectFit: "contain" }}
                           />
@@ -972,11 +977,12 @@ export default function DataDisplay() {
               color: "white",
               marginRight: "10px",
               padding: "5px 10px",
+              borderRadius:"5px"
             }}
           >
             Anterior
           </button>
-          <span>
+          <span style={{fontFamily:"Gagalin",fontWeight:"100"}}>
             Página {currentPage} de {totalPages}
           </span>
           <button
@@ -987,11 +993,12 @@ export default function DataDisplay() {
               color: "white",
               marginLeft: "10px",
               padding: "5px 10px",
+              borderRadius:"5px"
             }}
           >
             Siguiente
           </button>
-          <p style={{ marginTop: "10px" }}>
+          <p style={{fontFamily:"Gagalin",fontWeight:"100"}}>
             Mostrando {startIndex + 1} - {Math.min(endIndex, totalItems)} de{" "}
             {totalItems} resultados
           </p>

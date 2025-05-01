@@ -10,10 +10,12 @@
   .footer-container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding-top: 60px;
+    padding-bottom: 60px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    
   }
   
   .footer-content {

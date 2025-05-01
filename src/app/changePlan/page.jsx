@@ -66,7 +66,9 @@ const page = () => {
         <NavBar/>
       </header>
     <main >
+    
         <ChooseSubscriptionPlan cardsData={subscriptionCardsData} onPlanSelect={onPlanSelect}/>
+      
     </main>
     </>
   )

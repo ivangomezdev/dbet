@@ -1,7 +1,15 @@
 .navBar__bar{
-  opacity: 0.9;
-    background-color:#0A2035 !important;
-  
+  background-color:#000000 !important; /* Fondo negro semitransparente */
+      position: fixed !important; /* Asegura que esté en la parte superior */
+      height: 90px;
+      top: 0;
+      left: 0;
+      font-weight: 100;
+      width: 100%;
+      z-index: 999999999; /* Asegura que esté por encima del video */
+     
+     
+ 
 }
 
 @keyframes shadowPulse {
@@ -60,6 +68,7 @@
   font-weight: 100;
   width: 100%;
   z-index: 999999999; /* Asegura que esté por encima del video */
+  font-family: "Gagalin";
 }
 
 .NavBar__RegisterBTN{

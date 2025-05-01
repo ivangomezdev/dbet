@@ -176,7 +176,7 @@ export default function SignupForm() {
       <div className="auth-card">
         {showInitialForm && (
           <>
-            <h1 className="auth-title">Let's Start Learning</h1>
+            <h1 className="auth-title">Ingresa a WinBet420</h1>
             <p className="auth-subtitle">Please login or signup to continue</p>
           </>
         )}
@@ -245,7 +245,7 @@ export default function SignupForm() {
             {showInitialForm && (
               <>
                 <button type="button" className="auth-button google">
-                  <GoogleSignInButton />
+                 <img style={{width:"20px",height:"20px"}} src="https://res.cloudinary.com/dllkefj8m/image/upload/v1746116939/google-logo-icon-gsuite-hd-701751694791470gzbayltphh-removebg-preview_omdfxw.png" alt="" />
                 </button>
               </>
             )}

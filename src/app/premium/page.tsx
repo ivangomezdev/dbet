@@ -9,7 +9,7 @@ const premium = () => {
       <header>
         <NavBar/>
       </header>
-      <main>
+      <main style={{paddingTop:"60px"}}>
       <SubscriptionCard hrefAnual='/auth/register' hrefMensual='/auth/register' hrefFree='/auth/register' />
       </main>
       <footer>

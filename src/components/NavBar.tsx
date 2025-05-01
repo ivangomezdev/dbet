@@ -8,10 +8,10 @@ import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
-import Button from "./Button";
+import HowToRegIcon from '@mui/icons-material/HowToReg';
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
-
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import "./navBar.css";
 import Link from "next/link";
 import { useCookies } from "react-cookie";
@@ -53,120 +53,124 @@ function NavBar() {
   );
 
   return (
-    <AppBar position="static" className="navBar__bar">
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/ "
-            sx={{
-              mr: 6,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
+    <AppBar position="fixed" className="navBar__barHero">
+    <Container maxWidth="xl">
+      <Toolbar disableGutters>
+      <div className="adbIconWrapper">
+        <AdbIcon sx={{ display: { marginBottom:"9px",xs: "none", md: "flex" }, mr: 8 }} />
+      </div>
+        <Typography
+          variant="h6"
+          noWrap
+          component="a"
+          href="/ "
+          sx={{
+            mr: 6,
+            display: { xs: "none", md: "flex" },
+            fontFamily: "monospace",
+            fontWeight: 700,
+            letterSpacing: ".3rem",
+            color: "inherit",
+            textDecoration: "none",
+          }}
+        >
           <Link style={{textDecoration:"none",color:"inherit",letterSpacing:"normal"}} href={"/"}>
-          <Image alt="logo" src={"https://res.cloudinary.com/dllkefj8m/image/upload/v1745859382/WinBet420_yxohne.png"} width={100} height={100}/>
-            </Link>
-          </Typography>
+                 <Image className="heroLogo" alt="logo" src={"https://res.cloudinary.com/dllkefj8m/image/upload/v1746029667/WinBet420__4_-removebg-preview_1_pj71ps.png"} width={200} height={100}/>
+       
+          </Link>
+        </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{ display: { xs: "block", md: "none" } }}
-            >
-              {filteredPages.map((page, index) => (
-                <MenuItem key={index} onClick={handleCloseNavMenu}>
-                  <Link href={page.src}>
-                    <Typography sx={{ textAlign: "center" }}>
-                      {page.name}
-                    </Typography>
-                  </Link>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-          <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: { xs: "flex", md: "none" },
-              flexGrow: 1,
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
+        <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+          <IconButton
+            size="large"
+            aria-label="account of current user"
+            aria-controls="menu-appbar"
+            aria-haspopup="true"
+            onClick={handleOpenNavMenu}
+            color="inherit"
           >
-            <Link style={{textDecoration:"none",color:"inherit",letterSpacing:"normal"}} href={"/"}>
-            ZeroBet
-            </Link>
-          </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages2.map((page, index) => (
-              <Link
-                className="navBar__link"
-                key={index}
-                style={{ textDecoration: "none" }}
-                onClick={handleCloseNavMenu}
-                href={page.src}
-              >
-                {page.name}
-              </Link>
+            <MenuIcon />
+          </IconButton>
+          <Menu
+            id="menu-appbar"
+            anchorEl={anchorElNav}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "left",
+            }}
+            keepMounted
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "left",
+            }}
+            open={Boolean(anchorElNav)}
+            onClose={handleCloseNavMenu}
+            sx={{ display: { xs: "block", md: "none" } }}
+          >
+            {filteredPages.map((page, index) => (
+              <MenuItem key={index} onClick={handleCloseNavMenu}>
+                <Link href={page.src}>
+                  <Typography sx={{ textAlign: "center" }}>
+                    {page.name}
+                  </Typography>
+                </Link>
+              </MenuItem>
             ))}
-          </Box>
-          {cookies.token || session ? (
-            <Link style={{ textDecoration: "none" ,color:"black"}} href={"/me"}>
-        <Button text={"USUARIO"}/>
+          </Menu>
+        </Box>
+        <div className="adbIconWrapper">
+          <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
+        </div>
+        <Typography
+          variant="h5"
+          noWrap
+          component="a"
+          href="#app-bar-with-responsive-menu"
+          sx={{
+            mr: 2,
+            display: { xs: "flex", md: "none" },
+            flexGrow: 1,
+            fontFamily: "monospace",
+            fontWeight: 700,
+            letterSpacing: ".3rem",
+            color: "inherit",
+            textDecoration: "none",
+          }}
+        >
+    <Link style={{textDecoration:"none",color:"inherit",letterSpacing:"normal"}} href={"/"}>
+               ZeroBet
+               </Link>
+        </Typography>
+        <div className="box__style">
+        <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+          {pages2.map((page, index) => (
+            
+            <Link
+              className="navBar__link"
+              key={index}
+              style={{ textDecoration: "none" }}
+              onClick={handleCloseNavMenu}
+              href={page.src}
+            >
+              {page.name}
             </Link>
-          ) : (
-            <Link style={{ textDecoration: "none", }} href={"/auth/register"}>
-                   <Button text={"REGISTRO"}/>
-            </Link>
-          )}
-      {/*   <div className="NavBar__SocialIcons">
-            <TelegramIcon fontSize="medium" />
-            <YouTubeIcon fontSize="medium" />
-            <XIcon fontSize="medium" />
-          </div>
-          */ }
-        </Toolbar>
-      </Container>
-    </AppBar>
+            
+          ))}
+        </Box>
+        </div>
+        {cookies.token || session ? (
+          <Link style={{ textDecoration: "none" }} href={"/me"}>
+       <button className="logButton" ><AccountCircleIcon/>Login</button>
+          </Link>
+        ) : (
+          <Link style={{ textDecoration: "none" }} href={"/auth/register"}>
+       <button className="logButton"  style={{display:"flex",alignItems:"center",gap:"3px"}} ><HowToRegIcon/> Login</button>
+          </Link>
+        )}
+      
+      </Toolbar>
+    </Container>
+  </AppBar>
   );
 }
 export default NavBar;

@@ -25,9 +25,9 @@ const Page = () => {
     return (
         <div className="register__main">
             <header>
-                <NavBar />
                 <video src='https://res.cloudinary.com/dllkefj8m/video/upload/v1746115042/Dise%C3%B1o_sin_t%C3%ADtulo_3_d9ujeh.mp4' autoPlay muted loop id="fondo-video" />
             </header>
+                <NavBar />
             <main className="register__content">
                 <SignupForm />
             </main>

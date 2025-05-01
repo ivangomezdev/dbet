@@ -2,26 +2,26 @@
 .betting-table-container {
     position: relative;
     padding: 20px;
-
+    background: linear-gradient(135deg, #0A2035 0%, #05743E 100%);
   }
 
   .oddsMatcher__cont{
-    background-color:#054F36
+    background-color:#047541
   }
   
   .betting-table-title {
     color: #fff;
     text-align: center;
-    margin-bottom: 20px;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-    font-size: 24px;
+    margin-bottom: -100px;
+    font-family: "Gagalin";
+   font-size: 100px;
   }
   
   .table-wrapper {
     overflow-x: auto;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(20, 20, 20, 0.658);
     padding: 2px;
   }
   
@@ -31,10 +31,12 @@
     border-spacing: 0;
     color: #fff;
     font-size: 14px;
+    font-family: "BrunoAce";
+    font-weight: 100 !important;
   }
   
   .betting-table thead {
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(12, 12, 12, 0.74);
     position: sticky;
     top: 0;
     z-index: 10;
@@ -43,21 +45,25 @@
   .betting-table th {
     padding: 12px 8px;
     text-align: center;
-    font-weight: bold;
-    border-bottom: 2px solid #d4af37; /* Gold border */
+    font-size: 20px;
+    border-bottom: 2px solid #f8f8f88f; /* Gold border */
     white-space: nowrap;
   }
   
   .betting-table td {
     padding: 10px 8px;
     text-align: center;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    background-color: rgba(0, 0, 0, 0.2);
+    color: black;
+    font-size: 20px;
+    font-family: "gagalin";
+    border-bottom: 1px solid rgba(255, 255, 255, 0.548);
+    background-color: #fb9609e5;
   }
   
   .betting-table tbody tr:hover td {
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(24, 24, 24, 0.4);
     transition: background-color 0.2s;
+    color:white !important;
   }
   
   /* Column specific styles */
@@ -122,6 +128,11 @@
     border-radius: 4px;
     margin-top: 15px;
   }
+
+  .betting-thead{
+    font-family: "Gagalin";
+    font-weight: 100 !important;
+  }
   
   .no-more-data {
     text-align: center;
@@ -167,7 +178,7 @@
   
   .me__content {
     position: relative;
-    background-color: #054F36; /* Classic casino table green */
+    background-color: #080e0b; /* Classic casino table green */
     border-radius: 8px;
     padding: 30px;
     box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
@@ -186,7 +197,7 @@
 
   .oddsmatcher__filterData label{
     font-size: 13px !important;
-    color: rgb(12, 187, 91) !important;
+    color: white
 
   }
 
@@ -195,7 +206,7 @@
     flex-direction: column;
     width: 100px;
     border-radius: 5px;
-    margin-bottom: 5px;
+ 
   }
 
 
@@ -356,7 +367,7 @@
   }
   
   button[type="submit"] {
-    background-color: #4caf50;
+    background-color: #163017;
     color: white;
     padding: 10px 20px;
     border: none;
