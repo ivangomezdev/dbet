@@ -1,7 +1,7 @@
 import { NextResponse, NextRequest } from "next/server";
 import { verifyToken } from "./src/lib/joseToken";
 import { getServerSession } from "next-auth";
-import { authOptions } from "./src/lib/authOptions"; // Asegúrate de que la ruta sea correcta
+import { authOptions } from "./src/lib/authOptions";
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -20,7 +20,7 @@ export async function middleware(request: NextRequest) {
   if (token) {
     try {
       const verifiedToken = await verifyToken(token);
-      userId = session.user.id as string;
+      userId = verifiedToken?.sub || null; // Ajusta según el payload del token
       if (userId) {
         isAuthenticated = true;
       }
@@ -30,7 +30,7 @@ export async function middleware(request: NextRequest) {
   }
 
   // 2. Verificar sesión de NextAuth
-  if (session && session.user && session.user.id) {
+  if (session?.user?.id) {
     userId = session.user.id;
     isAuthenticated = true;
   }
@@ -68,7 +68,6 @@ export async function middleware(request: NextRequest) {
   return NextResponse.next();
 }
 
-// Configuración para aplicar el middleware a rutas específicas
 export const config = {
   matcher: ["/auth/register", "/auth/signin", "/me", "/api/me/:path*"],
 };
