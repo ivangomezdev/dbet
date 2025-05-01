@@ -19,7 +19,7 @@ export default function Home() {
       
       </header>
         <ImageTextContainer />
-      <main>
+      <main className="mainContent">
         
         <AboutLine/>
         <BetInfoVideo/>

@@ -71,17 +71,16 @@ export default function SignupForm() {
   const [subscriptionState, setSubscriptionState] = useState(null);
   const router = useRouter();
   const [selectedPlan, setSelectedPlan] = useState("");
-  const [showInitialForm, setShowInitialForm] = useState(true); // Nuevo estado
-  const setUserData = useSetAtom(userAtom)
-  
+  const [showInitialForm, setShowInitialForm] = useState(true);
+  const setUserData = useSetAtom(userAtom);
+
   const handlePlanSelection = (planName) => {
     setSelectedPlan(planName);
-  
   };
 
-  const updateSubscription = async (plan,email) =>{
-    console.log(plan,email, "RECIBIDO DESDE PC");
-    
+  const updateSubscription = async (plan, email) => {
+    console.log(plan, email, "RECIBIDO DESDE PC");
+
     try {
       const response = await fetch('/api/me/subscription', {
         method: 'POST',
@@ -90,23 +89,19 @@ export default function SignupForm() {
           'Authorization': `Bearer ${cookies.token}`,
         },
         body: JSON.stringify({
-         plan,
-         email
+          plan,
+          email,
         }),
       });
       const data = await response.json();
-
-      
     } catch {
       setError("err.message");
     }
-  
-  }
-
+  };
 
   useEffect(() => {
     if (selectedPlan === "FREE") {
-      updateSubscription("FREE",email)
+      updateSubscription("FREE", email);
     }
   }, [selectedPlan]);
 
@@ -132,9 +127,7 @@ export default function SignupForm() {
 
       if (data.subscriptionStatus) {
         setSubscriptionState(data.subscriptionStatus);
-        setUserData(data.subscriptionStatus)
-      
-        
+        setUserData(data.subscriptionStatus);
       }
 
       if (!response.ok) {
@@ -169,7 +162,7 @@ export default function SignupForm() {
 
       if (subscriptionState === "inactive") {
         setShowSubscription(true);
-        setShowInitialForm(false); // Ocultar elementos iniciales
+        setShowInitialForm(false);
       }
 
       setErrorCode(false);
@@ -179,19 +172,12 @@ export default function SignupForm() {
   };
 
   return (
-    <div className="signup">
-      <div className="signup__container">
+    <div className="auth-container">
+      <div className="auth-card">
         {showInitialForm && (
           <>
-            <h1 className="signup__title">¡Bienvenido!</h1>
-            <p className="signup__social-text">Regístrate con GOOGLE</p>
-
-            <div className="signup__social-buttons">
-        
-            <GoogleSignInButton/>
-            </div>
-
-            <p className="signup__divider">O utiliza tu email</p>
+            <h1 className="auth-title">Let's Start Learning</h1>
+            <p className="auth-subtitle">Please login or signup to continue</p>
           </>
         )}
 
@@ -199,16 +185,29 @@ export default function SignupForm() {
           <ChooseSubscriptionPlan cardsData={subscriptionCardsData} onPlanSelect={handlePlanSelection} />
         ) : (
           <form className="signup__form" onSubmit={showCodeInput ? handleCodeSubmit : handleSubmit}>
-            {error && <p className="signup__error">{error}</p>}
+            {error && <p className="auth-error">{error}</p>}
 
-            <div className="signup__form-group">
-              <label htmlFor="email" className="signup__label">
-                Email
-              </label>
+            <div className="input-group">
+              <span className="input-icon">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M16 12H8m4-4v8m-7 4h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                  />
+                </svg>
+              </span>
               <input
                 type="email"
                 id="email"
-                className="signup__input"
+                className="auth-input"
+                placeholder="Your Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -217,16 +216,16 @@ export default function SignupForm() {
             </div>
 
             {showCodeInput && (
-              <div className="signup__form-group">
-                <label htmlFor="code" className="signup__label">
-                  Ingresa el código enviado por email:
+              <div className="input-group">
+                <label htmlFor="code" className="code-label">
+                  Enter the code sent to your email:
                 </label>
-                {errorCode && <p style={{ color: "red" }}>El código ingresado es incorrecto</p>}
+                {errorCode && <p className="auth-error">The entered code is incorrect</p>}
                 <input
                   type="text"
                   id="code"
                   name="code"
-                  className="signup__input"
+                  className="auth-input"
                   value={code}
                   onChange={(e) => setCode(e.target.value)}
                   required
@@ -235,26 +234,38 @@ export default function SignupForm() {
               </div>
             )}
 
-            <button type="submit" className="signup__submit-button" disabled={loading}>
-              {loading ? "Procesando..." : showCodeInput ? "Confirmar Código" : "Regístrate"}
+            <button
+              type="submit"
+              className="auth-button primary"
+              disabled={loading}
+            >
+              {loading ? "Processing..." : showCodeInput ? "Confirm Code" : "Sign Up"}
             </button>
+
+            {showInitialForm && (
+              <>
+                <button type="button" className="auth-button google">
+                  <GoogleSignInButton />
+                </button>
+              </>
+            )}
           </form>
         )}
 
         <div className="signup__footer">
           <a href="#" className="signup__link">
-            Términos y Condiciones
+            Terms and Conditions
           </a>
           <span className="signup__separator">|</span>
           <a href="#" className="signup__link">
-            Política de Privacidad
+            Privacy Policy
           </a>
         </div>
       </div>
     </div>
   );
 }
-// Agregar SSR para manejar la redirección en el servidor
+
 export async function getServerSideProps(context) {
   const { req } = context;
   const token = req.cookies.token;

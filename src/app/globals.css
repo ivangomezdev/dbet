@@ -6,7 +6,7 @@ body{
     font-weight: 100;
   }
 
-  main{
+  .mainContent{
 
     background-image: url("https://res.cloudinary.com/dllkefj8m/image/upload/v1746036791/Dise%C3%B1o_sin_t%C3%ADtulo_1_fuoksf.png");
     background-size: 1900px;
