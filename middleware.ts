@@ -20,8 +20,9 @@ export async function middleware(request: NextRequest) {
   // 1. Verificar token JOSE
   if (token) {
     try {
-      const verifiedToken = await verifyToken(token);
-      userId = verifiedToken?.userId; // Asegúrate que `verifyToken` devuelva un objeto con `userId`
+   const verifiedToken = await verifyToken(token);
+userId = (verifiedToken as { userId: string }).userId;
+
       if (userId) {
         isAuthenticated = true;
       }
