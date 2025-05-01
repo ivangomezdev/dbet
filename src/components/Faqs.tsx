@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import "./Faqs.css"
+import "./faqs.css"
 
 function Faqs() {
   const [openIndex, setOpenIndex] = useState(null)

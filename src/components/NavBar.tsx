@@ -11,9 +11,7 @@ import Container from "@mui/material/Container";
 import Button from "./Button";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
-import TelegramIcon from "@mui/icons-material/Telegram";
-import XIcon from "@mui/icons-material/X";
-import YouTubeIcon from "@mui/icons-material/YouTube";
+
 import "./navBar.css";
 import Link from "next/link";
 import { useCookies } from "react-cookie";

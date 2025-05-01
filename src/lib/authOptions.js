@@ -2,6 +2,7 @@ import GoogleProvider from "next-auth/providers/google";
 import { User } from "@/models/user";
 import { Auth } from "@/models/auth";
 
+
 export const authOptions = {
   providers: [
     GoogleProvider({
@@ -10,7 +11,7 @@ export const authOptions = {
     }),
   ],
   callbacks: {
-    async signIn({ profile }) {
+    async signIn({  profile }) {
       console.log("Perfil de Google recibido:", profile);
 
       if (!profile?.email) {
@@ -49,7 +50,7 @@ export const authOptions = {
       }
     },
     async session({ session, token }) {
-      if (token.sub) {
+      if (token.sub && session.user.email) {
         try {
           const user = await User.findOne({
             where: { email: session.user.email },
@@ -71,5 +72,5 @@ export const authOptions = {
     signIn: "/auth/signin",
     error: "/auth/error",
   },
-  debug: true,
+  debug: process.env.NODE_ENV === "development",
 };
