@@ -193,7 +193,6 @@
   .user-bono__difficulty,
   .user-bono__date {
     display: flex;
-    font-family: fantasy;
     gap: 5px;
     flex-wrap: wrap;
   }
@@ -213,7 +212,7 @@
     border-radius: 5px;
     color: white;
     font-family: fantasy;
-    font-weight: bold;
+   
     cursor: pointer;
     font-size: 12px;
   }
