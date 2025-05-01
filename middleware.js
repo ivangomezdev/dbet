@@ -1,9 +1,9 @@
 import { NextResponse, NextRequest } from "next/server";
 import { verifyToken } from "./src/lib/joseToken";
 import { getServerSession } from "next-auth";
-import { authOptions } from "./src/lib/authOptions"; // Asegúrate de que la ruta sea correcta
+import { authOptions } from "./src/lib/authOptions";
 
-export async function middleware(request: NextRequest) {
+export async function middleware(request) {
   const { pathname } = request.nextUrl;
 
   // Obtener el token JOSE del encabezado Authorization
@@ -14,13 +14,13 @@ export async function middleware(request: NextRequest) {
 
   // Verificar autenticación
   let isAuthenticated = false;
-  let userId: string | null = null;
+  let userId = null;
 
   // 1. Verificar token JOSE
   if (token) {
     try {
       const verifiedToken = await verifyToken(token);
-      userId = session.user.id as string;
+      userId = session.user.id;
       if (userId) {
         isAuthenticated = true;
       }
@@ -56,8 +56,8 @@ export async function middleware(request: NextRequest) {
   // Si está autenticado, agregar el userId al header para rutas API
   if (isAuthenticated && pathname.startsWith("/api/me")) {
     const requestHeaders = new Headers(request.headers);
-    requestHeaders.set("x-user-id", userId as string);
-    return NextResponse.next({
+    requestHeaders.set("x-user-id", userId);
+    return Response.next({
       request: {
         headers: requestHeaders,
       },
