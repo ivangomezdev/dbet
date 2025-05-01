@@ -49,7 +49,7 @@ export const authOptions = {
         return false;
       }
     },
-    async session({ session, token, user }) {
+    async session({ session, token }) {
       if (token.sub && session.user.email) {
         try {
           const user = await User.findOne({
