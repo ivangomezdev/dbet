@@ -3,6 +3,7 @@
 import { useAtom } from "jotai";
 import { useState, useEffect, useMemo } from "react";
 import { tournamentsDataAtom, oddsDataAtom } from "../lib/atom";
+import "./top3Cards.css";
 
 export default function TopEventsCards() {
   const [tournamentsData] = useAtom(tournamentsDataAtom);
@@ -316,88 +317,7 @@ export default function TopEventsCards() {
           />
         </div>
       ))}
-      <style jsx>{`
-        .events-container {
-          display: flex;
-          gap: 20px;
-          justify-content: center;
-          padding: 20px;
-        }
-
-        .event-card {
-          background: linear-gradient(135deg, #0A2035 0%, rgba(5, 116, 62, 0.41) 100%);
-          border: 1px solid black;
-          border-radius: 8px;
-          width: 330px;
-          text-align: left;
-          padding: 15px;
-          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        .date {
-          font-size: 20px;
-          font-family: Gagalin;
-          color: #037338;
-          margin-bottom: 10px;
-        }
-
-        .teams {
-          display: flex;
-          flex-direction: column;
-          gap: 5px;
-          margin-bottom: 10px;
-        }
-
-        .team-container {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          color: white;
-          font-family: "Gagalin";
-          letter-spacing: 1px;
-        }
-
-        .team-logo {
-          width: 30px;
-          height: 30px;
-          object-fit: contain;
-          margin-right:15px;
-        }
-
-        .team-logo-placeholder {
-          width: 40px;
-          height: 40px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: #555;
-          font-size: 12px;
-          border-radius: 4px;
-        }
-
-        .team {
-          font-size: 14px;
-          font-weight: 500;
-        }
-
-        .vs {
-          font-size: 12px;
-          color: #FE9610;
-          margin-left:6px;
-          font-weight:bold
-        }
-
-        .bookmaker {
-          font-size: 12px;
-          color: white;
-          margin-bottom: 5px;
-        }
-
-        .rating {
-          font-size: 12px;
-          color: white;
-        }
-      `}</style>
+    
     </div>
   );
 }

@@ -18,6 +18,18 @@
   text-align: center;
 }
 
+@media(max-width:534px){
+  .auth-card{
+    width: 350px;
+  }
+}
+
+
+@media(max-width:356px){
+  .auth-card{
+    width: 300px;
+  }
+}
 .auth-title {
   font-size: 26px;
  font-family: "Gagalin";

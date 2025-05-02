@@ -39,7 +39,7 @@
 
 @media(max-width:1357px){
   .imageTextContainer__cont {
-   padding-top: 100px;
+   padding-top: 150px;
   
   
   }
@@ -51,9 +51,45 @@ height: 400px;
   }
 }
 
+@media(max-width:1000px){
+  .imageTextContainer__texts{
+    width: 500px !important;
+  }
+}
+
+@media(max-width:900px){
+  .imageTextContainer__texts{
+    width: 450px !important;
+  }
+}
+
+@media(max-width:850px){
+  .imageTextContainer__texts{
+    width: 400px !important;
+  }
+}
 
 
+@media(max-width:745px){
+  .imageTextContainer__texts{
+    width: 100% !important;
+    font-size: 30px !important;
+  }
+}
 
+@media(max-width:633px){
+  .imageTextContainer__texts{
+    
+    font-size: 25px !important;
+  }
+}
+
+@media(max-width:1629px){
+  .imageTextContainer__texts{
+    width:600px;
+    text-align: center;
+  }
+}
 
 
 .thirdline{

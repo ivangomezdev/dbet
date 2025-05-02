@@ -76,7 +76,8 @@
 /* Sección de características */
 .community-features {
   display: flex;
-  gap: 20px;
+  justify-content: center;
+  align-items: center ;
   margin-bottom: 60px;
 }
 
@@ -214,3 +215,17 @@
     font-size: 24px;
   }
 }
+
+
+@media(max-width:1149px){
+  .community-feature-card{
+    width: 60%;
+  }
+}
+
+@media(max-width:1149px){
+  .community-feature-card{
+    width: 60%;
+  }
+}
+
