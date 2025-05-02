@@ -48,15 +48,17 @@
   
 
 @media(max-width:740px){
-.user-bono__title420{
-   font-size: 33px !important;
-  }
+
 
   .user-bono__title span{
     font-size: 33px !important;
    }
-}
 
+  
+    .user-bono__title span{
+      font-size: 33px !important;
+     }
+  }
 
   .user-bono__subtitle {
     font-size: 14px;

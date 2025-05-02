@@ -919,7 +919,6 @@ export default function DataDisplay() {
                             })
                           }
                           style={{
-                         
                             color: "white",
                             padding: "10px 10px",
                             border: "none",
@@ -942,7 +941,6 @@ export default function DataDisplay() {
                             src={bookmakerImages[bookmaker]}
                             alt={bookmaker}
                             width={80}
-                           
                             height={80}
                             style={{ objectFit: "contain" }}
                           />
@@ -1008,6 +1006,7 @@ export default function DataDisplay() {
         <Calculator
           eventData={selectedEvent}
           onClose={handleCloseCalculator}
+          initialBetType={selectedBetType}
         />
       )}
       {ratingModalOpen && <RatingModal />}

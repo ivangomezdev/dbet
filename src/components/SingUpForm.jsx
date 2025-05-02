@@ -10,6 +10,7 @@ import { useSetAtom } from "jotai";
 import { userAtom } from "@/lib/atom";
 import GoogleSignInButton from "./GoogleSignButton";
 
+
 const subscriptionCardsData = [
   {
     planType: "FREE",
@@ -244,9 +245,9 @@ export default function SignupForm() {
 
             {showInitialForm && (
               <>
-                <button type="button" className="auth-button google">
-                 <img style={{width:"20px",height:"20px"}} src="https://res.cloudinary.com/dllkefj8m/image/upload/v1746116939/google-logo-icon-gsuite-hd-701751694791470gzbayltphh-removebg-preview_omdfxw.png" alt="" />
-                </button>
+           
+                < GoogleSignInButton/>
+             
               </>
             )}
           </form>

@@ -8,6 +8,8 @@
   background-color: rgba(0, 0, 0, 0.5); /* Dark, semi-transparent background */
   display: flex;
   justify-content: center;
+  font-family: gagalin;
+  font-weight: 100 !important;
   align-items: center;
   z-index: 1000; /* Ensure it appears above other content */
   overflow-y: auto; /* Allow scrolling if content overflows */
@@ -21,9 +23,9 @@
   max-width: 1100px;
   margin: 20px;
  
-  border: 1px solid #ddd;
+  border: 1px solid #dddddd5b;
   border-radius: 4px;
-  background-color: #000000dd;
+  background-color: #000000;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.819);
   z-index: 1001;
 }
@@ -33,15 +35,16 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px 15px;
-  background-color: #f0f0f0;
+  background-color: black;
   border-bottom: 1px solid #ddd;
 }
 
 .calculator__title {
   margin: 0;
-  font-size: 18px;
-  font-weight: bold;
-  color: #333;
+  font-size: 28px;
+  
+  font-family: "gagalin";
+  color: white;
 }
 
 .calculator__close-btn {
@@ -60,7 +63,7 @@
 .calculator__left-panel {
   flex: 0 0 40%;
   padding: 15px;
-  border-right: 1px solid #ddd;
+  border-right: 1px solid #dddddd2d;
 }
 
 .calculator__right-panel {
@@ -76,7 +79,7 @@
 
 .calculator__label {
   flex: 0 0 40%;
-  font-weight: bold;
+  color: orange;
   display: flex;
   align-items: center;
 }
@@ -97,7 +100,7 @@
 .calculator__input {
   width: 100%;
   padding: 5px;
-  border: 1px solid #ccc;
+  border: 1px solid #cccccc48;
   border-radius: 3px;
 }
 
@@ -115,7 +118,7 @@
   padding: 10px;
   background-color: #00b3a1c0;
   color: white;
-  font-weight: bold;
+  
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
 }
@@ -126,7 +129,7 @@
   padding: 10px;
   background-color: rgba(255, 85, 85, 0.774);
   color: white;
-  font-weight: bold;
+
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
 }
@@ -142,13 +145,13 @@
 }
 
 .calculator__odds-title {
-  font-weight: bold;
+  color: orange;
   margin-bottom: 10px;
 }
 
 .calculator__odds-value {
   font-size: 20px;
-  font-weight: bold;
+
   padding: 15px;
   margin: 10px auto;
   width: 60px;
@@ -202,9 +205,9 @@
 
 .calculator__input-label {
   flex: 0 0 40%;
-  font-weight: bold;
-  font-size: 13px;
-  color: white;
+
+  font-size: 20px;
+  color: orange;
   margin: 0 auto;
 }
 
@@ -220,7 +223,7 @@
 .calculator__input-container input{
   background-color: #ddd;
   border-radius: 5px;
-  
+  color: black;
 }
 
 .calculator__currency {
@@ -253,7 +256,8 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 2px;
-  font-size: 14px;
+  font-size: 16px;
+  font-weight: 100;
 }
 
 .calculator__action-contra {
@@ -265,11 +269,11 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 2px;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .calculator__risk {
-  background-color: rgba(255, 85, 85, 0.762);
+  background-color: rgba(255, 85, 85, 0);
   width: 240px;
   border-radius: 5px;
   color: white;
@@ -278,8 +282,8 @@
   justify-content: center;
   align-items: center;
   gap: 10px;
-  font-size: 13px;
-  font-weight: bold;
+  font-size: 23px;
+
 }
 
 .calculator__profit {
@@ -288,13 +292,13 @@
 }
 
 .calculator__profit-label {
-  font-weight: bold;
+  color: orange;
   font-size: 18px;
 }
 
 .calculator__profit-amount {
   font-size: 24px;
-  font-weight: bold;
+
   color: #f55;
 }
 
@@ -306,22 +310,23 @@
 
 .calculator__results-table {
   margin-top: 20px;
-  border: 1px solid #ddd;
+  border: 1px solid #dddddd49;
 }
 
 .calculator__results-header {
   display: flex;
   background-color: #f0f0f0;
-  font-weight: bold;
+
 }
 
 .calculator__results-cell {
   flex: 1;
   padding: 8px;
-  font-size: 12px;
+  font-size: 15px;
   text-align: center;
+  color: orange;
   background-color: rgb(42, 42, 42);
-  border-right: 1px solid #ddd;
+  border-right: 1px solid #dddddd42;
 }
 
 .calculator__results-cell:last-child {
@@ -330,7 +335,7 @@
 
 .calculator__results-row {
   display: flex;
-  border-top: 1px solid #ddd;
+  border-top: 1px solid #dddddd54;
 }
 
 .calculator__results-cell--favor {
@@ -345,12 +350,12 @@
 
 .calculator__results-cell--positive {
   color: green;
-  font-weight: bold;
+
 }
 
 .calculator__results-cell--negative {
   color: red;
-  font-weight: bold;
+
 }
 
 /* Prevent background scrolling */
@@ -369,7 +374,8 @@ body.calculator-open {
     flex: 1 0 auto;
     width: 100%;
     border-right: none;
-    border-bottom: 1px solid #ddd;
+    border-left: none;
+    border-bottom: 1px solid #dddddd2c;
   }
 
   .calculator__container {

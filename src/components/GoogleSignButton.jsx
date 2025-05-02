@@ -38,13 +38,13 @@ export default function GoogleSignInButton() {
   };
 
   return (
-    <div>
+    <div onClick={handleGoogleSignIn}>
       <button
-        onClick={handleGoogleSignIn}
+        
         disabled={isLoading}
-        className="signup__social-button signup__social-button--google"
+        className="auth-button google"
       >
-        <span className="signup__social-icon">G</span>
+    <img style={{width:"20px",height:"20px"}} src="https://res.cloudinary.com/dllkefj8m/image/upload/v1746116939/google-logo-icon-gsuite-hd-701751694791470gzbayltphh-removebg-preview_omdfxw.png" alt="" />
         {isLoading ? "Cargando..." : ""}
       </button>
      

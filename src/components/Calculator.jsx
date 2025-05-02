@@ -24,8 +24,8 @@ const BetTypeSelector = ({ betType, onBetTypeChange }) => (
             control={
               <Radio
                 sx={{
-                  color: "#00A500",
-                  "&.Mui-checked": { color: "#00A500" },
+                  color: "orange",
+                  "&.Mui-checked": { color: "orange" },
                 }}
               />
             }
@@ -368,8 +368,8 @@ const ResultsTable = ({ tooltipValues }) => (
 );
 
 // Main Calculator Component
-const Calculator = ({ eventData, onClose }) => {
-  const [betType, setBetType] = useState("Dinero real");
+const Calculator = ({ eventData, onClose, initialBetType }) => {
+  const [betType, setBetType] = useState(initialBetType || "Dinero real");
   const [inputs, setInputs] = useState({
     favorImporte: "100", // Default for Dinero real, Apuesta gratis, Reembolso
     favorCuota: eventData.favor ? eventData.favor.toFixed(2) : "",

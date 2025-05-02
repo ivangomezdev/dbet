@@ -196,11 +196,15 @@
 
   .oddsmatcher__filterData{
     display: flex;
-     margin-bottom: 30px;
+     margin-top: 70px;
     gap: 15px;
     align-items: center;
 
   }
+
+
+
+
 
   .oddsmatcher__filterData label{
     font-size: 13px !important;
