@@ -7,8 +7,7 @@ import { useSession } from "next-auth/react";
 import "./navBar.css";
 
 const pages = [
-  { name: "Guías", src: "/guides" },
-  { name: "Servicio Premium", src: "/premium" },
+  { name: "Cómo funciona", src: "/guides" },
   { name: "Blog", src: "/blog" },
   { name: "Bonos", src: "/bonos" },
   { name: "OddsMatcher", src: "/oddsMatcher" },
