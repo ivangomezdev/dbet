@@ -154,20 +154,8 @@ export const editSubscription = async (data: UserData) => {
   try {
     const updatedUser = await User.findOne({ where: { email } });
     const updatedSubscription = await Subscription.findOne({ where: { userId: user.id } });
-    console.log("Final state after editSubscription:", {
-      user: {
-        id: updatedUser.id,
-        email: updatedUser.email,
-        subscriptionStatus: updatedUser.subscriptionStatus,
-      },
-      subscription: updatedSubscription
-        ? {
-            plan: updatedSubscription.plan,
-            status: updatedSubscription.status,
-            stripeSubscriptionId: updatedSubscription.stripeSubscriptionId,
-          }
-        : "No subscription found",
-    });
+    console.log(updatedUser,updatedSubscription);
+    
   } catch (error) {
     console.error("Error verifying final state:", {
       message: error.message,
