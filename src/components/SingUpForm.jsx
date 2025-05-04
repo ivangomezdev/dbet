@@ -10,7 +10,6 @@ import { useSetAtom } from "jotai";
 import { userAtom } from "@/lib/atom";
 import GoogleSignInButton from "./GoogleSignButton";
 
-
 const subscriptionCardsData = [
   {
     planType: "FREE",
@@ -36,7 +35,15 @@ const subscriptionCardsData = [
       "Versión Completa de las Herramientas",
       "Cancela cuando quieras la suscripción",
     ],
-    tools: ["NinjaClub", "Oddsmatcher", "Dutcher", "Calculador", "Favor-Favor", "Multiplicador", "Profit Tracker"],
+    tools: [
+      "NinjaClub",
+      "Oddsmatcher",
+      "Dutcher",
+      "Calculador",
+      "Favor-Favor",
+      "Multiplicador",
+      "Profit Tracker",
+    ],
     buttonTextSpain: "OBTÉN PREMIUM – ESPAÑA",
     buttonTextLatam: "OBTÉN PREMIUM – LATINOAMÉRICA",
     hrefSpain: "/premium-mensual-spain",
@@ -52,7 +59,15 @@ const subscriptionCardsData = [
       "Versión Completa de las Herramientas",
       "Paga 120€ y Ahorra 60€",
     ],
-    tools: ["NinjaClub", "Oddsmatcher", "Dutcher", "Calculador", "Favor-Favor", "Multiplicador", "Profit Tracker"],
+    tools: [
+      "NinjaClub",
+      "Oddsmatcher",
+      "Dutcher",
+      "Calculador",
+      "Favor-Favor",
+      "Multiplicador",
+      "Profit Tracker",
+    ],
     buttonTextSpain: "OBTÉN PREMIUM – ESPAÑA",
     buttonTextLatam: "OBTÉN PREMIUM – LATINOAMÉRICA",
     hrefSpain: "/premium-anual-spain",
@@ -67,7 +82,7 @@ export default function SignupForm() {
   const [loading, setLoading] = useState(false);
   const [showCodeInput, setShowCodeInput] = useState(false);
   const [errorCode, setErrorCode] = useState(false);
-  const [showSubscription, setShowSubscription] = useState(false);
+  const [showSubscription, setShowSubscription] = useState(false); // Corrección aquí
   const [cookies, setCookie] = useCookies(["token"]);
   const [subscriptionState, setSubscriptionState] = useState(null);
   const router = useRouter();
@@ -80,14 +95,12 @@ export default function SignupForm() {
   };
 
   const updateSubscription = async (plan, email) => {
-    console.log(plan, email, "RECIBIDO DESDE PC");
-
     try {
-      const response = await fetch('/api/me/subscription', {
-        method: 'POST',
+      const response = await fetch("/api/me/subscription", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${cookies.token}`,
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${cookies.token}`,
         },
         body: JSON.stringify({
           plan,
@@ -95,22 +108,32 @@ export default function SignupForm() {
         }),
       });
       const data = await response.json();
-    } catch {
-      setError("err.message");
+      if (response.ok) {
+        // Actualizar el estado de suscripción después de la selección
+        setSubscriptionState(data.subscriptionStatus || "active");
+        setUserData(data.subscriptionStatus || "active");
+        // Redirigir a /me después de actualizar la suscripción
+        router.push("/me");
+      } else {
+        setError(data.error || "Error al actualizar la suscripción");
+      }
+    } catch (err) {
+      setError(err.message || "Error al actualizar la suscripción");
     }
   };
 
   useEffect(() => {
-    if (selectedPlan === "FREE") {
-      updateSubscription("FREE", email);
+    if (selectedPlan) {
+      updateSubscription(selectedPlan, email);
     }
-  }, [selectedPlan]);
+  }, [selectedPlan, email, cookies.token]);
 
   useEffect(() => {
-    if (cookies.token && subscriptionState !== "inactive") {
+    // Solo redirigir si hay token, subscriptionState no es "inactive" y un plan ha sido seleccionado
+    if (cookies.token && subscriptionState !== "inactive" && selectedPlan) {
       router.push("/me");
     }
-  }, [cookies.token, router, subscriptionState]);
+  }, [cookies.token, subscriptionState, selectedPlan, router]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -164,11 +187,14 @@ export default function SignupForm() {
       if (subscriptionState === "inactive") {
         setShowSubscription(true);
         setShowInitialForm(false);
+      } else {
+        router.push("/me");
       }
 
       setErrorCode(false);
     } catch (err) {
       console.log("Error al verificar el código:", err);
+      setErrorCode(true);
     }
   };
 
@@ -183,9 +209,15 @@ export default function SignupForm() {
         )}
 
         {showSubscription ? (
-          <ChooseSubscriptionPlan cardsData={subscriptionCardsData} onPlanSelect={handlePlanSelection} />
+          <ChooseSubscriptionPlan
+            cardsData={subscriptionCardsData}
+            onPlanSelect={handlePlanSelection}
+          />
         ) : (
-          <form className="signup__form" onSubmit={showCodeInput ? handleCodeSubmit : handleSubmit}>
+          <form
+            className="signup__form"
+            onSubmit={showCodeInput ? handleCodeSubmit : handleSubmit}
+          >
             {error && <p className="auth-error">{error}</p>}
 
             <div className="input-group">
@@ -221,7 +253,9 @@ export default function SignupForm() {
                 <label htmlFor="code" className="code-label">
                   Enter the code sent to your email:
                 </label>
-                {errorCode && <p className="auth-error">The entered code is incorrect</p>}
+                {errorCode && (
+                  <p className="auth-error">The entered code is incorrect</p>
+                )}
                 <input
                   type="text"
                   id="code"
@@ -240,14 +274,16 @@ export default function SignupForm() {
               className="auth-button primary"
               disabled={loading}
             >
-              {loading ? "Processing..." : showCodeInput ? "Confirm Code" : "Sign Up"}
+              {loading
+                ? "Processing..."
+                : showCodeInput
+                ? "Confirm Code"
+                : "Sign Up"}
             </button>
 
             {showInitialForm && (
               <>
-           
-                < GoogleSignInButton/>
-             
+                <GoogleSignInButton />
               </>
             )}
           </form>
