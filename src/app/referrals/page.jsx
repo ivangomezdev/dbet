@@ -155,12 +155,39 @@ export default function ReferralsPage() {
     }
   };
 
-  const handleShare = () => {
-    if (referralData.referralCode && referralData.referralCode !== "Error" && referralData.referralCode !== "Loading...") {
-      navigator.clipboard.write(referralData.referralCode);
-      alert("Referral code copied to clipboard!");
-    } else {
+  const handleShare = async () => {
+    const code = referralData.referralCode;
+    console.log("Attempting to copy referral code:", code); // Debug log
+  
+    // Check if referral code is valid
+    if (!code || code === "Error" || code === "Loading...") {
+      console.warn("No valid referral code to copy:", code);
       alert("No referral code available to share.");
+      return;
+    }
+  
+    try {
+      // Modern Clipboard API
+      await navigator.clipboard.write(code);
+      console.log("Referral code copied successfully!");
+      alert("Referral code copied to clipboard!");
+    } catch (err) {
+      console.error("Failed to copy with Clipboard API:", err);
+  
+      // Fallback for older browsers
+      try {
+        const textArea = document.createElement("textarea");
+        textArea.value = code;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textArea);
+        console.log("Referral code copied using fallback!");
+        alert("Referral code copied to clipboard!");
+      } catch (fallbackErr) {
+        console.error("Fallback copy failed:", fallbackErr);
+        alert("Failed to copy referral code. Please copy it manually.");
+      }
     }
   };
 

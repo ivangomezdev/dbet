@@ -19,6 +19,7 @@ export const editUser = async (data: UserData) => {
       { name, surname, email, phone, address },
       { where: { email }, returning: true }
     );
+    console.log(_);
     console.log("User updated:", { email, name, surname, phone, address });
     return updatedUser;
   } catch (error) {
@@ -29,6 +30,8 @@ export const editUser = async (data: UserData) => {
     throw error;
   }
 };
+
+
 
 export const editSubscription = async (data: UserData) => {
   const { email, plan, stripeSubscriptionId } = data;

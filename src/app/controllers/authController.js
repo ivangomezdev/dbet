@@ -26,6 +26,9 @@ export async function createOrFindUser(email, password) {
       },
     });
 
+    console.log(created);
+    
+
     // Si el usuario ya existía pero no tiene código de referido, generarlo y actualizarlo
     if (!user.get("referral_code")) {
       await user.update({ referral_code: referralCode });
