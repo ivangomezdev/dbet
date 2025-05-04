@@ -112,13 +112,7 @@ export default function Videos() {
       {/* Profile Header */}
       <div className="guides__profile">
         <div className="guides__profile-avatar">
-          <Image
-            src={channelData.profileImage || "/placeholder.svg"}
-            alt={`ZeroBet LOGO`}
-            width={120}
-            height={120}
-            className="guides__profile-image"
-          />
+      
         </div>
 
         <div className="guides__profile-info">
@@ -132,20 +126,7 @@ export default function Videos() {
           </div>
 
 
-          <div style={{ padding: "10px" }} className="article__share">
-            <span className="article__share-label">Compartir:</span>
-            <div className="article__share-buttons">
-              <button className="article__share-btn article__share-btn--facebook">
-                Facebook
-              </button>
-              <button className="article__share-btn article__share-btn--twitter">
-                Twitter
-              </button>
-              <button className="article__share-btn article__share-btn--email">
-                Email
-              </button>
-            </div>
-          </div>
+      
         </div>
       </div>
 
@@ -201,7 +182,7 @@ export default function Videos() {
                 <h3 className="guides__video-title">{video.title}</h3>
                 <div className="guides__video-meta">
              
-                  <span className="guides__video-separator">·</span>
+      
                   <span className="guides__video-time">{video.time}</span>
                 </div>
               </div>

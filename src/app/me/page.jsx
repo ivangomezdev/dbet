@@ -6,6 +6,7 @@ import UserEditForm from "../../components/UserEditForm";
 import NavBar from "@/components/NavBar";
 import "./mePage.css";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 
 
 // Example of initial data you could pass to the component
@@ -38,9 +39,10 @@ const Page = () => {
   }, [status, cookies.token, router]);
 
   return (
-    <div>
+    <div style={{backgroundColor:"#054F36"}}>
       <NavBar />
       <div className="me__content">
+      <Link href={"/referrals"}><button className="referralButtons"> Referidos 🎁</button></Link>
         <UserEditForm initialData={userData} />
       </div>
     </div>

@@ -9,7 +9,7 @@ const Footer = () => {
     <div className="footer-container">
       <div className="footer-content">
         <div className="footer-links">
-          <span>© Copyright 2016-2025 NinjaBet</span>
+          <span>© Copyright 2025 Winbet420</span>
           <span className="separator">|</span>
           <a href="/privacy-policy">Privacy Policy</a>
           <span className="separator">|</span>

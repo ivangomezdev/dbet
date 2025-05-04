@@ -1,13 +1,34 @@
 .me__content {
     position: relative;
     background-color: #054F36; /* Classic casino table green */
-
-    padding: 10px;
+    bottom: 50px;
     box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
-    overflow: hidden;
-  
+
+
    
   }
+
+  .referralButtons{
+    background-color: orange;
+    color: white;
+    font-family: "gagalin";
+    padding: 10px;
+    margin-top: 170px;
+    border-radius: 5px;
+
+    cursor: pointer;
+  }
+
+  
+  .referralButtons:hover{
+    background-color: rgba(255, 166, 0, 0.441);
+    color: white;
+    font-family: "gagalin";
+    padding: 10px;
+    border-radius: 5px;
+  }
+  
+
   
 
   /* Add felt texture */
@@ -23,6 +44,7 @@
     background-size: 4px 4px;
     background-position: 0 0, 2px 2px;
     pointer-events: none;
+
     z-index: 1;
   }
   
@@ -31,7 +53,7 @@
     content: "";
     position: absolute;
     width: 100%;
-    height: 100%;
+
     top: 0;
     left: 0;
     /* White chip */
@@ -178,4 +200,22 @@
     background-color: #3e8e41;
   }
   
+  .me__content {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
   
+  .me__referrals-button {
+    background-color: #054F36;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  
+  .me__referrals-button:hover {
+    background-color: #043f2e;
+  }

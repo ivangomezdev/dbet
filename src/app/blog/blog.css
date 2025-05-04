@@ -20,20 +20,26 @@
   font-size: 3rem;
   margin: 0px;
   position: relative;
-  background-color: #054F36;
+  background-color: #E07B30;
   text-align: center;
   padding: 30px;
   color: whitesmoke;
+
   overflow: hidden; /* Para evitar que los elementos se salgan */
 }
 
+
+.blog__contData h2{
+  font-family: "gagalin";
+}
 
 
 .blog__subtitle{
     padding: 10px;
     color: white;
-  background-color: #054F36;
+  background-color: #E07B30;
   text-align: center;
+  font-family: "gagalin";
     font-size: 20px;
     margin: 0px;
 
@@ -41,17 +47,15 @@
 
 .blog__post {
   margin-top: 100px;
-  border: #054F36 3px dashed;
+ 
   box-shadow: 0 0 0 10px inset linear-gradient(to right, #054F36, #4C947C); 
   border-radius: 8px;
   width: 250px;
-  box-shadow: 4px 5px 5px 0px rgba(0,0,0,0.14);
-  -webkit-box-shadow: 4px 5px 5px 0px rgba(0,0,0,0.14);
-  -moz-box-shadow: 4px 5px 5px 0px rgba(0,0,0,0.14);
+  
 }
 
 .blog__post h2 {
-  color: #054F36;
+  color: white;
   text-align: center;
   border-top: solid 1px gray;
   padding: 5px;
@@ -67,7 +71,14 @@
   font-weight: bolder;
   gap: 5px;
   width: 75px;
+  font-family: "gagalin";
   margin-left: 60px;
+  
+
+}
+
+.blog__link:hover{
+color: green;
   
 
 }
@@ -81,7 +92,7 @@
 .blog__info {
   display: flex;
   width: 100%;
-    
+    background-color:orange;
 }
 
 .blog__info p {
@@ -99,23 +110,17 @@
   text-align: center;
   color: white;
   margin-top: 20px;
-  border-radius: 0px 186px 170px 0px;
-  -webkit-border-radius: 0px 186px 170px 0px;
-  -moz-border-radius: 0px 186px 170px 0px;
-  background: linear-gradient(to right, #054F36, #4C947C);
+
 }
 
 
 
 .blog__contData{
-    background-color: #f6f6f6dc;
+    background-color: orange;
     position: relative;
     bottom: 50px;
     height: 90px;
-    background-image: radial-gradient(#054f362b 1.5px, transparent 1.5px), radial-gradient(#054f3640 1.5px, transparent 1.5px);
-background-size: 28px 28px;
-background-position: 0 0, 14px 14px;
-background-color: rgba(255, 255, 255, 0.51);
+
 
 }
 

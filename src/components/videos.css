@@ -1,11 +1,11 @@
 /* Estilos generales */
 .guides {
-  
-    max-width: 1200px;
+
+
     margin: 0 auto;
-    padding: 0 16px;
+    padding-top: 100px;
     color: #0f0f0f;
-    padding-bottom: 60px;
+    padding-bottom: 45px;
   }
   
   /* Estilos del perfil */
@@ -14,7 +14,8 @@
     padding: 16px 0;
     gap: 16px;
     margin-bottom: 24px;
-    background-image: url("https://res.cloudinary.com/dc5zbh38m/image/upload/v1742919704/1600w-4Iwc1WA2mcM_tgwnba.webp");
+    background-color: #FF980A;
+  
   }
   
   .guides__profile-avatar {
@@ -40,16 +41,18 @@
   }
   
   .guides__profile-name {
-    font-size:40px !important;
-    font-weight: 900;
+    font-size:90px !important;
+    font-weight: 100;
     margin: 0;
     display: flex;
+    font-family: "gagalin";
     align-items: center;
     gap: 8px;
-    background-color: #054f36c8;
+    letter-spacing: 1.3px;
+    color: white;
     border-radius: 5px;
     padding: 5px;
-    color: white;
+
   }
   
   .guides__profile-verified {
@@ -233,7 +236,7 @@
     position: absolute;
     bottom: 8px;
     right: 8px;
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: orange;
     color: white;
     padding: 2px 4px;
     border-radius: 4px;
@@ -248,8 +251,9 @@
   }
   
   .guides__video-title {
-    font-size: 14px;
-    font-weight: 500;
+    font-family: "gagalin";
+    font-size: 16px;
+    font-weight: 100;
     margin: 0;
     line-height: 1.4;
     display: -webkit-box;

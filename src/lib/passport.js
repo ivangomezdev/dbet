@@ -23,7 +23,7 @@ passport.use(
     {
       clientID: process.env.FACEBOOK_CLIENT_ID,
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-      callbackURL: 'http://localhost:3000/api/auth/facebook/callback',
+      callbackURL: 'https://winbet420.com/api/auth/facebook/callback',
       profileFields: ['id', 'emails', 'name'],
     },
     async (accessToken, refreshToken, profile, done) => {

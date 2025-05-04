@@ -1,0 +1,39 @@
+@font-face {
+    font-family: 'Gagalin';
+    src: url('/fonts/Gagalin-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  .referrals__content{
+    font-family: "gagalin";
+  }
+
+  .referrals__btn{
+    border-radius: 5px;
+    padding: 5px;
+    background: white;
+    color: orange;
+    margin-left: 30px;
+    cursor: pointer;
+    font-family: "gagalin";
+  }
+
+  .referrals__btn:hover{
+
+    color: orange;
+    background-color: antiquewhite;
+    cursor: pointer;
+
+  }
+
+
+  .referrals__btnCanjear{
+    border-radius: 5px;
+    padding: 5px;
+    background: white;
+    color: orange;
+ 
+    cursor: pointer;
+    font-family: "gagalin";
+  }

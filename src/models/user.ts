@@ -1,7 +1,8 @@
+// models/user.ts
 import { DataTypes, Model } from "sequelize";
 import { sequelize } from "../lib/db";
+import crypto from "crypto";
 
-// Define la interfaz para las propiedades del modelo User
 interface UserAttributes {
   id: number;
   email: string;
@@ -11,9 +12,11 @@ interface UserAttributes {
   surname: string | null;
   phone: string | null;
   address: string | null;
+  referral_code: string | null;
+  has_used_referral: boolean;
+  referred_by: number | null;
 }
 
-// Extiende la clase User con la interfaz
 export class User extends Model<UserAttributes> implements UserAttributes {
   public id!: number;
   public email!: string;
@@ -23,6 +26,9 @@ export class User extends Model<UserAttributes> implements UserAttributes {
   public surname!: string | null;
   public phone!: string | null;
   public address!: string | null;
+  public referral_code!: string | null;
+  public has_used_referral!: boolean;
+  public referred_by!: number | null;
 }
 
 User.init(
@@ -61,8 +67,35 @@ User.init(
       type: DataTypes.STRING,
       allowNull: true,
     },
+    referral_code: {
+      type: DataTypes.STRING,
+      unique: true,
+      allowNull: true,
+    },
+    has_used_referral: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
+    referred_by: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: "Users",
+        key: "id",
+      },
+    },
   },
-  { sequelize, modelName: "User" }
+  {
+    sequelize,
+    modelName: "User",
+    hooks: {
+      beforeCreate: (user: User) => {
+        if (!user.referral_code) {
+          user.referral_code = crypto.randomBytes(4).toString("hex").toUpperCase(); // 8 caracteres
+        }
+      },
+    },
+  }
 );
 
 export default User;
