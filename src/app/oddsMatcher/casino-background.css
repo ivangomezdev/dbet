@@ -183,8 +183,9 @@
 
   .oddsmatcher__filterData label{
     font-size: 13px !important;
-    color: white
-
+    color: white;
+    font-family: "gagalin";
+    color: white;
   }
 
   .oddsMatcher__label{

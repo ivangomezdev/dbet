@@ -802,7 +802,7 @@ export default function DataDisplay() {
               value={eventFilter}
               onChange={(e) => setEventFilter(e.target.value)}
               placeholder="Ej: Rosario vs Andes"
-              style={{ marginLeft: "5px", padding: "5px", width: "100%",borderRadius:"5px",marginTop:"5px",marginLeft:"-1px" }}
+              style={{color:"white", marginLeft: "5px", padding: "5px", width: "100%",borderRadius:"5px",marginTop:"5px",marginLeft:"-1px" }}
             />
           </label>
           <label className="oddsMatcher__label" style={{ width: "150px",fontWeight:"bold",marginBottom:"5px" }}>
@@ -810,7 +810,7 @@ export default function DataDisplay() {
             <select
               value={sportFilter}
               onChange={(e) => setSportFilter(e.target.value)}
-              style={{ marginLeft: "5px",backgroundColor:"#0B7348", padding: "5px", width: "100%", borderRadius:"5px",marginTop:"5px",marginLeft:"-1px" }}
+              style={{ color:"white", marginLeft: "5px",backgroundColor:"#0B7348", padding: "5px", width: "100%", borderRadius:"5px",marginTop:"5px",marginLeft:"-1px" }}
             >
               <option value="">Todos</option>
               <option value="Football">Fútbol</option>
@@ -822,7 +822,7 @@ export default function DataDisplay() {
             <select
               value={bookmakerFilter}
               onChange={(e) => setBookmakerFilter(e.target.value)}
-              style={{  padding: "5px", width: "100%",marginTop:"5px",marginLeft:"-1px",borderRadius:"5px" }}
+              style={{ color:"white", padding: "5px", width: "100%",marginTop:"5px",marginLeft:"-1px",borderRadius:"5px" }}
             >
               <option value="">Todos</option>
               {availableBookmakers.map((bookmaker) => (

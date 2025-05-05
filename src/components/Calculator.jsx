@@ -434,23 +434,10 @@ const Calculator = ({ eventData, onClose, initialBetType }) => {
 
         <div className="calculator__content">
           <div className="calculator__left-panel">
+        
             <div className="calculator__info-row">
               <div className="calculator__label">
-                <span className="calculator__icon calculator__icon--calendar"></span>
-                Fecha
-              </div>
-              <div className="calculator__value">
-                <input
-                  type="text"
-                  className="calculator__input"
-                  value={eventData.date}
-                  readOnly
-                />
-              </div>
-            </div>
-            <div className="calculator__info-row">
-              <div className="calculator__label">
-                <span className="calculator__icon calculator__icon--event"></span>
+               
                 Evento
               </div>
               <div className="calculator__value">{eventData.event}</div>
@@ -485,7 +472,7 @@ const Calculator = ({ eventData, onClose, initialBetType }) => {
                   </div>
                   <div className="calculator__bookmaker">
                     <img
-                      src={eventData.betfairImage}
+                      src="https://res.cloudinary.com/dllkefj8m/image/upload/v1746469540/betfa_bnuz8u.gif"
                       alt="Betfair"
                       className="calculator__bookmaker-logo"
                     />
