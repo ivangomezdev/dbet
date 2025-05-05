@@ -11,21 +11,14 @@ const Footer = () => {
       <div className="footer-content">
         <div className="footer-links">
           <span>© Copyright 2025 Winbet420</span>
-          <span className="separator">|</span>
-          <a href="/privacy-policy">Privacy Policy</a>
-          <span className="separator">|</span>
-          <a href="/cookie-policy">Cookie Policy</a>
-          <span className="separator">|</span>
-          <a href="/cookie-preferences">Actualiza tus preferencias de seguimiento</a>
-          <span className="separator">|</span>
+         
         </div>
 
         <div className="footer-links">
-          <a href="/terms">T&C</a>
+         
+          <a href="/guides">Cómo funciona</a>
           <span className="separator">|</span>
-          <a href="/about">QUIENES SOMOS</a>
-          <span className="separator">|</span>
-          <a href="/contact">ESCRÍBENOS</a>
+          <a href="/forYou">ESCRÍBENOS</a>
           <span className="separator">|</span>
           <a href="/referrals">AFILIADOS</a>
         </div>
