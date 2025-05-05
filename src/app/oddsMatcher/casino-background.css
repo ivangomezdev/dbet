@@ -150,7 +150,7 @@
  
 
   .navbar {
-    background-color: #333;
+    background-color: #000000;
     color: white;
     padding: 10px;
     text-align: center;
@@ -196,135 +196,15 @@
 
 
   
-  /* Add felt texture */
-  .me__content::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: radial-gradient(rgba(0, 0, 0, 0.1) 1px, transparent 1px),
-      radial-gradient(rgba(0, 0, 0, 0.1) 1px, transparent 1px);
-    background-size: 4px 4px;
-    background-position: 0 0, 2px 2px;
-    pointer-events: none;
-    z-index: 1;
-  }
+
   
-  /* Create poker chips */
-  .me__content::after {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    /* White chip */
-    background-image: radial-gradient(
-        circle at 10% 85%,
-        #fff 0%,
-        #f0f0f0 40%,
-        #ddd 42%,
-        #fff 43%,
-        #ddd 46%,
-        #999 48%,
-        #ddd 50%,
-        transparent 51%
-      ), /* Red chip */
-      radial-gradient(
-        circle at 20% 90%,
-        #e00 0%,
-        #c00 40%,
-        #900 42%,
-        #e00 43%,
-        #900 46%,
-        #600 48%,
-        #900 50%,
-        transparent 51%
-      ), /* Blue chip */
-      radial-gradient(
-        circle at 15% 80%,
-        #00e 0%,
-        #00c 40%,
-        #009 42%,
-        #00e 43%,
-        #009 46%,
-        #006 48%,
-        #009 50%,
-        transparent 51%
-      ), /* Black chip */
-      radial-gradient(
-        circle at 25% 88%,
-        #333 0%,
-        #222 40%,
-        #111 42%,
-        #333 43%,
-        #111 46%,
-        #000 48%,
-        #111 50%,
-        transparent 51%
-      ), /* Green chip */
-      radial-gradient(
-        circle at 85% 15%,
-        #0a0 0%,
-        #090 40%,
-        #070 42%,
-        #0a0 43%,
-        #070 46%,
-        #050 48%,
-        #070 50%,
-        transparent 51%
-      ), /* Gold coins */
-      radial-gradient(circle at 80% 85%, #fd0 0%, #fc0 40%, #ea0 45%, #fd0 47%, #ea0 49%, #c90 51%, transparent 52%),
-      radial-gradient(circle at 75% 80%, #fd0 0%, #fc0 40%, #ea0 45%, #fd0 47%, #ea0 49%, #c90 51%, transparent 52%),
-      radial-gradient(circle at 90% 85%, #fd0 0%, #fc0 40%, #ea0 45%, #fd0 47%, #ea0 49%, #c90 51%, transparent 52%);
-    background-size: 60px 60px, 50px 50px, 55px 55px, 45px 45px, 50px 50px, 30px 30px, 25px 25px, 20px 20px;
-    background-repeat: no-repeat;
-    pointer-events: none;
-    z-index: 2;
-  }
   
   .user-edit-form {
     position: relative;
     z-index: 10;
   }
-  
-  /* Add card corners */
-  .me__content::before {
-    content: "";
-    position: absolute;
-    width: 40px;
-    height: 60px;
-    background-color: white;
-    border-radius: 4px;
-    top: 20px;
-    right: 20px;
-    transform: rotate(15deg);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-    z-index: 3;
-  }
-  
-  /* Add another card */
-  .me__content::after {
-    content: "";
-    position: absolute;
-    width: 40px;
-    height: 60px;
-    background-color: white;
-    border-radius: 4px;
-    bottom: 30px;
-    left: 30px;
-    transform: rotate(-10deg);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-    z-index: 3;
-  }
-  
-  /* Make sure the form content is visible */
-  .me__content > * {
-    position: relative;
-    z-index: 10;
-  }
+
+
   
   .user-edit-form {
     background-color: rgba(255, 255, 255, 0.8);
