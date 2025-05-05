@@ -242,7 +242,7 @@ export default function ChooseSubscriptionPlan({ cardsData, onPlanSelect }: Subs
                     </button>
                     <button
                       
-                      className="btn btn-premium"
+                      className="btn btn-premiumDisabled"
                       onClick={() => handleButtonClick(card.planType)}
                       disabled
                     >

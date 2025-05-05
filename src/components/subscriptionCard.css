@@ -172,6 +172,7 @@
     margin-bottom: 10px;
   }
   
+  
   .btn:last-child {
     margin-bottom: 0;
   }
@@ -187,6 +188,11 @@
   
   .btn-premium {
     background-color: #054f36;
+    color: white;
+  }
+
+  .btn-premiumDisabled{
+    background-color: gray;
     color: white;
   }
   

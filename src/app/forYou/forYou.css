@@ -3,12 +3,13 @@
     margin: 130px auto;
     padding: 20px;
     font-family: Arial, sans-serif;
+    background-color:green;
   }
   .forYou__title {
     font-size: 3rem;
     text-align: center;
     font-family:"gagalin";
-    color: #333;
+    color: black;
   }
   .forYou__p {
     text-align: center;
@@ -41,7 +42,7 @@
   }
   .forYou__button {
     padding: 10px;
-    background-color: #0070f3;
+    background-color: orange;
     color: white;
     font-family:"gagalin";
     border: none;
@@ -51,5 +52,5 @@
     margin-top: 20px;
   }
   button:hover {
-    background-color: #005bb5;
+    background-color: rgba(255, 166, 0, 0.459);
   }
