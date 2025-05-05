@@ -27,10 +27,10 @@ export async function POST(request) {
     let subscriptionStatus;
 
     if (planName === "PREMIUM MENSUAL") {
-      priceId = "price_1R8B06QO2yiuJACCwEIuJZQv";
+      priceId = "price_1RKQoZDlBkPgK5IT6DFCy96s";
       subscriptionStatus = "MONTHLY";
     } else if (planName === "PREMIUM ANUAL") {
-      priceId = "price_1R8B1qQO2yiuJACCAZYkd1tn";
+      priceId = "price_1RKQooDlBkPgK5ITFyTS0NSd";
       subscriptionStatus = "YEAR";
     } else {
       return NextResponse.json({ error: "Plan no válido" }, { status: 400 });

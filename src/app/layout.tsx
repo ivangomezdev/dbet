@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   title: "Winbet420 - Gana con matchbetting",
   description: "Unete",
   icons: {
-    icon: '/favicon.png',
+    icon: '/favicon.ico',
   },
 };
 
