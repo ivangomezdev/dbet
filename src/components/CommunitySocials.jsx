@@ -50,7 +50,7 @@ function CommunitySocials() {
                   <span className="community-socials__timestamp">2025/05 13:01</span>
                 </div>
                 <p className="community-socials__text">
-                  Woohoo exactly 1 week ago i signed up for profit duel, and just now i hit $1k profit
+                  Woohoo exactly 1 week ago i signed up for 420, and just now i hit $1k profit
                 </p>
               </div>
             </div>
