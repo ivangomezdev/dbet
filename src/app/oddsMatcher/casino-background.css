@@ -6,9 +6,7 @@
     background: linear-gradient(135deg, #0A2035 0%, #05743E 100%);
   }
 
-  .oddsMatcher__cont{
-    background-color:#047541
-  }
+
   
   .betting-table-title {
     color: #fff;
@@ -149,31 +147,7 @@
     margin-top: 15px;
   }
   
-  /* Chip decorations around the table */
-  .betting-table-container::before,
-  .betting-table-container::after {
-    content: "";
-    position: absolute;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    z-index: 1;
-  }
-  
-  .betting-table-container::before {
-    background: radial-gradient(circle, #d4af37 0%, #b8860b 40%, #a67c00 60%, #d4af37 100%);
-    top: 10px;
-    left: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
-  }
-  
-  .betting-table-container::after {
-    background: radial-gradient(circle, #e74c3c 0%, #c0392b 40%, #962d22 60%, #e74c3c 100%);
-    bottom: 10px;
-    right: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
-  }
-  
+ 
 
   .navbar {
     background-color: #333;
