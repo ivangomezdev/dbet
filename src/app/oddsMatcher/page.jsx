@@ -8,7 +8,7 @@ import {
   tournamentsDataAtom,
   oddsDataAtom,
 } from "../../lib/atom";
-import NavBar from "@/components/NavBar";
+
 import Calculator from "@/components/Calculator";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";

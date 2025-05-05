@@ -7,17 +7,17 @@ import AllProviders from "./AllProviders"
 import DataFetcher from "./DataFetcher";
 initDB();
 
-
-
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
 
-
 export const metadata: Metadata = {
   title: "Winbet420 - Gana con matchbetting",
   description: "Unete",
+  icons: {
+    icon: '/favicon.png',
+  },
 };
 
 export default function RootLayout({
@@ -25,14 +25,13 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
   return (
     <html lang="en">
-      <body className={` ${geistMono.variable} `}> {/* Apply the font variable */}
-      <AllProviders>
-        <DataFetcher/>
+      <body className={geistMono.variable}>
+        <AllProviders>
+          <DataFetcher />
           {children}
-          </AllProviders>
+        </AllProviders>
       </body>
     </html>
   );
