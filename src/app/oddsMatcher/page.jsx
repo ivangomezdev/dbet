@@ -13,10 +13,33 @@ import Calculator from "@/components/Calculator";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { StarRate, AccountBalance, FilterList, Calculate } from "@mui/icons-material";
+import { useRouter } from "next/navigation";
+import React, { useEffect } from "react";
+import { useCookies } from "react-cookie";
+
+import NavBar from "@/components/NavBar";
+
+import { useSession } from "next-auth/react";
 
 export default function DataDisplay() {
   const [tournamentsData] = useAtom(tournamentsDataAtom);
   const [oddsData] = useAtom(oddsDataAtom);
+
+
+    const { data: session, status } = useSession();
+    const [cookies] = useCookies(["token"]); // Leer las cookies
+    const router = useRouter();
+  
+    console.log(status);
+    
+    useEffect(() => {
+      if (status === "loading") return;
+  
+      if (status === "unauthenticated" && !cookies.token) {
+        router.push("/auth/register");
+      }
+    }, [status, cookies.token, router]);
+
 
   const [currentPage, setCurrentPage] = useState(1);
   const [eventFilter, setEventFilter] = useState("");
