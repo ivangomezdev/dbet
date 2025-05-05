@@ -1,14 +1,13 @@
 /* Estilos generales */
 .premium-container {
     position: relative;
-    background-color: #054222;
+    background-color: #01733A;
     min-height: 100vh;
     
     padding: 40px 20px 80px;
     overflow: hidden;
     perspective: 1000px;
-    border-bottom: 5px solid #21d5998d;
-    border-top: 5px solid #21d5998d;
+ 
   }
   
   /* Elementos decorativos */
@@ -40,7 +39,7 @@
 
   .premium-content-bg{
 
-    background-color: #03723A;
+    background-color: #01733A;
    
   }
   
@@ -56,7 +55,7 @@
   
   .premium-title {
     font-size: 42px;
-    color: white;
+    color: black;
     font-family: "gagalin";
     margin-bottom: 10px;
     padding-top: 130px;
@@ -67,7 +66,7 @@
     color: white;
     font-family: "gagalin";
     margin-bottom: 40px;
-    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+  
   }
   
   /* Tarjetas de precios */
