@@ -38,7 +38,11 @@
   
 
 
-  
+  .premium-content-bg{
+
+    background-color: #03723A;
+    padding-top: 30px;
+  }
   
   
   /* Contenido principal */
@@ -61,6 +65,7 @@
   .premium-subtitle {
     font-size: 18px;
     color: white;
+    font-family: "gagalin";
     margin-bottom: 40px;
     text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
   }

@@ -179,7 +179,7 @@ export default function ChooseSubscriptionPlan({ cardsData, onPlanSelect }: Subs
   };
 
   return (
-    <div style={{ display: "flex" }}>
+    <div className="premium-content-bg" style={{ display: "flex" }}>
       <div className="premium-content">
         <h1 style={{ color: "#054F36" }} className="premium-title">
           Escoge tu plan
@@ -241,9 +241,10 @@ export default function ChooseSubscriptionPlan({ cardsData, onPlanSelect }: Subs
                       {isLoading ? "Cargando..." : card.buttonTextSpain}
                     </button>
                     <button
+                      
                       className="btn btn-premium"
                       onClick={() => handleButtonClick(card.planType)}
-                      disabled={isLoading}
+                      disabled
                     >
                       {isLoading ? "Cargando..." : card.buttonTextLatam}
                     </button>

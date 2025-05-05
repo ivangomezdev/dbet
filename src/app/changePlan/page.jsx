@@ -28,7 +28,7 @@ const subscriptionCardsData = [
         "Versión Completa de las Herramientas",
         "Cancela cuando quieras la suscripción",
       ],
-      tools: ["NinjaClub", "Oddsmatcher", "Dutcher", "Calculador", "Favor-Favor", "Multiplicador", "Profit Tracker"],
+    
       buttonTextSpain: "OBTÉN PREMIUM – ESPAÑA",
       buttonTextLatam: "OBTÉN PREMIUM – LATINOAMÉRICA (Proximamente)",
       hrefSpain: "/premium-mensual-spain",
@@ -44,7 +44,7 @@ const subscriptionCardsData = [
         "Versión Completa de las Herramientas",
         "Paga 120€ y Ahorra 60€",
       ],
-      tools: ["NinjaClub", "Oddsmatcher", "Dutcher", "Calculador", "Favor-Favor", "Multiplicador", "Profit Tracker"],
+    
       buttonTextSpain: "OBTÉN PREMIUM – ESPAÑA",
       buttonTextLatam: "OBTÉN PREMIUM – LATINOAMÉRICA  (Proximamente)",
       hrefSpain: "/premium-anual-spain",
