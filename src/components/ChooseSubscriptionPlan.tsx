@@ -182,7 +182,7 @@ export default function ChooseSubscriptionPlan({ cardsData, onPlanSelect }: Subs
     <div className="premium-content-bg" style={{ display: "flex" }}>
       <div className="premium-content">
         <h1 style={{ color: "#054F36" }} className="premium-title">
-          Escoge tu plan
+          Subscripción a WINBET420
         </h1>
         <p style={{ color: "gray" }} className="premium-subtitle">
           Puedes cancelar la renovación de la suscripción cuando quieras.

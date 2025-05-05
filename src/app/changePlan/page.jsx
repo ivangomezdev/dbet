@@ -61,7 +61,7 @@ const page = () => {
     };
   
   return (
-    <>
+    <div className="premium-content-bg">
       <header>
         <NavBar/>
       </header>
@@ -70,7 +70,7 @@ const page = () => {
         <ChooseSubscriptionPlan cardsData={subscriptionCardsData} onPlanSelect={onPlanSelect}/>
       
     </main>
-    </>
+    </div>
   )
 }
 

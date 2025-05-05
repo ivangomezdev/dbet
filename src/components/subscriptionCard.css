@@ -41,7 +41,7 @@
   .premium-content-bg{
 
     background-color: #03723A;
-    padding-top: 30px;
+   
   }
   
   
@@ -59,7 +59,7 @@
     color: white;
     font-family: "gagalin";
     margin-bottom: 10px;
- 
+    padding-top: 130px;
   }
   
   .premium-subtitle {
