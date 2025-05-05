@@ -1,6 +1,6 @@
 import React from "react";
 import "./CommunityInfo.css";
-import Top3Cards from "./Top3Cards.jsx";
+
 import Image from "next/image";
 
 
