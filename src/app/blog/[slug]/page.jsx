@@ -60,13 +60,13 @@ export default async function BlogPostPage({ params }) {
         <div style={{ padding: "10px" }} className="article__share">
           <span className="article__share-label">Compartir:</span>
           <div className="article__share-buttons">
-            <button className="article__share-btn article__share-btn--facebook">
+            <button style={{display:"none"}} className="article__share-btn article__share-btn--facebook">
               Facebook
             </button>
-            <button className="article__share-btn article__share-btn--twitter">
+            <button style={{display:"none"}} className="article__share-btn article__share-btn--twitter">
               Twitter
             </button>
-            <button className="article__share-btn article__share-btn--email">
+            <button style={{display:"none"}} className="article__share-btn article__share-btn--email">
               Email
             </button>
           </div>

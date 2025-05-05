@@ -178,7 +178,7 @@ color:"white"
   }
 
   .feature-images {
-    width: 50%;
+    width: 100%;
   }
 }
 
@@ -229,13 +229,10 @@ color:"white"
 
 .images-container {
   display: flex;
-  gap: 0.9rem;
+  gap: 1rem;
 }
 
-.feature-image {
-  border-radius: 0.5rem;
-  border: 1px solid #4b5563;
-}
+
 
 /* NinjaClub */
 .ninja-club {
@@ -312,24 +309,13 @@ color:"white"
 
 .feature-item img {
   position: relative;
-  border: 2px solid #ffffff;
-  padding: 20px;
-  background: #fff;
+ 
+  padding: 5px;
+  background: green;
   border-radius: 10px;
   overflow: hidden; /* Para que el efecto no se salga del contenedor */
 }
 
-/* Pseudo-elemento para el efecto de fuego neón */
-.feature-item img::after {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  
-
-}
 
 
 /* Efecto neón estático con box-shadow */
@@ -338,4 +324,13 @@ color:"white"
     0 0 10px #027735,
     0 0 20px #027735,
     0 0 30px #027735;
+}
+
+.feature-imageVideo{
+  border-radius: 10px;
+  border: solid 7px #008000;
+  box-shadow: 
+  0 0 10px #027735,
+  0 0 20px #027735,
+  0 0 30px #027735;
 }

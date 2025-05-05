@@ -18,10 +18,7 @@ body{
 
   box-sizing: border-box;
  
-  font-weight: normal;  /* Asegúrate de resetear el peso de la fuente */
-  font-style: normal; /* Asegúrate de resetear el estilo de la fuente */
-  text-decoration: none; /* Elimina decoraciones de texto como el subrayado */
-  color: inherit; /* Reseta el color del texto para que herede del padre */
+  
   background-color: transparent; /* Reseta el color de fondo */
   font-weight: 100;
  

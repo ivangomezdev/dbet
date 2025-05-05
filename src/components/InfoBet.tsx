@@ -38,14 +38,14 @@ export default function InfoBet() {
             <div className="feature-images">
               <div className="images-container">
                 <Image
-                  src="https://res.cloudinary.com/dc5zbh38m/image/upload/v1742504453/bonoshome2_rj0quy.png"
+                  src="https://res.cloudinary.com/dllkefj8m/image/upload/v1746462674/bonos_c8o19t.png"
                   alt="Bonos de bienvenida"
                   width={220}
                   height={130}
                   className="feature-image"
                 />
                 <Image
-                  src="https://res.cloudinary.com/dc5zbh38m/image/upload/v1742504453/bonos-home_vjgtl4.png"
+                  src="https://res.cloudinary.com/dllkefj8m/image/upload/v1746462674/bonos2_lys7yl.png"
                   alt="Promociones"
                   width={220}
                   height={130}
@@ -74,7 +74,7 @@ export default function InfoBet() {
             </div>
             <div className="feature-images">
               <Image
-                src="https://res.cloudinary.com/dc5zbh38m/image/upload/v1742504530/calculador-home_walwvi.png"
+                src="https://res.cloudinary.com/dllkefj8m/image/upload/v1746462674/odds_msizon.png"
                 alt="Calculadora de apuestas"
                 width={220}
                 height={130}
@@ -91,21 +91,22 @@ export default function InfoBet() {
               
        
               <div>
-                <h3> <span className="number-circle">2</span> El Profit Tracker</h3>
+                <h3> <span className="number-circle">2</span>Auto Mbetting</h3>
                 <p>
-                  Controla tus ganancias y mantén un registro detallado de todas tus apuestas. Analiza tus resultados y
-                  mejora tu estrategia con el seguimiento de tus ganancias y pérdidas en tiempo real.
+                 Relajate mientras nuestros profesionales generan dinero por tí. ideal para quienes no conocen de matchbetting. Reduce los riesgos a 0 y empieza a ganar con nosotross
                 </p>
               </div>
             </div>
             <div className="feature-images">
-              <Image
-                src="https://res.cloudinary.com/dc5zbh38m/image/upload/v1742504528/profit-tracker-ninjabet-es_f1tyg0.png"
-                alt="Seguimiento de ganancias"
-                width={220}
+              <video
+                src="https://res.cloudinary.com/dllkefj8m/video/upload/v1746466426/Image_to_video_%E4%B8%A8_haz_que_este_personaje_se_mueva_uktjao.mp4"
+                width={190}
                 height={130}
-                className="feature-image"
-                style={{border:"none"}}
+                className="feature-imageVideo"
+                autoPlay
+                muted
+                loop
+             
               />
             </div>
           </div>

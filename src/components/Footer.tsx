@@ -34,10 +34,10 @@ const Footer = () => {
 
       <div className="social-contact">
         <div className="social-icons">
-          <a href="https://facebook.com" className="social-icon">
+          <a style={{display:"none"}} href="https://facebook.com" className="social-icon">
             <span className="icon">f</span>
           </a>
-          <a href="https://instagram.com" className="social-icon">
+          <a style={{display:"none"}} href="https://instagram.com" className="social-icon">
             <span className="icon">
               <svg viewBox="0 0 24 24" width="16" height="16">
                 <path
@@ -47,7 +47,7 @@ const Footer = () => {
               </svg>
             </span>
           </a>
-          <a href="https://telegram.com" className="social-icon">
+          <a style={{display:"none"}} href="https://telegram.com" className="social-icon">
             <span className="icon">
               <svg viewBox="0 0 24 24" width="16" height="16">
                 <path

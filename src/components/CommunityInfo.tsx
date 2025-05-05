@@ -54,7 +54,7 @@ const CommunityInfo = () => {
 
       <section className="community-features">
       <div className="community-feature-card">
-      <Top3Cards/>
+    {/* <Top3Cards/> */} 
       </div>
       </section>
     </main>

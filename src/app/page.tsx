@@ -27,18 +27,13 @@ export default function Home() {
         <HowWorks/>
         <ReviewsBet/>
        <InfoBet/>
-        <SubscriptionCard hrefAnual='/auth/register' hrefMensual='/auth/register' hrefFree='/auth/register'/>
+      
 
       </main>
       <section className="communityFaqs">
         
         <CommunitySocials/>
         <Faqs/>
-      </section>
-      <section>
-      </section>
-      <section>
-      
       </section>
 
       <footer>

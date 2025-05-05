@@ -84,7 +84,7 @@ function ReviewsBet() {
           </div>
         </div>
 
-        <button className="reviews-bet__button">LEA LAS RESEÑAS DE WINBET420</button>
+      
       </div>
     </div>
   );

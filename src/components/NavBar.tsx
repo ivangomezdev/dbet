@@ -11,6 +11,7 @@ const pages = [
   { name: "Blog", src: "/blog" },
   { name: "Bonos", src: "/bonos" },
   { name: "OddsMatcher", src: "/oddsMatcher" },
+  { name: "Lo hacemos por ti", src: "/forYou" },
 ];
 
 function NavBar() {

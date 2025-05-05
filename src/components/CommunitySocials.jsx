@@ -12,11 +12,11 @@ function CommunitySocials() {
               </div>
               <div className="community-socials__message-content">
                 <div className="community-socials__user-info">
-                  <span className="community-socials__username community-socials__username--todd">Todd Unctious</span>
-                  <span className="community-socials__timestamp">Yesterday at 14:41</span>
+                  <span className="community-socials__username community-socials__username--todd">Marcelo Gomez</span>
+                  <span className="community-socials__timestamp">2025/04 18:45</span>
                 </div>
                 <p className="community-socials__text">
-                  Morning. The offers shown on your dashboard are the ones we recommend beginning with.
+                  La pagina cumple con lo que promete. excelente forma de generar sin riesgo. 
                 </p>
               </div>
             </div>
@@ -29,11 +29,11 @@ function CommunitySocials() {
               </div>
               <div className="community-socials__message-content">
                 <div className="community-socials__user-info">
-                  <span className="community-socials__username">Ed Munroe</span>
-                  <span className="community-socials__timestamp">Yesterday at 18:20</span>
+                  <span className="community-socials__username">Martin Delavecchia</span>
+                  <span className="community-socials__timestamp">2025/04 22:11</span>
                 </div>
                 <p className="community-socials__text">
-                  That's probably a good idea to keep track of total profit, I'll do that right
+                 El servicio de autoBet es genial, la membresia se paga sola.
                 </p>
               </div>
             </div>
@@ -47,7 +47,7 @@ function CommunitySocials() {
               <div className="community-socials__message-content">
                 <div className="community-socials__user-info">
                   <span className="community-socials__username">arsenalfcjun14</span>
-                  <span className="community-socials__timestamp">Today at 3:33 AM</span>
+                  <span className="community-socials__timestamp">2025/05 13:01</span>
                 </div>
                 <p className="community-socials__text">
                   Woohoo exactly 1 week ago i signed up for profit duel, and just now i hit $1k profit
@@ -64,10 +64,10 @@ function CommunitySocials() {
         <div className="community-socials__content">
           <h2 className="community-socials__title">ÚNETE A NUESTRA COMUNIDAD SOCIAL ACTIVA</h2>
           <p className="community-socials__description">
-            Contamos con una gran comunidad de miembros de ProfitDuel que siempre comparten consejos y trucos, y siempre
+            Contamos con una gran comunidad de miembros de WinBet que siempre comparten consejos y trucos, y siempre
             hacen y responden preguntas. Únete a las comunidades y haz cualquier pregunta que tengas.
           </p>
-          <div className="community-socials__buttons">
+          <div style={{display:"none"}} className="community-socials__buttons">
             <a style={{display:"flex",alignItems:"center",gap:"10px"}} href="#" className="community-socials__button community-socials__button--facebook">
             <img style={{width:"30px"}} src="https://res.cloudinary.com/dllkefj8m/image/upload/v1745956662/fb_olc2jp.png"/> Facebook
             </a>
