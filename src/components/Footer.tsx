@@ -1,5 +1,6 @@
 import React from "react";
 import "./footer.css"
+import Link from "next/link";
 
 const Footer = () => {
   return (
@@ -26,7 +27,7 @@ const Footer = () => {
           <span className="separator">|</span>
           <a href="/contact">ESCRÍBENOS</a>
           <span className="separator">|</span>
-          <a href="/affiliates">AFILIADOS</a>
+          <a href="/referrals">AFILIADOS</a>
         </div>
 
        
@@ -59,6 +60,7 @@ const Footer = () => {
           </a>
         </div>
 
+            <Link href={"/forYou"}>
         <button className="contact-button">
           <svg viewBox="0 0 24 24" width="24" height="24" className="chat-icon">
             <path
@@ -68,6 +70,7 @@ const Footer = () => {
           </svg>
           Contáctanos
         </button>
+        </Link>
       </div>
     </div>
     </div>

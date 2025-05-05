@@ -7,6 +7,7 @@
     
   }
   
+  
   .footer-container {
     max-width: 1200px;
     margin: 0 auto;
@@ -97,10 +98,11 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    background-color: #037239;
+    background-color: #027338;
     color: #ffffff;
+    font-family: "gagalin";
     border: none;
-    border-radius: 30px;
+    border-radius: 10px;
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;

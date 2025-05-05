@@ -63,7 +63,7 @@ function BetInfoVideo() {
         </div>
       </div>
 
-      <button className="bet-info-video__cta">DESCUBRE CÓMO FUNCIONA</button>
+      <button  href={"#howWorks"} className="bet-info-video__cta">DESCUBRE CÓMO FUNCIONA</button>
     </div>
   )
 }
