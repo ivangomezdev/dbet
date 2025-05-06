@@ -2,7 +2,7 @@
 
 import "./casino-background.css";
 import { useAtom } from "jotai";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import {
   tournamentsDataAtom,
@@ -14,32 +14,27 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { StarRate, AccountBalance, FilterList, Calculate } from "@mui/icons-material";
 import { useRouter } from "next/navigation";
-import React, { useEffect } from "react";
 import { useCookies } from "react-cookie";
-
 import NavBar from "@/components/NavBar";
-
 import { useSession } from "next-auth/react";
 
 export default function DataDisplay() {
   const [tournamentsData] = useAtom(tournamentsDataAtom);
   const [oddsData] = useAtom(oddsDataAtom);
 
+  const { data: session, status } = useSession();
+  const [cookies] = useCookies(["token"]);
+  const router = useRouter();
 
-    const { data: session, status } = useSession();
-    const [cookies] = useCookies(["token"]); // Leer las cookies
-    const router = useRouter();
-  
-    console.log(status);
-    
-    useEffect(() => {
-      if (status === "loading") return;
-  
-      if (status === "unauthenticated" && !cookies.token) {
-        router.push("/auth/register");
-      }
-    }, [status, cookies.token, router]);
+  console.log(status);
 
+  useEffect(() => {
+    if (status === "loading") return;
+
+    if (status === "unauthenticated" && !cookies.token) {
+      router.push("/auth/register");
+    }
+  }, [status, cookies.token, router]);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [eventFilter, setEventFilter] = useState("");
@@ -64,7 +59,6 @@ export default function DataDisplay() {
   const [sortConfig, setSortConfig] = useState({ key: "rating", direction: "desc" });
   const itemsPerPage = 15;
 
-  // Estados para filtros
   const [commission, setCommission] = useState(0.7);
   const [tempCommission, setTempCommission] = useState(commission);
   const [filterInputs, setFilterInputs] = useState({
@@ -77,38 +71,27 @@ export default function DataDisplay() {
   });
   const [tempFilterInputs, setTempFilterInputs] = useState({ ...filterInputs });
 
-  // Updated bookmakerImages, excluding bet365, Betfair Sportsbook, and Betfair Exchange
   const bookmakerImages = {
-    Bet365:"https://res.cloudinary.com/dc5zbh38m/image/upload/v1743783285/36_w0vbhc.gif",
-    Betway:
-      "https://res.cloudinary.com/dc5zbh38m/image/upload/v1743783285/way_guaro0.png",
-    "LeoVegas ES":
-      "https://res.cloudinary.com/dc5zbh38m/image/upload/v1742972625/71_ij3po0.png",
-    "PAF ES":
-      "https://res.cloudinary.com/dc5zbh38m/image/upload/v1742972626/paf_r32yqs.png",
-    TonyBet:
-      "https://res.cloudinary.com/dc5zbh38m/image/upload/v1742972625/105_kjtrkr.png",
-    marcaapuestas:
-      "https://res.cloudinary.com/dc5zbh38m/image/upload/v1742972622/marcaapuestas.png",
-    "Winamax FR":
-      "https://res.cloudinary.com/dc5zbh38m/image/upload/v1745713210/wiina_ntkzce.png",
+    Bet365: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1743783285/36_w0vbhc.gif",
+    Betway: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1743783285/way_guaro0.png",
+    "LeoVegas ES": "https://res.cloudinary.com/dc5zbh38m/image/upload/v1742972625/71_ij3po0.png",
+    "PAF ES": "https://res.cloudinary.com/dc5zbh38m/image/upload/v1742972626/paf_r32yqs.png",
+    TonyBet: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1742972625/105_kjtrkr.png",
+    marcaapuestas: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1742972622/marcaapuestas.png",
+    "Winamax FR": "https://res.cloudinary.com/dc5zbh38m/image/upload/v1745713210/wiina_ntkzce.png",
   };
 
-  // Updated sportImages to use dynamic sport value from oddsData
   const sportImages = {
     Football: {
       tournamentIds: [1024, 155, 325, 18, 24, 34, 35, 679, 7, 480, 384, 498],
-      image:
-        "https://res.cloudinary.com/dc5zbh38m/image/upload/v1743784233/FOTBAL_wprepx.png",
+      image: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1743784233/FOTBAL_wprepx.png",
     },
     Basketball: {
       tournamentIds: [132],
-      image:
-        "https://res.cloudinary.com/dc5zbh38m/image/upload/v1743784289/BASKET_hrcizl.png",
+      image: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1743784289/BASKET_hrcizl.png",
     },
   };
 
-  // Lógica de ordenamiento
   const handleSort = (key) => {
     setSortConfig((prev) => {
       if (prev.key === key && prev.direction === "asc") {
@@ -119,7 +102,6 @@ export default function DataDisplay() {
     });
   };
 
-  // Cálculos (from Calculator component)
   const calculateTooltipValues = (inputs, betType, favorCuota, contraCuota) => {
     const favorImporte = parseFloat(inputs.favorImporte) || 0;
     const favorCuotaValue = parseFloat(favorCuota) || 0;
@@ -135,8 +117,7 @@ export default function DataDisplay() {
     let contraBookmakerProfit, contraBetfairProfit, contraTotal;
 
     if (betType === "Dinero real") {
-      contraAmount =
-        (favorImporte * favorCuotaValue) / (contraCuotaValue - commissionInput) || 0;
+      contraAmount = (favorImporte * favorCuotaValue) / (contraCuotaValue - commissionInput) || 0;
       favorBookmakerProfit = favorImporte * favorCuotaValue - favorImporte;
       favorBetfairProfit = -(contraAmount * (contraCuotaValue - 1));
       favorTotal = favorBookmakerProfit + favorBetfairProfit;
@@ -144,8 +125,7 @@ export default function DataDisplay() {
       contraBetfairProfit = contraAmount * (1 - commissionInput);
       contraTotal = contraBookmakerProfit + contraBetfairProfit;
     } else if (betType === "Apuesta gratis") {
-      contraAmount =
-        (favorImporte * (favorCuotaValue - 1)) / (contraCuotaValue - commissionInput) || 0;
+      contraAmount = (favorImporte * (favorCuotaValue - 1)) / (contraCuotaValue - commissionInput) || 0;
       favorBookmakerProfit = favorImporte * favorCuotaValue - favorImporte;
       favorBetfairProfit = -(contraAmount * (contraCuotaValue - 1));
       favorTotal = favorBookmakerProfit + favorBetfairProfit;
@@ -156,7 +136,7 @@ export default function DataDisplay() {
       const totalFavorImporte = dineroReal + bonos;
       contraAmount =
         ((totalFavorImporte * favorCuotaValue) -
-         Math.max(0, rolloverRestante - totalFavorImporte) * (1 - ratingFuturo)) /
+          Math.max(0, rolloverRestante - totalFavorImporte) * (1 - ratingFuturo)) /
         (contraCuotaValue - commissionInput) || 0;
       favorBookmakerProfit =
         ((totalFavorImporte * favorCuotaValue) - dineroReal) -
@@ -225,13 +205,12 @@ export default function DataDisplay() {
   const getEventBookmakerOutcomeTriples = () => {
     let triples = [];
 
-    // List of bookmakers to exclude
     const excludedBookmakers = ["Bet365 (no latency)", "Betfair Sportsbook", "Betfair Exchange"];
 
     Object.values(oddsData).forEach((eventOdds) => {
       const eventId = eventOdds.eventId;
       const eventDate = eventOdds.date;
-      const sport = eventOdds.sport || "Football"; // Default to Football if sport is undefined
+      const sport = eventOdds.sport || "Football";
       const homeTeam = eventOdds.home || eventOdds.participant1 || "Team 1";
       const awayTeam = eventOdds.away || eventOdds.participant2 || "Team 2";
       const eventName = `${homeTeam} vs ${awayTeam}`.toLowerCase();
@@ -245,7 +224,6 @@ export default function DataDisplay() {
       ];
 
       Object.entries(eventOdds.bookmakers).forEach(([bookmakerName, bookmakerData]) => {
-        // Skip excluded bookmakers
         if (excludedBookmakers.includes(bookmakerName)) return;
 
         const marketData = bookmakerData.find((market) => market.name === "ML");
@@ -282,6 +260,9 @@ export default function DataDisplay() {
             tooltipValues.contra.total,
             tooltipValues.favor.total
           );
+
+          // Excluir apuestas con rating > 100.1%
+          if (rating !== "-" && parseFloat(rating) > 100.1) return;
 
           if (
             rating !== "-" &&
@@ -354,7 +335,6 @@ export default function DataDisplay() {
     typeof price === "number" ? price.toFixed(2) : "-";
 
   const getSportImage = (tournamentId) => {
-    // Find the sport whose tournamentIds include the given tournamentId
     for (const [sport, { tournamentIds, image }] of Object.entries(sportImages)) {
       if (tournamentIds.includes(tournamentId)) {
         return image;
@@ -746,10 +726,8 @@ export default function DataDisplay() {
       <div className="me__content betting-table-container">
         <h2 className="betting-table-title">OddsMatcher</h2>
 
-        {/* Filtros Superiores */}
         <div className="oddsmatcher__filterData" style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
           <label className="oddsMatcher__label" style={{ width: "150px" }}>
-           
             <button
               onClick={handleOpenRatingModal}
               style={{
@@ -762,7 +740,7 @@ export default function DataDisplay() {
                 width: "100%",
                 display: "flex",
                 alignItems: "center",
-                borderRadius:"5px",
+                borderRadius: "5px",
                 justifyContent: "center",
               }}
             >
@@ -771,7 +749,6 @@ export default function DataDisplay() {
             </button>
           </label>
           <label className="oddsMatcher__label" style={{ width: "150px" }}>
-           
             <button
               onClick={handleOpenCommissionModal}
               style={{
@@ -781,7 +758,7 @@ export default function DataDisplay() {
                 color: "white",
                 border: "none",
                 cursor: "pointer",
-                borderRadius:"5px",
+                borderRadius: "5px",
                 width: "100%",
                 display: "flex",
                 alignItems: "center",
@@ -793,7 +770,6 @@ export default function DataDisplay() {
             </button>
           </label>
           <label className="oddsMatcher__label" style={{ width: "150px" }}>
-            
             <button
               onClick={handleOpenFilterModal}
               style={{
@@ -802,7 +778,7 @@ export default function DataDisplay() {
                 backgroundColor: "rgba(12, 187, 91, 0.497)",
                 color: "white",
                 border: "none",
-                borderRadius:"5px",
+                borderRadius: "5px",
                 cursor: "pointer",
                 width: "100%",
                 display: "flex",
@@ -816,40 +792,39 @@ export default function DataDisplay() {
           </label>
         </div>
 
-        {/* Filtros Inferiores */}
         <div className="oddsmatcher__filterData" style={{ display: "flex", gap: "10px" }}>
-          <label className="oddsMatcher__label" style={{ width: "150px",fontWeight:"bold",marginBottom:"5px" }}>
+          <label className="oddsMatcher__label" style={{ width: "150px", fontWeight: "bold", marginBottom: "5px" }}>
             Evento
             <input
               type="text"
               value={eventFilter}
               onChange={(e) => setEventFilter(e.target.value)}
               placeholder="Ej: Rosario vs Andes"
-              style={{color:"white", marginLeft: "5px", padding: "5px", width: "100%",borderRadius:"5px",marginTop:"5px",marginLeft:"-1px" }}
+              style={{ color: "white", marginLeft: "5px", padding: "5px", width: "100%", borderRadius: "5px", marginTop: "5px", marginLeft: "-1px" }}
             />
           </label>
-          <label className="oddsMatcher__label" style={{ width: "150px",fontWeight:"bold",marginBottom:"5px" }}>
+          <label className="oddsMatcher__label" style={{ width: "150px", fontWeight: "bold", marginBottom: "5px" }}>
             Deporte
             <select
               value={sportFilter}
               onChange={(e) => setSportFilter(e.target.value)}
-              style={{ color:"white", marginLeft: "5px",backgroundColor:"#0B7348", padding: "5px", width: "100%", borderRadius:"5px",marginTop:"5px",marginLeft:"-1px" }}
+              style={{ color: "white", marginLeft: "5px", backgroundColor: "#0B7348", padding: "5px", width: "100%", borderRadius: "5px", marginTop: "5px", marginLeft: "-1px" }}
             >
               <option value="">Todos</option>
               <option value="Football">Fútbol</option>
               <option value="Basketball">Baloncesto</option>
             </select>
           </label>
-          <label className="oddsMatcher__label" style={{ width: "150px",fontWeight:"bold",marginBottom:"5px" }}>
+          <label className="oddsMatcher__label" style={{ width: "150px", fontWeight: "bold", marginBottom: "5px" }}>
             Bookmaker
             <select
               value={bookmakerFilter}
               onChange={(e) => setBookmakerFilter(e.target.value)}
-              style={{ color:"white", padding: "5px", width: "100%",marginTop:"5px",marginLeft:"-1px",borderRadius:"5px" }}
+              style={{ color: "white", padding: "5px", width: "100%", marginTop: "5px", marginLeft: "-1px", borderRadius: "5px" }}
             >
               <option value="">Todos</option>
               {availableBookmakers.map((bookmaker) => (
-                <option style={{color:"black"}} key={bookmaker} value={bookmaker}>
+                <option style={{ color: "black" }} key={bookmaker} value={bookmaker}>
                   {bookmaker}
                 </option>
               ))}
@@ -952,7 +927,7 @@ export default function DataDisplay() {
                             borderRadius: "4px"
                           }}
                         >
-                          <Calculate style={{ fontSize: "30px",marginLeft:"30px" }} />
+                          <Calculate style={{ fontSize: "30px", marginLeft: "30px" }} />
                         </button>
                       </td>
                       <td>
@@ -998,12 +973,12 @@ export default function DataDisplay() {
               color: "white",
               marginRight: "10px",
               padding: "5px 10px",
-              borderRadius:"5px"
+              borderRadius: "5px"
             }}
           >
             Anterior
           </button>
-          <span style={{fontFamily:"Gagalin",fontWeight:"100"}}>
+          <span style={{ fontFamily: "Gagalin", fontWeight: "100" }}>
             Página {currentPage} de {totalPages}
           </span>
           <button
@@ -1014,12 +989,12 @@ export default function DataDisplay() {
               color: "white",
               marginLeft: "10px",
               padding: "5px 10px",
-              borderRadius:"5px"
+              borderRadius: "5px"
             }}
           >
             Siguiente
           </button>
-          <p style={{fontFamily:"Gagalin",fontWeight:"100"}}>
+          <p style={{ fontFamily: "Gagalin", fontWeight: "100" }}>
             Mostrando {startIndex + 1} - {Math.min(endIndex, totalItems)} de{" "}
             {totalItems} resultados
           </p>
