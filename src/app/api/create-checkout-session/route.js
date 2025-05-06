@@ -49,7 +49,7 @@
         payment_method_types: ["card"],
         line_items: [{ price: priceId, quantity: 1 }],
         success_url: `${request.headers.get("origin")}/success?session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: `${request.headers.get("origin")}/failed?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: "https://winbet420.com/failed?session_id={CHECKOUT_SESSION_ID}",
         metadata: {
           userId: user.id.toString(),
           planName,
