@@ -3,6 +3,7 @@ import NavBar from "@/components/HeroNavBar";
 import React, { useState } from "react";
 import emailjs from "@emailjs/browser";
 import "./forYou.css";
+import Footer from "../../components/Footer"
 
 const Page = () => {
   const [formData, setFormData] = useState({
@@ -102,6 +103,7 @@ const Page = () => {
         </button>
       </form>
       {status && <p>{status}</p>}
+      <Footer/>
     </div>
   );
 };
