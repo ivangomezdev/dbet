@@ -1,6 +1,6 @@
 import Stripe from 'stripe';
 
-console.log('STRIPE_SECRET_KEY desde stripe.ts:', process.env.STRIPE_SECRET_KEY);
+
 
 
 
