@@ -9,6 +9,7 @@ import CommunitySocials from "@/components/CommunitySocials";
 import BetInfoVideo from "@/components/bet-info-video";
 import ReviewsBet from "@/components/ReviewsBet";
 import { initDB } from '../lib/init-db';
+import SubscriptionCard from "@/components/SubscriptionCard";
 initDB();
 export default function Home() {
   return (
@@ -29,7 +30,7 @@ export default function Home() {
 
       </main>
       <section className="communityFaqs">
-        
+      <SubscriptionCard hrefAnual="/auth/register" hrefFree="/auth/register" hrefMensual="/auth/register"/>
         <CommunitySocials/>
         <Faqs/>
       </section>
