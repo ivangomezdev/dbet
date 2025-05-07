@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   description: "Unete",
   icons: {
     icon: [
-      { url: '/favicon.ico', type: 'image/x-icon' },
+      { url: 'https://res.cloudinary.com/dllkefj8m/image/upload/v1746635198/wbet-removebg-preview_fw5m6l.png', type: 'image/x-icon' },
     ],
   },
 };
