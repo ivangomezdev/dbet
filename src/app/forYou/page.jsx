@@ -3,6 +3,7 @@ import NavBar from "@/components/HeroNavBar";
 import React, { useState } from "react";
 import emailjs from "@emailjs/browser";
 import "./forYou.css";
+import Footer from "../../components/Footer"
 
 const Page = () => {
   const [formData, setFormData] = useState({
@@ -45,9 +46,9 @@ const Page = () => {
     }
   };
 
-  return (
-    <div className="container">
+  return (<>
       <NavBar />
+    <div className="container">
       <h1 className="forYou__title">Hacemos el MatchBetting por tí</h1>
       <p className="forYoy__p">
         ¿No sabes cómo realizar el MatchBetting? Déjanos un mensaje y un
@@ -103,6 +104,8 @@ const Page = () => {
       </form>
       {status && <p>{status}</p>}
     </div>
+      <Footer/>
+    </>
   );
 };
 
