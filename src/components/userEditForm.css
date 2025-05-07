@@ -63,10 +63,11 @@
   
   .user-edit-form__close {
 
-    font-size: 1,1rem;
+    font-size: 1.1rem;
     cursor: pointer;
     color: white;
     padding: 5px;
+    border-radius: 5px;
     background-color: red;
     
     display: flex;
