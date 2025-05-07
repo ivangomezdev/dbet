@@ -62,13 +62,13 @@
   }
   
   .user-edit-form__close {
-    background: none;
-    border: none;
-    font-size: 0,8rem;
+
+    font-size: 1,1rem;
     cursor: pointer;
-    color: #999;
-    padding: 0;
-    height: 24px;
+    color: white;
+    padding: 5px;
+    background-color: red;
+    
     display: flex;
     align-items: center;
     justify-content: center;
@@ -138,6 +138,7 @@
     bottom: -50px;
     
   }
+  
   
   .user-edit-form__profile {
     position: relative;
@@ -473,10 +474,13 @@
 
   }
   .user-edit-form__planUpgrade{
-    color: #00AC20;
+    color: white;
     text-decoration: none;
     width: 130px;
-    border-bottom: 1px dashed #01AA26;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 25px;
+    background-color: #054F36;
     font-family: "Gagalin";
     letter-spacing: 1px;
    
