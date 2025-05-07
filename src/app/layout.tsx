@@ -5,6 +5,7 @@ import "./globals.css";
 import { initDB } from '../lib/init-db.js';
 import AllProviders from "./AllProviders"
 import DataFetcher from "./DataFetcher";
+import Head from "next/head";
 initDB();
 
 const geistMono = Geist_Mono({
@@ -16,7 +17,9 @@ export const metadata: Metadata = {
   title: "Winbet420 - Gana con matchbetting",
   description: "Unete",
   icons: {
-    icon: '/favicon.ico',
+    icon: [
+      { url: '/favicon.ico', type: 'image/x-icon' },
+    ],
   },
 };
 
@@ -27,6 +30,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <Head>
+        <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+      </Head>
       <body className={geistMono.variable}>
         <AllProviders>
           <DataFetcher />

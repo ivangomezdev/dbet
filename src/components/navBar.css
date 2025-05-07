@@ -39,11 +39,12 @@
   display: flex;
   align-items: center;
   flex-shrink: 0; /* Prevent logo from shrinking */
-  
+  width: 60px !important;
+  height: 80px !important;
 }
 
 .hero-logo {
-  width: 130px;
+  width: 90px;
   height: auto;
   margin-top: 20px;
   object-fit: contain;

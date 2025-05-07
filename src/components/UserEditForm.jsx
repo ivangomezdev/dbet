@@ -117,6 +117,7 @@ export default function UserEditForm({
 
   return (
     <div className="user-edit-form">
+      <h3 style={{marginBottom:"-10px",marginLeft:"20px",color:"orange",fontFamily:"gagalin"}}>{user?.subscriptionStatus}</h3>
       <div className="user-edit-form__header">
         <h2 className="user-edit-form__title">Tu información</h2>
         <button

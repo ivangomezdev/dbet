@@ -30,7 +30,7 @@ const Page = () => {
 
   console.log(status);
   
-  useEffect(() => {
+   useEffect(() => {
     if (status === "loading") return;
 
     if (status === "unauthenticated" && !cookies.token) {
