@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { verify } from "jose";
 import { User } from "@/models/user"; // Ajusta la ruta según tu proyecto
-import { sequelize } from "@/lib/db"; // Ajusta la ruta según tu proyecto
+
 
 export async function GET(req) {
   const authHeader = req.headers.get("authorization");
