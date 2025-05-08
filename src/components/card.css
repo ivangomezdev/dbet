@@ -8,7 +8,7 @@
 .card {
   position: relative;
   width: 380px;
-  height: 230px;
+  height: 280px;
   background: linear-gradient(220deg, rgba(0, 0, 0, 0.395) 45%, rgba(0, 0, 0, 0.573) 55%);
   border-top: 2px solid #343434;
   border-right: 1px solid rgba(255,255,255,0.65);
@@ -66,7 +66,8 @@
 
 .card-description {
   font-size: 15px;
-  margin-top: 4px;
+  font-family: "gagalin";
+  margin-top: 24px;
   padding: 5px;
   color: rgba(255, 255, 255, 0.6);
 }
@@ -126,7 +127,8 @@
   .card {
 
     width: 300px;
-    height: 300px;
+    text-align: center;
+    height: 390px;
    
   
     

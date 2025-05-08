@@ -52,11 +52,7 @@ const CommunityInfo = () => {
         </div>
       </section>
 
-      <section className="community-features">
-      <div className="community-feature-card">
-    {/* <Top3Cards/> */} 
-      </div>
-      </section>
+
     </main>
   );
 };
