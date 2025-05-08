@@ -25,10 +25,10 @@ const ImageTextContainer = () => {
       <Image
         className="imageTextContainer__img"
         src={
-          "https://res.cloudinary.com/dllkefj8m/image/upload/v1745946034/image__1_-removebg_1_zo5t3f.png"
+          "https://res.cloudinary.com/dllkefj8m/image/upload/v1746720234/negro_1_zwo7ky.png"
         }
         alt=""
-        width={650}
+        width={600}
         height={550}
       />
     

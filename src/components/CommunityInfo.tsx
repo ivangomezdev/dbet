@@ -30,13 +30,14 @@ const CommunityInfo = () => {
         </div>
 
         <div className="community-hero-image">
-          <Image
+      {/*  <Image
             src="https://res.cloudinary.com/dllkefj8m/image/upload/v1746051078/easda_ou1mtr.png"
             alt="Software con métricas financieras"
             width={390}
             height={250}
             className="community-main-image"
-          />
+          />*/}
+          <video src="https://res.cloudinary.com/dllkefj8m/video/upload/v1746720009/Image_to_video_%E4%B8%A8_dale_animacion_al_robot_este_online-video-cutter.com_f5gnvy.mp4" loop muted autoPlay className="community-main-image"></video>
           <span className="community-price-badge" style={{ top: "80px", right: "100px" }}>
             +$270
           </span>
