@@ -40,7 +40,7 @@ function NavBar() {
             <Image
               className="hero-logo"
               alt="logo"
-              src="https://res.cloudinary.com/dllkefj8m/image/upload/v1746635198/wbet-removebg-preview_fw5m6l.png"
+              src="https://res.cloudinary.com/dllkefj8m/image/upload/v1746718585/WIN_BET_420_3_1_locn8p.png"
               width={150}
               height={75}
               style={{ objectFit: "contain" }}

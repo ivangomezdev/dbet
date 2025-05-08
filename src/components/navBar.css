@@ -44,7 +44,7 @@
 }
 
 .hero-logo {
-  width: 90px;
+  width: 120px;
   height: auto;
   margin-top: 20px;
   object-fit: contain;
@@ -175,7 +175,7 @@
   }
 
   .navbar-logo img{
-    width: 170px;
+    width: 120px;
   }
 
   .hero-logo {
