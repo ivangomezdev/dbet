@@ -92,7 +92,7 @@ export default function DataDisplay() {
     "golden park": "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/golden_co3ixz.png",
     marathonbet: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/marathon_uvvys8.png",
     paston: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665177/paston_if2fg1.png",
-  "betfair sportbook": "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746666802/betfairsport_fqtyfv.gif"
+  "betfair sportsbook": "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746666802/betfairsport_fqtyfv.gif"
   };
 
   const sportImages = {
