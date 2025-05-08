@@ -149,7 +149,7 @@ export default function UserBono({ bonosData }: UserBonoProps) {
                     </div>
 
                     <div className="user-bono__actions">
-                      <button className="user-bono__button user-bono__button--show">
+                   {/*    <button className="user-bono__button user-bono__button--show">
                         MUESTRA
                       </button>
                       {!bono.fields.complete ? (
@@ -162,7 +162,9 @@ export default function UserBono({ bonosData }: UserBonoProps) {
                           COMPLETADA
                         </button>
                       )}
+                        */}
                     </div>
+                    
                   </div>
 
                   <div className="user-bono__value">

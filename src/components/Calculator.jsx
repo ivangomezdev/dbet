@@ -377,7 +377,7 @@ const Calculator = ({ eventData, onClose, initialBetType }) => {
     contraCuota: eventData.contra ? eventData.contra.toFixed(2) : "",
     dineroReal: "100", // Default for RollOver
     bonos: "100", // Default for RollOver
-    rolloverRestante: "1000", // Default for RollOver
+    rolloverRestante: "100", // Updated default for RollOver
     ratingFuturo: "0.95", // Default for RollOver
     importeReembolso: "100", // Default for Reembolso
   });
