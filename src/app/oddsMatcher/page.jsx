@@ -71,29 +71,29 @@ export default function DataDisplay() {
   });
   const [tempFilterInputs, setTempFilterInputs] = useState({ ...filterInputs });
 
-  const bookmakerImages = {
-    Bet365: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1743783285/36_w0vbhc.gif",
-    Betway: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1743783285/way_guaro0.png",
-    "LeoVegas ES": "https://res.cloudinary.com/dc5zbh38m/image/upload/v1742972625/71_ij3po0.png",
-    "PAF ES": "https://res.cloudinary.com/dc5zbh38m/image/upload/v1742972626/paf_r32yqs.png",
-    TonyBet: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1742972625/105_kjtrkr.png",
-    marcaapuestas: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1742972622/marcaapuestas.png",
-    "Winamax FR": "https://res.cloudinary.com/dc5zbh38m/image/upload/v1745713210/wiina_ntkzce.png",
-    "william hill": "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665179/william_aaiwz3.gif",
-    codere: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665179/codere_m7410b.png",
-    retabet: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/retabet_upii83.png",
-    sportium: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/sportium_qpfdnf.png",
-    pokerstars: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/pokerstar_iflvut.png",
-    luckia: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/luckia_fukvcc.png",
-    jokerbet: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/joker_tcbpxt.png",
-    casumo: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/casumo_og6f4g.png",
-    bwin: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/bwin_drzq5i.gif",
-    juegging: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/jueggin_pxoeqm.png",
-    "golden park": "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/golden_co3ixz.png",
-    marathonbet: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/marathon_uvvys8.png",
-    paston: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665177/paston_if2fg1.png",
-  "betfair sportsbook": "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746666802/betfairsport_fqtyfv.gif"
-  };
+const bookmakerImages = {
+  Bet365: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1743783285/36_w0vbhc.gif",
+  Betway: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1743783285/way_guaro0.png",
+  "LeoVegas ES": "https://res.cloudinary.com/dc5zbh38m/image/upload/v1742972625/71_ij3po0.png",
+  "PAF ES": "https://res.cloudinary.com/dc5zbh38m/image/upload/v1742972626/paf_r32yqs.png",
+  TonyBet: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1742972625/105_kjtrkr.png",
+  marcaapuestas: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1742972622/marcaapuestas.png",
+  "Winamax FR": "https://res.cloudinary.com/dc5zbh38m/image/upload/v1745713210/wiina_ntkzce.png",
+  // Nuevas imágenes agregadas
+  "william hill": "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665179/william_aaiwz3.gif",
+  codere: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665179/codere_m7410b.png",
+  retabet: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/retabet_upii83.png",
+  sportium: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/sportium_qpfdnf.png",
+  pokerstars: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/pokerstar_iflvut.png",
+  luckia: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/luckia_fukvcc.png",
+  jokerbet: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/joker_tcbpxt.png",
+  casumo: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/casumo_og6f4g.png",
+  bwin: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/bwin_drzq5i.gif",
+  juegging: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/jueggin_pxoeqm.png",
+  "golden park": "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/golden_co3ixz.png",
+  marathonbet: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/marathon_uvvys8.png",
+  paston: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665177/paston_if2fg1.png"
+};
 
   const sportImages = {
     Football: {
@@ -219,7 +219,7 @@ export default function DataDisplay() {
   const getEventBookmakerOutcomeTriples = () => {
     let triples = [];
 
-    const excludedBookmakers = ["Bet365 (no latency)", "Betfair Exchange"];
+    const excludedBookmakers = ["Bet365 (no latency)", "Betfair Sportsbook","Betfair Exchange"];
 
     Object.values(oddsData).forEach((eventOdds) => {
       const eventId = eventOdds.eventId;
