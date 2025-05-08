@@ -26,7 +26,15 @@ export default function DataDisplay() {
   const [cookies] = useCookies(["token"]);
   const router = useRouter();
 
+  console.log(status);
 
+  useEffect(() => {
+    if (status === "loading") return;
+
+    if (status === "unauthenticated" && !cookies.token) {
+      router.push("/auth/register");
+    }
+  }, [status, cookies.token, router]);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [eventFilter, setEventFilter] = useState("");
@@ -71,6 +79,19 @@ export default function DataDisplay() {
     TonyBet: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1742972625/105_kjtrkr.png",
     marcaapuestas: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1742972622/marcaapuestas.png",
     "Winamax FR": "https://res.cloudinary.com/dc5zbh38m/image/upload/v1745713210/wiina_ntkzce.png",
+    "william hill": "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665179/william_aaiwz3.gif",
+    codere: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665179/codere_m7410b.png",
+    retabet: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/retabet_upii83.png",
+    sportium: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/sportium_qpfdnf.png",
+    pokerstars: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/pokerstar_iflvut.png",
+    luckia: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/luckia_fukvcc.png",
+    jokerbet: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/joker_tcbpxt.png",
+    casumo: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/casumo_og6f4g.png",
+    bwin: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/bwin_drzq5i.gif",
+    juegging: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/jueggin_pxoeqm.png",
+    "golden park": "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/golden_co3ixz.png",
+    marathonbet: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/marathon_uvvys8.png",
+    paston: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665177/paston_if2fg1.png"
   };
 
   const sportImages = {
@@ -197,7 +218,7 @@ export default function DataDisplay() {
   const getEventBookmakerOutcomeTriples = () => {
     let triples = [];
 
-    const excludedBookmakers = ["Bet365 (no latency)", "Betfair Sportsbook", "Betfair Exchange"];
+    const excludedBookmakers = ["Bet365 (no latency)", "Betfair Sportsbook","Betfair Exchange"];
 
     Object.values(oddsData).forEach((eventOdds) => {
       const eventId = eventOdds.eventId;
@@ -210,9 +231,9 @@ export default function DataDisplay() {
       if (!eventOdds.bookmakers) return;
 
       const outcomes = [
-        { id: "101", name: homeTeam, key: "home" },
-        { id: "102", name: "Empate", key: "draw" },
-        { id: "103", name: awayTeam, key: "away" },
+        { id: "101", name: homeTeam, key: "home", depthKey: "depthLayHome" },
+        { id: "102", name: "Empate", key: "draw", depthKey: "depthLayDraw" },
+        { id: "103", name: awayTeam, key: "away", depthKey: "depthLayAway" },
       ];
 
       Object.entries(eventOdds.bookmakers).forEach(([bookmakerName, bookmakerData]) => {
@@ -229,6 +250,7 @@ export default function DataDisplay() {
         outcomes.forEach((outcome) => {
           const favorOdds = parseFloat(marketData.odds[0][outcome.key]);
           const contraOdds = parseFloat(betfairData.odds[0][outcome.key]);
+          const depthLay = parseFloat(betfairData.odds[0][outcome.depthKey]) || "-";
 
           if (isNaN(favorOdds) || isNaN(contraOdds)) return;
 
@@ -253,6 +275,7 @@ export default function DataDisplay() {
             tooltipValues.favor.total
           );
 
+          // Excluir apuestas con rating > 100.1%
           if (rating !== "-" && parseFloat(rating) > 100.1) return;
 
           if (
@@ -272,18 +295,6 @@ export default function DataDisplay() {
           if (filterInputs.dateStart && new Date(eventDate) < filterInputs.dateStart) return;
           if (filterInputs.dateEnd && new Date(eventDate) > filterInputs.dateEnd) return;
 
-          let depthRating = "-";
-          const betfairExchange = eventOdds.bookmakers["Betfair Exchange"];
-          if (betfairExchange) {
-            const market = betfairExchange.find((m) => m.name === "ML");
-            if (market && market.odds && market.odds[0]) {
-              const depthKey =
-                outcome.key === "home" ? "depthLayHome" :
-                outcome.key === "draw" ? "depthLayDraw" : "depthLayAway";
-              depthRating = market.odds[0][depthKey] || "-";
-            }
-          }
-
           triples.push({
             event: { participant1: homeTeam, participant2: awayTeam, eventId },
             bookmaker: bookmakerName,
@@ -294,7 +305,7 @@ export default function DataDisplay() {
             favor: favorOdds,
             contra: contraOdds,
             sportType: sport,
-            depthRating: depthRating,
+            depthLay: depthLay,
           });
         });
       });
@@ -310,9 +321,9 @@ export default function DataDisplay() {
       } else if (sortConfig.key === "event") {
         aValue = `${a.event.participant1} vs ${a.event.participant2}`.toLowerCase();
         bValue = `${b.event.participant1} vs ${b.event.participant2}`.toLowerCase();
-      } else if (sortConfig.key === "%Rating") {
-        aValue = a.depthRating === "-" ? -Infinity : parseFloat(a.depthRating);
-        bValue = b.depthRating === "-" ? -Infinity : parseFloat(b.depthRating);
+      } else if (sortConfig.key === "depthLay") {
+        aValue = parseFloat(aValue) || -Infinity;
+        bValue = parseFloat(bValue) || -Infinity;
       }
 
       if (aValue < bValue) return sortConfig.direction === "asc" ? -1 : 1;
@@ -363,7 +374,7 @@ export default function DataDisplay() {
       bookmakerImage: bookmakerImages[item.bookmaker],
       betfairImage: bookmakerImages["Betfair Exchange"],
       apuesta: item.apuesta,
-      depthRating: item.depthRating,
+      depthLay: item.depthLay,
     });
   };
 
@@ -699,7 +710,7 @@ export default function DataDisplay() {
           </label>
         </div>
         <div className="modal-buttons" style={{ display: "flex", justifyContent: "flex-end" }}>
-          W          <button
+          <button
             onClick={handleCloseFilterModal}
             style={{
               padding: "10px 20px",
@@ -860,6 +871,7 @@ export default function DataDisplay() {
                 <th onClick={() => handleSort("rating")} style={{ cursor: "pointer" }}>
                   RATING (%) {sortConfig.key === "rating" && (sortConfig.direction === "asc" ? "↑" : "↓")}
                 </th>
+               
                 <th onClick={() => handleSort("bookmaker")} style={{ cursor: "pointer" }}>
                   BOOKMAKER {sortConfig.key === "bookmaker" && (sortConfig.direction === "asc" ? "↑" : "↓")}
                 </th>
@@ -872,8 +884,8 @@ export default function DataDisplay() {
                 <th onClick={() => handleSort("contra")} style={{ cursor: "pointer" }}>
                   CONTRA {sortConfig.key === "contra" && (sortConfig.direction === "asc" ? "↑" : "↓")}
                 </th>
-                <th onClick={() => handleSort("%Rating")} style={{ cursor: "pointer" }}>
-                  Liquidez {sortConfig.key === "%Rating" && (sortConfig.direction === "asc" ? "↑" : "↓")}
+                <th onClick={() => handleSort("depthLay")} style={{ cursor: "pointer" }}>
+                  LIQUIDEZ {sortConfig.key === "depthLay" && (sortConfig.direction === "asc" ? "↑" : "↓")}
                 </th>
               </tr>
             </thead>
@@ -889,7 +901,7 @@ export default function DataDisplay() {
                     rating,
                     favor,
                     contra,
-                    depthRating,
+                    depthLay,
                   },
                   index
                 ) => {
@@ -926,7 +938,7 @@ export default function DataDisplay() {
                               rating,
                               favor,
                               contra,
-                              depthRating,
+                              depthLay,
                             })
                           }
                           style={{
@@ -970,7 +982,7 @@ export default function DataDisplay() {
                         />
                       </td>
                       <td>{formatPrice(contra)}</td>
-                      <td>{depthRating}</td>
+                      <td>{formatPrice(depthLay)}</td>
                     </tr>
                   );
                 }
