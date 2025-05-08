@@ -71,29 +71,28 @@ export default function DataDisplay() {
   });
   const [tempFilterInputs, setTempFilterInputs] = useState({ ...filterInputs });
 
-const bookmakerImages = {
-  Bet365: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1743783285/36_w0vbhc.gif",
-  Betway: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1743783285/way_guaro0.png",
-  "LeoVegas ES": "https://res.cloudinary.com/dc5zbh38m/image/upload/v1742972625/71_ij3po0.png",
-  "PAF ES": "https://res.cloudinary.com/dc5zbh38m/image/upload/v1742972626/paf_r32yqs.png",
-  TonyBet: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1742972625/105_kjtrkr.png",
-  marcaapuestas: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1742972622/marcaapuestas.png",
-  "Winamax FR": "https://res.cloudinary.com/dc5zbh38m/image/upload/v1745713210/wiina_ntkzce.png",
-  // Nuevas imágenes agregadas
-  "william hill": "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665179/william_aaiwz3.gif",
-  codere: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665179/codere_m7410b.png",
-  retabet: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/retabet_upii83.png",
-  sportium: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/sportium_qpfdnf.png",
-  pokerstars: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/pokerstar_iflvut.png",
-  luckia: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/luckia_fukvcc.png",
-  jokerbet: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/joker_tcbpxt.png",
-  casumo: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/casumo_og6f4g.png",
-  bwin: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/bwin_drzq5i.gif",
-  juegging: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/jueggin_pxoeqm.png",
-  "golden park": "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/golden_co3ixz.png",
-  marathonbet: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/marathon_uvvys8.png",
-  paston: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665177/paston_if2fg1.png"
-};
+  const bookmakerImages = {
+    Bet365: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1743783285/36_w0vbhc.gif",
+    Betway: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1743783285/way_guaro0.png",
+    "LeoVegas ES": "https://res.cloudinary.com/dc5zbh38m/image/upload/v1742972625/71_ij3po0.png",
+    "PAF ES": "https://res.cloudinary.com/dc5zbh38m/image/upload/v1742972626/paf_r32yqs.png",
+    TonyBet: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1742972625/105_kjtrkr.png",
+    marcaapuestas: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1742972622/marcaapuestas.png",
+    "Winamax FR": "https://res.cloudinary.com/dc5zbh38m/image/upload/v1745713210/wiina_ntkzce.png",
+    "william hill": "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665179/william_aaiwz3.gif",
+    codere: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665179/codere_m7410b.png",
+    retabet: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/retabet_upii83.png",
+    sportium: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/sportium_qpfdnf.png",
+    pokerstars: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/pokerstar_iflvut.png",
+    luckia: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/luckia_fukvcc.png",
+    jokerbet: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/joker_tcbpxt.png",
+    casumo: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/casumo_og6f4g.png",
+    bwin: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/bwin_drzq5i.gif",
+    juegging: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/jueggin_pxoeqm.png",
+    "golden park": "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/golden_co3ixz.png",
+    marathonbet: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/marathon_uvvys8.png",
+    paston: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665177/paston_if2fg1.png"
+  };
 
   const sportImages = {
     Football: {
@@ -232,9 +231,9 @@ const bookmakerImages = {
       if (!eventOdds.bookmakers) return;
 
       const outcomes = [
-        { id: "101", name: homeTeam, key: "home" },
-        { id: "102", name: "Empate", key: "draw" },
-        { id: "103", name: awayTeam, key: "away" },
+        { id: "101", name: homeTeam, key: "home", depthKey: "depthLayHome" },
+        { id: "102", name: "Empate", key: "draw", depthKey: "depthLayDraw" },
+        { id: "103", name: awayTeam, key: "away", depthKey: "depthLayAway" },
       ];
 
       Object.entries(eventOdds.bookmakers).forEach(([bookmakerName, bookmakerData]) => {
@@ -251,6 +250,7 @@ const bookmakerImages = {
         outcomes.forEach((outcome) => {
           const favorOdds = parseFloat(marketData.odds[0][outcome.key]);
           const contraOdds = parseFloat(betfairData.odds[0][outcome.key]);
+          const depthLay = parseFloat(betfairData.odds[0][outcome.depthKey]) || "-";
 
           if (isNaN(favorOdds) || isNaN(contraOdds)) return;
 
@@ -305,6 +305,7 @@ const bookmakerImages = {
             favor: favorOdds,
             contra: contraOdds,
             sportType: sport,
+            depthLay: depthLay,
           });
         });
       });
@@ -320,6 +321,9 @@ const bookmakerImages = {
       } else if (sortConfig.key === "event") {
         aValue = `${a.event.participant1} vs ${a.event.participant2}`.toLowerCase();
         bValue = `${b.event.participant1} vs ${b.event.participant2}`.toLowerCase();
+      } else if (sortConfig.key === "depthLay") {
+        aValue = parseFloat(aValue) || -Infinity;
+        bValue = parseFloat(bValue) || -Infinity;
       }
 
       if (aValue < bValue) return sortConfig.direction === "asc" ? -1 : 1;
@@ -370,6 +374,7 @@ const bookmakerImages = {
       bookmakerImage: bookmakerImages[item.bookmaker],
       betfairImage: bookmakerImages["Betfair Exchange"],
       apuesta: item.apuesta,
+      depthLay: item.depthLay,
     });
   };
 
@@ -866,6 +871,7 @@ const bookmakerImages = {
                 <th onClick={() => handleSort("rating")} style={{ cursor: "pointer" }}>
                   RATING (%) {sortConfig.key === "rating" && (sortConfig.direction === "asc" ? "↑" : "↓")}
                 </th>
+               
                 <th onClick={() => handleSort("bookmaker")} style={{ cursor: "pointer" }}>
                   BOOKMAKER {sortConfig.key === "bookmaker" && (sortConfig.direction === "asc" ? "↑" : "↓")}
                 </th>
@@ -877,6 +883,9 @@ const bookmakerImages = {
                 </th>
                 <th onClick={() => handleSort("contra")} style={{ cursor: "pointer" }}>
                   CONTRA {sortConfig.key === "contra" && (sortConfig.direction === "asc" ? "↑" : "↓")}
+                </th>
+                <th onClick={() => handleSort("depthLay")} style={{ cursor: "pointer" }}>
+                  LIQUIDEZ {sortConfig.key === "depthLay" && (sortConfig.direction === "asc" ? "↑" : "↓")}
                 </th>
               </tr>
             </thead>
@@ -892,6 +901,7 @@ const bookmakerImages = {
                     rating,
                     favor,
                     contra,
+                    depthLay,
                   },
                   index
                 ) => {
@@ -928,6 +938,7 @@ const bookmakerImages = {
                               rating,
                               favor,
                               contra,
+                              depthLay,
                             })
                           }
                           style={{
@@ -971,6 +982,7 @@ const bookmakerImages = {
                         />
                       </td>
                       <td>{formatPrice(contra)}</td>
+                      <td>{formatPrice(depthLay)}</td>
                     </tr>
                   );
                 }
