@@ -172,10 +172,12 @@
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
+    z-index: 10; /* Asegura que el logo esté por encima */
   }
 
-  .navbar-logo img{
+  .navbar-logo img {
     width: 120px;
+    max-width: 100%; /* Evita que el logo sea demasiado grande */
   }
 
   .hero-logo {
