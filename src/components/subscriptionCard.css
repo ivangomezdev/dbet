@@ -1,7 +1,7 @@
 /* Estilos generales */
 .premium-container {
     position: relative;
-    background-color: #01733A;
+    background: linear-gradient(135deg, #0A2035 0%, #05743E 100%);
     min-height: 100vh;
     
     padding: 40px 20px 80px;
@@ -54,11 +54,11 @@
   }
   
   .premium-title {
-    font-size: 62px;
-    color: black;
+    font-size: 6rem;
+    color: #FF9305;
     font-family: "gagalin";
     margin-bottom: 10px;
-    padding-top: 130px;
+    padding-top: 30px;
   }
   
   .premium-subtitle {
@@ -222,13 +222,29 @@
       margin-bottom: 20px;
     }
   
-    .premium-title {
-      font-size: 36px;
-    }
-  
+
     .premium-subtitle {
       font-size: 16px;
     }
   }
   
+
+  @media (max-width: 397px) {
+    .pricing-cards {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .pricing-card {
+      max-width: 400px;
+      margin-bottom: 20px;
+    }
+    .premium-title {
+      font-size: 60px;
+    }
+
+    .premium-subtitle {
+      font-size: 16px;
+    }
+  }
   

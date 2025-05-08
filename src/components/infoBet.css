@@ -115,6 +115,8 @@
   
 }
 
+
+
 .content-container h1{
  font-family: "gagalin";
  font-weight: 100;
@@ -328,9 +330,16 @@ color:"white"
 
 .feature-imageVideo{
   border-radius: 10px;
-  border: solid 7px #008000;
+  border: solid 3px #008000;
   box-shadow: 
   0 0 10px #027735,
   0 0 20px #027735,
   0 0 30px #027735;
+}
+
+@media(max-width:354px){
+  .content-container h1{
+ 
+    font-size: 40px!important;
+   }
 }
