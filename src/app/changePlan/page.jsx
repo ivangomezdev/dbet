@@ -8,7 +8,7 @@ import ChooseSubscriptionPlan from "@/components/ChooseSubscriptionPlan";
 import React, { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import { useSession } from "next-auth/react";
-import "./guides.css";
+import "../../components/guides.css";
 
 const Page = () => {
   const [cookies] = useCookies(["token"]);
