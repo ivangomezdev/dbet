@@ -4,11 +4,11 @@ import Footer from "@/components/Footer";
 import NavBar from "@/components/NavBar";
 import Videos from "@/components/Videos";
 import SubscriptionCard from "@/components/SubscriptionCard";
-import ChooseSubscriptionPlan from "@/components/ChooseSubscriptionPlan"; 
+import ChooseSubscriptionPlan from "@/components/ChooseSubscriptionPlan"; // Assuming this exists
 import React, { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import { useSession } from "next-auth/react";
-
+import "./guides.css";
 
 const Page = () => {
   const [cookies] = useCookies(["token"]);
@@ -43,7 +43,6 @@ const Page = () => {
   // Determine subscription status
   const subscriptionStatus = session?.user?.subscriptionStatus || userData?.subscriptionStatus || "inactive";
   const isFreePlan = subscriptionStatus === "FREE";
-  const isPremiumPlan = subscriptionStatus === "MONTHLY" || subscriptionStatus === "YEAR";
 
   return (
     <>
@@ -56,14 +55,21 @@ const Page = () => {
         {!isAuthenticated ? (
           <div>
             <SubscriptionCard
-              hrefAnual="/auth/register"
               hrefFree="/auth/register"
               hrefMensual="/auth/register"
+              hrefAnual="/auth/register"
+              isAuthenticated={false}
             />
           </div>
         ) : isFreePlan ? (
           <div>
-            <ChooseSubscriptionPlan />
+            <SubscriptionCard
+              hrefFree="/changeplan"
+              hrefMensual="/changeplan"
+              hrefAnual="/changeplan"
+              isAuthenticated={true}
+              isFreePlan={true}
+            />
           </div>
         ) : (
           <div></div>

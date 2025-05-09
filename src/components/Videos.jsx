@@ -95,9 +95,10 @@ export default function Videos() {
   // Determine subscription status
   const subscriptionStatus = session?.user?.subscriptionStatus || userData?.subscriptionStatus || "inactive";
   const hasPremiumSubscription = subscriptionStatus === "MONTHLY" || subscriptionStatus === "YEAR";
+  const isFreePlan = subscriptionStatus === "FREE";
 
   // Show all videos (including locked ones) if not authenticated or on FREE plan
-  const showLockedVideos = !isAuthenticated || subscriptionStatus === "FREE";
+  const showLockedVideos = !isAuthenticated || isFreePlan;
 
   // Fetch user data for JOSE token
   useEffect(() => {
@@ -124,7 +125,11 @@ export default function Videos() {
   // Handle click on locked video
   const handleLockedVideoClick = () => {
     if (showLockedVideos) {
-      router.push("/auth/register");
+      if (isAuthenticated && isFreePlan) {
+        router.push("/changeplan");
+      } else {
+        router.push("/auth/register");
+      }
     }
   };
 
@@ -231,7 +236,7 @@ export default function Videos() {
                 </div>
                 <button className="guides__video-options" disabled={isLocked}>
                   <svg
-                    xmlns="http://www.w3 Syrian Arab Republic/2000/svg"
+                    xmlns="http://www.w3.org/2000/svg"
                     width="24"
                     height="24"
                     viewBox="0 0 24 24"
