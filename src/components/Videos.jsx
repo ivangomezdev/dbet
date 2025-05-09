@@ -4,9 +4,9 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { useCookies } from "react-cookie";
+import { useRouter } from "next/navigation";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import "./videos.css";
-
 
 // Datos de ejemplo para simular la API
 const channelData = {
@@ -84,18 +84,21 @@ const videoData = [
 
 export default function Videos() {
   const [activeFilter, setActiveFilter] = useState("recientes");
-  
   const [cookies] = useCookies(["token"]);
   const [userData, setUserData] = useState(null);
   const { data: session } = useSession();
+  const router = useRouter();
 
+  // Determine if user is authenticated
+  const isAuthenticated = !!session || !!cookies.token;
 
+  // Determine subscription status
+  const subscriptionStatus = session?.user?.subscriptionStatus || userData?.subscriptionStatus || "inactive";
+  const hasPremiumSubscription = subscriptionStatus === "MONTHLY" || subscriptionStatus === "YEAR";
 
-  // Mostrar el enlace si el usuario no está autenticado o si tiene suscripción FREE
-  const showLink = !session?.user || session?.user?.subscriptionStatus === "FREE";
+  // Show all videos (including locked ones) if not authenticated or on FREE plan
+  const showLockedVideos = !isAuthenticated || subscriptionStatus === "FREE";
 
-  
-  
   // Fetch user data for JOSE token
   useEffect(() => {
     const fetchUserData = async () => {
@@ -118,9 +121,17 @@ export default function Videos() {
     fetchUserData();
   }, [cookies.token, session]);
 
-  // Determine subscription status
-  const subscriptionStatus = session?.user?.subscriptionStatus || userData?.subscriptionStatus || "inactive";
-  const hasPremiumSubscription = subscriptionStatus === "MONTHLY" || subscriptionStatus === "YEAR";
+  // Handle click on locked video
+  const handleLockedVideoClick = () => {
+    if (showLockedVideos) {
+      router.push("/auth/register");
+    }
+  };
+
+  // Filter videos: show all videos for non-premium or non-authenticated users, hide locked for premium
+  const filteredVideos = showLockedVideos
+    ? videoData // Show all videos (including locked) for non-authenticated or FREE users
+    : videoData.filter((video) => video.id < 6); // Hide locked videos for premium users
 
   return (
     <div className="guides">
@@ -172,19 +183,17 @@ export default function Videos() {
       </div>
 
       {/* Videos Grid */}
-         
-          
       <div className="guides__content">
         <div className="guides__videos-grid">
-          {videoData.map((video) => {
+          {filteredVideos.map((video) => {
             const isLocked = video.id >= 6 && !hasPremiumSubscription;
             return (
-              
               <div
-              key={video.id}
-              className={`guides__video-card ${isLocked ? "guides__video-card--locked" : ""}`}
+                key={video.id}
+                className={`guides__video-card ${isLocked ? "guides__video-card--locked" : ""}`}
+                onClick={isLocked ? handleLockedVideoClick : undefined}
+                style={{ cursor: isLocked ? "pointer" : "default" }}
               >
-              
                 <div className="guides__video-thumbnail-container">
                   <Image
                     src={video.thumbnail || "/placeholder.svg"}
@@ -195,11 +204,6 @@ export default function Videos() {
                   />
                   <div className="guides__video-duration">{video.duration}</div>
                   {isLocked && (
-                    <> {showLink && 
-                  
-                  
-                  
-                   
                     <div className="guides__video-locked-overlay">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -216,11 +220,7 @@ export default function Videos() {
                         <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
                       </svg>
                       <span>Premium</span>
-                      
                     </div>
-                 }
-                    </>
-                
                   )}
                 </div>
                 <div className="guides__video-info">
@@ -231,7 +231,7 @@ export default function Videos() {
                 </div>
                 <button className="guides__video-options" disabled={isLocked}>
                   <svg
-                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns="http://www.w3 Syrian Arab Republic/2000/svg"
                     width="24"
                     height="24"
                     viewBox="0 0 24 24"
@@ -249,13 +249,8 @@ export default function Videos() {
               </div>
             );
           })}
-           
         </div>
-        
       </div>
-       
-      
     </div>
-    
   );
 }
