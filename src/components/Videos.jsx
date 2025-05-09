@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import { useCookies } from "react-cookie";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import "./videos.css";
+import Link from "next/link";
 
 // Datos de ejemplo para simular la API
 const channelData = {
@@ -86,7 +87,9 @@ export default function Videos() {
   const { data: session } = useSession();
   const [cookies] = useCookies(["token"]);
   const [userData, setUserData] = useState(null);
-
+  
+  console.log(session,"ESTE ES EL SESSION");
+  
   // Fetch user data for JOSE token
   useEffect(() => {
     const fetchUserData = async () => {
@@ -163,15 +166,18 @@ export default function Videos() {
       </div>
 
       {/* Videos Grid */}
+ 
       <div className="guides__content">
         <div className="guides__videos-grid">
           {videoData.map((video) => {
             const isLocked = video.id >= 6 && !hasPremiumSubscription;
             return (
+              
               <div
-                key={video.id}
-                className={`guides__video-card ${isLocked ? "guides__video-card--locked" : ""}`}
+              key={video.id}
+              className={`guides__video-card ${isLocked ? "guides__video-card--locked" : ""}`}
               >
+              
                 <div className="guides__video-thumbnail-container">
                   <Image
                     src={video.thumbnail || "/placeholder.svg"}
@@ -182,6 +188,8 @@ export default function Videos() {
                   />
                   <div className="guides__video-duration">{video.duration}</div>
                   {isLocked && (
+                    <Link href="/auth/register"  >
+                   
                     <div className="guides__video-locked-overlay">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -198,7 +206,9 @@ export default function Videos() {
                         <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
                       </svg>
                       <span>Premium</span>
+                      
                     </div>
+                  </Link>
                   )}
                 </div>
                 <div className="guides__video-info">
@@ -227,8 +237,13 @@ export default function Videos() {
               </div>
             );
           })}
+           
         </div>
+        
       </div>
+       
+      
     </div>
+    
   );
 }

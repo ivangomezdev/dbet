@@ -1,7 +1,7 @@
 /* Estilos generales */
 .guides {
 
-
+    padding: 20px;
     margin: 0 auto;
     padding-top: 100px;
     color: #0f0f0f;
@@ -30,8 +30,15 @@
     font-weight: bold;
   }
   
-  .guides__video-locked-overlay svg {
-    margin-bottom: 8px;
+
+
+  .guides__video-locked-overlay{
+  background-color: gray;
+  transition: 1s ease-in background-color;
+  }
+
+  .guides__video-locked-overlay:hover{
+    background-color: transparent;
   }
   
   /* Estilos del perfil */

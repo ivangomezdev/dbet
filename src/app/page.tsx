@@ -24,13 +24,13 @@ export default function Home() {
         <BetInfoVideo/>
         <CommunityInfo/>
         <HowWorks/>
+      <SubscriptionCard hrefAnual="/auth/register" hrefFree="/auth/register" hrefMensual="/auth/register"/>
         <ReviewsBet/>
-       <InfoBet/>
+       <InfoBet/>|
       
 
       </main>
       <section className="communityFaqs">
-      <SubscriptionCard hrefAnual="/auth/register" hrefFree="/auth/register" hrefMensual="/auth/register"/>
         <CommunitySocials/>
         <Faqs/>
       </section>

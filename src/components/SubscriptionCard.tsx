@@ -5,13 +5,14 @@ interface SubscriptionCardProps {
   hrefFree?: string;
   hrefMensual?: string;
   hrefAnual?:string;
+  subscriptionText?:string;
 }
 
 export default function SubscriptionCard(hrefsData: SubscriptionCardProps) {
   const safeFreeHref = hrefsData.hrefFree || "#"; 
   const safeMensualHref = hrefsData.hrefMensual || "#"; 
   const safeAnualHref = hrefsData.hrefAnual || "#"; 
-  
+  const subscriptionTitle = hrefsData.subscriptionText || "Desbloquea todo el potencial de nuestra app" ;
   return (
     <div className="premium-container">
       <div className="decorative-elements">
@@ -44,7 +45,7 @@ export default function SubscriptionCard(hrefsData: SubscriptionCardProps) {
       </div>
 
       <div className="premium-content">
-        <h1 className="premium-title">Premium</h1>
+        <h1 className="premium-title">{subscriptionTitle || "Premium" }</h1>
         <p className="premium-subtitle">Puedes cancelar la renovación de la suscripción cuando quieras.</p>
 
         <div className="pricing-cards">
