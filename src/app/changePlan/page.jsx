@@ -1,77 +1,79 @@
-"use client"
-import React, { useState } from 'react'
-import NavBar from "../../components/NavBar"
-import ChooseSubscriptionPlan from "../../components/ChooseSubscriptionPlan"
+"use client";
 
-const subscriptionCardsData = [
-    {
-      planType: "FREE",
-      price: "0€",
-      features: [
-        "Gana 120€/15US$ Sin Riesgos",
-        "Acceso a 3 Guías",
-        "Acceso a 3 Video Guías",
-        "Versión Limitada de las Herramientas",
-      ],
-      buttonTextSpain: "REGÍSTRATE GRATIS",
-     
-      hrefSpain: "/free-spain",
-      hrefLatam: "/free-latam",
-    },
-    {
-      planType: "PREMIUM MENSUAL",
-      price: "14.99€",
-      period: "/ Mes",
-      features: [
-        "Gana hasta 500 €/US$ al Mes",
-        "Acceso a todas las Guías",
-        "Versión Completa de las Herramientas",
-        "Cancela cuando quieras la suscripción",
-      ],
-    
-      buttonTextSpain: "OBTÉN PREMIUM – ESPAÑA",
-      buttonTextLatam: "OBTÉN PREMIUM – LATINOAMÉRICA (Proximamente)",
-      hrefSpain: "/premium-mensual-spain",
-      hrefLatam: "/premium-mensual-latam",
-    },
-    {
-      planType: "PREMIUM ANUAL",
-      price: "10€",
-      period: "/ Mes",
-      features: [
-        "Gana hasta 500 €/US$ al Mes",
-        "Acceso a todas las Guías",
-        "Versión Completa de las Herramientas",
-        "Paga 120€ y Ahorra 60€",
-      ],
-    
-      buttonTextSpain: "OBTÉN PREMIUM – ESPAÑA",
-      buttonTextLatam: "OBTÉN PREMIUM – LATINOAMÉRICA  (Proximamente)",
-      hrefSpain: "/premium-anual-spain",
-      hrefLatam: "/premium-anual-latam",
-    },
-  ];
+import Footer from "@/components/Footer";
+import NavBar from "@/components/NavBar";
+import Videos from "@/components/Videos";
+import SubscriptionCard from "@/components/SubscriptionCard";
+import ChooseSubscriptionPlan from "@/components/ChooseSubscriptionPlan"; 
+import React, { useState, useEffect } from "react";
+import { useCookies } from "react-cookie";
+import { useSession } from "next-auth/react";
+import "./guides.css";
 
-const page = () => {
-    const [selectedPlan, setSelectedPlan] = useState(null);
+const Page = () => {
+  const [cookies] = useCookies(["token"]);
+  const { data: session } = useSession();
+  const [userData, setUserData] = useState(null);
 
-    const onPlanSelect = (planName) => {
-      console.log(`Plan seleccionado: ${planName}`);
-      setSelectedPlan(planName);
+  // Determine if user is authenticated
+  const isAuthenticated = !!session || !!cookies.token;
+
+  // Fetch user data for token-based authentication
+  useEffect(() => {
+    const fetchUserData = async () => {
+      if (cookies.token && !session) {
+        try {
+          const response = await fetch("/api/user", {
+            headers: {
+              Authorization: `Bearer ${cookies.token}`,
+            },
+          });
+          if (response.ok) {
+            const data = await response.json();
+            setUserData(data);
+          }
+        } catch (error) {
+          console.error("Error fetching user data:", error);
+        }
+      }
     };
-  
-  return (
-    <div className="premium-content-bg">
-      <header>
-        <NavBar/>
-      </header>
-    <main >
-    
-        <ChooseSubscriptionPlan cardsData={subscriptionCardsData} onPlanSelect={onPlanSelect}/>
-      
-    </main>
-    </div>
-  )
-}
+    fetchUserData();
+  }, [cookies.token, session]);
 
-export default page
+  // Determine subscription status
+  const subscriptionStatus = session?.user?.subscriptionStatus || userData?.subscriptionStatus || "inactive";
+  const isFreePlan = subscriptionStatus === "FREE";
+  const isPremiumPlan = subscriptionStatus === "MONTHLY" || subscriptionStatus === "YEAR";
+
+  return (
+    <>
+      <header>
+        <NavBar />
+      </header>
+      <main className="guides__main bonos__content">
+        <Videos />
+        {/* Conditional rendering for subscription components */}
+        {!isAuthenticated ? (
+          <div>
+            <SubscriptionCard
+              hrefAnual="/auth/register"
+              hrefFree="/auth/register"
+              hrefMensual="/auth/register"
+            />
+          </div>
+        ) : isFreePlan ? (
+          <div>
+            <ChooseSubscriptionPlan />
+          </div>
+        ) : (
+          <div></div>
+        )}
+      </main>
+      <footer>
+        <Footer />
+      </footer>
+    </>
+  );
+};
+
+export default Page;
