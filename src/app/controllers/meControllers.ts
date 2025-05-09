@@ -10,6 +10,7 @@ interface UserData {
   address?: string;
   plan?: "FREE" | "MONTHLY" | "YEAR" | "inactive";
   stripeSubscriptionId?: string;
+  
 }
 
 export const editUser = async (data: UserData) => {

@@ -3,6 +3,8 @@
 import { useState } from "react";
 import "./userBono.css";
 import Link from "next/link";
+import { useCookies } from "react-cookie";
+import { useSession } from "next-auth/react";
 
 
 type BonosData = {
@@ -49,7 +51,14 @@ interface UserBonoProps {
 
 export default function UserBono({ bonosData }: UserBonoProps) {
   const [tabActiva, setTabActiva] = useState("disponibles");
+  const [cookies] = useCookies(["token"]);
+  const { data: session } = useSession();
 
+
+
+  // Mostrar el enlace si el usuario no está autenticado o si tiene suscripción FREE
+  const showLink = !session?.user || !cookies.token;
+ 
   console.log("Bonos:", bonosData);
   console.log("Tab activa:", tabActiva);
 
@@ -148,8 +157,9 @@ export default function UserBono({ bonosData }: UserBonoProps) {
                       </div>
                     </div>
 
+                    {!showLink && 
                     <div className="user-bono__actions">
-                   {/*    <button className="user-bono__button user-bono__button--show">
+                      <button className="user-bono__button user-bono__button--show">
                         MUESTRA
                       </button>
                       {!bono.fields.complete ? (
@@ -162,9 +172,9 @@ export default function UserBono({ bonosData }: UserBonoProps) {
                           COMPLETADA
                         </button>
                       )}
-                        */}
+                        
                     </div>
-                    
+                    } 
                   </div>
 
                   <div className="user-bono__value">

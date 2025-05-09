@@ -84,11 +84,17 @@ const videoData = [
 
 export default function Videos() {
   const [activeFilter, setActiveFilter] = useState("recientes");
-  const { data: session } = useSession();
+  
   const [cookies] = useCookies(["token"]);
   const [userData, setUserData] = useState(null);
+  const { data: session, status } = useSession();
+
+
+
+  // Mostrar el enlace si el usuario no está autenticado o si tiene suscripción FREE
+  const showLink = !session?.user || session?.user?.subscriptionStatus === "FREE";
+
   
-  console.log(session,"ESTE ES EL SESSION");
   
   // Fetch user data for JOSE token
   useEffect(() => {
@@ -166,7 +172,8 @@ export default function Videos() {
       </div>
 
       {/* Videos Grid */}
- 
+         
+          
       <div className="guides__content">
         <div className="guides__videos-grid">
           {videoData.map((video) => {
@@ -188,7 +195,10 @@ export default function Videos() {
                   />
                   <div className="guides__video-duration">{video.duration}</div>
                   {isLocked && (
-                    <Link href="/auth/register"  >
+                    <> {showLink && 
+                  
+                  
+                  
                    
                     <div className="guides__video-locked-overlay">
                       <svg
@@ -208,7 +218,9 @@ export default function Videos() {
                       <span>Premium</span>
                       
                     </div>
-                  </Link>
+                 }
+                    </>
+                
                   )}
                 </div>
                 <div className="guides__video-info">
