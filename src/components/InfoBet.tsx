@@ -112,7 +112,6 @@ export default function InfoBet() {
           </div>
         </div>
 
-        {/* NinjaClub */}
        
        
       </div>

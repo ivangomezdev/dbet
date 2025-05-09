@@ -56,18 +56,12 @@ const FAQ = () => {
         {
           title: "Tengo más preguntas, ¿Con quién puedo contactar?",
           description:
-            "Estamos siempre disponibles para aclarar cualquier pregunta sobre nuestra plataforma o sobre el Matched Betting. Para cualquier pregunta sobre el matched betting o sobre Ninjabet, pueden escribirnos un email a info@ninjabet.es, contactarnos a través del chat de nuestro sitio o también escribirnos en el NinjaClub (el foro de NinjaBet).",
+            "Estamos siempre disponibles para aclarar cualquier pregunta sobre nuestra plataforma puedes enviarnos un mensaje.",
         },
       ];
 
 
 
-  const faqs = [
-    "Lorem ipsum dolor sit amet?",
-    "Lorem ipsum dolor sit amet?",
-    "Lorem ipsum dolor sit amet?",
-    "Lorem ipsum dolor sit amet?",
-  ];
 
   return (
     <div className="faq_3">

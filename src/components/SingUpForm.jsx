@@ -36,13 +36,10 @@ const subscriptionCardsData = [
       "Cancela cuando quieras la suscripción",
     ],
     tools: [
-      "NinjaClub",
+     
       "Oddsmatcher",
-      "Dutcher",
-      "Calculador",
-      "Favor-Favor",
-      "Multiplicador",
-      "Profit Tracker",
+      "Auto Mbetting",
+      "Bonos"
     ],
     buttonTextSpain: "OBTÉN PREMIUM – ESPAÑA",
     buttonTextLatam: "OBTÉN PREMIUM – LATINOAMÉRICA (Próximamente)",
@@ -60,13 +57,9 @@ const subscriptionCardsData = [
       "Paga 120€ y Ahorra 60€",
     ],
     tools: [
-      "NinjaClub",
-      "Oddsmatcher",
-      "Dutcher",
-      "Calculador",
-      "Favor-Favor",
-      "Multiplicador",
-      "Profit Tracker",
+    "Oddsmatcher",
+      "Auto Mbetting",
+      "Bonos"
     ],
     buttonTextSpain: "OBTÉN PREMIUM – ESPAÑA",
     buttonTextLatam: "OBTÉN PREMIUM – LATINOAMÉRICA  (Próximamente)",

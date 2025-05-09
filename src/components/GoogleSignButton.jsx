@@ -15,7 +15,7 @@ export default function GoogleSignInButton() {
     try {
       const result = await signIn("google", {
         redirect: false, // Evita redirección automática
-        callbackUrl: "/me"
+        callbackUrl: "/guides"
       });
 
 
@@ -27,7 +27,7 @@ export default function GoogleSignInButton() {
 
       if (result?.ok) {
         console.log("Inicio de sesión exitoso, redirigiendo...");
-        router.push("/me");
+        router.push("/guides");
       }
     } catch {
       console.error("Excepción en handleGoogleSignIn:");

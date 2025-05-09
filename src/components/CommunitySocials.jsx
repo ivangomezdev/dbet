@@ -8,7 +8,7 @@ function CommunitySocials() {
           <div className="community-socials__chat-messages">
             <div className="community-socials__message community-socials__message--todd">
               <div className="community-socials__avatar community-socials__avatar--todd">
-                <img src="https://res.cloudinary.com/dllkefj8m/image/upload/v1745436600/pedro_jo_yj7otc.jpg" alt="Todd avatar" />
+                <img src="https://res.cloudinary.com/dllkefj8m/image/upload/v1746812685/relax_gekbas.jpg" alt="Todd avatar" />
               </div>
               <div className="community-socials__message-content">
                 <div className="community-socials__user-info">
@@ -50,7 +50,7 @@ function CommunitySocials() {
                   <span className="community-socials__timestamp">2025/05 13:01</span>
                 </div>
                 <p className="community-socials__text">
-                  Woohoo exactly 1 week ago i signed up for 420, and just now i hit $1k profit
+                 Los bonos de bienvenida son brutales, 766 eur de ganancias en 1 mes, Recomendadisimos.
                 </p>
               </div>
             </div>

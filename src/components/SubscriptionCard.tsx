@@ -85,17 +85,16 @@ export default function SubscriptionCard(hrefsData: SubscriptionCardProps) {
               <p className="feature">Acceso a todas las Guías</p>
               <p className="feature">Versión Completa de las Herramientas</p>
               <p className="feature tools">
-                (<span className="tool-link">NinjaClub</span>,<span className="tool-link">Oddsmatcher</span>,
-                <span className="tool-link">Dutcher</span>,<span className="tool-link">Calculador</span>, Favor-Favor,{" "}
-                <span className="tool-link">Multiplicador</span>,<span className="tool-link">Profit Tracker</span>)
+                (<span className="tool-link">Bonos</span>,
+                <span className="tool-link">Auto MBetting</span>,<span className="tool-link">Calculador</span>,
+                <span className="tool-link">OddsMatcher</span>)
               </p>
               <p className="feature">Cancela cuando quieras la suscripción</p>
             </div>
 
             <div className="card-footer">
             <Link href={safeMensualHref} style={{textDecoration:"none"}}><button style={{marginBottom:"10px"}} className="btn btn-premium">OBTÉN PREMIUM – ESPAÑA</button></Link>
-            <Link href={safeMensualHref} style={{textDecoration:"none"}}><button className="btn btn-premium">OBTÉN PREMIUM – LATINOAMÉRICA</button></Link>
-            </div>
+            <button disabled style={{backgroundColor:"gray"}} className="btn btn-premium">OBTÉN PREMIUM – LATINOAMÉRICA (Proxímamente)</button>            </div>
           </div>
 
           <div className="pricing-card">
@@ -112,17 +111,16 @@ export default function SubscriptionCard(hrefsData: SubscriptionCardProps) {
               <p className="feature">Acceso a todas las Guías</p>
               <p className="feature">Versión Completa de las Herramientas</p>
               <p className="feature tools">
-                (<span className="tool-link">NinjaClub</span>,<span className="tool-link">Oddsmatcher</span>,
-                <span className="tool-link">Dutcher</span>,<span className="tool-link">Calculador</span>, Favor-Favor,{" "}
-                <span className="tool-link">Multiplicador</span>,<span className="tool-link">Profit Tracker</span>)
+              (<span className="tool-link">Bonos</span>,
+                <span className="tool-link">Auto MBetting</span>,<span className="tool-link">Calculador</span>,
+                <span className="tool-link">OddsMatcher</span>)
               </p>
               <p className="feature">Paga 120€ y Ahorra 60€</p>
             </div>
 
             <div className="card-footer">
             <Link href={safeAnualHref} style={{textDecoration:"none"}}><button style={{marginBottom:"10px"}} className="btn btn-premium">OBTÉN PREMIUM – ESPAÑA</button></Link>
-            <Link href={safeAnualHref} style={{textDecoration:"none"}}><button className="btn btn-premium">OBTÉN PREMIUM – LATINOAMÉRICA</button></Link>
-              
+            <button disabled style={{backgroundColor:"gray"}} className="btn btn-premium">OBTÉN PREMIUM – LATINOAMÉRICA (Proxímamente)</button>              
               
             </div>
           </div>
