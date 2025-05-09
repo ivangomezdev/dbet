@@ -112,8 +112,8 @@ export default function SignupForm() {
         // Actualizar el estado de suscripción después de la selección
         setSubscriptionState(data.subscriptionStatus || "active");
         setUserData(data.subscriptionStatus || "active");
-        // Redirigir a /me después de actualizar la suscripción
-        router.push("/me");
+        // Redirigir a home después de actualizar la suscripción
+        router.push("/");
       } else {
         setError(data.error || "Error al actualizar la suscripción");
       }
