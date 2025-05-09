@@ -6,7 +6,7 @@ import { useSession } from "next-auth/react";
 import { useCookies } from "react-cookie";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import "./videos.css";
-import Link from "next/link";
+
 
 // Datos de ejemplo para simular la API
 const channelData = {
@@ -87,7 +87,7 @@ export default function Videos() {
   
   const [cookies] = useCookies(["token"]);
   const [userData, setUserData] = useState(null);
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
 
 
 
