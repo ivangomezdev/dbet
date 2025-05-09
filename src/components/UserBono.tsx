@@ -57,7 +57,7 @@ export default function UserBono({ bonosData }: UserBonoProps) {
 
 
   // Mostrar el enlace si el usuario no está autenticado o si tiene suscripción FREE
-  const showLink = !session?.user || !cookies.token;
+  const showLink = !session?.user && !cookies.token;
  
   console.log("Bonos:", bonosData);
   console.log("Tab activa:", tabActiva);
