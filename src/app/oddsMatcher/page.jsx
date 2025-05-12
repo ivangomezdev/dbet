@@ -26,8 +26,6 @@ export default function DataDisplay() {
   const [cookies] = useCookies(["token"]);
   const router = useRouter();
 
-  console.log(status);
-
   useEffect(() => {
     if (status === "loading") return;
 
@@ -174,7 +172,7 @@ export default function DataDisplay() {
       contraAmount: isNaN(contraAmount) ? 0 : contraAmount.toFixed(2),
       favor: {
         bookmaker: isNaN(favorBookmakerProfit) ? 0 : favorBookmakerProfit.toFixed(2),
-        betfair: isNaN(favorBetfairProfit) ? 0 : favorBookmakerProfit.toFixed(2),
+        betfair: isNaN(favorBetfairProfit) ? 0 : favorBetfairProfit.toFixed(2),
         total: isNaN(favorTotal) ? 0 : favorTotal.toFixed(2),
       },
       contra: {
@@ -218,7 +216,7 @@ export default function DataDisplay() {
   const getEventBookmakerOutcomeTriples = () => {
     let triples = [];
 
-    const excludedBookmakers = ["Bet365 (no latency)", "Betfair Sportsbook","Betfair Exchange"];
+    const excludedBookmakers = ["Bet365 (no latency)", "Betfair Sportsbook", "Betfair Exchange"];
 
     Object.values(oddsData).forEach((eventOdds) => {
       const eventId = eventOdds.eventId;
@@ -231,9 +229,9 @@ export default function DataDisplay() {
       if (!eventOdds.bookmakers) return;
 
       const outcomes = [
-        { id: "101", name: homeTeam, key: "home", depthKey: "depthLayHome" },
-        { id: "102", name: "Empate", key: "draw", depthKey: "depthLayDraw" },
-        { id: "103", name: awayTeam, key: "away", depthKey: "depthLayAway" },
+        { id: "101", name: homeTeam, key: "home", depthKey: "depthHome" },
+        { id: "102", name: "Empate", key: "draw", depthKey: "depthDraw" },
+        { id: "103", name: awayTeam, key: "away", depthKey: "depthAway" },
       ];
 
       Object.entries(eventOdds.bookmakers).forEach(([bookmakerName, bookmakerData]) => {
@@ -250,9 +248,13 @@ export default function DataDisplay() {
         outcomes.forEach((outcome) => {
           const favorOdds = parseFloat(marketData.odds[0][outcome.key]);
           const contraOdds = parseFloat(betfairData.odds[0][outcome.key]);
-          const depthLay = parseFloat(betfairData.odds[0][outcome.depthKey]) || "-";
+          const depthLay = parseFloat(betfairData.odds[0][outcome.depthKey]) || 0;
 
-          if (isNaN(favorOdds) || isNaN(contraOdds)) return;
+          // Skip if favor or contra is 0 or NaN
+          if (isNaN(favorOdds) || isNaN(contraOdds) || favorOdds === 0 || contraOdds === 0) return;
+
+          // Skip if liquidity (depthLay) is less than 20
+          if (depthLay < 20) return;
 
           if (
             (eventFilter && !eventName.includes(eventFilter.toLowerCase())) ||
@@ -871,7 +873,6 @@ export default function DataDisplay() {
                 <th onClick={() => handleSort("rating")} style={{ cursor: "pointer" }}>
                   RATING (%) {sortConfig.key === "rating" && (sortConfig.direction === "asc" ? "↑" : "↓")}
                 </th>
-               
                 <th onClick={() => handleSort("bookmaker")} style={{ cursor: "pointer" }}>
                   BOOKMAKER {sortConfig.key === "bookmaker" && (sortConfig.direction === "asc" ? "↑" : "↓")}
                 </th>
