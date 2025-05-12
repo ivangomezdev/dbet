@@ -5,6 +5,7 @@ import "./bonoDetail.css";
 
 export async function generateStaticParams() {
   const bonos = await getBonos();
+  // Filter out entries where slug is undefined or not a string, and map to the required format
   return bonos
     .filter((bono) => typeof bono.fields.slug === "string" && bono.fields.slug.trim() !== "")
     .map((bono) => ({
@@ -22,11 +23,6 @@ export default async function BonoDetailPage({ params }) {
   }
 
   const { title, image, offerType, amount, conditions, difficulty, description, url, ganancia, cuotaMinima, tiempoEntrega, metodosPagoNoValidos, enlaceOferta } = bono.fields;
-
-  // Debug the image URL
-  console.log("Image data:", image);
-  const imageUrl = image?.fields?.file?.url || "/placeholder.svg";
-  console.log("Image URL:", imageUrl);
 
   // Helper function to render rich text (description field from Contentful)
   const renderRichText = (richText) => {
@@ -59,12 +55,8 @@ export default async function BonoDetailPage({ params }) {
           <h1>{title}</h1>
           <div className="bono-detail__logo">
             <img
-              src={imageUrl}
+              src={image?.fields?.file?.url || "/placeholder.svg"}
               alt="logoBet"
-              onError={(e) => {
-                console.error("Image failed to load:", imageUrl);
-                e.target.src = "/placeholder.svg"; // Fallback if image fails to load
-              }}
             />
           </div>
         </div>
