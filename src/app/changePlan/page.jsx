@@ -4,11 +4,10 @@ import Footer from "@/components/Footer";
 import NavBar from "@/components/NavBar";
 import Videos from "@/components/Videos";
 import SubscriptionCard from "@/components/SubscriptionCard";
-import ChooseSubscriptionPlan from "@/components/ChooseSubscriptionPlan"; // Assuming this exists
 import React, { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import { useSession } from "next-auth/react";
-import "./guides.css";
+import "../guides/guides.css";
 
 const Page = () => {
   const [cookies] = useCookies(["token"]);
