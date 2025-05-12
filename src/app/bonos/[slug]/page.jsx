@@ -1,6 +1,8 @@
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
 import { getBonos } from "@/lib/contenful";
+import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
+import { BLOCKS, INLINES } from "@contentful/rich-text-types";
 import "./bonoDetail.css";
 
 export async function generateStaticParams() {
@@ -28,34 +30,36 @@ export default async function BonoDetailPage({ params }) {
   const imageUrl = (image?.fields?.file?.url?.startsWith("//") ? "https:" + image?.fields?.file?.url : image?.fields?.file?.url) || "/placeholder.svg";
   console.log("Image URL:", imageUrl);
 
-  // Helper function to render rich text (description field from Contentful)
-  const renderRichText = (richText) => {
-    if (!richText || !richText.content) return null;
+  // Debug the includes for assets
+  console.log("Includes Assets:", bonos.includes?.Asset);
 
-    return richText.content.map((node, index) => {
-      if (node.nodeType === "paragraph") {
-        return <p key={index}>{node.content[0].value}</p>;
-      } else if (node.nodeType === "ordered-list") {
-        return (
-          <ol key={index}>
-            {node.content.map((item, itemIndex) => (
-              item.nodeType === "list-item" && item.content[0].nodeType === "paragraph" ? (
-                <li key={itemIndex}>{item.content[0].content[0].value}</li>
-              ) : null
-            ))}
-          </ol>
-        );
-      } else if (node.nodeType === "embedded-asset-block") {
+  // Render rich text with @contentful/rich-text-react-renderer
+  const renderOptions = {
+    renderNode: {
+      [BLOCKS.EMBEDDED_ASSET]: (node) => {
         const assetId = node.data.target.sys.id;
-        // Find the asset in the bonos response (assuming assets are included)
         const asset = bonos.includes?.Asset?.find((a) => a.sys.id === assetId) || null;
+        console.log(`Asset ID: ${assetId}, Found Asset:`, asset);
         const assetUrl = asset?.fields?.file?.url
           ? (asset.fields.file.url.startsWith("//") ? "https:" + asset.fields.file.url : asset.fields.file.url)
           : "/placeholder.svg";
-        return asset ? <img key={index} src={assetUrl} alt={`Embedded asset ${assetId}`} style={{ maxWidth: "100%" }} /> : null;
-      }
-      return null;
-    });
+        return asset ? (
+          <img
+            src={assetUrl}
+            alt={`Embedded asset ${assetId}`}
+            style={{ maxWidth: "100%", margin: "10px 0" }}
+          />
+        ) : null;
+      },
+      [INLINES.HYPERLINK]: (node) => (
+        <a href={node.data.uri}>{node.content[0].value}</a>
+      ),
+    },
+  };
+
+  const renderRichText = (richText) => {
+    if (!richText || !richText.content) return null;
+    return documentToReactComponents(richText, renderOptions);
   };
 
   return (
@@ -67,10 +71,7 @@ export default async function BonoDetailPage({ params }) {
         <div className="bono-detail__header">
           <h1>{title}</h1>
           <div className="bono-detail__logo">
-            <img
-              src={imageUrl}
-              alt="logoBet"
-            />
+            <img src={imageUrl} alt="logoBet" />
           </div>
         </div>
 
