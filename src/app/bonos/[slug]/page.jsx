@@ -4,9 +4,12 @@ import { getBonos } from "@/lib/contenful"; // Assuming this fetches all bonos
 
 export async function generateStaticParams() {
   const bonos = await getBonos();
-  return bonos.map((bono) => ({
-    slug: bono.fields.slug,
-  }));
+  // Filter out entries where slug is undefined or not a string, and map to the required format
+  return bonos
+    .filter((bono) => typeof bono.fields.slug === "string" && bono.fields.slug.trim() !== "")
+    .map((bono) => ({
+      slug: bono.fields.slug,
+    }));
 }
 
 export default async function BonoDetailPage({ params }) {

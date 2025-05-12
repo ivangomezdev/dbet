@@ -5,15 +5,13 @@ import "./userBono.css";
 import Link from "next/link";
 import { useCookies } from "react-cookie";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation"; // Updated import for App Router
-
-// ... (type definitions remain the same)
+import { useRouter } from "next/navigation";
 
 export default function UserBono({ bonosData }) {
   const [tabActiva, setTabActiva] = useState("disponibles");
   const [cookies] = useCookies(["token"]);
   const { data: session } = useSession();
-  const router = useRouter(); // Use the router from next/navigation
+  const router = useRouter();
 
   const showLink = !session?.user && !cookies.token;
 
@@ -28,9 +26,12 @@ export default function UserBono({ bonosData }) {
 
   const bonosFiltrados = filtrarBonos();
 
-  // Function to handle the "MUESTRA" button click
   const handleShowDetails = (slug) => {
-    router.push(`/bonos/${slug}`); // Navigate to the dynamic route
+    if (!slug) {
+      console.error("Slug is missing for this bono");
+      return;
+    }
+    router.push(`/bonos/${slug}`);
   };
 
   return (
@@ -121,6 +122,7 @@ export default function UserBono({ bonosData }) {
                         <button
                           className="user-bono__button user-bono__button--show"
                           onClick={() => handleShowDetails(bono.fields.slug)}
+                          disabled={!bono.fields.slug} // Disable button if slug is missing
                         >
                           MUESTRA
                         </button>
