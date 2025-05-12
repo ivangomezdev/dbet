@@ -434,10 +434,8 @@ const Calculator = ({ eventData, onClose, initialBetType }) => {
 
         <div className="calculator__content">
           <div className="calculator__left-panel">
-        
             <div className="calculator__info-row">
               <div className="calculator__label">
-               
                 Evento
               </div>
               <div className="calculator__value">{eventData.event}</div>
@@ -453,7 +451,7 @@ const Calculator = ({ eventData, onClose, initialBetType }) => {
               </div>
               <div className="calculator__odds-content">
                 <div className="calculator__odds-column">
-                  <div className="calculator__odds-title">Menos de 4.5</div>
+                  <div className="calculator__odds-title">{eventData.apuesta}</div>
                   <div className="calculator__odds-value calculator__odds-value--favor">
                     {inputs.favorCuota}
                   </div>
@@ -466,7 +464,7 @@ const Calculator = ({ eventData, onClose, initialBetType }) => {
                   </div>
                 </div>
                 <div className="calculator__odds-column">
-                  <div className="calculator__odds-title">Menos de 4.5</div>
+                  <div className="calculator__odds-title">{eventData.apuesta}</div>
                   <div className="calculator__odds-value calculator__odds-value--contra">
                     {inputs.contraCuota}
                   </div>
