@@ -25,12 +25,13 @@ export default async function BonoDetailPage({ params }) {
 
   // Debug the image URL
   console.log("Image data:", image);
-  const imageUrl = image?.fields?.file?.url || "/placeholder.svg";
+  const imageUrl = (image?.fields?.file?.url?.startsWith("//") ? "https:" + image?.fields?.file?.url : image?.fields?.file?.url) || "/placeholder.svg";
   console.log("Image URL:", imageUrl);
 
   // Helper function to render rich text (description field from Contentful)
   const renderRichText = (richText) => {
     if (!richText || !richText.content) return null;
+
     return richText.content.map((node, index) => {
       if (node.nodeType === "paragraph") {
         return <p key={index}>{node.content[0].value}</p>;
@@ -44,6 +45,14 @@ export default async function BonoDetailPage({ params }) {
             ))}
           </ol>
         );
+      } else if (node.nodeType === "embedded-asset-block") {
+        const assetId = node.data.target.sys.id;
+        // Find the asset in the bonos response (assuming assets are included)
+        const asset = bonos.includes?.Asset?.find((a) => a.sys.id === assetId) || null;
+        const assetUrl = asset?.fields?.file?.url
+          ? (asset.fields.file.url.startsWith("//") ? "https:" + asset.fields.file.url : asset.fields.file.url)
+          : "/placeholder.svg";
+        return asset ? <img key={index} src={assetUrl} alt={`Embedded asset ${assetId}`} style={{ maxWidth: "100%" }} /> : null;
       }
       return null;
     });
