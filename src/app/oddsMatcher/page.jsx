@@ -172,7 +172,7 @@ export default function DataDisplay() {
       contraAmount: isNaN(contraAmount) ? 0 : contraAmount.toFixed(2),
       favor: {
         bookmaker: isNaN(favorBookmakerProfit) ? 0 : favorBookmakerProfit.toFixed(2),
-        betfair: isNaN(favorBetfairProfit) ? 0 : favorBetfairProfit.toFixed(2),
+        betfair: isNaN(favorBetfairProfit) ? 0 : favorBookmakerProfit.toFixed(2),
         total: isNaN(favorTotal) ? 0 : favorTotal.toFixed(2),
       },
       contra: {
@@ -250,9 +250,10 @@ export default function DataDisplay() {
           const contraOdds = parseFloat(betfairData.odds[0][outcome.key]);
           const depthLay = parseFloat(betfairData.odds[0][outcome.depthKey]) || 0;
 
-          // Skip if favor or contra is 0 or NaN
-          if (isNaN(favorOdds) || isNaN(contraOdds) || favorOdds === 0 || contraOdds === 0) return;
-
+          // Skip if favorOdds is 0, NaN, or invalid
+          if (!favorOdds || favorOdds === 0 || isNaN(favorOdds)) return;
+          // Skip if contraOdds is 0, NaN, or invalid
+          if (!contraOdds || contraOdds === 0 || isNaN(contraOdds)) return;
           // Skip if liquidity (depthLay) is less than 20
           if (depthLay < 20) return;
 
