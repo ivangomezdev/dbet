@@ -5,62 +5,17 @@ import "./userBono.css";
 import Link from "next/link";
 import { useCookies } from "react-cookie";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation"; // Updated import for App Router
 
+// ... (type definitions remain the same)
 
-type BonosData = {
-  metadata: {
-    tags: any[];
-    concepts: any[];
-  };
-  sys: {
-    id: string;
-    type: string;
-    createdAt: string;
-    updatedAt: string;
-  };
-  fields: {
-    title: string;
-    image: {
-      metadata: any;
-      sys: any;
-      fields: {
-        file: {
-          url: string;
-        };
-      };
-    };
-    offerType: string;
-    amount: string;
-    conditions?: string;
-    difficulty: string;
-    aadida: string;
-    complete: boolean;
-    slug: string;
-    url: string;
-    description: {
-      nodeType: string;
-      data: any;
-      content: any[];
-    };
-  };
-}[];
-
-interface UserBonoProps {
-  bonosData: BonosData;
-}
-
-export default function UserBono({ bonosData }: UserBonoProps) {
+export default function UserBono({ bonosData }) {
   const [tabActiva, setTabActiva] = useState("disponibles");
   const [cookies] = useCookies(["token"]);
   const { data: session } = useSession();
+  const router = useRouter(); // Use the router from next/navigation
 
-
-
-  // Mostrar el enlace si el usuario no está autenticado o si tiene suscripción FREE
   const showLink = !session?.user && !cookies.token;
- 
-  console.log("Bonos:", bonosData);
-  console.log("Tab activa:", tabActiva);
 
   const filtrarBonos = () => {
     if (!bonosData) return [];
@@ -73,14 +28,18 @@ export default function UserBono({ bonosData }: UserBonoProps) {
 
   const bonosFiltrados = filtrarBonos();
 
+  // Function to handle the "MUESTRA" button click
+  const handleShowDetails = (slug) => {
+    router.push(`/bonos/${slug}`); // Navigate to the dynamic route
+  };
+
   return (
     <div className="user-bono">
       <div className="user-bono__header">
-       
         <div className="user-bono__welcome">
-    
-      <h1 className="user-bono__title420">Bonos<span style={{color:"#FD910E"}}>420</span></h1>
-      
+          <h1 className="user-bono__title420">
+            Bonos<span style={{ color: "#FD910E" }}>420</span>
+          </h1>
         </div>
       </div>
 
@@ -157,24 +116,26 @@ export default function UserBono({ bonosData }: UserBonoProps) {
                       </div>
                     </div>
 
-                    {!showLink && 
-                    <div className="user-bono__actions">
-                      <button className="user-bono__button user-bono__button--show">
-                        MUESTRA
-                      </button>
-                      {!bono.fields.complete ? (
-                        <></>
-                      ) : (
+                    {!showLink && (
+                      <div className="user-bono__actions">
                         <button
-                          className="user-bono__button user-bono__button--complete"
-                          disabled
+                          className="user-bono__button user-bono__button--show"
+                          onClick={() => handleShowDetails(bono.fields.slug)}
                         >
-                          COMPLETADA
+                          MUESTRA
                         </button>
-                      )}
-                        
-                    </div>
-                    } 
+                        {!bono.fields.complete ? (
+                          <></>
+                        ) : (
+                          <button
+                            className="user-bono__button user-bono__button--complete"
+                            disabled
+                          >
+                            COMPLETADA
+                          </button>
+                        )}
+                      </div>
+                    )}
                   </div>
 
                   <div className="user-bono__value">
@@ -208,13 +169,12 @@ export default function UserBono({ bonosData }: UserBonoProps) {
 
 const promociones = [
   {
-    id:1,
+    id: 1,
     titulo: "¡También estamos en Telegram!",
     imagen: "/placeholder.svg?height=150&width=150",
     alt: "App móvil",
     link: "https://t.me/bonoscasino",
   },
-
   {
     id: 3,
     titulo: "GUÍA DE BONOS 2024",
