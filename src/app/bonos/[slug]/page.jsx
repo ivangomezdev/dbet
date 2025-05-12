@@ -1,6 +1,7 @@
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
-import { getBonos } from "@/lib/contenful"; // Assuming this fetches all bonos
+import { getBonos } from "@/lib/contenful";
+import "./bonoDetail.css";
 
 export async function generateStaticParams() {
   const bonos = await getBonos();
@@ -21,7 +22,7 @@ export default async function BonoDetailPage({ params }) {
     return <div>Bono no encontrado</div>;
   }
 
-  const { title, image, offerType, amount, conditions, difficulty, description, url } = bono.fields;
+  const { title, image, offerType, amount, conditions, difficulty, description, url, ganancia, cuotaMinima, tiempoEntrega, metodosPagoNoValidos, enlaceOferta } = bono.fields;
 
   // Helper function to render rich text (description field from Contentful)
   const renderRichText = (richText) => {
@@ -29,6 +30,16 @@ export default async function BonoDetailPage({ params }) {
     return richText.content.map((node, index) => {
       if (node.nodeType === "paragraph") {
         return <p key={index}>{node.content[0].value}</p>;
+      } else if (node.nodeType === "ordered-list") {
+        return (
+          <ol key={index}>
+            {node.content.map((item, itemIndex) => (
+              item.nodeType === "list-item" && item.content[0].nodeType === "paragraph" ? (
+                <li key={itemIndex}>{item.content[0].content[0].value}</li>
+              ) : null
+            ))}
+          </ol>
+        );
       }
       return null;
     });
@@ -52,12 +63,12 @@ export default async function BonoDetailPage({ params }) {
 
         <div className="bono-detail__content">
           <h2>Detalles de la Oferta</h2>
-          <p><strong>Ganancia:</strong> {amount}€</p>
-          <p><strong>Cuota mínima:</strong> {conditions || "1.80 y apuesta gratis a cualquier cuota"}</p>
+          <p><strong>Ganancia:</strong> {ganancia || amount}€</p>
+          <p><strong>Cuota mínima:</strong> {cuotaMinima}</p>
           <p><strong>Tipo de Oferta:</strong> {offerType}</p>
-          <p><strong>Tiempo de entrega del bono:</strong> tras realizar el depósito</p>
-          <p><strong>Enlace oferta:</strong> <a href={url}>Bono de Bienvenida</a></p>
-          <p><strong>Métodos de pago no válidos:</strong> Ninguno</p>
+          <p><strong>Tiempo de entrega del bono:</strong> {tiempoEntrega}</p>
+          <p><strong>Enlace oferta:</strong> <a href={url}>{enlaceOferta}</a></p>
+          <p><strong>Métodos de pago no válidos:</strong> {metodosPagoNoValidos}</p>
           <a href={url}>Contacta con el corredor de apuestas</a>
         </div>
 
