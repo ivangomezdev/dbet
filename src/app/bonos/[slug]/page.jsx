@@ -125,8 +125,8 @@ export default async function BonoDetailPage({ params }) {
           </p>
           <p>
             <p style={{color:"white",fontSize:"20px"}}>Enlace oferta:</p>{" "}
-            <a href={url} className="bono-detail__link">
-              {enlaceOferta || "Visitar oferta"}
+            <a href={url} target="_blank" rel="noopener noreferrer" className="bono-detail__link">
+              Visitar oferta
             </a>
           </p>
           <p>
