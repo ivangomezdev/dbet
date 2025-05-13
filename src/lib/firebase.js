@@ -2,13 +2,12 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCztD1AvpjxRbJ40hPSLgNh01fiReSuJ5Q",
-    authDomain: "dbet-df365.firebaseapp.com",
-    projectId: "dbet-df365",
-    storageBucket: "dbet-df365.firebasestorage.app",
-    messagingSenderId: "323522244673",
-    appId: "1:323522244673:web:b2586720b72056b28b56c0",
-    measurementId: "G-5P3BSJPNWL"
+ apiKey: "AIzaSyC3SyuRhIRtUv_VYdBo750-1O4X7YLgiSg",
+  authDomain: "dbet360.firebaseapp.com",
+  projectId: "dbet360",
+  storageBucket: "dbet360.firebasestorage.app",
+  messagingSenderId: "307381226888",
+  appId: "1:307381226888:web:22aea15e23797e68823e3d"
 };
 
 const app = initializeApp(firebaseConfig);
