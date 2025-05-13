@@ -50,6 +50,8 @@ export default async function BonoDetailPage({ params }) {
   // Debug the includes for assets
   console.log("Includes Assets:", bonos[0]?.includes?.Asset);
 
+ 
+  
   // Render rich text with @contentful/rich-text-react-renderer
   const renderOptions = {
     renderNode: {
@@ -92,8 +94,9 @@ export default async function BonoDetailPage({ params }) {
     return documentToReactComponents(richText, renderOptions);
   };
 
+  console.log(image,"esta es la imagennnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn")
   return (
-    <>
+    <div className="bono-body">
       <header>
         <NavBar />
       </header>
@@ -106,42 +109,44 @@ export default async function BonoDetailPage({ params }) {
         </div>
 
         <div className="bono-detail__content">
+         <div>
           <h2>Detalles de la Oferta</h2>
           <p>
-            <strong>Ganancia:</strong> {ganancia || amount}€
+            <p style={{color:"orange",fontSize:"20px"}}>Ganancia:</p> {ganancia || amount}€
           </p>
           <p>
-            <strong>Cuota mínima:</strong> {cuotaMinima || "No especificada"}
+            <p style={{color:"orange",fontSize:"20px"}}>Cuota mínima:</p> {cuotaMinima || "No especificada"}
           </p>
           <p>
-            <strong>Tipo de Oferta:</strong> {offerType}
+            <p style={{color:"orange",fontSize:"20px"}}>Tipo de Oferta:</p> {offerType}
           </p>
           <p>
-            <strong>Tiempo de entrega del bono:</strong> {tiempoEntrega || "No especificado"}
+            <p style={{color:"orange",fontSize:"20px"}}>Tiempo de entrega del bono:</p> {tiempoEntrega || "No especificado"}
           </p>
           <p>
-            <strong>Enlace oferta:</strong>{" "}
+            <p style={{color:"orange",fontSize:"20px"}}>Enlace oferta:</p>{" "}
             <a href={url} className="bono-detail__link">
               {enlaceOferta || "Visitar oferta"}
             </a>
           </p>
           <p>
-            <strong>Métodos de pago no válidos:</strong>{" "}
+            <p style={{color:"orange",fontSize:"20px"}}>Métodos de pago no válidos:</p>{" "}
             {metodosPagoNoValidos || "Ninguno"}
           </p>
-          <a href={url} className="bono-detail__link">
-            Contacta con el corredor de apuestas
-          </a>
+       
+             </div> 
+             <div className="bono-detail__image">
+        <img  src={imageUrl} />
         </div>
-
-        <div className="bono-detail__description">
-          <h2>Descripción de la oferta</h2>
+          </div>
+       <div className="bono-detail__description">
+          <h2 style={{fontSize:"40px",color:"white"}}>Descripción de la oferta</h2>
           {renderRichText(description)}
         </div>
       </main>
       <footer>
         <Footer />
       </footer>
-    </>
+    </div>
   );
 }

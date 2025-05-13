@@ -66,6 +66,7 @@ export default function DataDisplay() {
     oddsMax: "",
     dateStart: null,
     dateEnd: null,
+    liquidityMin: "", // Added liquidityMin
   });
   const [tempFilterInputs, setTempFilterInputs] = useState({ ...filterInputs });
 
@@ -297,6 +298,7 @@ export default function DataDisplay() {
           if (filterInputs.oddsMax && favorOdds > parseFloat(filterInputs.oddsMax)) return;
           if (filterInputs.dateStart && new Date(eventDate) < filterInputs.dateStart) return;
           if (filterInputs.dateEnd && new Date(eventDate) > filterInputs.dateEnd) return;
+          if (filterInputs.liquidityMin && depthLay < parseFloat(filterInputs.liquidityMin)) return;
 
           triples.push({
             event: { participant1: homeTeam, participant2: awayTeam, eventId },
@@ -599,7 +601,7 @@ export default function DataDisplay() {
   );
 
   const CommissionModal = () => (
-    <div className="modal-overlay" style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, backgroundColor: "rgba(0,0,0,0.5)", display: "flex", justifyContent: "center", alignItems: "center", zIndex: 1000 }}>
+    <div className="modal-overlay" style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: "0", backgroundColor: "rgba(0,0,0,0.5)", display: "flex", justifyContent: "center", alignItems: "center", zIndex: 1000 }}>
       <div className="modal-content" style={{ backgroundColor: "white", padding: "20px", borderRadius: "5px", width: "400px", maxWidth: "90%" }} onClick={(e) => e.stopPropagation()}>
         <h2 style={{ marginBottom: "10px" }}>Configurar Comisión</h2>
         <div className="tab-content" style={{ marginBottom: "20px" }}>
@@ -691,6 +693,17 @@ export default function DataDisplay() {
             </div>
           </label>
           <label style={{ display: "block", marginBottom: "10px" }}>
+            Liquidez Mínima (€)
+            <input
+              type="text"
+              name="liquidityMin"
+              value={tempFilterInputs.liquidityMin}
+              onChange={handleFilterInputChange}
+              placeholder="Mín"
+              style={{ width: "100%", padding: "5px", marginTop: "5px" }}
+            />
+          </label>
+          <label style={{ display: "block", marginBottom: "10px" }}>
             Fecha/Hora desde
             <div style={{ display: "flex", gap: "5px" }}>
               <DatePicker
@@ -740,9 +753,7 @@ export default function DataDisplay() {
         </div>
       </div>
     </div>
-  );
-
-  return (
+  );return (
     <div className="oddsMatcher__cont">
       <NavBar />
       <div className="me__content betting-table-container">
