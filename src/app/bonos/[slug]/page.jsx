@@ -112,25 +112,25 @@ export default async function BonoDetailPage({ params }) {
          <div>
           <h2>Detalles de la Oferta</h2>
           <p>
-            <p style={{color:"orange",fontSize:"20px"}}>Ganancia:</p> {ganancia || amount}€
+            <p style={{color:"white",fontSize:"20px"}}>Ganancia:</p> {ganancia || amount}€
           </p>
           <p>
-            <p style={{color:"orange",fontSize:"20px"}}>Cuota mínima:</p> {cuotaMinima || "No especificada"}
+            <p style={{color:"white",fontSize:"20px"}}>Cuota mínima:</p> {cuotaMinima || "No especificada"}
           </p>
           <p>
-            <p style={{color:"orange",fontSize:"20px"}}>Tipo de Oferta:</p> {offerType}
+            <p style={{color:"white",fontSize:"20px"}}>Tipo de Oferta:</p> {offerType}
           </p>
           <p>
-            <p style={{color:"orange",fontSize:"20px"}}>Tiempo de entrega del bono:</p> {tiempoEntrega || "No especificado"}
+            <p style={{color:"white",fontSize:"20px"}}>Tiempo de entrega del bono:</p> {tiempoEntrega || "No especificado"}
           </p>
           <p>
-            <p style={{color:"orange",fontSize:"20px"}}>Enlace oferta:</p>{" "}
+            <p style={{color:"white",fontSize:"20px"}}>Enlace oferta:</p>{" "}
             <a href={url} className="bono-detail__link">
               {enlaceOferta || "Visitar oferta"}
             </a>
           </p>
           <p>
-            <p style={{color:"orange",fontSize:"20px"}}>Métodos de pago no válidos:</p>{" "}
+            <p style={{color:"white",fontSize:"20px"}}>Métodos de pago no válidos:</p>{" "}
             {metodosPagoNoValidos || "Ninguno"}
           </p>
        
@@ -142,6 +142,7 @@ export default async function BonoDetailPage({ params }) {
        <div className="bono-detail__description">
           <h2 style={{fontSize:"40px",color:"white"}}>Descripción de la oferta</h2>
           {renderRichText(description)}
+          <img style={{position:"relative",top:"200px",right:"100px"}} src="https://res.cloudinary.com/dllkefj8m/image/upload/v1746049880/Screenshot-removebg-preview_ukah2o.png" alt="" />
         </div>
       </main>
       <footer>

@@ -1,3 +1,5 @@
+media
+
 .bono-detail {
   max-width: 1200px;
   margin: 0 auto;
@@ -23,14 +25,66 @@
 
 }
 
+
 .bono-detail__content {
+  
   display: flex;
-  gap: 50px;
+  border: solid 3px black;
+  background-image: url("https://res.cloudinary.com/dllkefj8m/image/upload/v1746043395/Sin_t%C3%ADtulo-removebg-preview_pt6cpz.png");
+  padding: 40px;
+  background-repeat: no-repeat;
+  background-position: center;
   justify-content: center;
   align-items: center;
   background-color: #037338;
   margin-top: -20px;
   
+}
+
+@media(max-width:950px){
+  .bono-detail__content {
+  display: flex;
+flex-direction: column;
+justify-content: center;
+text-align: center;
+font-family: "gagalin";
+  
+}
+}
+
+@media(max-width:535px){
+  .bono-detail__content {
+  display: flex;
+flex-direction: column;
+justify-content: center;
+text-align: center;
+font-family: "gagalin";
+  
+}
+
+  .bono-detail__content h2{
+  display: flex;
+  font-size: 40px;
+  width: 300px;
+  margin: 60px auto;
+flex-direction: column;
+justify-content: center;
+text-align: center;
+font-family: "gagalin";
+  
+}
+
+  .bono-detail__content p{
+  display: flex;
+  font-size: 40px;
+  width: 300px;
+  margin: 60px auto;
+flex-direction: column;
+justify-content: center;
+text-align: center;
+font-family: "gagalin";
+  
+}
 }
 
 .bono-detail__header h1 {
@@ -52,17 +106,29 @@
 }
 
 .bono-detail__content h2 {
-  font-size: 40px;
+  font-size: 50px;
   color: white;
   margin-bottom: 10px;
+    font-family: "gagalin";
 }
 
 .bono-detail__content p {
   margin: 5px 0;
   font-size: 15px;
   letter-spacing: 1px;
+    font-family: "gagalin";
+}
+p{
+  font-weight: 500px;
+}
+b{
+
+  font-weight: bold;
 }
 
+li{
+  display: none;
+}
 .bono-detail__content a {
   color: #037338;
   text-decoration: underline;
@@ -70,28 +136,33 @@
 
 .bono-detail__description {
   padding: 50px !important;
-  margin-top: -30px;
-  
+  margin-top: -5px;
+    border: solid 3px black;
   background-color: #037338;
 }
 
 .bono-detail__description h2 {
   font-size: 20px;
-
+  font-family: "gagalin";
   margin-bottom: 10px;
 }
 
 .bono-detail__description h3 {
-  font-size: 20px;
-  color: white;
+  font-size: 25px;
+  color: rgba(245, 245, 245, 0.938);
   margin-bottom: 10px;
+    font-family: "gagalin";
 }
 
 .bono-detail__description p {
   margin: 5px 0;
   color: black;
   letter-spacing: 1px;
-  font-size: 13px;
+  font-size: 15px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  word-spacing: 2px;
+  line-height: 20px;
+
 }
 
 .bono-detail__embedded-image {

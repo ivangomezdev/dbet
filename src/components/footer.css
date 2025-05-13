@@ -30,6 +30,8 @@
     font-family: "BrunoAce";
     flex-wrap: wrap;
     align-items: center;
+position: relative;
+top: 30px;
     gap: 5px;
   }
   
@@ -63,6 +65,8 @@
     display: flex;
     align-items: center;
     gap: 20px;
+    position: relative;
+top: 30px;
   }
   
   .social-icons {
@@ -81,6 +85,7 @@
     color: #ffffff;
     text-decoration: none;
     transition: background-color 0.3s;
+    
   }
   
   .social-icon:hover {
