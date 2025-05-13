@@ -58,3 +58,24 @@
 .bono-detail__description p {
   margin: 5px 0;
 }
+
+.bono-detail__embedded-image {
+  max-width: 100%;
+  height: auto;
+  margin: 10px 0;
+  border-radius: 8px; /* Optional: for better aesthetics */
+}
+
+.bono-detail__logo-img {
+  max-width: 150px; /* Adjust as needed */
+  height: auto;
+}
+
+.bono-detail__link {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.bono-detail__link:hover {
+  text-decoration: underline;
+}
