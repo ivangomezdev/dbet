@@ -323,7 +323,7 @@ export default function DataDisplay() {
 
     let rating;
     if (betType === "Dinero real") {
-      rating = ((favorImporter + contraTotalValue) / favorImporte) * 100;
+      rating = ((favorImporte + contraTotalValue) / favorImporte) * 100;
     } else if (betType === "Apuesta gratis") {
       rating = (contraTotalValue / favorImporte) * 100;
     } else if (betType === "Reembolso") {
