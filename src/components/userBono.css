@@ -77,7 +77,12 @@
        
       }
   }
-  
+  .user-bono__embedded-image {
+  max-width: 100%;
+  height: auto;
+  margin: 10px 0;
+  border-radius: 8px; /* Optional: for better aesthetics */
+}
 
   .user-bono__subtitle {
     font-size: 14px;
