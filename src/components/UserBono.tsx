@@ -6,34 +6,14 @@ import Link from "next/link";
 import { useCookies } from "react-cookie";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
-import { BLOCKS } from "@contentful/rich-text-types";
 
 export default function UserBono({ bonosData }) {
-  const [tabActiva,setTabActiva] = useState("disponibles");
+  const [tabActiva, setTabActiva] = useState("disponibles");
   const [cookies] = useCookies(["token"]);
   const { data: session } = useSession();
   const router = useRouter();
 
   const showLink = !session?.user && !cookies.token;
-
-  // Rich text rendering options for embedded assets
-  const renderOptions = {
-    renderNode: {
-      [BLOCKS.EMBEDDED_ASSET]: (node) => {
-        const { file, title } = node.data.target.fields;
-        const imageUrl = file?.url ? `https:${file.url}` : "/placeholder.svg";
-        return (
-          <img
-            src={imageUrl}
-            alt={title || "Embedded image"}
-            className="user-bono__embedded-image"
-            style={{ maxWidth: "100%", height: "auto" }}
-          />
-        );
-      },
-    },
-  };
 
   const filtrarBonos = () => {
     if (!bonosData) return [];
@@ -97,8 +77,7 @@ export default function UserBono({ bonosData }) {
                   <div className="user-bono__logo">
                     <img
                       src={
-                        bono.fields.image?.fields?.file?.url ||
-                        "/placeholder.svg"
+                        bono.fields.image?.fields?.file?.url || "/placeholder.svg"
                       }
                       alt="logoBet"
                       className="user-bono__logo-img"
@@ -114,16 +93,6 @@ export default function UserBono({ bonosData }) {
                       </span>
                     </p>
                     <p className="user-bono__promo">{bono.fields.conditions}</p>
-
-                    {/* Render the rich text description with embedded images */}
-                    {bono.fields.description && (
-                      <div className="user-bono__description">
-                        {documentToReactComponents(
-                          bono.fields.description,
-                          renderOptions
-                        )}
-                      </div>
-                    )}
 
                     <div className="user-bono__meta">
                       <div className="user-bono__difficulty">
@@ -153,7 +122,7 @@ export default function UserBono({ bonosData }) {
                         <button
                           className="user-bono__button user-bono__button--show"
                           onClick={() => handleShowDetails(bono.fields.slug)}
-                          disabled={!bono.fields.slug}
+                          disabled={!bono.fields.slug} // Disable button if slug is missing
                         >
                           MUESTRA
                         </button>
@@ -180,10 +149,7 @@ export default function UserBono({ bonosData }) {
                 </div>
               ))
             ) : (
-              <p>
-                No hay bonos{" "}
-                {tabActiva === "disponibles" ? "disponibles" : "completados"}
-              </p>
+              <p>No hay bonos {tabActiva === "disponibles" ? "disponibles" : "completados"}</p>
             )}
           </div>
         </div>

@@ -1,6 +1,6 @@
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
-import { getBonos } from "@/lib/contenful";
+import { getBonos } from "@/lib/contentful"; // Ensure `contentful` is lowercase
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import { BLOCKS, INLINES } from "@contentful/rich-text-types";
 import "./bonoDetail.css";
@@ -23,42 +23,72 @@ export default async function BonoDetailPage({ params }) {
     return <div>Bono no encontrado</div>;
   }
 
-  const { title, image, offerType, amount, conditions, difficulty, description, url, ganancia, cuotaMinima, tiempoEntrega, metodosPagoNoValidos, enlaceOferta } = bono.fields;
+  const {
+    title,
+    image,
+    offerType,
+    amount,
+    conditions,
+    difficulty,
+    description,
+    url,
+    ganancia,
+    cuotaMinima,
+    tiempoEntrega,
+    metodosPagoNoValidos,
+    enlaceOferta,
+  } = bono.fields;
 
   // Debug the image URL
   console.log("Image data:", image);
-  const imageUrl = (image?.fields?.file?.url?.startsWith("//") ? "https:" + image?.fields?.file?.url : image?.fields?.file?.url) || "/placeholder.svg";
+  const imageUrl =
+    (image?.fields?.file?.url?.startsWith("//")
+      ? "https:" + image.fields.file.url
+      : image?.fields?.file?.url) || "/placeholder.svg";
   console.log("Image URL:", imageUrl);
 
   // Debug the includes for assets
-  console.log("Includes Assets:", bonos.includes?.Asset);
+  console.log("Includes Assets:", bonos[0]?.includes?.Asset);
 
   // Render rich text with @contentful/rich-text-react-renderer
   const renderOptions = {
     renderNode: {
       [BLOCKS.EMBEDDED_ASSET]: (node) => {
         const assetId = node.data.target.sys.id;
-        const asset = bonos.includes?.Asset?.find((a) => a.sys.id === assetId) || null;
+        // Find the asset in the includes array
+        const asset = bonos[0]?.includes?.Asset?.find((a) => a.sys.id === assetId) || null;
         console.log(`Asset ID: ${assetId}, Found Asset:`, asset);
-        const assetUrl = asset?.fields?.file?.url
-          ? (asset.fields.file.url.startsWith("//") ? "https:" + asset.fields.file.url : asset.fields.file.url)
+        if (!asset) {
+          console.warn(`Asset with ID ${assetId} not found in includes`);
+          return <img src="/placeholder.svg" alt="Missing asset" style={{ maxWidth: "100%", margin: "10px 0" }} />;
+        }
+        const assetUrl = asset.fields?.file?.url
+          ? asset.fields.file.url.startsWith("//")
+            ? "https:" + asset.fields.file.url
+            : asset.fields.file.url
           : "/placeholder.svg";
-        return asset ? (
+        return (
           <img
             src={assetUrl}
-            alt={`Embedded asset ${assetId}`}
+            alt={asset.fields?.title || `Embedded asset ${assetId}`}
             style={{ maxWidth: "100%", margin: "10px 0" }}
+            className="bono-detail__embedded-image"
           />
-        ) : null;
+        );
       },
       [INLINES.HYPERLINK]: (node) => (
-        <a href={node.data.uri}>{node.content[0].value}</a>
+        <a href={node.data.uri} className="bono-detail__link">
+          {node.content[0].value}
+        </a>
       ),
     },
   };
 
   const renderRichText = (richText) => {
-    if (!richText || !richText.content) return null;
+    if (!richText || !richText.content) {
+      console.warn("Rich text is empty or invalid:", richText);
+      return <p>No hay descripción disponible.</p>;
+    }
     return documentToReactComponents(richText, renderOptions);
   };
 
@@ -71,19 +101,37 @@ export default async function BonoDetailPage({ params }) {
         <div className="bono-detail__header">
           <h1>{title}</h1>
           <div className="bono-detail__logo">
-            <img src={imageUrl} alt="logoBet" />
+            <img src={imageUrl} alt="logoBet" className="bono-detail__logo-img" />
           </div>
         </div>
 
         <div className="bono-detail__content">
           <h2>Detalles de la Oferta</h2>
-          <p><strong>Ganancia:</strong> {ganancia || amount}€</p>
-          <p><strong>Cuota mínima:</strong> {cuotaMinima}</p>
-          <p><strong>Tipo de Oferta:</strong> {offerType}</p>
-          <p><strong>Tiempo de entrega del bono:</strong> {tiempoEntrega}</p>
-          <p><strong>Enlace oferta:</strong> <a href={url}>{enlaceOferta}</a></p>
-          <p><strong>Métodos de pago no válidos:</strong> {metodosPagoNoValidos}</p>
-          <a href={url}>Contacta con el corredor de apuestas</a>
+          <p>
+            <strong>Ganancia:</strong> {ganancia || amount}€
+          </p>
+          <p>
+            <strong>Cuota mínima:</strong> {cuotaMinima || "No especificada"}
+          </p>
+          <p>
+            <strong>Tipo de Oferta:</strong> {offerType}
+          </p>
+          <p>
+            <strong>Tiempo de entrega del bono:</strong> {tiempoEntrega || "No especificado"}
+          </p>
+          <p>
+            <strong>Enlace oferta:</strong>{" "}
+            <a href={url} className="bono-detail__link">
+              {enlaceOferta || "Visitar oferta"}
+            </a>
+          </p>
+          <p>
+            <strong>Métodos de pago no válidos:</strong>{" "}
+            {metodosPagoNoValidos || "Ninguno"}
+          </p>
+          <a href={url} className="bono-detail__link">
+            Contacta con el corredor de apuestas
+          </a>
         </div>
 
         <div className="bono-detail__description">
