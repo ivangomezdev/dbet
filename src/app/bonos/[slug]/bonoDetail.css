@@ -26,8 +26,10 @@
 .bono-detail__content {
   display: flex;
   gap: 50px;
+  justify-content: center;
   align-items: center;
-  background-color: #007bff;
+  background-color: #037338;
+  margin-top: -20px;
   
 }
 
@@ -67,8 +69,10 @@
 }
 
 .bono-detail__description {
-  padding: 20px;
+  padding: 50px !important;
   margin-top: -30px;
+  
+  background-color: #037338;
 }
 
 .bono-detail__description h2 {
@@ -85,7 +89,9 @@
 
 .bono-detail__description p {
   margin: 5px 0;
-  color: orange;
+  color: black;
+  letter-spacing: 1px;
+  font-size: 13px;
 }
 
 .bono-detail__embedded-image {

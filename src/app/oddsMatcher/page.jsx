@@ -2,7 +2,7 @@
 
 import "./casino-background.css";
 import { useAtom } from "jotai";
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo } from "react";
 import Image from "next/image";
 import {
   tournamentsDataAtom,
@@ -17,6 +17,127 @@ import { useRouter } from "next/navigation";
 import { useCookies } from "react-cookie";
 import NavBar from "@/components/NavBar";
 import { useSession } from "next-auth/react";
+
+// Define FilterModal as a separate component
+const FilterModal = memo(({ tempFilterInputs, setTempFilterInputs, handleCloseFilterModal, handleApplyFilter }) => {
+  const handleFilterInputChange = (e) => {
+    const { name, value } = e.target;
+    setTempFilterInputs((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  return (
+    <div className="modal-overlay" style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, backgroundColor: "rgba(0,0,0,0.5)", display: "flex", justifyContent: "center", alignItems: "center", zIndex: 1000 }}>
+      <div className="modal-content" style={{ backgroundColor: "white", padding: "20px", borderRadius: "5px", width: "400px", maxWidth: "90%" }} onClick={(e) => e.stopPropagation()}>
+        <h2 style={{ marginBottom: "10px" }}>Configurar Filtros</h2>
+        <div className="tab-content" style={{ marginBottom: "20px" }}>
+          <label style={{ display: "block", marginBottom: "10px" }}>
+            Rating (%) desde
+            <div style={{ display: "flex", gap: "5px" }}>
+              <input
+                type="text"
+                name="ratingMin"
+                value={tempFilterInputs.ratingMin}
+                onChange={handleFilterInputChange}
+                placeholder="Mín"
+                style={{ width: "50%", padding: "5px", marginTop: "5px" }}
+              />
+              <input
+                type="text"
+                name="ratingMax"
+                value={tempFilterInputs.ratingMax}
+                onChange={handleFilterInputChange}
+                placeholder="Máx"
+                style={{ width: "50%", padding: "5px", marginTop: "5px" }}
+              />
+            </div>
+          </label>
+          <label style={{ display: "block", marginBottom: "10px" }}>
+            Cuotas Bookmaker desde
+            <div style={{ display: "flex", gap: "5px" }}>
+              <input
+                type="text"
+                name="oddsMin"
+                value={tempFilterInputs.oddsMin}
+                onChange={handleFilterInputChange}
+                placeholder="Mín"
+                style={{ width: "50%", padding: "5px", marginTop: "5px" }}
+              />
+              <input
+                type="text"
+                name="oddsMax"
+                value={tempFilterInputs.oddsMax}
+                onChange={handleFilterInputChange}
+                placeholder="Máx"
+                style={{ width: "50%", padding: "5px", marginTop: "5px" }}
+              />
+            </div>
+          </label>
+          <label style={{ display: "block", marginBottom: "10px" }}>
+            Liquidez Mínima (€)
+            <input
+              type="text"
+              name="liquidityMin"
+              value={tempFilterInputs.liquidityMin}
+              onChange={handleFilterInputChange}
+              placeholder="Mín"
+              style={{ width: "100%", padding: "5px", marginTop: "5px" }}
+            />
+          </label>
+          <label style={{ display: "block", marginBottom: "10px" }}>
+            Fecha/Hora desde
+            <div style={{ display: "flex", gap: "5px" }}>
+              <DatePicker
+                selected={tempFilterInputs.dateStart}
+                onChange={(date) => setTempFilterInputs((prev) => ({ ...prev, dateStart: date }))}
+                showTimeSelect
+                dateFormat="Pp"
+                placeholderText="Desde"
+                style={{ width: "50%", padding: "5px", marginTop: "5px" }}
+              />
+              <DatePicker
+                selected={tempFilterInputs.dateEnd}
+                onChange={(date) => setTempFilterInputs((prev) => ({ ...prev, dateEnd: date }))}
+                showTimeSelect
+                dateFormat="Pp"
+                placeholderText="A"
+                style={{ width: "50%", padding: "5px", marginTop: "5px" }}
+              />
+            </div>
+          </label>
+        </div>
+        <div className="modal-buttons" style={{ display: "flex", justifyContent: "flex-end" }}>
+          <button
+            onClick={handleCloseFilterModal}
+            style={{
+              padding: "10px 20px",
+              marginRight: "10px",
+              backgroundColor: "#ccc",
+              border: "none",
+              cursor: "pointer",
+            }}
+          >
+            Cancelar
+          </button>
+          <button
+            onClick={handleApplyFilter}
+            style={{
+              padding: "10px 20px",
+              backgroundColor: "#00A500",
+              color: "white",
+              border: "none",
+              cursor: "pointer",
+            }}
+          >
+            Aplicar
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+});
 
 export default function DataDisplay() {
   const [tournamentsData] = useAtom(tournamentsDataAtom);
@@ -66,7 +187,7 @@ export default function DataDisplay() {
     oddsMax: "",
     dateStart: null,
     dateEnd: null,
-    liquidityMin: "", // Added liquidityMin
+    liquidityMin: "",
   });
   const [tempFilterInputs, setTempFilterInputs] = useState({ ...filterInputs });
 
@@ -202,7 +323,7 @@ export default function DataDisplay() {
 
     let rating;
     if (betType === "Dinero real") {
-      rating = ((favorImporte + contraTotalValue) / favorImporte) * 100;
+      rating = ((favorImporter + contraTotalValue) / favorImporte) * 100;
     } else if (betType === "Apuesta gratis") {
       rating = (contraTotalValue / favorImporte) * 100;
     } else if (betType === "Reembolso") {
@@ -442,14 +563,6 @@ export default function DataDisplay() {
     setFilterModalOpen(false);
   };
 
-  const handleFilterInputChange = (e) => {
-    const { name, value } = e.target;
-    setTempFilterInputs((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
   const RatingModal = () => (
     <div className="modal-overlay" style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, backgroundColor: "rgba(0,0,0,0.5)", display: "flex", justifyContent: "center", alignItems: "center", zIndex: 1000 }}>
       <div className="modal-content" style={{ backgroundColor: "white", padding: "20px", borderRadius: "5px", width: "400px", maxWidth: "90%" }} onClick={(e) => e.stopPropagation()}>
@@ -601,7 +714,7 @@ export default function DataDisplay() {
   );
 
   const CommissionModal = () => (
-    <div className="modal-overlay" style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: "0", backgroundColor: "rgba(0,0,0,0.5)", display: "flex", justifyContent: "center", alignItems: "center", zIndex: 1000 }}>
+    <div className="modal-overlay" style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, backgroundColor: "rgba(0,0,0,0.5)", display: "flex", justifyContent: "center", alignItems: "center", zIndex: 1000 }}>
       <div className="modal-content" style={{ backgroundColor: "white", padding: "20px", borderRadius: "5px", width: "400px", maxWidth: "90%" }} onClick={(e) => e.stopPropagation()}>
         <h2 style={{ marginBottom: "10px" }}>Configurar Comisión</h2>
         <div className="tab-content" style={{ marginBottom: "20px" }}>
@@ -644,116 +757,7 @@ export default function DataDisplay() {
       </div>
     </div>
   );
-
-  const FilterModal = () => (
-    <div className="modal-overlay" style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, backgroundColor: "rgba(0,0,0,0.5)", display: "flex", justifyContent: "center", alignItems: "center", zIndex: 1000 }}>
-      <div className="modal-content" style={{ backgroundColor: "white", padding: "20px", borderRadius: "5px", width: "400px", maxWidth: "90%" }} onClick={(e) => e.stopPropagation()}>
-        <h2 style={{ marginBottom: "10px" }}>Configurar Filtros</h2>
-        <div className="tab-content" style={{ marginBottom: "20px" }}>
-          <label style={{ display: "block", marginBottom: "10px" }}>
-            Rating (%) desde
-            <div style={{ display: "flex", gap: "5px" }}>
-              <input
-                type="text"
-                name="ratingMin"
-                value={tempFilterInputs.ratingMin}
-                onChange={handleFilterInputChange}
-                placeholder="Mín"
-                style={{ width: "50%", padding: "5px", marginTop: "5px" }}
-              />
-              <input
-                type="text"
-                name="ratingMax"
-                value={tempFilterInputs.ratingMax}
-                onChange={handleFilterInputChange}
-                placeholder="Máx"
-                style={{ width: "50%", padding: "5px", marginTop: "5px" }}
-              />
-            </div>
-          </label>
-          <label style={{ display: "block", marginBottom: "10px" }}>
-            Cuotas Bookmaker desde
-            <div style={{ display: "flex", gap: "5px" }}>
-              <input
-                type="text"
-                name="oddsMin"
-                value={tempFilterInputs.oddsMin}
-                onChange={handleFilterInputChange}
-                placeholder="Mín"
-                style={{ width: "50%", padding: "5px", marginTop: "5px" }}
-              />
-              <input
-                type="text"
-                name="oddsMax"
-                value={tempFilterInputs.oddsMax}
-                onChange={handleFilterInputChange}
-                placeholder="Máx"
-                style={{ width: "50%", padding: "5px", marginTop: "5px" }}
-              />
-            </div>
-          </label>
-          <label style={{ display: "block", marginBottom: "10px" }}>
-            Liquidez Mínima (€)
-            <input
-              type="text"
-              name="liquidityMin"
-              value={tempFilterInputs.liquidityMin}
-              onChange={handleFilterInputChange}
-              placeholder="Mín"
-              style={{ width: "100%", padding: "5px", marginTop: "5px" }}
-            />
-          </label>
-          <label style={{ display: "block", marginBottom: "10px" }}>
-            Fecha/Hora desde
-            <div style={{ display: "flex", gap: "5px" }}>
-              <DatePicker
-                selected={tempFilterInputs.dateStart}
-                onChange={(date) => setTempFilterInputs({ ...tempFilterInputs, dateStart: date })}
-                showTimeSelect
-                dateFormat="Pp"
-                placeholderText="Desde"
-                style={{ width: "50%", padding: "5px", marginTop: "5px" }}
-              />
-              <DatePicker
-                selected={tempFilterInputs.dateEnd}
-                onChange={(date) => setTempFilterInputs({ ...tempFilterInputs, dateEnd: date })}
-                showTimeSelect
-                dateFormat="Pp"
-                placeholderText="A"
-                style={{ width: "50%", padding: "5px", marginTop: "5px" }}
-              />
-            </div>
-          </label>
-        </div>
-        <div className="modal-buttons" style={{ display: "flex", justifyContent: "flex-end" }}>
-          <button
-            onClick={handleCloseFilterModal}
-            style={{
-              padding: "10px 20px",
-              marginRight: "10px",
-              backgroundColor: "#ccc",
-              border: "none",
-              cursor: "pointer",
-            }}
-          >
-            Cancelar
-          </button>
-          <button
-            onClick={handleApplyFilter}
-            style={{
-              padding: "10px 20px",
-              backgroundColor: "#00A500",
-              color: "white",
-              border: "none",
-              cursor: "pointer",
-            }}
-          >
-            Aplicar
-          </button>
-        </div>
-      </div>
-    </div>
-  );return (
+    return (
     <div className="oddsMatcher__cont">
       <NavBar />
       <div className="me__content betting-table-container">
@@ -1048,7 +1052,14 @@ export default function DataDisplay() {
       )}
       {ratingModalOpen && <RatingModal />}
       {commissionModalOpen && <CommissionModal />}
-      {filterModalOpen && <FilterModal />}
+      {filterModalOpen && (
+        <FilterModal
+          tempFilterInputs={tempFilterInputs}
+          setTempFilterInputs={setTempFilterInputs}
+          handleCloseFilterModal={handleCloseFilterModal}
+          handleApplyFilter={handleApplyFilter}
+        />
+      )}
     </div>
   );
 }
