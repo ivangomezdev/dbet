@@ -18,7 +18,216 @@ import { useCookies } from "react-cookie";
 import NavBar from "@/components/NavBar";
 import { useSession } from "next-auth/react";
 
-// Define FilterModal as a separate component
+// RatingModal Component
+const RatingModal = memo(({ tempRatingInputs, setTempRatingInputs, activeTab, setActiveTab, handleCloseRatingModal, handleApplyRating }) => {
+  const handleRatingInputChange = (e) => {
+    const { name, value } = e.target;
+    setTempRatingInputs((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  return (
+    <div className="modal-overlay" style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, backgroundColor: "rgba(0,0,0,0.5)", display: "flex", justifyContent: "center", alignItems: "center", zIndex: 1000 }}>
+      <div className="modal-content" style={{ backgroundColor: "white", padding: "20px", borderRadius: "5px", width: "400px", maxWidth: "90%" }} onClick={(e) => e.stopPropagation()}>
+        <h2 style={{ marginBottom: "10px" }}>Configurar Rating</h2>
+        <div className="tabs" style={{ display: "flex", marginBottom: "10px" }}>
+          {["Dinero real", "Apuesta gratis", "RollOver", "Reembolso"].map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              style={{
+                flex: 1,
+                padding: "10px",
+                backgroundColor: activeTab === tab ? "#00A500" : "#f0f0f0",
+                color: activeTab === tab ? "white" : "black",
+                border: "none",
+                cursor: "pointer",
+              }}
+            >
+              {tab}
+            </button>
+          ))}
+        </div>
+        <div className="tab-content" style={{ marginBottom: "20px" }}>
+          {activeTab === "Dinero real" && (
+            <div>
+              <label style={{ display: "block", marginBottom: "10px" }}>
+                Importe Apuesta (€)
+                <input
+                  type="text"
+                  name="favorImporte"
+                  value={tempRatingInputs.favorImporte}
+                  onChange={handleRatingInputChange}
+                  style={{ width: "100%", padding: "5px", marginTop: "5px" }}
+                />
+              </label>
+            </div>
+          )}
+          {activeTab === "Apuesta gratis" && (
+            <div>
+              <label style={{ display: "block", marginBottom: "10px" }}>
+                Importe Apuesta (€)
+                <input
+                  type="text"
+                  name="favorImporte"
+                  value={tempRatingInputs.favorImporte}
+                  onChange={handleRatingInputChange}
+                  style={{ width: "100%", padding: "5px", marginTop: "5px" }}
+                />
+              </label>
+            </div>
+          )}
+          {activeTab === "RollOver" && (
+            <div>
+              <label style={{ display: "block", marginBottom: "10px" }}>
+                Dinero Real (€)
+                <input
+                  type="text"
+                  name="dineroReal"
+                  value={tempRatingInputs.dineroReal}
+                  onChange={handleRatingInputChange}
+                  style={{ width: "100%", padding: "5px", marginTop: "5px" }}
+                />
+              </label>
+              <label style={{ display: "block", marginBottom: "10px" }}>
+                Bonos (€)
+                <input
+                  type="text"
+                  name="bonos"
+                  value={tempRatingInputs.bonos}
+                  onChange={handleRatingInputChange}
+                  style={{ width: "100%", padding: "5px", marginTop: "5px" }}
+                />
+              </label>
+              <label style={{ display: "block", marginBottom: "10px" }}>
+                Rollover Restante (€)
+                <input
+                  type="text"
+                  name="rolloverRestante"
+                  value={tempRatingInputs.rolloverRestante}
+                  onChange={handleRatingInputChange}
+                  style={{ width: "100%", padding: "5px", marginTop: "5px" }}
+                />
+              </label>
+              <label style={{ display: "block", marginBottom: "10px" }}>
+                Rating Futuro (%)
+                <input
+                  type="text"
+                  name="ratingFuturo"
+                  value={tempRatingInputs.ratingFuturo}
+                  onChange={handleRatingInputChange}
+                  style={{ width: "100%", padding: "5px", marginTop: "5px" }}
+                />
+              </label>
+            </div>
+          )}
+          {activeTab === "Reembolso" && (
+            <div>
+              <label style={{ display: "block", marginBottom: "10px" }}>
+                Importe Apuesta (€)
+                <input
+                  type="text"
+                  name="favorImporte"
+                  value={tempRatingInputs.favorImporte}
+                  onChange={handleRatingInputChange}
+                  style={{ width: "100%", padding: "5px", marginTop: "5px" }}
+                />
+              </label>
+              <label style={{ display: "block", marginBottom: "10px" }}>
+                Importe Reembolso (€)
+                <input
+                  type="text"
+                  name="importeReembolso"
+                  value={tempRatingInputs.importeReembolso}
+                  onChange={handleRatingInputChange}
+                  style={{ width: "100%", padding: "5px", marginTop: "5px" }}
+                />
+              </label>
+            </div>
+          )}
+        </div>
+        <div className="modal-buttons" style={{ display: "flex", justifyContent: "flex-end" }}>
+          <button
+            onClick={handleCloseRatingModal}
+            style={{
+              padding: "10px 20px",
+              marginRight: "10px",
+              backgroundColor: "#ccc",
+              border: "none",
+              cursor: "pointer",
+            }}
+          >
+            Cancelar
+          </button>
+          <button
+            onClick={handleApplyRating}
+            style={{
+              padding: "10px 20px",
+              backgroundColor: "#00A500",
+              color: "white",
+              border: "none",
+              cursor: "pointer",
+            }}
+          >
+            Aplicar
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+});
+
+// CommissionModal Component
+const CommissionModal = memo(({ tempCommission, setTempCommission, handleCloseCommissionModal, handleApplyCommission }) => {
+  return (
+    <div className="modal-overlay" style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, backgroundColor: "rgba(0,0,0,0.5)", display: "flex", justifyContent: "center", alignItems: "center", zIndex: 1000 }}>
+      <div className="modal-content" style={{ backgroundColor: "white", padding: "20px", borderRadius: "5px", width: "400px", maxWidth: "90%" }} onClick={(e) => e.stopPropagation()}>
+        <h2 style={{ marginBottom: "10px" }}>Configurar Comisión</h2>
+        <div className="tab-content" style={{ marginBottom: "20px" }}>
+          <label style={{ display: "block", marginBottom: "10px" }}>
+            Comisión (%)
+            <input
+              type="text"
+              value={tempCommission}
+              onChange={(e) => setTempCommission(e.target.value)}
+              style={{ width: "100%", padding: "5px", marginTop: "5px" }}
+            />
+          </label>
+        </div>
+        <div className="modal-buttons" style={{ display: "flex", justifyContent: "flex-end" }}>
+          <button
+            onClick={handleCloseCommissionModal}
+            style={{
+              padding: "10px 20px",
+              marginRight: "10px",
+              backgroundColor: "#ccc",
+              border: "none",
+              cursor: "pointer",
+            }}
+          >
+            Cancelar
+          </button>
+          <button
+            onClick={handleApplyCommission}
+            style={{
+              padding: "10px 20px",
+              backgroundColor: "#00A500",
+              color: "white",
+              border: "none",
+              cursor: "pointer",
+            }}
+          >
+            Aplicar
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+});
+
+// FilterModal Component
 const FilterModal = memo(({ tempFilterInputs, setTempFilterInputs, handleCloseFilterModal, handleApplyFilter }) => {
   const handleFilterInputChange = (e) => {
     const { name, value } = e.target;
@@ -372,11 +581,8 @@ export default function DataDisplay() {
           const contraOdds = parseFloat(betfairData.odds[0][outcome.key]);
           const depthLay = parseFloat(betfairData.odds[0][outcome.depthKey]) || 0;
 
-          // Skip if favorOdds is 0, NaN, or invalid
           if (!favorOdds || favorOdds === 0 || isNaN(favorOdds)) return;
-          // Skip if contraOdds is 0, NaN, or invalid
           if (!contraOdds || contraOdds === 0 || isNaN(contraOdds)) return;
-          // Skip if liquidity (depthLay) is less than 20
           if (depthLay < 20) return;
 
           if (
@@ -400,7 +606,6 @@ export default function DataDisplay() {
             tooltipValues.favor.total
           );
 
-          // Excluir apuestas con rating > 100.1%
           if (rating !== "-" && parseFloat(rating) > 100.1) return;
 
           if (
@@ -525,14 +730,6 @@ export default function DataDisplay() {
     setRatingModalOpen(false);
   };
 
-  const handleRatingInputChange = (e) => {
-    const { name, value } = e.target;
-    setTempRatingInputs((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
   const handleOpenCommissionModal = () => {
     setTempCommission(commission);
     setCommissionModalOpen(true);
@@ -562,202 +759,7 @@ export default function DataDisplay() {
     setCurrentPage(1);
     setFilterModalOpen(false);
   };
-
-  const RatingModal = () => (
-    <div className="modal-overlay" style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, backgroundColor: "rgba(0,0,0,0.5)", display: "flex", justifyContent: "center", alignItems: "center", zIndex: 1000 }}>
-      <div className="modal-content" style={{ backgroundColor: "white", padding: "20px", borderRadius: "5px", width: "400px", maxWidth: "90%" }} onClick={(e) => e.stopPropagation()}>
-        <h2 style={{ marginBottom: "10px" }}>Configurar Rating</h2>
-        <div className="tabs" style={{ display: "flex", marginBottom: "10px" }}>
-          {["Dinero real", "Apuesta gratis", "RollOver", "Reembolso"].map((tab) => (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              style={{
-                flex: 1,
-                padding: "10px",
-                backgroundColor: activeTab === tab ? "#00A500" : "#f0f0f0",
-                color: activeTab === tab ? "white" : "black",
-                border: "none",
-                cursor: "pointer",
-              }}
-            >
-              {tab}
-            </button>
-          ))}
-        </div>
-        <div className="tab-content" style={{ marginBottom: "20px" }}>
-          {activeTab === "Dinero real" && (
-            <div>
-              <label style={{ display: "block", marginBottom: "10px" }}>
-                Importe Apuesta (€)
-                <input
-                  type="text"
-                  name="favorImporte"
-                  value={tempRatingInputs.favorImporte}
-                  onChange={handleRatingInputChange}
-                  style={{ width: "100%", padding: "5px", marginTop: "5px" }}
-                />
-              </label>
-            </div>
-          )}
-          {activeTab === "Apuesta gratis" && (
-            <div>
-              <label style={{ display: "block", marginBottom: "10px" }}>
-                Importe Apuesta (€)
-                <input
-                  type="text"
-                  name="favorImporte"
-                  value={tempRatingInputs.favorImporte}
-                  onChange={handleRatingInputChange}
-                  style={{ width: "100%", padding: "5px", marginTop: "5px" }}
-                />
-              </label>
-            </div>
-          )}
-          {activeTab === "RollOver" && (
-            <div>
-              <label style={{ display: "block", marginBottom: "10px" }}>
-                Dinero Real (€)
-                <input
-                  type="text"
-                  name="dineroReal"
-                  value={tempRatingInputs.dineroReal}
-                  onChange={handleRatingInputChange}
-                  style={{ width: "100%", padding: "5px", marginTop: "5px" }}
-                />
-              </label>
-              <label style={{ display: "block", marginBottom: "10px" }}>
-                Bonos (€)
-                <input
-                  type="text"
-                  name="bonos"
-                  value={tempRatingInputs.bonos}
-                  onChange={handleRatingInputChange}
-                  style={{ width: "100%", padding: "5px", marginTop: "5px" }}
-                />
-              </label>
-              <label style={{ display: "block", marginBottom: "10px" }}>
-                Rollover Restante (€)
-                <input
-                  type="text"
-                  name="rolloverRestante"
-                  value={tempRatingInputs.rolloverRestante}
-                  onChange={handleRatingInputChange}
-                  style={{ width: "100%", padding: "5px", marginTop: "5px" }}
-                />
-              </label>
-              <label style={{ display: "block", marginBottom: "10px" }}>
-                Rating Futuro (%)
-                <input
-                  type="text"
-                  name="ratingFuturo"
-                  value={tempRatingInputs.ratingFuturo}
-                  onChange={handleRatingInputChange}
-                  style={{ width: "100%", padding: "5px", marginTop: "5px" }}
-                />
-              </label>
-            </div>
-          )}
-          {activeTab === "Reembolso" && (
-            <div>
-              <label style={{ display: "block", marginBottom: "10px" }}>
-                Importe Apuesta (€)
-                <input
-                  type="text"
-                  name="favorImporte"
-                  value={tempRatingInputs.favorImporte}
-                  onChange={handleRatingInputChange}
-                  style={{ width: "100%", padding: "5px", marginTop: "5px" }}
-                />
-              </label>
-              <label style={{ display: "block", marginBottom: "10px" }}>
-                Importe Reembolso (€)
-                <input
-                  type="text"
-                  name="importeReembolso"
-                  value={tempRatingInputs.importeReembolso}
-                  onChange={handleRatingInputChange}
-                  style={{ width: "100%", padding: "5px", marginTop: "5px" }}
-                />
-              </label>
-            </div>
-          )}
-        </div>
-        <div className="modal-buttons" style={{ display: "flex", justifyContent: "flex-end" }}>
-          <button
-            onClick={handleCloseRatingModal}
-            style={{
-              padding: "10px 20px",
-              marginRight: "10px",
-              backgroundColor: "#ccc",
-              border: "none",
-              cursor: "pointer",
-            }}
-          >
-            Cancelar
-          </button>
-          <button
-            onClick={handleApplyRating}
-            style={{
-              padding: "10px 20px",
-              backgroundColor: "#00A500",
-              color: "white",
-              border: "none",
-              cursor: "pointer",
-            }}
-          >
-            Aplicar
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-
-  const CommissionModal = () => (
-    <div className="modal-overlay" style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, backgroundColor: "rgba(0,0,0,0.5)", display: "flex", justifyContent: "center", alignItems: "center", zIndex: 1000 }}>
-      <div className="modal-content" style={{ backgroundColor: "white", padding: "20px", borderRadius: "5px", width: "400px", maxWidth: "90%" }} onClick={(e) => e.stopPropagation()}>
-        <h2 style={{ marginBottom: "10px" }}>Configurar Comisión</h2>
-        <div className="tab-content" style={{ marginBottom: "20px" }}>
-          <label style={{ display: "block", marginBottom: "10px" }}>
-            Comisión (%)
-            <input
-              type="text"
-              value={tempCommission}
-              onChange={(e) => setTempCommission(e.target.value)}
-              style={{ width: "100%", padding: "5px", marginTop: "5px" }}
-            />
-          </label>
-        </div>
-        <div className="modal-buttons" style={{ display: "flex", justifyContent: "flex-end" }}>
-          <button
-            onClick={handleCloseCommissionModal}
-            style={{
-              padding: "10px 20px",
-              marginRight: "10px",
-              backgroundColor: "#ccc",
-              border: "none",
-              cursor: "pointer",
-            }}
-          >
-            Cancelar
-          </button>
-          <button
-            onClick={handleApplyCommission}
-            style={{
-              padding: "10px 20px",
-              backgroundColor: "#00A500",
-              color: "white",
-              border: "none",
-              cursor: "pointer",
-            }}
-          >
-            Aplicar
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-    return (
+  return (
     <div className="oddsMatcher__cont">
       <NavBar />
       <div className="me__content betting-table-container">
@@ -1050,8 +1052,24 @@ export default function DataDisplay() {
           initialBetType={selectedBetType}
         />
       )}
-      {ratingModalOpen && <RatingModal />}
-      {commissionModalOpen && <CommissionModal />}
+      {ratingModalOpen && (
+        <RatingModal
+          tempRatingInputs={tempRatingInputs}
+          setTempRatingInputs={setTempRatingInputs}
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          handleCloseRatingModal={handleCloseRatingModal}
+          handleApplyRating={handleApplyRating}
+        />
+      )}
+      {commissionModalOpen && (
+        <CommissionModal
+          tempCommission={tempCommission}
+          setTempCommission={setTempCommission}
+          handleCloseCommissionModal={handleCloseCommissionModal}
+          handleApplyCommission={handleApplyCommission}
+        />
+      )}
       {filterModalOpen && (
         <FilterModal
           tempFilterInputs={tempFilterInputs}
