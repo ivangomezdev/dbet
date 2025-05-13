@@ -9,11 +9,22 @@ console.log(client,"ESTE ES CLIENT");
 
 
 // Función genérica que acepta el content_type como parámetro
-export async function getEntriesByContentType(contentType: string) {
-  const response = await client.getEntries({ content_type: contentType });
-  console.log(`Contentful response for ${contentType}:`, response.items);
-  
-  return response.items;
+export async function getEntriesByContentType(contentType:string) {
+  try {
+    const response = await client.getEntries({
+      content_type: contentType,
+      include: 2, // Fetch linked assets (e.g., images in rich text)
+    });
+    console.log(`Datos recibidos para contentType ${contentType}:`, response);
+    // Return items with includes attached
+    return response.items.map((item) => ({
+      ...item,
+      includes: response.includes || {}, // Ensure includes is always present
+    }));
+  } catch (error) {
+    console.error(`Error fetching entries for contentType ${contentType}:`, error);
+    throw error;
+  }
 }
 
 // Ejemplo de uso para cada content model
