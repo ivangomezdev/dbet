@@ -46,7 +46,7 @@ const Page = () => {
     }
   };
 
-  return (<>
+  return (< div style={{backgroundColor:"#054F36",marginTop:"-30px"}}>
       <NavBar />
     <div className="container">
       <h1 className="forYou__title">Hacemos el MatchBetting por tí</h1>
@@ -54,7 +54,7 @@ const Page = () => {
         ¿No sabes cómo realizar el MatchBetting? Déjanos un mensaje y un
         profesional se contactará contigo
       </p>
-      <form onSubmit={handleSubmit}>
+      <form className="forYou__form" onSubmit={handleSubmit}>
         <label className="forYou__label">
           Nombre:
           <input
@@ -105,7 +105,7 @@ const Page = () => {
       {status && <p>{status}</p>}
     </div>
       <Footer/>
-    </>
+    </div>
   );
 };
 

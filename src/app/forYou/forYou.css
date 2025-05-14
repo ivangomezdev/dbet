@@ -3,30 +3,49 @@
     margin: 130px auto;
     padding: 20px;
     font-family: Arial, sans-serif;
+    
 
   }
   .forYou__title {
     font-size: 3rem;
     text-align: center;
     font-family:"gagalin";
-    color: black;
+    color: white;
   }
   .forYou__p {
     text-align: center;
     color: #666;
     margin-bottom: 20px;
+    font-family: "Rowdies-Light";
+    font-weight: bold;
+
+  }
+
+  .forYoy__p{
+    background-color: #05442f;
+    padding: 6px;
+    border-radius: 5px;
+    color: whitesmoke;
+    text-align: center;
+    font-weight: 700;
+    font-size: 15px;
   }
   .forYou__form {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+   
+    
   }
   .forYou__label {
     display: flex;
     flex-direction: column;
     font-family:"gagalin";
     font-size: 16px;
-    color: #333;
+    color:black;
+    background-color: white;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 10px;
   }
   .forYou__input,
   .forYou__textarea {
@@ -46,7 +65,7 @@
     color: white;
     font-family:"gagalin";
     border: none;
-    border-radius: 4px;
+ 
     font-size: 16px;
     cursor: pointer;
     margin-top: 20px;

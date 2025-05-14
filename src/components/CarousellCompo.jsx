@@ -10,9 +10,9 @@ const FAQ = () => {
             "Si! Yes! Oui! Ja! Ayo! Lo repetimos en todos los idiomas del mundo si es necesario, ¡las apuestas combinadas ( Matched Betting) realmente funcionan! ? Te sugerimos que eches un vistazo a las ganancias generadas por nuestros usuarios.",
         },
         {
-          title: "¿Cuánto dinero puedo ganar online con ZeroBet?",
+          title: "¿Cuánto dinero puedo ganar online con WinBet?",
           description:
-            "Depende de cuánto tiempo dediques a esta actividad. Muchos usuarios han llegado a ganar alrededor de 500€ al mes en España y 500US$ al mes en Latinoamérica. Echa un vistazo a esta publicación que explica en detalle las ganancias que puedes generar con NinjaBet.",
+            "Depende de cuánto tiempo dediques a esta actividad. Muchos usuarios han llegado a ganar alrededor de 500€ al mes en España y 500US$ al mes en Latinoamérica. Echa un vistazo a esta publicación que explica en detalle las ganancias que puedes generar con Winbet420.",
         },
         {
           title: "¿Hay riesgos?",
@@ -20,7 +20,7 @@ const FAQ = () => {
             "Visto que apostarás a todos los resultados posibles, estás eliminando efectivamente cualquier riesgo aleatorio. El único riesgo es el error humano, como por ejemplo hacer una apuesta incorrecta. Pero si sigues nuestras instrucciones online, no podrás hacer nada más que ganar.",
         },
         {
-          title: "¿Quién puede ganar online con ZeroBet?",
+          title: "¿Quién puede ganar online con WinBet?",
           description:
             "Si vives en España o Latinoamérica y tienes más de 18 años, puedes ganar dinero online usando nuestra plataforma. ¡Lo único que realmente importa es la determinación!",
         },
@@ -37,7 +37,7 @@ const FAQ = () => {
         {
           title: "Soy un apostador, ¿tiene sentido para mí?",
           description:
-            "¡Por supuesto! Puedes seguir apostando pero al mismo tiempo trabajar desde casa con el Matched Betting. Aunque si ya tienes muchas cuentas en los distintos corredores de apuestas o ya has gastado los bonos, todas las semanas salen nuevos bonos , de manera que con Ninjabet puedas ganar online cada mes.",
+            "¡Por supuesto! Puedes seguir apostando pero al mismo tiempo trabajar desde casa con el Matched Betting. Aunque si ya tienes muchas cuentas en los distintos corredores de apuestas o ya has gastado los bonos, todas las semanas salen nuevos bonos , de manera que con Winbet420 puedas ganar online cada mes.",
         },
         {
           title: "¿Debería seguir el mundo del fútbol?",
@@ -51,7 +51,7 @@ const FAQ = () => {
         },
         {
           title: "¿Es gratis o de pago?",
-          description: "Registrarse a ZeroBet es gratuito",
+          description: "Registrarse a Winbet es gratuito",
         },
         {
           title: "Tengo más preguntas, ¿Con quién puedo contactar?",

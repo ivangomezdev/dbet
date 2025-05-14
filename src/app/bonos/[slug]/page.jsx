@@ -118,38 +118,43 @@ export default async function BonoDetailPage({ params }) {
         </div>
 
         <div className="bono-detail__content">
-          <div>
-            <h2>Detalles de la Oferta</h2>
+          <div >
+            <h2 style={{color:"#000000"}}>Detalles de la Oferta</h2>
             <p>
-              <p style={{ color: "white", fontSize: "20px" }}>Ganancia:</p> {ganancia || amount}€
+              <p style={{ color: "#054F36", fontSize: "19px" }}>Ganancia: <span style={{color:"black"}}> {ganancia || amount}</span>€</p>
             </p>
             <p>
-              <p style={{ color: "white", fontSize: "20px" }}>Cuota mínima:</p> {cuotaMinima || "No especificada"}
+              <p style={{color: "#054F36", fontSize: "19px" }}>Cuota mínima: <span style={{color:"black"}}>{cuotaMinima || "No especificada"}</span></p> 
             </p>
             <p>
-              <p style={{ color: "white", fontSize: "20px" }}>Tipo de Oferta:</p> {offerType}
+              <p style={{color: "#054F36", fontSize: "19px" }}>Tipo de Oferta: <span style={{color:"black"}}>{offerType}</span></p>
             </p>
             <p>
-              <p style={{ color: "white", fontSize: "20px" }}>Tiempo de entrega del bono:</p> {tiempoEntrega || "No especificado"}
+              <p style={{color: "#054F36", fontSize: "19px" }}>Tiempo de entrega del bono: <span style={{color:"black"}}>{tiempoEntrega || "No especificado"}</span></p>
             </p>
             <p>
-              <p style={{ color: "white", fontSize: "20px" }}>Enlace oferta:</p>{" "}
-              <a href={url} target="_blank" rel="noopener noreferrer" className="bono-detail__link">
+              <p style={{color: "white", fontSize: "19px" }}>Enlace oferta:</p>{" "}
+              <a href={url} style={{textDecoration:"none",color:"orange",marginTop:"60px"}} target="_blank" rel="noopener noreferrer" className="bono-detail__link">
                 Visitar oferta
               </a>
             </p>
-            <p>
-              <p style={{ color: "white", fontSize: "20px" }}>Métodos de pago no válidos:</p>{" "}
+           {metodosPagoNoValidos !== "Ninguno" && 
+               (<p>
+              <p style={{ color: "#054F36", fontSize: "20px" }}>Métodos de pago no válidos:</p>{" "}
               {metodosPagoNoValidos || "Ninguno"}
-            </p>
+            </p>)
+           
+          }
           </div>
           <div className="bono-detail__image">
             <img src={imageUrl} />
           </div>
         </div>
         <div className="bono-detail__description">
-          <h2 style={{ fontSize: "40px", color: "white" }}>Descripción de la oferta</h2>
+      
+          <div className="bono-detail__details">
           {renderRichText(description, "description")}
+          </div>
           <div className="bono-detail__additional-descriptions">
             {description1 && (
               <div className="bono-detail__description-item">

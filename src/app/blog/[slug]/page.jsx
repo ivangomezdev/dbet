@@ -53,7 +53,7 @@ export default async function BlogPostPage({ params }) {
         </h1>
 
         <div style={{ padding: "10px" }} className="article__meta">
-          <span className="article__author">Por ZeroBet Team</span>
+          <span className="article__author">Por WinBet Team</span>
           <span className="article__date">{post.fields.fecha.split("T")[0]}</span>
         </div>
 

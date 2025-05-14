@@ -46,7 +46,7 @@ export default async function BlogPage() {
   
   
   return (
-    <>
+    <div>
       <header>
         <NavBar />
       
@@ -54,9 +54,10 @@ export default async function BlogPage() {
       <main className="blog__main" >
           <h1 className="blog__title">BLOG</h1>
      
-          <p className="blog__subtitle">Atención: Si sigues leyendo este blog vas a ser expuesto a informaciones que te permitirán de convertirte en un Winbetter con el Matched Betting. 😀</p>
+          
 
         <section>
+          <h1 style={{backgroundColor:"#2131",textAlign:"center",fontSize:"90px",fontFamily:"gagalin"}}>Win<span style={{color:"orange",}}>Blog</span></h1>
           <div className="blog__posts">
             {mappingPosts}
           </div>
@@ -65,6 +66,6 @@ export default async function BlogPage() {
       <footer className="blog__footer">
       <Footer/>
       </footer>
-    </>
+    </div>
   );
 }

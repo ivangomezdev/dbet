@@ -17,7 +17,7 @@ const Page = () => {
 
 
   return (
-    <>
+    <div style={{backgroundColor:"#054F36"}}>
     <header>
       <NavBar />
       </header>
@@ -31,7 +31,7 @@ const Page = () => {
       <footer>
         <Footer/>
       </footer>
-    </>
+    </div>
   )
 }
 

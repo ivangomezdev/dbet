@@ -4,16 +4,19 @@
     display: grid;
     justify-items: center !important;
     grid-template-columns: 1fr 1fr 1fr; /* 3 columnas fijas */
-  
+    background-color: #054F36;
     max-width: 100%; /* No exceder el contenedor padre */
     margin: 0 auto !important; /* Centra horizontalmente */
     gap: 30px;
     
     
 }
-
+.blog__main{
+  background-color: #054F36;
+}
 .blog__footer{
   padding-top:80px ;
+  background-color:#054F36;
 }
 
 .blog__title {

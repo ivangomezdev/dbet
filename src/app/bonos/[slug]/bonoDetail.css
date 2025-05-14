@@ -6,11 +6,12 @@
   font-family: "gagalin";
   font-weight: 100;
   padding: 20px;
+  background-color: #054F36;
 
 }
 
 .bono-body {
-  background-image: url("https://res.cloudinary.com/dllkefj8m/image/upload/v1747155684/imgfondo_omdwpc.avif");
+  background-color: #054F36;
   background-attachment: fixed;
   background-size: cover; /* Optional: Ensures the image covers the entire element */
   background-position: center; /* Optional: Centers the image */
@@ -26,12 +27,45 @@
 
 }
 
+.bono-detail__details{
+  background-color: rgb(255, 255, 255);
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.bono-detail__details h3{
+  color:black !important;
+  padding:40px;
+  font-size: 40px !important;
+
+}
+
+.bono-detail__details p{
+  color: black !important;
+  font-family: "Rowdies-Light";
+  
+  padding-left: 40px !important;
+  padding-right: 40px !important;
+  padding-bottom: 40px;
+}
+
+.bono-detail__description{
+    font-family: "Rowdes-Light" !important;
+   font-weight: bold !important;
+    /*background-color: aliceblue;*/
+    background-color: #054F36;
+}
+
+
+
 .bono-detail__description-item{
-  border: solid 1px gray;
+
+  
   text-align: center;
   padding: 30px;
-    background-color: #26553c;
-    margin-bottom: 50px;
+  border-radius: 10px;
+  background-color: white;
+  margin-bottom: 50px;
 }
 
 .bono-detail__description-item hr{
@@ -40,26 +74,49 @@
 
 
 .bono-detail__description-item b{
- font-weight: 100;
+  font-family: "Rowdies-Light";
+ font-weight: 900;
 }
+
+.bono-detail__description-item h3{
+ color: black !important;
+}
+
+
 
 
 
 
 .bono-detail__content {
-  
+  background-color: white;
+  border-radius: 3px;
   display: flex;
-  border: solid 3px black;
- 
-  padding: 40px;
-  background-repeat: no-repeat;
-  background-position: center;
-  justify-content: center;
+  color: black;
+  padding: 20px;
+
+  gap: 0px;
   align-items: center;
-  background-color: #037338;
   margin-top: -20px;
+}
+
+.bono-detail__content div{
+    padding-left: 80px;
+       padding-bottom: 30px;
+}
+
+
+
+.bono-detail__image img{
+ 
+  border-radius: 5px;
+ position: relative;
+ left: -27px;
+}
+.bono-detail__content p{
+  max-width: 400px;
   
 }
+
 
 @media(max-width:950px){
   .bono-detail__content {
@@ -68,8 +125,25 @@ flex-direction: column;
 justify-content: center;
 text-align: center;
 font-family: "gagalin";
+
   
 }
+.bono-detail__content div{
+    padding-left: 0px;
+       padding-bottom: 30px;
+}
+
+.bono-detail__content p{
+   padding: 0px;
+}
+}
+
+
+@media(max-width:432px){
+  .bono-detail__content img {
+  width: 50%;
+
+ } 
 }
 
 @media(max-width:535px){
@@ -95,6 +169,7 @@ font-family: "gagalin";
 }
 
   .bono-detail__content p{
+    color: black;
   display: flex;
   font-size: 40px;
   width: 300px;
@@ -157,8 +232,8 @@ li{
 .bono-detail__description {
   padding: 50px !important;
   margin-top: -5px;
-    border: solid 3px black;
-  background-color: #037338;
+  
+
 }
 
 .bono-detail__description h2 {
@@ -185,6 +260,11 @@ li{
 
 }
 
+.bono-detail__description-item p{
+  margin: 20px 0px;
+  
+}
+
 .bono-detail__embedded-image {
   max-width: 100%;
   height: auto;
@@ -200,10 +280,23 @@ li{
 }
 
 .bono-detail__link {
-  color: #007bff;
+  background-color: #054F36;
+  padding: 8px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  color: white;
   text-decoration: none;
+  transition: background-color ease-in-out 0.5s;
+}
+
+.bono-detail__link a{
+  text-decoration: none !important;
+  color: white;
+  font-family: "Rowdies-Light";
+  font-weight: bold;
 }
 
 .bono-detail__link:hover {
-  text-decoration: underline;
+ background-color: #037338;
 }

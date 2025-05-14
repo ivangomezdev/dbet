@@ -126,7 +126,7 @@ export default function Videos() {
   const handleLockedVideoClick = () => {
     if (showLockedVideos) {
       if (isAuthenticated && isFreePlan) {
-        router.push("/changeplan");
+        router.push("/changePlan");
       } else {
         router.push("/auth/register");
       }
@@ -149,7 +149,7 @@ export default function Videos() {
               {channelData.name}
               {channelData.isVerified && (
                 <span className="guides__profile-verified">
-                  <VerifiedIcon sx={{ color: "#8FC799" }} />
+                
                 </span>
               )}
             </h1>
@@ -200,13 +200,7 @@ export default function Videos() {
                 style={{ cursor: isLocked ? "pointer" : "default" }}
               >
                 <div className="guides__video-thumbnail-container">
-                  <Image
-                    src={video.thumbnail || "/placeholder.svg"}
-                    alt={video.title}
-                    width={320}
-                    height={180}
-                    className="guides__video-thumbnail"
-                  />
+               <div style={{backgroundColor:"gray",width:"100%",height:"200px"}}></div>
                   <div className="guides__video-duration">{video.duration}</div>
                   {isLocked && (
                     <div className="guides__video-locked-overlay">

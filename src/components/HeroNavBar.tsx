@@ -8,10 +8,10 @@ import "./navBar.css";
 
 const pages = [
   { name: "Cómo funciona", src: "/guides" },
-  { name: "Blog", src: "/blog" },
   { name: "Bonos", src: "/bonos" },
   { name: "OddsMatcher", src: "/oddsMatcher" },
   { name: "Lo hacemos por ti", src: "/forYou" },
+  { name: "Blog", src: "/blog" },
 ];
 
 function NavBar() {

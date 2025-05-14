@@ -25,7 +25,7 @@ const WorldFlags = () => {
     <div className='worldFlags__container'>
          <div className="linea-divisoria"/>
 
- <h2>Todos los que viven en los siguientes países pueden utilizar ZeroBet:</h2>
+ <h2>Todos los que viven en los siguientes países pueden utilizar Winbet:</h2>
  <div className='worldFlags__cont'>
     {flags.map((i,index)=>{
       return  <div key={index} className='worldFlags__each'> 
