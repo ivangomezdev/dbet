@@ -31,6 +31,18 @@ export default async function BonoDetailPage({ params }) {
     conditions,
     difficulty,
     description,
+    description1,
+    description2,
+    description3,
+    description4,
+    description5,
+    description6,
+    description7,
+    description8,
+    description9,
+    description10,
+    description11,
+    description12,
     url,
     ganancia,
     cuotaMinima,
@@ -50,8 +62,6 @@ export default async function BonoDetailPage({ params }) {
   // Debug the includes for assets
   console.log("Includes Assets:", bonos[0]?.includes?.Asset);
 
- 
-  
   // Render rich text with @contentful/rich-text-react-renderer
   const renderOptions = {
     renderNode: {
@@ -86,15 +96,14 @@ export default async function BonoDetailPage({ params }) {
     },
   };
 
-  const renderRichText = (richText) => {
+  const renderRichText = (richText, fieldName) => {
     if (!richText || !richText.content) {
-      console.warn("Rich text is empty or invalid:", richText);
-      return <p>No hay descripción disponible.</p>;
+      console.warn(`Rich text is empty or invalid for field ${fieldName}:`, richText);
+      return <p>No hay descripción disponible para {fieldName}.</p>;
     }
     return documentToReactComponents(richText, renderOptions);
   };
 
-  console.log(image,"esta es la imagennnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn")
   return (
     <div className="bono-body">
       <header>
@@ -109,40 +118,101 @@ export default async function BonoDetailPage({ params }) {
         </div>
 
         <div className="bono-detail__content">
-         <div>
-          <h2>Detalles de la Oferta</h2>
-          <p>
-            <p style={{color:"white",fontSize:"20px"}}>Ganancia:</p> {ganancia || amount}€
-          </p>
-          <p>
-            <p style={{color:"white",fontSize:"20px"}}>Cuota mínima:</p> {cuotaMinima || "No especificada"}
-          </p>
-          <p>
-            <p style={{color:"white",fontSize:"20px"}}>Tipo de Oferta:</p> {offerType}
-          </p>
-          <p>
-            <p style={{color:"white",fontSize:"20px"}}>Tiempo de entrega del bono:</p> {tiempoEntrega || "No especificado"}
-          </p>
-          <p>
-            <p style={{color:"white",fontSize:"20px"}}>Enlace oferta:</p>{" "}
-            <a href={url} target="_blank" rel="noopener noreferrer" className="bono-detail__link">
-              Visitar oferta
-            </a>
-          </p>
-          <p>
-            <p style={{color:"white",fontSize:"20px"}}>Métodos de pago no válidos:</p>{" "}
-            {metodosPagoNoValidos || "Ninguno"}
-          </p>
-       
-             </div> 
-             <div className="bono-detail__image">
-        <img  src={imageUrl} />
-        </div>
+          <div>
+            <h2>Detalles de la Oferta</h2>
+            <p>
+              <p style={{ color: "white", fontSize: "20px" }}>Ganancia:</p> {ganancia || amount}€
+            </p>
+            <p>
+              <p style={{ color: "white", fontSize: "20px" }}>Cuota mínima:</p> {cuotaMinima || "No especificada"}
+            </p>
+            <p>
+              <p style={{ color: "white", fontSize: "20px" }}>Tipo de Oferta:</p> {offerType}
+            </p>
+            <p>
+              <p style={{ color: "white", fontSize: "20px" }}>Tiempo de entrega del bono:</p> {tiempoEntrega || "No especificado"}
+            </p>
+            <p>
+              <p style={{ color: "white", fontSize: "20px" }}>Enlace oferta:</p>{" "}
+              <a href={url} target="_blank" rel="noopener noreferrer" className="bono-detail__link">
+                Visitar oferta
+              </a>
+            </p>
+            <p>
+              <p style={{ color: "white", fontSize: "20px" }}>Métodos de pago no válidos:</p>{" "}
+              {metodosPagoNoValidos || "Ninguno"}
+            </p>
           </div>
-       <div className="bono-detail__description">
-          <h2 style={{fontSize:"40px",color:"white"}}>Descripción de la oferta</h2>
-          {renderRichText(description)}
-          <img style={{position:"relative",top:"200px",right:"100px"}} src="https://res.cloudinary.com/dllkefj8m/image/upload/v1746049880/Screenshot-removebg-preview_ukah2o.png" alt="" />
+          <div className="bono-detail__image">
+            <img src={imageUrl} />
+          </div>
+        </div>
+        <div className="bono-detail__description">
+          <h2 style={{ fontSize: "40px", color: "white" }}>Descripción de la oferta</h2>
+          {renderRichText(description, "description")}
+          <div className="bono-detail__additional-descriptions">
+            {description1 && (
+              <div className="bono-detail__description-item">
+                {renderRichText(description1, "description1")}
+              </div>
+            )}
+            {description2 && (
+              <div className="bono-detail__description-item">
+                {renderRichText(description2, "description2")}
+              </div>
+            )}
+            {description3 && (
+              <div className="bono-detail__description-item">
+                {renderRichText(description3, "description3")}
+              </div>
+            )}
+            {description4 && (
+              <div className="bono-detail__description-item">
+                {renderRichText(description4, "description4")}
+              </div>
+            )}
+            {description5 && (
+              <div className="bono-detail__description-item">
+                {renderRichText(description5, "description5")}
+              </div>
+            )}
+            {description6 && (
+              <div className="bono-detail__description-item">
+                {renderRichText(description6, "description6")}
+              </div>
+            )}
+            {description7 && (
+              <div className="bono-detail__description-item">
+                {renderRichText(description7, "description7")}
+              </div>
+            )}
+            {description8 && (
+              <div className="bono-detail__description-item">
+                {renderRichText(description8, "description8")}
+              </div>
+            )}
+            {description9 && (
+              <div className="bono-detail__description-item">
+                {renderRichText(description9, "description9")}
+              </div>
+            )}
+            {description10 && (
+              <div className="bono-detail__description-item">
+                {renderRichText(description10, "description10")}
+              </div>
+            )}
+            {description11 && (
+              <div className="bono-detail__description-item">
+                {renderRichText(description11, "description11")}
+              </div>
+            )}
+            {description12 && (
+              <div className="bono-detail__description-item">
+                {renderRichText(description12, "description12")}
+              </div>
+            )}
+          </div>
+          
         </div>
       </main>
       <footer>
