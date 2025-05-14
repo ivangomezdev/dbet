@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import "./userBono.css";
-import Link from "next/link";
+
 import { useCookies } from "react-cookie";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
