@@ -1,4 +1,4 @@
-media
+
 
 .bono-detail {
   max-width: 1200px;
@@ -23,7 +23,27 @@ media
   margin-bottom: 20px;
 
 
+
 }
+
+.bono-detail__description-item{
+  border: solid 1px gray;
+  text-align: center;
+  padding: 30px;
+    background-color: #26553c;
+    margin-bottom: 50px;
+}
+
+.bono-detail__description-item hr{
+ display: none;
+}
+
+
+.bono-detail__description-item b{
+ font-weight: 100;
+}
+
+
 
 
 .bono-detail__content {
