@@ -39,7 +39,15 @@ body{
     font-style: normal;
     font-display: swap;
   }
-  
+
+  @font-face{
+    font-family: "Rowdies-Light";
+    src: url("/fonts/Rowdies-Light.ttf");
+     font-weight: 400; /* Or the appropriate weight */
+    font-style: normal;
+    font-display: swap;
+  }
+
   body {
     font-family: var(--font-gagalin); /* Apply Gagalin to the body or any other element */
   }

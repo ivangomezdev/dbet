@@ -3,7 +3,7 @@
     margin: 0 auto;
     padding: 20px;
     color: #333;
-
+    font-family: "Rowdies-Light";
   }
   
   /* Header */
@@ -206,7 +206,7 @@
   
   .user-bono__offer-type {
     font-size: 14px;
-    font-family: fantasy;
+    font-family: "Rowdies-Light";
     margin: 0 0 5px;
   }
   
@@ -216,10 +216,11 @@
   }
   
   .user-bono__promo {
+    display: none;
     color: #ff0000;
     font-size: 14px;
     margin: 0 0 15px;
-    font-family: fantasy;
+    font-family: "Rowdies-Light";
   }
   
   .user-bono__meta {
@@ -289,7 +290,8 @@
   
   .user-bono__value-label {
     font-size: 12px;
-    margin-bottom: 5px;
+      font-family: "Rowdies-Light";
+   
   }
   
   .user-bono__value-amount {
@@ -361,19 +363,22 @@
   
   /* Indicadores de dificultad */
   .user-bono__difficulty-value {
-    font-family: fantasy;
+     font-family: "Rowdies-Light";
   }
   
   .user-bono__difficulty-value--easy {
     color: #4caf50;
+      font-family: "Rowdies-Light";
   }
   
   .user-bono__difficulty-value--medium {
     color: #ff9800;
+      font-family: "Rowdies-Light";
   }
   
   .user-bono__difficulty-value--hard {
     color: #f44336;
+    font-family: "Rowdies-Light";
   }
   
   /* Responsive */
@@ -408,6 +413,7 @@
       position: static;
       margin-top: 15px;
       align-self: flex-end;
+        font-family: "Rowdies-Light";
     }
   
     .user-bono__value::after {

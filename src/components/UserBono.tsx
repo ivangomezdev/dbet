@@ -154,34 +154,9 @@ export default function UserBono({ bonosData }) {
           </div>
         </div>
 
-        <div className="user-bono__sidebar">
-          {promociones.map((promo) => (
-            <div key={promo.id} className="user-bono__promo">
-              <h3 className="user-bono__promo-title">{promo.titulo}</h3>
-              <Link href={promo.link} className="user-bono__promo-link">
-                {promo.alt}
-              </Link>
-            </div>
-          ))}
-        </div>
+       
       </div>
     </div>
   );
 }
 
-const promociones = [
-  {
-    id: 1,
-    titulo: "¡También estamos en Telegram!",
-    imagen: "/placeholder.svg?height=150&width=150",
-    alt: "App móvil",
-    link: "https://t.me/bonoscasino",
-  },
-  {
-    id: 3,
-    titulo: "GUÍA DE BONOS 2024",
-    imagen: "/placeholder.svg?height=150&width=150",
-    alt: "Guía de bonos",
-    link: "/blog",
-  },
-];
