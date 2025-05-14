@@ -53,7 +53,7 @@
     font-family: "Rowdes-Light" !important;
    font-weight: bold !important;
     /*background-color: aliceblue;*/
-    background-color: #054F36;
+    background-color: aliceblue;
 }
 
 
@@ -80,6 +80,8 @@
 
 .bono-detail__description-item h3{
  color: black !important;
+   font-family: "Rowdies-Light" !important;
+
 }
 
 
@@ -93,7 +95,7 @@
   display: flex;
   color: black;
   padding: 20px;
-
+  font-family: "Rowdies-Light" !important;
   gap: 0px;
   align-items: center;
   margin-top: -20px;
@@ -204,14 +206,14 @@ font-family: "gagalin";
   font-size: 50px;
   color: white;
   margin-bottom: 10px;
-    font-family: "gagalin";
+   font-family: "gagalin";
 }
 
 .bono-detail__content p {
   margin: 5px 0;
   font-size: 15px;
   letter-spacing: 1px;
-    font-family: "gagalin";
+    font-family: "Rowdies-Light";
 }
 p{
   font-weight: 500px;
@@ -254,7 +256,7 @@ li{
   color: black;
   letter-spacing: 1px;
   font-size: 15px;
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-family: "Rowdies-Light";
   word-spacing: 2px;
   line-height: 20px;
 

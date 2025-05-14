@@ -119,22 +119,22 @@ export default async function BonoDetailPage({ params }) {
 
         <div className="bono-detail__content">
           <div >
-            <h2 style={{color:"#000000"}}>Detalles de la Oferta</h2>
+            <h2 style={{color:"#000000",fontWeight:"700"}}>Detalles de la Oferta</h2>
             <p>
-              <p style={{ color: "#054F36", fontSize: "19px" }}>Ganancia: <span style={{color:"black"}}> {ganancia || amount}</span>€</p>
+              <p style={{ color: "#054F36", fontSize: "21px" }}>Ganancia: <span style={{color:"black"}}> {ganancia || amount}</span>€</p>
             </p>
             <p>
-              <p style={{color: "#054F36", fontSize: "19px" }}>Cuota mínima: <span style={{color:"black"}}>{cuotaMinima || "No especificada"}</span></p> 
+              <p style={{color: "#054F36", fontSize: "21px" }}>Cuota mínima: <span style={{color:"black"}}>{cuotaMinima || "No especificada"}</span></p> 
             </p>
             <p>
-              <p style={{color: "#054F36", fontSize: "19px" }}>Tipo de Oferta: <span style={{color:"black"}}>{offerType}</span></p>
+              <p style={{color: "#054F36", fontSize: "21px" }}>Tipo de Oferta: <span style={{color:"black"}}>{offerType}</span></p>
             </p>
             <p>
-              <p style={{color: "#054F36", fontSize: "19px" }}>Tiempo de entrega del bono: <span style={{color:"black"}}>{tiempoEntrega || "No especificado"}</span></p>
+              <p style={{color: "#054F36", fontSize: "21px" }}>Tiempo de entrega del bono: <span style={{color:"black"}}>{tiempoEntrega || "No especificado"}</span></p>
             </p>
             <p>
-              <p style={{color: "white", fontSize: "19px" }}>Enlace oferta:</p>{" "}
-              <a href={url} style={{textDecoration:"none",color:"orange",marginTop:"60px"}} target="_blank" rel="noopener noreferrer" className="bono-detail__link">
+              <p style={{color: "white", fontSize: "21px" }}>Enlace oferta:</p>{" "}
+              <a href={url} style={{textDecoration:"none",fontFamily:"Rowdies-Light",color:"orange",marginTop:"60px"}} target="_blank" rel="noopener noreferrer" className="bono-detail__link">
                 Visitar oferta
               </a>
             </p>
