@@ -2,23 +2,46 @@
 
 import Footer from "@/components/Footer";
 import NavBar from "@/components/NavBar";
-
-import ChooseSubscriptionPlan from "../../components/ChooseSubscriptionPlan"
-
+import ChooseSubscriptionPlan from "../../components/ChooseSubscriptionPlan";
 import React, { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import { useSession } from "next-auth/react";
 import "../guides/guides.css";
+
+// Datos de ejemplo para cardsData
+const cardsData = [
+  {
+    planType: "FREE",
+    price: "$0",
+    period: "/mes",
+    features: ["Acceso básico", "Soporte limitado"],
+    buttonTextSpain: "Seleccionar",
+    buttonTextLatam: "Seleccionar (Latam)",
+    hrefSpain: "#",
+    hrefLatam: "#",
+  },
+  {
+    planType: "PREMIUM",
+    price: "$10",
+    period: "/mes",
+    features: ["Acceso completo", "Soporte prioritario"],
+    tools: ["Herramienta 1", "Herramienta 2"],
+    buttonTextSpain: "Comprar",
+    buttonTextLatam: "Comprar (Latam)",
+    hrefSpain: "#",
+    hrefLatam: "#",
+  },
+];
 
 const Page = () => {
   const [cookies] = useCookies(["token"]);
   const { data: session } = useSession();
   const [userData, setUserData] = useState(null);
 
-  // Determine if user is authenticated
+  // Determinar si el usuario está autenticado
   const isAuthenticated = !!session || !!cookies.token;
 
-  // Fetch user data for token-based authentication
+  // Obtener datos del usuario para autenticación basada en token
   useEffect(() => {
     const fetchUserData = async () => {
       if (cookies.token && !session) {
@@ -40,9 +63,15 @@ const Page = () => {
     fetchUserData();
   }, [cookies.token, session]);
 
-  // Determine subscription status
+  // Determinar el estado de la suscripción
   const subscriptionStatus = session?.user?.subscriptionStatus || userData?.subscriptionStatus || "inactive";
   const isFreePlan = subscriptionStatus === "FREE";
+
+  // Función para manejar la selección del plan
+  const handlePlanSelect = (planName) => {
+    console.log(`Plan seleccionado: ${planName}`);
+    // Puedes agregar lógica adicional aquí, como actualizar el estado o redirigir
+  };
 
   return (
     <>
@@ -50,7 +79,7 @@ const Page = () => {
         <NavBar />
       </header>
       <main className="guides__main bonos__content">
-            <ChooseSubscriptionPlan/>
+        <ChooseSubscriptionPlan cardsData={cardsData} onPlanSelect={handlePlanSelect} />
       </main>
       <footer>
         <Footer />

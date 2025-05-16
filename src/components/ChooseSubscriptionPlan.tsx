@@ -10,7 +10,7 @@ import { useState, useEffect } from "react";
 const stripePromise = loadStripe(STRIPE_PUBLISHABLE_KEY);
 
 interface SubscriptionCardProps {
-  cardsData: CardData[];
+  cardsData?: CardData[]; // Hacer cardsData opcional
   onPlanSelect: (planName: string) => void;
 }
 
@@ -26,7 +26,7 @@ interface CardData {
   hrefLatam: string;
 }
 
-export default function ChooseSubscriptionPlan({ cardsData, onPlanSelect }: SubscriptionCardProps) {
+export default function ChooseSubscriptionPlan({ cardsData = [], onPlanSelect }: SubscriptionCardProps) {
   const router = useRouter();
   const { data: session, status } = useSession();
   const [hasReferralDiscount, setHasReferralDiscount] = useState(false);
@@ -181,9 +181,7 @@ export default function ChooseSubscriptionPlan({ cardsData, onPlanSelect }: Subs
   return (
     <div className="premium-content-bg" style={{ display: "flex" }}>
       <div className="premium-content">
-        <h1  className="premium-title">
-          Subscripción a WINBET420
-        </h1>
+        <h1 className="premium-title">Subscripción a WINBET420</h1>
         <p className="premium-subtitle">
           Puedes cancelar la renovación de la suscripción cuando quieras.
         </p>
@@ -193,45 +191,34 @@ export default function ChooseSubscriptionPlan({ cardsData, onPlanSelect }: Subs
           </p>
         )}
         <div className="pricing-cards">
-          {cardsData.map((card, index) => (
-            <div className="pricing-card" key={index}>
-              <div className="card-header">
-                <h3 className="plan-type">{card.planType}</h3>
-                <div className="price">
-                  <span className="amount">{card.price}</span>
-                  {card.period && <span className="period">{card.period}</span>}
+          {Array.isArray(cardsData) && cardsData.length > 0 ? (
+            cardsData.map((card, index) => (
+              <div className="pricing-card" key={index}>
+                <div className="card-header">
+                  <h3 className="plan-type">{card.planType}</h3>
+                  <div className="price">
+                    <span className="amount">{card.price}</span>
+                    {card.period && <span className="period">{card.period}</span>}
+                  </div>
                 </div>
-              </div>
-
-              <div className="card-body">
-                {card.features.map((feature, featureIndex) => (
-                  <p className="feature" key={featureIndex}>
-                    {feature}
-                  </p>
-                ))}
-                {card.tools && (
-                  <p className="feature tools">
-                    {card.tools.map((tool, toolIndex) => (
-                      <span className="tool-link" key={toolIndex}>
-                        {tool}
-                      </span>
-                    ))}
-                  </p>
-                )}
-              </div>
-
-              <div className="card-footer">
-                {card.planType === "FREE" ? (
-                  <button
-                    style={{ marginBottom: "10px" }}
-                    className="btn btn-premium"
-                    onClick={() => handleButtonClick(card.planType)}
-                    disabled={isLoading}
-                  >
-                    {isLoading ? "Cargando..." : card.buttonTextSpain}
-                  </button>
-                ) : (
-                  <>
+                <div className="card-body">
+                  {card.features.map((feature, featureIndex) => (
+                    <p className="feature" key={featureIndex}>
+                      {feature}
+                    </p>
+                  ))}
+                  {card.tools && Array.isArray(card.tools) && (
+                    <p className="feature tools">
+                      {card.tools.map((tool, toolIndex) => (
+                        <span className="tool-link" key={toolIndex}>
+                          {tool}
+                        </span>
+                      ))}
+                    </p>
+                  )}
+                </div>
+                <div className="card-footer">
+                  {card.planType === "FREE" ? (
                     <button
                       style={{ marginBottom: "10px" }}
                       className="btn btn-premium"
@@ -240,19 +227,31 @@ export default function ChooseSubscriptionPlan({ cardsData, onPlanSelect }: Subs
                     >
                       {isLoading ? "Cargando..." : card.buttonTextSpain}
                     </button>
-                    <button
-                      
-                      className="btn btn-premiumDisabled"
-                      onClick={() => handleButtonClick(card.planType)}
-                      disabled
-                    >
-                      {isLoading ? "Cargando..." : card.buttonTextLatam}
-                    </button>
-                  </>
-                )}
+                  ) : (
+                    <>
+                      <button
+                        style={{ marginBottom: "10px" }}
+                        className="btn btn-premium"
+                        onClick={() => handleButtonClick(card.planType)}
+                        disabled={isLoading}
+                      >
+                        {isLoading ? "Cargando..." : card.buttonTextSpain}
+                      </button>
+                      <button
+                        className="btn btn-premiumDisabled"
+                        onClick={() => handleButtonClick(card.planType)}
+                        disabled
+                      >
+                        {isLoading ? "Cargando..." : card.buttonTextLatam}
+                      </button>
+                    </>
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
+            ))
+          ) : (
+            <p>No hay planes disponibles.</p>
+          )}
         </div>
       </div>
     </div>
