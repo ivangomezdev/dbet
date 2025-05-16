@@ -14,7 +14,7 @@ export default function SubscriptionCard(hrefsData: SubscriptionCardProps) {
   const safeAnualHref = hrefsData.hrefAnual || "#"; 
   const subscriptionTitle = hrefsData.subscriptionText || "Desbloquea todo el potencial de nuestra app" ;
   return (
-    <div className="premium-container">
+    <div className="premium-container" id="plans">
       <div className="decorative-elements">
         {/* Estrellas - más estrellas para el cielo nocturno */}
         {Array.from({ length: 100 }).map((_, i) => (

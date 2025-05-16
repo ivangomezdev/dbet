@@ -3,6 +3,7 @@
 import Footer from "@/components/Footer";
 import NavBar from "@/components/NavBar";
 import Videos from "@/components/Videos";
+import Videos from "@/components/ChooseSubscriptionPlan.jsx";
 import SubscriptionCard from "@/components/SubscriptionCard";
 import React, { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
@@ -62,12 +63,8 @@ const Page = () => {
           </div>
         ) : isFreePlan ? (
           <div>
-            <SubscriptionCard
-              hrefFree="/changeplan"
-              hrefMensual="/changeplan"
-              hrefAnual="/changeplan"
-              isAuthenticated={true}
-              isFreePlan={true}
+            <ChooseSubs
+             
             />
           </div>
         ) : (
