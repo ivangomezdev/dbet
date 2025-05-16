@@ -2,9 +2,9 @@
 
 import Footer from "@/components/Footer";
 import NavBar from "@/components/NavBar";
-import Videos from "@/components/Videos";
+
 import ChooseSubscriptionPlan from "../../components/ChooseSubscriptionPlan"
-import SubscriptionCard from "@/components/SubscriptionCard";
+
 import React, { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import { useSession } from "next-auth/react";
@@ -50,26 +50,7 @@ const Page = () => {
         <NavBar />
       </header>
       <main className="guides__main bonos__content">
-        <Videos />
-        {/* Conditional rendering for subscription components */}
-        {!isAuthenticated ? (
-          <div>
-            <SubscriptionCard
-              hrefFree="/auth/register"
-              hrefMensual="/auth/register"
-              hrefAnual="/auth/register"
-              isAuthenticated={false}
-            />
-          </div>
-        ) : isFreePlan ? (
-          <div>
             <ChooseSubscriptionPlan/>
-             
-           
-          </div>
-        ) : (
-          <div></div>
-        )}
       </main>
       <footer>
         <Footer />
