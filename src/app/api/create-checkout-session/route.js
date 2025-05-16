@@ -1,3 +1,4 @@
+  //api/create-checkout-session/route.js
   import { NextResponse } from "next/server";
   import { stripe } from "@/lib/stripe";
   import { getAuthenticatedUser } from "@/lib/auth";
