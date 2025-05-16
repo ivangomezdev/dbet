@@ -10,7 +10,7 @@ import { useState, useEffect } from "react";
 const stripePromise = loadStripe(STRIPE_PUBLISHABLE_KEY);
 
 interface SubscriptionCardProps {
-  cardsData?: CardData[]; // Hacer cardsData opcional
+  cardsData?: CardData[];
   onPlanSelect: (planName: string) => void;
 }
 
@@ -31,6 +31,9 @@ export default function ChooseSubscriptionPlan({ cardsData = [], onPlanSelect }:
   const { data: session, status } = useSession();
   const [hasReferralDiscount, setHasReferralDiscount] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  // Planes válidos para enviar al backend
+  const validPlans = ["FREE", "PREMIUM MENSUAL", "PREMIUM ANUAL"];
 
   // Verificar si el usuario tiene un descuento por referido
   useEffect(() => {
@@ -73,6 +76,12 @@ export default function ChooseSubscriptionPlan({ cardsData = [], onPlanSelect }:
   }, [status, session]);
 
   const handleButtonClick = async (planName: string) => {
+    // Validar que el plan sea válido
+    if (!validPlans.includes(planName)) {
+      Swal.fire("Error", "El plan seleccionado no es válido", "error");
+      return;
+    }
+
     onPlanSelect(planName);
 
     // Validar autenticación
@@ -162,12 +171,13 @@ export default function ChooseSubscriptionPlan({ cardsData = [], onPlanSelect }:
             }
           } catch (error) {
             const errorMessage = error.message || "Error desconocido al procesar el pago";
-            Swal.fire("Error", errorMessage, "error");
             console.error("Error al procesar el pago:", {
+              planName,
               message: error.message,
               stack: error.stack,
               response: error.response ? error.response.data : null,
             });
+            Swal.fire("Error", errorMessage, "error");
           } finally {
             setIsLoading(false);
           }
@@ -221,7 +231,7 @@ export default function ChooseSubscriptionPlan({ cardsData = [], onPlanSelect }:
                   {card.planType === "FREE" ? (
                     <button
                       style={{ marginBottom: "10px" }}
-                      className="btn btn-premium"
+                      className="btn btn-premium" // Corregido de btn developmental-premium
                       onClick={() => handleButtonClick(card.planType)}
                       disabled={isLoading}
                     >

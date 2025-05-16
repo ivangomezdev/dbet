@@ -8,7 +8,7 @@ import { useCookies } from "react-cookie";
 import { useSession } from "next-auth/react";
 import "../guides/guides.css";
 
-// Datos de ejemplo para cardsData
+// Datos de los planes, alineados con el backend
 const cardsData = [
   {
     planType: "FREE",
@@ -21,10 +21,21 @@ const cardsData = [
     hrefLatam: "#",
   },
   {
-    planType: "PREMIUM",
-    price: "$10",
+    planType: "PREMIUM MENSUAL",
+    price: "$10", // Ajusta según el precio real
     period: "/mes",
     features: ["Acceso completo", "Soporte prioritario"],
+    tools: ["Herramienta 1", "Herramienta 2"],
+    buttonTextSpain: "Comprar",
+    buttonTextLatam: "Comprar (Latam)",
+    hrefSpain: "#",
+    hrefLatam: "#",
+  },
+  {
+    planType: "PREMIUM ANUAL",
+    price: "$100", // Ajusta según el precio real
+    period: "/año",
+    features: ["Acceso completo", "Soporte prioritario", "Descuento anual"],
     tools: ["Herramienta 1", "Herramienta 2"],
     buttonTextSpain: "Comprar",
     buttonTextLatam: "Comprar (Latam)",
@@ -70,7 +81,7 @@ const Page = () => {
   // Función para manejar la selección del plan
   const handlePlanSelect = (planName) => {
     console.log(`Plan seleccionado: ${planName}`);
-    // Puedes agregar lógica adicional aquí, como actualizar el estado o redirigir
+    // Agrega lógica adicional si es necesario (por ejemplo, analíticas o redirección)
   };
 
   return (
