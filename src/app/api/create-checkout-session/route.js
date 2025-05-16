@@ -27,10 +27,10 @@
       let subscriptionStatus;
 
       if (planName === "PREMIUM MENSUAL") {
-        priceId = "price_1RLZHDDlBkPgK5IThqe1cyaN";
+        priceId = "price_1RPTAcGIOd01JKnRVESQiQxo";
         subscriptionStatus = "MONTHLY";
       } else if (planName === "PREMIUM ANUAL") {
-        priceId = "price_1RLZHfDlBkPgK5ITYnN4txNc";
+        priceId = "price_1RPT8QGIOd01JKnRfVq0eAx8";
         subscriptionStatus = "YEAR";
       } else {
         return NextResponse.json({ error: "Plan no válido" }, { status: 400 });

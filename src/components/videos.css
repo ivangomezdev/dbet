@@ -413,7 +413,9 @@
       padding: 10px;
     }
 
-    .guides__profile-name{
+    .guides__profile-name
+    
+    {
     
     }
     .guides__profile-info p{
