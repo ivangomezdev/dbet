@@ -3,7 +3,7 @@
 import Footer from "@/components/Footer";
 import NavBar from "@/components/NavBar";
 import Videos from "@/components/Videos";
-import ChooseSubscriptionPlan from "@/components/ChooseSubscriptionPlan.jsx";
+import ChooseSubscriptionPlan from "../../components/ChooseSubscriptionPlan"
 import SubscriptionCard from "@/components/SubscriptionCard";
 import React, { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
