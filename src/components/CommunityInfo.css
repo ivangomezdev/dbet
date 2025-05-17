@@ -14,13 +14,17 @@
   flex-direction: row;
   gap: 40px;
   margin-bottom: 60px;
+  justify-content: center;
+
 }
 
 .community-hero-content {
   flex: 1;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
+
 }
 
 .community-title {
@@ -43,6 +47,7 @@
   color: white;
   font-size: 32px;
   font-weight: bold;
+      max-width: 800px;
 }
 
 .community-paragraph {
@@ -56,12 +61,14 @@
 .community-hero-image {
   flex: 1;
   position: relative;
+  max-width: 500px;
+  margin: 0 auto;
 }
 
 .community-main-image {
-  width: 100%;
+  margin: 0 auto;
   height: auto;
-  object-fit: contain;
+  max-width: 500px;
 }
 
 .community-price-badge {
@@ -214,6 +221,7 @@
   .community-title-primary,
   .community-title-secondary {
     font-size: 24px;
+
   }
 }
 

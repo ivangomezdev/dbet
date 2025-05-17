@@ -369,17 +369,20 @@ const ResultsTable = ({ tooltipValues }) => (
 
 // Main Calculator Component
 const Calculator = ({ eventData, onClose, initialBetType }) => {
-  const [betType, setBetType] = useState(initialBetType || "Dinero real");
+  // Initialize betType with eventData.selectedBetType or fallback to initialBetType
+  const [betType, setBetType] = useState(eventData.selectedBetType || initialBetType || "Dinero real");
+
+  // Initialize inputs with values from eventData.ratingInputs, if available
   const [inputs, setInputs] = useState({
-    favorImporte: "100", // Default for Dinero real, Apuesta gratis, Reembolso
+    favorImporte: eventData.ratingInputs?.favorImporte || "100",
     favorCuota: eventData.favor ? eventData.favor.toFixed(2) : "",
-    contraImporte: "7", // Default commission as percentage
+    contraImporte: eventData.ratingInputs?.contraImporte || "7",
     contraCuota: eventData.contra ? eventData.contra.toFixed(2) : "",
-    dineroReal: "100", // Default for RollOver
-    bonos: "100", // Default for RollOver
-    rolloverRestante: "100", // Updated default for RollOver
-    ratingFuturo: "0.95", // Default for RollOver
-    importeReembolso: "100", // Default for Reembolso
+    dineroReal: eventData.ratingInputs?.dineroReal || "100",
+    bonos: eventData.ratingInputs?.bonos || "100",
+    rolloverRestante: eventData.ratingInputs?.rolloverRestante || "100",
+    ratingFuturo: eventData.ratingInputs?.ratingFuturo || "0.95",
+    importeReembolso: eventData.ratingInputs?.importeReembolso || "100",
   });
 
   // Handle scroll locking and Esc key

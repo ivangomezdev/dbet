@@ -31,7 +31,11 @@ export default function UserBono({ bonosData }) {
       console.error("Slug is missing for this bono");
       return;
     }
-    router.push(`/bonos/${slug}`);
+    if (showLink) {
+      router.push("/auth/register");
+    } else {
+      router.push(`/bonos/${slug}`);
+    }
   };
 
   return (
@@ -117,27 +121,25 @@ export default function UserBono({ bonosData }) {
                       </div>
                     </div>
 
-                    {!showLink && (
-                      <div className="user-bono__actions">
+                    <div className="user-bono__actions">
+                      <button
+                        className="user-bono__button user-bono__button--show"
+                        onClick={() => handleShowDetails(bono.fields.slug)}
+                        disabled={!bono.fields.slug} // Disable button if slug is missing
+                      >
+                        MUESTRA
+                      </button>
+                      {!bono.fields.complete ? (
+                        <></>
+                      ) : (
                         <button
-                          className="user-bono__button user-bono__button--show"
-                          onClick={() => handleShowDetails(bono.fields.slug)}
-                          disabled={!bono.fields.slug} // Disable button if slug is missing
+                          className="user-bono__button user-bono__button--complete"
+                          disabled
                         >
-                          MUESTRA
+                          COMPLETADA
                         </button>
-                        {!bono.fields.complete ? (
-                          <></>
-                        ) : (
-                          <button
-                            className="user-bono__button user-bono__button--complete"
-                            disabled
-                          >
-                            COMPLETADA
-                          </button>
-                        )}
-                      </div>
-                    )}
+                      )}
+                    </div>
                   </div>
 
                   <div className="user-bono__value">
@@ -153,10 +155,7 @@ export default function UserBono({ bonosData }) {
             )}
           </div>
         </div>
-
-       
       </div>
     </div>
   );
 }
-

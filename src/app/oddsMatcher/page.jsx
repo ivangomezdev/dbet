@@ -19,7 +19,7 @@ import NavBar from "@/components/NavBar";
 import { useSession } from "next-auth/react";
 
 // RatingModal Component
-const RatingModal = memo(({ tempRatingInputs, setTempRatingInputs, activeTab, setActiveTab, handleCloseRatingModal, handleApplyRating }) => {
+const RatingModal = memo(({ temp,PortableTextInputs, setTempRatingInputs, activeTab, setActiveTab, handleCloseRatingModal, handleApplyRating }) => {
   const handleRatingInputChange = (e) => {
     const { name, value } = e.target;
     setTempRatingInputs((prev) => ({
@@ -503,7 +503,7 @@ export default function DataDisplay() {
       contraAmount: isNaN(contraAmount) ? 0 : contraAmount.toFixed(2),
       favor: {
         bookmaker: isNaN(favorBookmakerProfit) ? 0 : favorBookmakerProfit.toFixed(2),
-        betfair: isNaN(favorBetfairProfit) ? 0 : favorBookmakerProfit.toFixed(2),
+        betfair: isNaN(favorBetfairProfit) ? 0 : favorBetfairProfit.toFixed(2),
         total: isNaN(favorTotal) ? 0 : favorTotal.toFixed(2),
       },
       contra: {
@@ -706,6 +706,8 @@ export default function DataDisplay() {
       betfairImage: bookmakerImages["Betfair Exchange"],
       apuesta: item.apuesta,
       depthLay: item.depthLay,
+      ratingInputs: ratingInputs, // Pass ratingInputs
+      selectedBetType: selectedBetType, // Pass selectedBetType
     });
   };
 
@@ -759,77 +761,77 @@ export default function DataDisplay() {
     setCurrentPage(1);
     setFilterModalOpen(false);
   };
+
   return (
     <div className="oddsMatcher__cont">
       <NavBar />
       <div className="me__content betting-table-container">
         <h2 className="betting-table-title">OddsMatcher</h2>
-
-        <div className="oddsmatcher__filterData" style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
-          <label className="oddsMatcher__label" style={{ width: "150px" }}>
-            <button
-              onClick={handleOpenRatingModal}
-              style={{
-                marginLeft: "5px",
-                padding: "5px 10px",
-                backgroundColor: "rgba(12, 187, 91, 0.497)",
-                color: "white",
-                border: "none",
-                cursor: "pointer",
-                width: "100%",
-                display: "flex",
-                alignItems: "center",
-                borderRadius: "5px",
-                justifyContent: "center",
-              }}
-            >
-              <StarRate style={{ marginRight: "5px" }} />
-              Rating
-            </button>
-          </label>
-          <label className="oddsMatcher__label" style={{ width: "150px" }}>
-            <button
-              onClick={handleOpenCommissionModal}
-              style={{
-                marginLeft: "5px",
-                padding: "5px 10px",
-                backgroundColor: "rgba(12, 187, 91, 0.497)",
-                color: "white",
-                border: "none",
-                cursor: "pointer",
-                borderRadius: "5px",
-                width: "100%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <AccountBalance style={{ marginRight: "5px" }} />
-              Comisión ({commission}%)
-            </button>
-          </label>
-          <label className="oddsMatcher__label" style={{ width: "150px" }}>
-            <button
-              onClick={handleOpenFilterModal}
-              style={{
-                marginLeft: "5px",
-                padding: "5px 10px",
-                backgroundColor: "rgba(12, 187, 91, 0.497)",
-                color: "white",
-                border: "none",
-                borderRadius: "5px",
-                cursor: "pointer",
-                width: "100%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <FilterList style={{ marginRight: "5px" }} />
-              Filtro
-            </button>
-          </label>
-        </div>
+<div className="oddsmatcher__filterData" style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+  <label className="oddsMatcher__label" style={{ width: "150px" }}>
+    <button
+      onClick={handleOpenRatingModal}
+      style={{
+        marginLeft: "5px",
+        padding: "5px 10px",
+        backgroundColor: "rgba(12, 187, 91, 0.497)",
+        color: "white",
+        border: "none",
+        cursor: "pointer",
+        width: "100%",
+        display: "flex",
+        alignItems: "center",
+        borderRadius: "5px",
+        justifyContent: "center",
+      }}
+    >
+      <StarRate style={{ marginRight: "5px" }} />
+      Rating
+    </button>
+  </label>
+  <label className="oddsMatcher__label" style={{ width: "150px" }}>
+    <button
+      onClick={handleOpenCommissionModal}
+      style={{
+        marginLeft: "5px",
+        padding: "5px 10px",
+        backgroundColor: "rgba(12, 187, 91, 0.497)",
+        color: "white",
+        border: "none",
+        cursor: "pointer",
+        borderRadius: "5px",
+        width: "100%",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <AccountBalance style={{ marginRight: "5px" }} />
+      Comisión ({commission}%)
+    </button>
+  </label>
+  <label className="oddsMatcher__label" style={{ width: "150px" }}>
+    <button
+      onClick={handleOpenFilterModal}
+      style={{
+        marginLeft: "5px",
+        padding: "5px 10px",
+        backgroundColor: "rgba(12, 187, 91, 0.497)",
+        color: "white",
+        border: "none",
+        borderRadius: "5px",
+        cursor: "pointer",
+        width: "100%",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <FilterList style={{ marginRight: "5px" }} />
+      Filtro
+    </button>
+  </label>
+</div>
 
         <div className="oddsmatcher__filterData" style={{ display: "flex", gap: "10px" }}>
           <label className="oddsMatcher__label" style={{ width: "150px", fontWeight: "bold", marginBottom: "5px" }}>

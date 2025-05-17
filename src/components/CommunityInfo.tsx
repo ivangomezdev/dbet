@@ -37,18 +37,7 @@ const CommunityInfo = () => {
             className="community-main-image"
           />*/}
           <video src="https://res.cloudinary.com/dllkefj8m/video/upload/v1747254016/Image_to_video_%E4%B8%A8_genera_una_animaci%C3%B3n_en_el_robot._a_su_entorno_y_a_la_pc_dejalo..._xjsf8h.mp4" loop muted autoPlay className="community-main-image"></video>
-          <span className="community-price-badge" style={{ top: "80px", right: "100px" }}>
-            +$270
-          </span>
-          <span className="community-price-badge" style={{ top: "150px", right: "30px" }}>
-            +$100
-          </span>
-          <span className="community-price-badge" style={{ bottom: "100px", left: "50px" }}>
-            +$450
-          </span>
-          <span className="community-price-badge" style={{ bottom: "50px", right: "150px" }}>
-            +$80
-          </span>
+        
         </div>
       </section>
 

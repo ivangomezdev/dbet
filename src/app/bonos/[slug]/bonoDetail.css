@@ -100,6 +100,7 @@
   border-radius: 3px;
   display: flex;
   color: black;
+  justify-content: space-around;
   padding: 20px;
   font-family: "Rowdies-Light" !important;
   gap: 0px;
@@ -133,7 +134,7 @@
 }
 
 .bono-detail__content h2 {
-  font-size: 50px;
+  font-size: 37px;
   color: white;
   margin-bottom: 10px;
   font-family: "gagalin";
