@@ -19,7 +19,7 @@ import NavBar from "@/components/NavBar";
 import { useSession } from "next-auth/react";
 
 // RatingModal Component
-const RatingModal = memo(({ temp,PortableTextInputs, setTempRatingInputs, activeTab, setActiveTab, handleCloseRatingModal, handleApplyRating }) => {
+const RatingModal = memo(({ tempRatingInputs,PortableTextInputs, setTempRatingInputs, activeTab, setActiveTab, handleCloseRatingModal, handleApplyRating }) => {
   const handleRatingInputChange = (e) => {
     const { name, value } = e.target;
     setTempRatingInputs((prev) => ({
