@@ -46,7 +46,7 @@ export default async function BonoDetailPage({ params }) {
     description9,
     description10,
     description11,
-    description12,
+   
     url,
     ganancia,
     cuotaMinima,
@@ -171,18 +171,15 @@ export default async function BonoDetailPage({ params }) {
           
           {/* Renderiza el contenedor solo si hay al menos una descripción adicional */}
           {(
-            description1 ||
-            description2 ||
-            description3 ||
-            description4 ||
-            description5 ||
-            description6 ||
+            description1 ,
+            description2 ,
+            description3 ,
+            description4 ,
+            description5 ,
+            description6 ,
             description7 ||
-            description8 ||
-            description9 ||
-            description10 ||
-            description11 ||
-            description12
+            description8 
+            
           ) && (
             <div className="bono-detail__additional-descriptions">
               {description1 && (
@@ -218,9 +215,7 @@ export default async function BonoDetailPage({ params }) {
               {description11 && (
                 <div className="bono-detail__description-item">{renderRichText(description11, "description11")}</div>
               )}
-              {description12 && (
-                <div className="bono-detail__description-item">{renderRichText(description12, "description12")}</div>
-              )}
+           
             </div>
           )}
         </div>
