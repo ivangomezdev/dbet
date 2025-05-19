@@ -145,7 +145,7 @@ export default function UserBono({ bonosData }) {
                   <div className="user-bono__value">
                     <div className="user-bono__value-label">Bonos</div>
                     <div className="user-bono__value-amount">
-                      {bono.fields.amount}$
+                      {bono.fields.amount}€
                     </div>
                   </div>
                 </div>
