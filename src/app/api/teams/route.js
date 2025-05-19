@@ -7,7 +7,7 @@ export async function GET(request) {
   const apiKey = process.env.THESPORTSDB_API_KEY || "3";
 
   if (!teamName) {
-    return NextResponse.json({ error: "Team name is required" }, { status: 400 });
+    return NextResponse.json({ error: "Team names is required" }, { status: 400 });
   }
 
   try {
