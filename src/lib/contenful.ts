@@ -1,28 +1,31 @@
-
 import { createClient } from "contentful";
 
 const client = createClient({
-  space: process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID_1! ,
-  accessToken: process.env.NEXT_PUBLIC_CONTENTFUL_ACCESS_TOKEN_1! ,
+  space: process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID_1,
+  accessToken: process.env.NEXT_PUBLIC_CONTENTFUL_ACCESS_TOKEN_1,
+  environment: process.env.NEXT_PUBLIC_CONTENTFUL_ENVIRONMENT || "master", // Especifica el entorno, por defecto "master"
 });
-console.log(client,"ESTE ES CLIENT");
 
+console.log("Contentful client inicializado:", {
+  space: process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID_1,
+  environment: process.env.NEXT_PUBLIC_CONTENTFUL_ENVIRONMENT || "master",
+});
 
-// Función genérica que acepta el content_type como parámetro
-export async function getEntriesByContentType(contentType:string) {
+// Función genérica para obtener entradas por content_type
+export async function getEntriesByContentType(contentType) {
   try {
     const response = await client.getEntries({
       content_type: contentType,
       include: 2, // Fetch linked assets (e.g., images in rich text)
     });
-    console.log(`Datos recibidos para contentType ${contentType}:`, response);
+    console.log(`Datos recibidos para contentType ${contentType}:`, JSON.stringify(response.items, null, 2));
     // Return items with includes attached
     return response.items.map((item) => ({
       ...item,
-      includes: response.includes || {}, // Ensure includes is always present
+      includes: response.includes || {}, // Asegura que includes siempre esté presente
     }));
   } catch (error) {
-    console.error(`Error fetching entries for contentType ${contentType}:`, error);
+    console.error(`Error al obtener entradas para contentType ${contentType}:`, error);
     throw error;
   }
 }
@@ -36,7 +39,7 @@ export async function getBonos() {
   console.log("Ejecutando getBonos...");
   try {
     const response = await getEntriesByContentType("bonos");
-    console.log("Datos recibidos de Contentful:", response);
+    console.log("Datos recibidos de Contentful para bonos:", JSON.stringify(response, null, 2));
     return response;
   } catch (error) {
     console.error("Error en getBonos:", error);
