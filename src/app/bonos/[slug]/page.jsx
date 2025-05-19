@@ -1,6 +1,6 @@
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
-import { getBonos } from "../../../lib/contenful"; // Corrige `contentful` a minúsculas
+import { getBonos } from "../../../lib/contentful";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import { BLOCKS, INLINES } from "@contentful/rich-text-types";
 import "./bonoDetail.css";
@@ -168,44 +168,61 @@ export default async function BonoDetailPage({ params }) {
         </div>
         <div className="bono-detail__description">
           <div className="bono-detail__details">{renderRichText(description, "description")}</div>
-          <div className="bono-detail__additional-descriptions">
-            {description1 && (
-              <div className="bono-detail__description-item">{renderRichText(description1, "description1")}</div>
-            )}
-            {description2 && (
-              <div className="bono-detail__description-item">{renderRichText(description2, "description2")}</div>
-            )}
-            {description3 && (
-              <div className="bono-detail__description-item">{renderRichText(description3, "description3")}</div>
-            )}
-            {description4 && (
-              <div className="bono-detail__description-item">{renderRichText(description4, "description4")}</div>
-            )}
-            {description5 && (
-              <div className="bono-detail__description-item">{renderRichText(description5, "description5")}</div>
-            )}
-            {description6 && (
-              <div className="bono-detail__description-item">{renderRichText(description6, "description6")}</div>
-            )}
-            {description7 && (
-              <div className="bono-detail__description-item">{renderRichText(description7, "description7")}</div>
-            )}
-            {description8 && (
-              <div className="bono-detail__description-item">{renderRichText(description8, "description8")}</div>
-            )}
-            {description9 && (
-              <div className="bono-detail__description-item">{renderRichText(description9, "description9")}</div>
-            )}
-            {description10 && (
-              <div className="bono-detail__description-item">{renderRichText(description10, "description10")}</div>
-            )}
-            {description11 && (
-              <div className="bono-detail__description-item">{renderRichText(description11, "description11")}</div>
-            )}
-            {description12 && (
-              <div className="bono-detail__description-item">{renderRichText(description12, "description12")}</div>
-            )}
-          </div>
+          
+          {/* Renderiza el contenedor solo si hay al menos una descripción adicional */}
+          {(
+            description1 ||
+            description2 ||
+            description3 ||
+            description4 ||
+            description5 ||
+            description6 ||
+            description7 ||
+            description8 ||
+            description9 ||
+            description10 ||
+            description11 ||
+            description12
+          ) && (
+            <div className="bono-detail__additional-descriptions">
+              {description1 && (
+                <div className="bono-detail__description-item">{renderRichText(description1, "description1")}</div>
+              )}
+              {description2 && (
+                <div className="bono-detail__description-item">{renderRichText(description2, "description2")}</div>
+              )}
+              {description3 && (
+                <div className="bono-detail__description-item">{renderRichText(description3, "description3")}</div>
+              )}
+              {description4 && (
+                <div className="bono-detail__description-item">{renderRichText(description4, "description4")}</div>
+              )}
+              {description5 && (
+                <div className="bono-detail__description-item">{renderRichText(description5, "description5")}</div>
+              )}
+              {description6 && (
+                <div className="bono-detail__description-item">{renderRichText(description6, "description6")}</div>
+              )}
+              {description7 && (
+                <div className="bono-detail__description-item">{renderRichText(description7, "description7")}</div>
+              )}
+              {description8 && (
+                <div className="bono-detail__description-item">{renderRichText(description8, "description8")}</div>
+              )}
+              {description9 && (
+                <div className="bono-detail__description-item">{renderRichText(description9, "description9")}</div>
+              )}
+              {description10 && (
+                <div className="bono-detail__description-item">{renderRichText(description10, "description10")}</div>
+              )}
+              {description11 && (
+                <div className="bono-detail__description-item">{renderRichText(description11, "description11")}</div>
+              )}
+              {description12 && (
+                <div className="bono-detail__description-item">{renderRichText(description12, "description12")}</div>
+              )}
+            </div>
+          )}
         </div>
       </main>
       <footer>
