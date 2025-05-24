@@ -1,14 +1,14 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { useCookies } from "react-cookie";
 import { useRouter } from "next/navigation";
 import VerifiedIcon from "@mui/icons-material/Verified";
+import { getVideos } from "../lib/contenful";
 import "./videos.css";
 
-// Datos de ejemplo para simular la API
+// Datos de ejemplo para el canal
 const channelData = {
   name: "GUÍAS",
   isVerified: true,
@@ -16,76 +16,11 @@ const channelData = {
   profileImage: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1742334432/BRAIN_tfew9b.png",
 };
 
-const videoData = [
-  {
-    id: 1,
-    title: "Video 1 prueba dsadasdasaasd asdasdasd ",
-    thumbnail: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1742489438/1_ilbchq.png",
-    time: "hace 2 horas",
-    duration: "15:24",
-  },
-  {
-    id: 2,
-    title: "Video 2 prueba asdasdasdasdasdasdasdasd",
-    thumbnail: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1742489438/2_ev9m72.png",
-    time: "hace 20 horas",
-    duration: "5:52",
-  },
-  {
-    id: 3,
-    title: "Video 3 prueba",
-    thumbnail: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1742489435/4_chzk5n.png",
-    time: "hace 1 día",
-    duration: "10:20",
-  },
-  {
-    id: 4,
-    title: "Video 4 prueba adsasd asdasdasdasd",
-    thumbnail: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1742489438/2_ev9m72.png",
-    time: "hace 2 días",
-    duration: "10:34",
-  },
-  {
-    id: 5,
-    title: "Video 5 prueba asdas asdasdasdasdasdasd ",
-    thumbnail: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1742489438/1_ilbchq.png",
-    time: "hace 2 días",
-    duration: "6:01",
-  },
-  {
-    id: 6,
-    title: "Video 4 prueba asdasdasdasdasdasdasdasd",
-    thumbnail: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1742489434/3_opp8bh.png",
-    time: "hace 1 día",
-    duration: "6:25",
-  },
-  {
-    id: 7,
-    title: "Video 7 pruebaasd adsd asdasdasdasd",
-    thumbnail: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1742489434/3_opp8bh.png",
-    time: "hace 3 días",
-    duration: "6:42",
-  },
-  {
-    id: 8,
-    title: "Video 6 prueba asd asdasdasdasd ",
-    thumbnail: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1742489434/3_opp8bh.png",
-    time: "hace 5 días",
-    duration: "12:31",
-  },
-  {
-    id: 9,
-    title: "Video 9 prueba asdasd asdasdasdasdasdasd ",
-    thumbnail: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1742489434/3_opp8bh.png",
-    time: "hace 6 días",
-    duration: "9:25",
-  },
-];
-
 export default function Videos() {
   const [activeFilter, setActiveFilter] = useState("recientes");
   const [cookies] = useCookies(["token"]);
   const [userData, setUserData] = useState(null);
+  const [videos, setVideos] = useState([]);
   const { data: session } = useSession();
   const router = useRouter();
 
@@ -99,6 +34,29 @@ export default function Videos() {
 
   // Show all videos (including locked ones) if not authenticated or on FREE plan
   const showLockedVideos = !isAuthenticated || isFreePlan;
+
+  // Fetch videos from Contentful
+  useEffect(() => {
+    const fetchVideos = async () => {
+      try {
+        const videoEntries = await getVideos();
+        const formattedVideos = videoEntries.map((entry, index) => ({
+          id: index + 1,
+          title: entry.fields.title || "Sin título",
+          thumbnail: entry.fields.thumbnail?.fields?.file?.url
+            ? `https:${entry.fields.thumbnail.fields.file.url}`
+            : "https://res.cloudinary.com/dc5zbh38m/image/upload/v1742489438/1_ilbchq.png",
+          time: entry.fields.time || "hace 1 día",
+          duration: entry.fields.duration || "10:00",
+          slug: entry.fields.slug || `video-${index + 1}`,
+        }));
+        setVideos(formattedVideos);
+      } catch (error) {
+        console.error("Error fetching videos:", error);
+      }
+    };
+    fetchVideos();
+  }, []);
 
   // Fetch user data for JOSE token
   useEffect(() => {
@@ -133,10 +91,15 @@ export default function Videos() {
     }
   };
 
+  // Handle video click to navigate to video detail page
+  const handleVideoClick = (slug) => {
+    router.push(`/guides/${slug}`);
+  };
+
   // Filter videos: show all videos for non-premium or non-authenticated users, hide locked for premium
   const filteredVideos = showLockedVideos
-    ? videoData // Show all videos (including locked) for non-authenticated or FREE users
-    : videoData.filter((video) => video.id < 6); // Hide locked videos for premium users
+    ? videos
+    : videos.filter((video) => video.id < 6);
 
   return (
     <div className="guides">
@@ -149,7 +112,7 @@ export default function Videos() {
               {channelData.name}
               {channelData.isVerified && (
                 <span className="guides__profile-verified">
-                
+                  <VerifiedIcon />
                 </span>
               )}
             </h1>
@@ -196,11 +159,11 @@ export default function Videos() {
               <div
                 key={video.id}
                 className={`guides__video-card ${isLocked ? "guides__video-card--locked" : ""}`}
-                onClick={isLocked ? handleLockedVideoClick : undefined}
+                onClick={isLocked ? handleLockedVideoClick : () => handleVideoClick(video.slug)}
                 style={{ cursor: isLocked ? "pointer" : "default" }}
               >
                 <div className="guides__video-thumbnail-container">
-               <div style={{backgroundColor:"gray",width:"100%",height:"200px"}}></div>
+                  <img src={video.thumbnail} alt={video.title} style={{ width: "100%", height: "200px", objectFit: "cover" }} />
                   <div className="guides__video-duration">{video.duration}</div>
                   {isLocked && (
                     <div className="guides__video-locked-overlay">

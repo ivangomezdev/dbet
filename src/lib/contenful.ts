@@ -3,7 +3,7 @@ import { createClient } from "contentful";
 const client = createClient({
   space: process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID_1,
   accessToken: process.env.NEXT_PUBLIC_CONTENTFUL_ACCESS_TOKEN_1,
-  environment: process.env.NEXT_PUBLIC_CONTENTFUL_ENVIRONMENT || "master", // Especifica el entorno, por defecto "master"
+  environment: process.env.NEXT_PUBLIC_CONTENTFUL_ENVIRONMENT || "master",
 });
 
 console.log("Contentful client inicializado:", {
@@ -16,13 +16,12 @@ export async function getEntriesByContentType(contentType) {
   try {
     const response = await client.getEntries({
       content_type: contentType,
-      include: 2, // Fetch linked assets (e.g., images in rich text)
+      include: 2,
     });
     console.log(`Datos recibidos para contentType ${contentType}:`, JSON.stringify(response.items, null, 2));
-    // Return items with includes attached
     return response.items.map((item) => ({
       ...item,
-      includes: response.includes || {}, // Asegura que includes siempre esté presente
+      includes: response.includes || {},
     }));
   } catch (error) {
     console.error(`Error al obtener entradas para contentType ${contentType}:`, error);
@@ -43,6 +42,18 @@ export async function getBonos() {
     return response;
   } catch (error) {
     console.error("Error en getBonos:", error);
+    return [];
+  }
+}
+
+export async function getVideos() {
+  console.log("Ejecutando getVideos...");
+  try {
+    const response = await getEntriesByContentType("guides");
+    console.log("Datos recibidos de Contentful para videos:", JSON.stringify(response, null, 2));
+    return response;
+  } catch (error) {
+    console.error("Error en getVideos:", error);
     return [];
   }
 }

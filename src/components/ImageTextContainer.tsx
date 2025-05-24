@@ -17,7 +17,8 @@ const ImageTextContainer = () => {
     autoPlay
     muted
     loop
-    src="https://res.cloudinary.com/dc5zbh38m/video/upload/v1745374454/Gen-4_Turbo_quiero_que_el_video_se_mantenga_quieto_en_posicionamiento_solo_quiero_que_las_luces_parpadeen_desde_la_grada_3825668609_v2zd6c.mp4"
+    preload="auto"
+    src="https://res.cloudinary.com/dc5zbh38m/video/upload/q_auto,f_auto/v1745374454/Gen-4_Turbo_quiero_que_el_video_se_mantenga_quieto_en_posicionamiento_solo_quiero_que_las_luces_parpadeen_desde_la_grada_3825668609_v2zd6c.mp4"
     className="background-video"
     />
      
