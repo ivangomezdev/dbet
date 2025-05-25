@@ -16,11 +16,11 @@ const Footer = () => {
 
         <div className="footer-links">
          
-          <a href="/guides">Cómo funciona</a>
+          <Link href="/guides">Cómo funciona</Link>
           <span className="separator">|</span>
           <a href="/forYou">ESCRÍBENOS</a>
           <span className="separator">|</span>
-          <a href="/referrals">AFILIADOS</a>
+          <Link href="/referrals">AFILIADOS</Link>
         </div>
 
        
