@@ -45,7 +45,7 @@ export default function Videos() {
           title: entry.fields.title || "Sin título",
           thumbnail: entry.fields.thumbnail?.fields?.file?.url
             ? `https:${entry.fields.thumbnail.fields.file.url}`
-            : "https://res.cloudinary.com/dc5zbh38m/image/upload/v1742489438/1_ilbchq.png",
+            : "https://res.cloudinary.com/dc5zbh38m/image/upload/v174248 angles/1_ilbchq.png",
           time: entry.fields.time || "hace 1 día",
           duration: entry.fields.duration || "10:00",
           slug: entry.fields.slug || `video-${index + 1}`,
@@ -96,10 +96,12 @@ export default function Videos() {
     router.push(`/guides/${slug}`);
   };
 
-  // Filter videos: show all videos for non-premium or non-authenticated users, hide locked for premium
-  const filteredVideos = showLockedVideos
-    ? videos
-    : videos.filter((video) => video.id < 6);
+  // Filter and sort videos by slug (guia-1, guia-2, etc.)
+  const filteredVideos = (showLockedVideos ? videos : videos.filter((video) => video.id < 6)).sort((a, b) => {
+    const aNumber = parseInt(a.slug.split("-")[1], 10) || 0;
+    const bNumber = parseInt(b.slug.split("-")[1], 10) || 0;
+    return aNumber - bNumber;
+  });
 
   return (
     <div className="guides">
@@ -110,11 +112,7 @@ export default function Videos() {
           <div className="guides__profile-name-container">
             <h1 className="guides__profile-name">
               {channelData.name}
-              {channelData.isVerified && (
-                <span className="guides__profile-verified">
-                  <VerifiedIcon />
-                </span>
-              )}
+          
             </h1>
           </div>
         </div>
@@ -129,23 +127,7 @@ export default function Videos() {
             }`}
             onClick={() => setActiveFilter("recientes")}
           >
-            Más recientes
-          </button>
-          <button
-            className={`guides__filter-button ${
-              activeFilter === "popular" ? "guides__filter-button--active" : ""
-            }`}
-            onClick={() => setActiveFilter("popular")}
-          >
-            Vistos
-          </button>
-          <button
-            className={`guides__filter-button ${
-              activeFilter === "antiguos" ? "guides__filter-button--active" : ""
-            }`}
-            onClick={() => setActiveFilter("antiguos")}
-          >
-            No vistos
+           Ver guías
           </button>
         </div>
       </div>
@@ -164,7 +146,7 @@ export default function Videos() {
               >
                 <div className="guides__video-thumbnail-container">
                   <img src={video.thumbnail} alt={video.title} style={{ width: "100%", height: "200px", objectFit: "cover" }} />
-                  <div className="guides__video-duration">{video.duration}</div>
+                  <div className="guides__video-duration">{video.slug.slice(5)}</div>
                   {isLocked && (
                     <div className="guides__video-locked-overlay">
                       <svg
