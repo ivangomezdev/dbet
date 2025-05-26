@@ -2,30 +2,56 @@
 import { getVideos } from "../../../lib/contenful";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import { BLOCKS, INLINES } from "@contentful/rich-text-types";
-import "./videosSlug.css"
+import "./videosSlug.css";
 import NavBar from "@/components/NavBar";
+import Footer from "@/components/Footer";
 
-// Opciones de renderizado para el campo bookmaker (rich text)
+// Opciones de renderizado para el campo rich text
 const renderOptions = {
   renderNode: {
-    [BLOCKS.PARAGRAPH]: (node, children) => <p style={{ marginBottom: "15px" }}>{children}</p>,
-    [BLOCKS.HEADING_1]: (node, children) => <h1 style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "10px" }}>{children}</h1>,
-    [BLOCKS.HEADING_2]: (node, children) => <h2 style={{ fontSize: "20px", fontWeight: "bold", marginBottom: "10px" }}>{children}</h2>,
-    [BLOCKS.LIST_ITEM]: (node, children) => <li style={{ marginBottom: "5px" }}>{children}</li>,
+    [BLOCKS.PARAGRAPH]: (node, children) => (
+      <p style={{ marginBottom: "15px" }}>{children}</p>
+    ),
+    [BLOCKS.HEADING_1]: (node, children) => (
+      <h1
+        style={{
+          fontSize: "24px",
+          fontWeight: "bold",
+          marginBottom: "10px",
+        }}
+      >
+        {children}
+      </h1>
+    ),
+    [BLOCKS.HEADING_2]: (node, children) => (
+      <h2
+        style={{
+          fontSize: "20px",
+          fontWeight: "bold",
+          marginBottom: "10px",
+        }}
+      >
+        {children}
+      </h2>
+    ),
+    [BLOCKS.LIST_ITEM]: (node, children) => (
+      <li style={{ marginBottom: "5px" }}>{children}</li>
+    ),
     [INLINES.HYPERLINK]: (node, children) => (
-      <a href={node.data.uri} style={{ color: "#00bcd4", textDecoration: "underline" }}>
+      <a
+        href={node.data.uri}
+        style={{ color: "#00bcd4", textDecoration: "underline" }}
+      >
         {children}
       </a>
     ),
   },
   renderText: (text) => {
-    // Aplicar negrita al texto antes de los dos puntos
     return text.split(":").map((part, index, array) => {
       if (index < array.length - 1) {
         return (
           <span key={index}>
             <strong>{part}:</strong>
-            {index < array.length - 1 ? "" : part}
           </span>
         );
       }
@@ -34,6 +60,12 @@ const renderOptions = {
   },
 };
 
+const isValidRichText = (richText) =>
+  richText &&
+  richText.nodeType === "document" &&
+  Array.isArray(richText.content) &&
+  richText.content.length > 0;
+
 export async function generateStaticParams() {
   try {
     const videoEntries = await getVideos();
@@ -41,13 +73,15 @@ export async function generateStaticParams() {
       console.error("getVideos retornó datos no válidos:", videoEntries);
       return [];
     }
-    return videoEntries.map((entry) => {
-      if (!entry.fields?.slug) {
-        console.warn("Entrada sin slug:", entry);
-        return null;
-      }
-      return { slug: entry.fields.slug };
-    }).filter(Boolean);
+    return videoEntries
+      .map((entry) => {
+        if (!entry.fields?.slug) {
+          console.warn("Entrada sin slug:", entry);
+          return null;
+        }
+        return { slug: entry.fields.slug };
+      })
+      .filter(Boolean);
   } catch (error) {
     console.error("Error en generateStaticParams:", error);
     return [];
@@ -64,80 +98,151 @@ export default async function VideoDetail({ params }) {
       <div style={{ padding: "20px", textAlign: "center" }}>
         <h1>Error</h1>
         <p>Video no encontrado</p>
-        <BackButton />
       </div>
     );
   }
 
   const video = {
     title: videoData.fields.title || "Sin título",
-    videoUrl: videoData.fields.videoUrl || "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    videoUrl:
+      videoData.fields.videoUrl ||
+      "https://www.youtube.com/embed/dQw4w9WgXcQ",
     thumbnail: videoData.fields.thumbnail?.fields?.file?.url
       ? `https:${videoData.fields.thumbnail.fields.file.url}`
       : "https://res.cloudinary.com/dc5zbh38m/image/upload/v1742489438/1_ilbchq.png",
     description: videoData.fields.description || "No hay descripción disponible.",
-    introduction: videoData.fields.introduction || "Introducción no disponible.",
-    organization: videoData.fields.organization || "Organización no disponible.",
-    concepts: videoData.fields.concepts || "Conceptos no disponibles.",
-    profit: videoData.fields.profit || "Profit no disponible.",
-    bookmaker: videoData.fields.bookmaker || { nodeType: "document", data: {}, content: [] }, // Fallback para rich text
-    conclusion: videoData.fields.conclusion || "Conclusión no disponible.",
+    desc1: videoData.fields.desc1 || { nodeType: "document", data: {}, content: [] },
+    desc2: videoData.fields.desc2 || { nodeType: "document", data: {}, content: [] },
+    desc3: videoData.fields.desc3 || { nodeType: "document", data: {}, content: [] },
+    desc4: videoData.fields.desc4 || { nodeType: "document", data: {}, content: [] },
+    desc5: videoData.fields.desc5 || { nodeType: "document", data: {}, content: [] },
+    bookmaker:
+      videoData.fields.bookmaker || {
+        nodeType: "document",
+        data: {},
+        content: [],
+      },
   };
 
-  // Validar que bookmaker sea un objeto rich text válido
-  const isValidRichText = video.bookmaker && video.bookmaker.nodeType === "document" && Array.isArray(video.bookmaker.content);
+  return (
+    <div style={{ backgroundColor: "#054F36" }}>
+      <NavBar />
+      <div
+        style={{
+          backgroundColor: "#054F20",
+          padding: "20px",
+          maxWidth: "800px",
+          margin: "100px auto",
+          fontFamily: "Arial, sans-serif",
+        }}
+      >
+        <h1
+          style={{
+            fontSize: "24px",
+            fontWeight: "bold",
+            color: "white",
+            marginBottom: "20px",
+          }}
+        >
+          {video.title}
+        </h1>
+        <div style={{ marginBottom: "20px" }}>
+          <iframe
+            width="100%"
+            height="450"
+            src={video.videoUrl}
+            title={video.title}
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          ></iframe>
+        </div>
 
-  return (<div style={{backgroundColor:"#054F36"}}>
-    <NavBar/>
-    <div style={{backgroundColor:"#054F20",padding: "20px", maxWidth: "800px", margin: "100px auto", fontFamily: "Arial, sans-serif" }}>
-      <h1 style={{ fontSize: "24px", fontWeight: "bold",color:"white", marginBottom: "20px" }}>{video.title}</h1>
-      <div style={{ marginBottom: "20px" }}>
-        <iframe
-          width="100%"
-          height="450"
-          src={video.videoUrl}
-          title={video.title}
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-        ></iframe>
-      </div>
-      <section style={{ marginBottom: "30px",padding:"10px", backgroundColor: "#F1F0EC", padding: "15px", borderRadius: "5px" }}>
-        <p>{video.description}</p>
-      </section>
-      <section style={{ borderRadius:"5px",backgroundColor:"#F1F0EC",padding:"10px",marginBottom: "30px" }}>
-        <h2 style={{ fontSize: "20px",color:"#054F36", fontWeight: "bold", marginBottom: "10px" }}>Introducción</h2>
-        <p>{video.introduction}</p>
-      </section>
-      <section style={{ borderRadius:"5px",backgroundColor:"#F1F0EC",padding:"10px",marginBottom: "30px" }}>
-        <h2 style={{ fontSize: "20px",color:"#054F36", fontWeight: "bold", marginBottom: "10px" }}>Cómo está organizado nuestro sitio web</h2>
-        <p>{video.organization}</p>
-      </section>
-      <section style={{borderRadius:"5px", backgroundColor:"#F1F0EC",padding:"10px",marginBottom: "30px" }}>
-        <h2 style={{ fontSize: "20px",color:"#054F36", fontWeight: "bold", marginBottom: "10px" }}>Conceptos Básicos</h2>
-        <p>{video.concepts}</p>
-      </section>
-      <section style={{borderRadius:"5px", backgroundColor:"#F1F0EC",padding:"10px",marginBottom: "30px" }}>
-        <h2 style={{ fontSize: "20px",color:"#054F36", fontWeight: "bold", marginBottom: "10px" }}>Profit Tracker</h2>
-        <p>{video.profit}</p>
-      </section>
-      <section style={{borderRadius:"5px",backgroundColor:"#F1F0EC",padding:"10px", marginBottom: "30px" }}>
-        <h2 style={{ fontSize: "20px", color:"#054F36",fontWeight: "bold", marginBottom: "10px" }}>Bookmaker</h2>
-        {isValidRichText ? (
-          documentToReactComponents(video.bookmaker, renderOptions)
-        ) : (
-          <p>Contenido no disponible para Bookmaker.</p>
+        <section
+          style={{
+            marginBottom: "30px",
+            padding: "10px",
+            backgroundColor: "#F1F0EC",
+            padding: "15px",
+            borderRadius: "5px",
+          }}
+        >
+          <p>{video.description}</p>
+        </section>
+
+        {/* Rich Text Sections */}
+        {[
+          { label: "Introducción", key: "desc1" },
+          { label: "Organización", key: "desc2" },
+          { label: "Conceptos Básicos", key: "desc3" },
+          { label: "Profit Tracker", key: "desc4" },
+          { label: "Conclusión", key: "desc5" },
+        ].map(({ label, key }) => {
+          const content = video[key];
+          if (!isValidRichText(content)) return null;
+
+          return (
+            <section
+              key={key}
+              style={{
+                borderRadius: "5px",
+                backgroundColor: "#F1F0EC",
+                padding: "10px",
+                marginBottom: "30px",
+              }}
+            >
+              <h2
+                style={{
+                  fontSize: "20px",
+                  color: "#054F36",
+                  fontWeight: "bold",
+                  marginBottom: "10px",
+                }}
+              >
+                {label}
+              </h2>
+              {documentToReactComponents(content, renderOptions)}
+            </section>
+          );
+        })}
+
+        {/* Bookmaker */}
+        {isValidRichText(video.bookmaker) && (
+          <section
+            style={{
+              borderRadius: "5px",
+              backgroundColor: "#F1F0EC",
+              padding: "10px",
+              marginBottom: "30px",
+            }}
+          >
+            <h2
+              style={{
+                fontSize: "20px",
+                color: "#054F36",
+                fontWeight: "bold",
+                marginBottom: "10px",
+              }}
+            >
+              Bookmaker
+            </h2>
+            {documentToReactComponents(video.bookmaker, renderOptions)}
+          </section>
         )}
-      </section>
-      <section style={{borderRadius:"5px",backgroundColor:"#F1F0EC",padding:"10px",marginBottom: "30px" }}>
-        <h2 style={{ fontSize: "20px", color:"#054F36",fontWeight: "bold", marginBottom: "10px" }}>Conclusión</h2>
-        <p>{video.conclusion}</p>
-      </section>
-      <div style={{ textAlign: "center", marginTop: "40px", padding: "15px", backgroundColor: "#e0f7fa", borderRadius: "5px" }}>
-        <p style={{ marginBottom: "10px" }}>¿Y ahora qué?</p>
 
+        <div
+          style={{
+            textAlign: "center",
+            marginTop: "40px",
+            padding: "15px",
+            backgroundColor: "#e0f7fa",
+            borderRadius: "5px",
+          }}
+        >
+          <p style={{ marginBottom: "10px" }}>¿Y ahora qué?</p>
+        </div>
       </div>
-    </div>
+      <Footer/>
     </div>
   );
 }
