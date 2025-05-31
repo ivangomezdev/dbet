@@ -401,7 +401,7 @@ export default function DataDisplay() {
   const [tempFilterInputs, setTempFilterInputs] = useState({ ...filterInputs });
 
   const bookmakerImages = {
-    Bet365: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1743783285/36_w0vbhc.gif",
+    bet365: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1743783285/36_w0vbhc.gif",
     Betway: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1743783285/way_guaro0.png",
     "LeoVegas ES": "https://res.cloudinary.com/dc5zbh38m/image/upload/v1742972625/71_ij3po0.png",
     "PAF ES": "https://res.cloudinary.com/dc5zbh38m/image/upload/v1742972626/paf_r32yqs.png",
