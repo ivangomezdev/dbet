@@ -2,6 +2,7 @@
 import { getVideos } from "../../../lib/contenful";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import { BLOCKS, INLINES } from "@contentful/rich-text-types";
+import Link from "next/link";
 import "./videosSlug.css";
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
@@ -102,6 +103,21 @@ export default async function VideoDetail({ params }) {
     );
   }
 
+  // Obtener todos los slugs y ordenarlos numéricamente
+  const slugs = videoEntries
+    .filter((entry) => entry.fields?.slug)
+    .map((entry) => entry.fields.slug)
+    .sort((a, b) => {
+      const numA = parseInt(a.match(/\d+/)[0], 10);
+      const numB = parseInt(b.match(/\d+/)[0], 10);
+      return numA - numB;
+    });
+
+  // Encontrar el índice del slug actual
+  const currentIndex = slugs.indexOf(slug);
+  const previousSlug = currentIndex > 0 ? slugs[currentIndex - 1] : null;
+  const nextSlug = currentIndex < slugs.length - 1 ? slugs[currentIndex + 1] : null;
+
   const video = {
     title: videoData.fields.title || "Sin título",
     videoUrl:
@@ -156,14 +172,59 @@ export default async function VideoDetail({ params }) {
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
           ></iframe>
+          {/* Botones de navegación */}
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              marginTop: "15px",
+            }}
+          >
+            {previousSlug && (
+              <Link href={`/guides/${previousSlug}`}>
+                <button
+                  style={{
+                    padding: "10px 20px",
+                    backgroundColor: "#054F",
+                    color: "white",
+                    border: "none",
+                    borderRadius: "5px",
+                    cursor: "pointer",
+                    fontSize: "16px",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Guía Anterior
+                </button>
+              </Link>
+            )}
+            <div style={{ flex: 1 }} /> {/* Espaciador para alinear el botón siguiente a la derecha */}
+            {nextSlug && (
+              <Link href={`/guides/${nextSlug}`}>
+                <button
+                  style={{
+                    padding: "10px 20px",
+                    backgroundColor: "#054F",
+                    color: "white",
+                    border: "none",
+                    borderRadius: "5px",
+                    cursor: "pointer",
+                    fontSize: "16px",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Guía Siguiente
+                </button>
+              </Link>
+            )}
+          </div>
         </div>
 
         <section
           style={{
             marginBottom: "30px",
-            padding: "10px",
-            backgroundColor: "#F1F0EC",
             padding: "15px",
+            backgroundColor: "#F1F0EC",
             borderRadius: "5px",
           }}
         >
@@ -242,7 +303,7 @@ export default async function VideoDetail({ params }) {
           <p style={{ marginBottom: "10px" }}>¿Y ahora qué?</p>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 }

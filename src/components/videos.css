@@ -230,7 +230,7 @@
   }
   
   .guides__filter-button--active {
-    background-color: orange;
+    background-color: #04724d;
     color: #ffffff;
   }
   
@@ -249,7 +249,8 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    cursor: pointer;
+    cursor: pointer !important;
+    
     
   }
   
@@ -270,12 +271,15 @@
   .guides__video-duration {
     position: absolute;
     bottom: 8px;
+      font-family: "gagalin";
     right: 8px;
-    background-color: orange;
+    background-color: #054F36;
     color: white;
     padding: 2px 4px;
-    border-radius: 4px;
-    font-size: 12px;
+    border-radius: 50%;
+    font-size: 29px;
+    width: 40px;
+    text-align: center;
     font-weight: 500;
   }
   
@@ -286,7 +290,7 @@
     margin-top: -5px;
     padding: 5px;
     height: 70px;
-    background-color: #6666669f;
+    background-color: #046e4b;
   }
   
   .guides__video-time{
@@ -296,11 +300,11 @@
   .guides__video-title { 
     color: white;
     font-family: "gagalin";
-    font-size: 16px;
+    font-size: 20px;
     font-weight: 100;
     margin: 0;
     line-height: 1.4;
-
+    padding-bottom: 40px;
     overflow: hidden;
   }
   
@@ -334,6 +338,7 @@
   
   .guides__video-card:hover .guides__video-options {
     opacity: 1;
+    
   }
   
   /* Media queries para responsive */
