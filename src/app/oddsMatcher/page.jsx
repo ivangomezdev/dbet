@@ -19,7 +19,7 @@ import NavBar from "@/components/NavBar";
 import { useSession } from "next-auth/react";
 
 // RatingModal Component
-const RatingModal = memo(({ tempRatingInputs,PortableTextInputs, setTempRatingInputs, activeTab, setActiveTab, handleCloseRatingModal, handleApplyRating }) => {
+const RatingModal = memo(({ tempRatingInputs, setTempRatingInputs, activeTab, setActiveTab, handleCloseRatingModal, handleApplyRating }) => {
   const handleRatingInputChange = (e) => {
     const { name, value } = e.target;
     setTempRatingInputs((prev) => ({
@@ -264,38 +264,6 @@ const FilterModal = memo(({ tempFilterInputs, setTempFilterInputs, handleCloseFi
             </div>
           </label>
           <label style={{ display: "block", marginBottom: "10px" }}>
-            Cuotas Bookmaker desde
-            <div style={{ display: "flex", gap: "5px" }}>
-              <input
-                type="text"
-                name="oddsMin"
-                value={tempFilterInputs.oddsMin}
-                onChange={handleFilterInputChange}
-                placeholder="Mín"
-                style={{ width: "50%", padding: "5px", marginTop: "5px" }}
-              />
-              <input
-                type="text"
-                name="oddsMax"
-                value={tempFilterInputs.oddsMax}
-                onChange={handleFilterInputChange}
-                placeholder="Máx"
-                style={{ width: "50%", padding: "5px", marginTop: "5px" }}
-              />
-            </div>
-          </label>
-          <label style={{ display: "block", marginBottom: "10px" }}>
-            Liquidez Mínima (€)
-            <input
-              type="text"
-              name="liquidityMin"
-              value={tempFilterInputs.liquidityMin}
-              onChange={handleFilterInputChange}
-              placeholder="Mín"
-              style={{ width: "100%", padding: "5px", marginTop: "5px" }}
-            />
-          </label>
-          <label style={{ display: "block", marginBottom: "10px" }}>
             Fecha/Hora desde
             <div style={{ display: "flex", gap: "5px" }}>
               <DatePicker
@@ -392,11 +360,8 @@ export default function DataDisplay() {
   const [filterInputs, setFilterInputs] = useState({
     ratingMin: "",
     ratingMax: "",
-    oddsMin: "",
-    oddsMax: "",
     dateStart: null,
     dateEnd: null,
-    liquidityMin: "",
   });
   const [tempFilterInputs, setTempFilterInputs] = useState({ ...filterInputs });
 
@@ -422,9 +387,9 @@ export default function DataDisplay() {
     marathonbet: "https://i.imgur.com/2FQ9zXu.png",
     paston: "https://i.imgur.com/bSUrrm2.png",
     "888sport": "https://i.imgur.com/e2TLt4V.gif",
-betsson: "https://i.imgur.com/j6tEmW6.png",
-Versus: "https://i.imgur.com/nR7A3np.png",
-Dazn:"https://i.imgur.com/Gj7YS2J.png",
+    betsson: "https://i.imgur.com/j6tEmW6.png",
+    Versus: "https://i.imgur.com/nR7A3np.png",
+    Dazn: "https://i.imgur.com/Gj7YS2J.png",
   };
 
   const sportImages = {
@@ -587,7 +552,6 @@ Dazn:"https://i.imgur.com/Gj7YS2J.png",
 
           if (!favorOdds || favorOdds === 0 || isNaN(favorOdds)) return;
           if (!contraOdds || contraOdds === 0 || isNaN(contraOdds)) return;
-          if (depthLay < 20) return;
 
           if (
             (eventFilter && !eventName.includes(eventFilter.toLowerCase())) ||
@@ -624,11 +588,8 @@ Dazn:"https://i.imgur.com/Gj7YS2J.png",
             parseFloat(rating) > parseFloat(filterInputs.ratingMax)
           )
             return;
-          if (filterInputs.oddsMin && favorOdds < parseFloat(filterInputs.oddsMin)) return;
-          if (filterInputs.oddsMax && favorOdds > parseFloat(filterInputs.oddsMax)) return;
           if (filterInputs.dateStart && new Date(eventDate) < filterInputs.dateStart) return;
           if (filterInputs.dateEnd && new Date(eventDate) > filterInputs.dateEnd) return;
-          if (filterInputs.liquidityMin && depthLay < parseFloat(filterInputs.liquidityMin)) return;
 
           triples.push({
             event: { participant1: homeTeam, participant2: awayTeam, eventId },
@@ -636,7 +597,7 @@ Dazn:"https://i.imgur.com/Gj7YS2J.png",
             date: eventDate,
             tournamentId: sport === "Football" ? 155 : 132,
             apuesta: outcome.name,
-            rating: rating === "-" ? -Infinity : parseFloat(rating),
+            rating: rating === "-Infinity" ? -Infinity : parseFloat(rating),
             favor: favorOdds,
             contra: contraOdds,
             sportType: sport,
@@ -710,8 +671,8 @@ Dazn:"https://i.imgur.com/Gj7YS2J.png",
       betfairImage: bookmakerImages["Betfair Exchange"],
       apuesta: item.apuesta,
       depthLay: item.depthLay,
-      ratingInputs: ratingInputs, // Pass ratingInputs
-      selectedBetType: selectedBetType, // Pass selectedBetType
+      ratingInputs: ratingInputs,
+      selectedBetType: selectedBetType,
     });
   };
 
@@ -771,71 +732,71 @@ Dazn:"https://i.imgur.com/Gj7YS2J.png",
       <NavBar />
       <div className="me__content betting-table-container">
         <h2 className="betting-table-title">OddsMatcher</h2>
-<div className="oddsmatcher__filterData" style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
-  <label className="oddsMatcher__label" style={{ width: "150px" }}>
-    <button
-      onClick={handleOpenRatingModal}
-      style={{
-        marginLeft: "5px",
-        padding: "5px 10px",
-        backgroundColor: "rgba(12, 187, 91, 0.497)",
-        color: "white",
-        border: "none",
-        cursor: "pointer",
-        width: "100%",
-        display: "flex",
-        alignItems: "center",
-        borderRadius: "5px",
-        justifyContent: "center",
-      }}
-    >
-      <StarRate style={{ marginRight: "5px" }} />
-      Rating
-    </button>
-  </label>
-  <label className="oddsMatcher__label" style={{ width: "150px" }}>
-    <button
-      onClick={handleOpenCommissionModal}
-      style={{
-        marginLeft: "5px",
-        padding: "5px 10px",
-        backgroundColor: "rgba(12, 187, 91, 0.497)",
-        color: "white",
-        border: "none",
-        cursor: "pointer",
-        borderRadius: "5px",
-        width: "100%",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <AccountBalance style={{ marginRight: "5px" }} />
-      Comisión ({commission}%)
-    </button>
-  </label>
-  <label className="oddsMatcher__label" style={{ width: "150px" }}>
-    <button
-      onClick={handleOpenFilterModal}
-      style={{
-        marginLeft: "5px",
-        padding: "5px 10px",
-        backgroundColor: "rgba(12, 187, 91, 0.497)",
-        color: "white",
-        border: "none",
-        borderRadius: "5px",
-        cursor: "pointer",
-        width: "100%",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <FilterList style={{ marginRight: "5px" }} />
-      Filtro
-    </button>
-  </label>
-</div>
+        <div className="oddsmatcher__filterData" style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+          <label className="oddsMatcher__label" style={{ width: "150px" }}>
+            <button
+              onClick={handleOpenRatingModal}
+              style={{
+                marginLeft: "5px",
+                padding: "5px 10px",
+                backgroundColor: "rgba(12, 187, 91, 0.497)",
+                color: "white",
+                border: "none",
+                cursor: "pointer",
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                borderRadius: "5px",
+                justifyContent: "center",
+              }}
+            >
+              <StarRate style={{ marginRight: "5px" }} />
+              Rating
+            </button>
+          </label>
+          <label className="oddsMatcher__label" style={{ width: "150px" }}>
+            <button
+              onClick={handleOpenCommissionModal}
+              style={{
+                marginLeft: "5px",
+                padding: "5px 10px",
+                backgroundColor: "rgba(12, 187, 91, 0.497)",
+                color: "white",
+                border: "none",
+                cursor: "pointer",
+                borderRadius: "5px",
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <AccountBalance style={{ marginRight: "5px" }} />
+              Comisión ({commission}%)
+            </button>
+          </label>
+          <label className="oddsMatcher__label" style={{ width: "150px" }}>
+            <button
+              onClick={handleOpenFilterModal}
+              style={{
+                marginLeft: "5px",
+                padding: "5px 10px",
+                backgroundColor: "rgba(12, 187, 91, 0.497)",
+                color: "white",
+                border: "none",
+                borderRadius: "5px",
+                cursor: "pointer",
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <FilterList style={{ marginRight: "5px" }} />
+              Filtro
+            </button>
+          </label>
+        </div>
 
         <div className="oddsmatcher__filterData" style={{ display: "flex", gap: "10px" }}>
           <label className="oddsMatcher__label" style={{ width: "150px", fontWeight: "bold", marginBottom: "5px" }}>
