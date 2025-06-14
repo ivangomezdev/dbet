@@ -389,7 +389,7 @@ export default function DataDisplay() {
     "888sport": "https://i.imgur.com/e2TLt4V.gif",
     betsson: "https://i.imgur.com/j6tEmW6.png",
     versus: "https://i.imgur.com/nR7A3np.png",
-    Dazn: "https://i.imgur.com/Gj7YS2J.png",
+    daznbet: "https://i.imgur.com/Gj7YS2J.png",
   };
 
   const sportImages = {
