@@ -421,7 +421,7 @@ export default function DataDisplay() {
     "golden park": "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/golden_co3ixz.png",
     marathonbet: "https://i.imgur.com/2FQ9zXu.png",
     paston: "https://i.imgur.com/bSUrrm2.png",
-    888sport: "https://i.imgur.com/e2TLt4V.gif",
+    "888sport": "https://i.imgur.com/e2TLt4V.gif",
 Betsson: "https://i.imgur.com/6BCH3gH.png",
 Versus: "https://i.imgur.com/nR7A3np.png",
 Dazn:"https://i.imgur.com/Gj7YS2J.png",
