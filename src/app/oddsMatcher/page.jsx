@@ -408,19 +408,19 @@ export default function DataDisplay() {
     TonyBet: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1742972625/105_kjtrkr.png",
     marcaapuestas: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1742972622/marcaapuestas.png",
     "Winamax FR": "https://res.cloudinary.com/dc5zbh38m/image/upload/v1745713210/wiina_ntkzce.png",
-    "william hill": "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665179/william_aaiwz3.gif",
-    codere: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665179/codere_m7410b.png",
+    "william hill": "https://imgur.com/cQArLmw",
+    codere: "https://imgur.com/hxXFOpr",
     retabet: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/retabet_upii83.png",
-    sportium: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/sportium_qpfdnf.png",
-    pokerstars: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/pokerstar_iflvut.png",
+    sportium: "https://imgur.com/bStuoiA",
+    pokerstars: "https://imgur.com/9LokjX8",
     luckia: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/luckia_fukvcc.png",
-    jokerbet: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/joker_tcbpxt.png",
-    casumo: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/casumo_og6f4g.png",
-    bwin: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/bwin_drzq5i.gif",
+    jokerbet: "https://imgur.com/qzbFMld",
+    casumo: "https://imgur.com/rUMJsaZ",
+    bwin: " https://imgur.com/xR1Zl0z",
     juegging: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/jueggin_pxoeqm.png",
     "golden park": "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/golden_co3ixz.png",
-    marathonbet: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665178/marathon_uvvys8.png",
-    paston: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1746665177/paston_if2fg1.png"
+    marathonbet: "https://imgur.com/2FQ9zXu",
+    paston: "https://imgur.com/bSUrrm2"
   };
 
   const sportImages = {
