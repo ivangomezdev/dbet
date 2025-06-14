@@ -366,7 +366,7 @@ export default function DataDisplay() {
   const [tempFilterInputs, setTempFilterInputs] = useState({ ...filterInputs });
 
   const bookmakerImages = {
-    bet365: "https://i.imgur.com/sTLsFul.gif",
+    Bet365: "https://i.imgur.com/sTLsFul.gif",
     Betway: "https://i.imgur.com/briJaUL.png",
     "LeoVegas ES": "https://res.cloudinary.com/dc5zbh38m/image/upload/v1742972625/71_ij3po0.png",
     "PAF ES": "https://res.cloudinary.com/dc5zbh38m/image/upload/v1742972626/paf_r32yqs.png",
@@ -388,7 +388,7 @@ export default function DataDisplay() {
     paston: "https://i.imgur.com/bSUrrm2.png",
     "888sport": "https://i.imgur.com/e2TLt4V.gif",
     betsson: "https://i.imgur.com/j6tEmW6.png",
-    Versus: "https://i.imgur.com/nR7A3np.png",
+    versus: "https://i.imgur.com/nR7A3np.png",
     Dazn: "https://i.imgur.com/Gj7YS2J.png",
   };
 
