@@ -427,11 +427,11 @@ export default function DataDisplay() {
   const sportImages = {
     Football: {
       tournamentIds: [1024, 155, 325, 18, 24, 34, 35, 679, 7, 480, 384, 498],
-      image: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1743784233/FOTBAL_wprepx.png",
+      image: "https://i.imgur.com/xGTJeR3.png",
     },
     Basketball: {
       tournamentIds: [132],
-      image: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1743784289/BASKET_hrcizl.png",
+      image: "https://www.ninjabet.es/images/basket.png",
     },
   };
 
