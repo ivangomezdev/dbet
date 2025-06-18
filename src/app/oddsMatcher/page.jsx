@@ -992,7 +992,7 @@ export default function DataDisplay() {
                       <td>{formatPrice(favor)}</td>
                       <td>
                         <Image
-                          src="https://res.cloudinary.com/dc5zbh38m/image/upload/v1742972626/betfair_qlonut.gif"
+                          src="https://www.ninjabet.es/images/betfair.png"
                           alt="Betfair Exchange"
                           width={80}
                           height={80}
