@@ -240,10 +240,10 @@ const FilterModal = memo(({ tempFilterInputs, setTempFilterInputs, handleCloseFi
   return (
     <div className="modal-overlay" style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, backgroundColor: "rgba(0,0,0,0.5)", display: "flex", justifyContent: "center", alignItems: "center", zIndex: 1000 }}>
       <div className="modal-content" style={{ backgroundColor: "white", padding: "20px", borderRadius: "5px", width: "400px", maxWidth: "90%" }} onClick={(e) => e.stopPropagation()}>
-        <h2 style={{ marginBottom: "10px" }}>Configurar Filtros</h2>
+             <h2 style={{ marginBottom: "10px" }}>Configurar Filtros</h2>
         <div className="tab-content" style={{ marginBottom: "20px" }}>
-          <label style={{ display: "block", marginBottom: "10px" }}>
-            Rating (%) desde
+          <label style={{ display: "block", marginBottom: "10px" }}>More actions
+            Rating (%) desde            Rating (%) desde
             <div style={{ display: "flex", gap: "5px" }}>
               <input
                 type="text"
@@ -262,6 +262,38 @@ const FilterModal = memo(({ tempFilterInputs, setTempFilterInputs, handleCloseFi
                 style={{ width: "50%", padding: "5px", marginTop: "5px" }}
               />
             </div>
+          </label>
+          <label style={{ display: "block", marginBottom: "10px" }}>
+            Cuotas Bookmaker desde
+            <div style={{ display: "flex", gap: "5px" }}>
+              <input
+                type="text"
+                name="oddsMin"
+                value={tempFilterInputs.oddsMin}
+                onChange={handleFilterInputChange}
+                placeholder="Mín"
+                style={{ width: "50%", padding: "5px", marginTop: "5px" }}
+              />
+              <input
+                type="text"
+                name="oddsMax"
+                value={tempFilterInputs.oddsMax}
+                onChange={handleFilterInputChange}
+                placeholder="Máx"
+                style={{ width: "50%", padding: "5px", marginTop: "5px" }}
+              />
+            </div>
+          </label>
+          <label style={{ display: "block", marginBottom: "10px" }}>
+            Liquidez Mínima (€)
+            <input
+              type="text"
+              name="liquidityMin"
+              value={tempFilterInputs.liquidityMin}
+              onChange={handleFilterInputChange}
+              placeholder="Mín"
+              style={{ width: "100%", padding: "5px", marginTop: "5px" }}
+            />
           </label>
           <label style={{ display: "block", marginBottom: "10px" }}>
             Fecha/Hora desde
