@@ -425,6 +425,7 @@ export default function DataDisplay() {
     betsson: "https://i.imgur.com/j6tEmW6.png",
     versus: "https://i.imgur.com/nR7A3np.png",
     daznbet: "https://i.imgur.com/Gj7YS2J.png",
+    "Betfair Exchange": "https://www.ninjabet.es/images/betfair.png"
   };
 
   const sportImages = {
