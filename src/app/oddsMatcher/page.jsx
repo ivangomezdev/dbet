@@ -240,10 +240,10 @@ const FilterModal = memo(({ tempFilterInputs, setTempFilterInputs, handleCloseFi
   return (
     <div className="modal-overlay" style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, backgroundColor: "rgba(0,0,0,0.5)", display: "flex", justifyContent: "center", alignItems: "center", zIndex: 1000 }}>
       <div className="modal-content" style={{ backgroundColor: "white", padding: "20px", borderRadius: "5px", width: "400px", maxWidth: "90%" }} onClick={(e) => e.stopPropagation()}>
-             <h2 style={{ marginBottom: "10px" }}>Configurar Filtros</h2>
+        <h2 style={{ marginBottom: "10px" }}>Configurar Filtros</h2>
         <div className="tab-content" style={{ marginBottom: "20px" }}>
-          <label style={{ display: "block", marginBottom: "10px" }}>More actions
-            Rating (%) desde            Rating (%) desde
+          <label style={{ display: "block", marginBottom: "10px" }}>
+            Rating (%) desde
             <div style={{ display: "flex", gap: "5px" }}>
               <input
                 type="text"
@@ -392,6 +392,9 @@ export default function DataDisplay() {
   const [filterInputs, setFilterInputs] = useState({
     ratingMin: "",
     ratingMax: "",
+    oddsMin: "",
+    oddsMax: "",
+    liquidityMin: "",
     dateStart: null,
     dateEnd: null,
   });
@@ -592,6 +595,19 @@ export default function DataDisplay() {
           ) {
             return;
           }
+
+          if (
+            filterInputs.oddsMin &&
+            parseFloat(favorOdds) < parseFloat(filterInputs.oddsMin)
+          ) return;
+          if (
+            filterInputs.oddsMax &&
+            parseFloat(favorOdds) > parseFloat(filterInputs.oddsMax)
+          ) return;
+          if (
+            filterInputs.liquidityMin &&
+            parseFloat(depthLay) < parseFloat(filterInputs.liquidityMin)
+          ) return;
 
           const tooltipValues = calculateTooltipValues(
             ratingInputs,
