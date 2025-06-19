@@ -407,7 +407,7 @@ export default function DataDisplay() {
     "PAF ES": "https://res.cloudinary.com/dc5zbh38m/image/upload/v1742972626/paf_r32yqs.png",
     TonyBet: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1742972625/105_kjtrkr.png",
     marcaapuestas: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1742972622/marcaapuestas.png",
-    "Winamax FR": "https://res.cloudinary.com/dc5zbh38m/image/upload/v1745713210/wiina_ntkzce.png",
+    "Winamax FR": "https://i.imgur.com/w30mIM6.png",
     "william hill": "https://i.imgur.com/cQArLmw.gif",
     codere: "https://i.imgur.com/hxXFOpr.png",
     retabet: "https://i.imgur.com/nrODWBh.png",
@@ -425,7 +425,7 @@ export default function DataDisplay() {
     betsson: "https://i.imgur.com/j6tEmW6.png",
     versus: "https://i.imgur.com/nR7A3np.png",
     daznbet: "https://i.imgur.com/Gj7YS2J.png",
-    "Betfair Exchange": "https://www.ninjabet.es/images/betfair.png"
+    "Betfair Exchange": "https://i.imgur.com/mXc0S1p.gif"
   };
 
   const sportImages = {
@@ -1009,7 +1009,7 @@ export default function DataDisplay() {
                       <td>{formatPrice(favor)}</td>
                       <td>
                         <Image
-                          src="https://www.ninjabet.es/images/betfair.png"
+                          src="https://i.imgur.com/mXc0S1p.gif"
                           alt="Betfair Exchange"
                           width={80}
                           height={80}
