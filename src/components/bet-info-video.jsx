@@ -76,16 +76,7 @@ function BetInfoVideo() {
   title="WinBet420 Video"
 ></iframe>
 
-          {!isPlaying && (
-            <button
-              className="bet-info-video__play-button"
-              onClick={handlePlayPause}
-              aria-label="Reproducir video"
-            >
-              <div className="bet-info-video__play-icon"></div>
-            </button>
-          )}
-
+   
           <div className="bet-info-video__caption">
             <p>
              Aprende con el creador de WinBet
