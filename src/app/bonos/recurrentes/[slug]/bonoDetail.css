@@ -157,7 +157,7 @@ b {
 }
 
 li {
-  display: none;
+  text-align: start;
 }
 
 .bono-detail__content a {

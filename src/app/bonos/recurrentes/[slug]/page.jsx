@@ -5,7 +5,6 @@ import { documentToReactComponents } from "@contentful/rich-text-react-renderer"
 import { BLOCKS, INLINES } from "@contentful/rich-text-types";
 import "./bonoDetail.css";
 
-// Habilita Incremental Static Regeneration (ISR) para regenerar la página cada 60 segundos
 export const revalidate = 60;
 
 export async function generateStaticParams() {
@@ -16,6 +15,31 @@ export async function generateStaticParams() {
       slug: bono.fields.slug,
     }));
 }
+
+// Función auxiliar para verificar si un campo richText tiene contenido significativo
+const hasMeaningfulContent = (richText) => {
+  if (!richText || !richText.content || !Array.isArray(richText.content)) {
+    return false;
+  }
+
+  return richText.content.some((node) => {
+    if (node.nodeType === "paragraph" || node.nodeType === "heading-2" || node.nodeType === "heading-3") {
+      return node.content.some((contentNode) => {
+        return contentNode.nodeType === "text" && contentNode.value.trim() !== "";
+      });
+    }
+    if (node.nodeType === "unordered-list" || node.nodeType === "ordered-list") {
+      return node.content.some((listItem) => {
+        return listItem.content.some((contentNode) => {
+          return contentNode.content.some((textNode) => {
+            return textNode.nodeType === "text" && textNode.value.trim() !== "";
+          });
+        });
+      });
+    }
+    return false;
+  });
+};
 
 export default async function BonoDetailPage({ params }) {
   const { slug } = params;
@@ -46,7 +70,6 @@ export default async function BonoDetailPage({ params }) {
     description9,
     description10,
     description11,
-   
     url,
     ganancia,
     cuotaMinima,
@@ -55,68 +78,76 @@ export default async function BonoDetailPage({ params }) {
     enlaceOferta,
   } = bono.fields;
 
-  // Debug de la imagen
-  console.log("Image data:", image);
   const imageUrl =
     (image?.fields?.file?.url?.startsWith("//")
       ? "https:" + image.fields.file.url
       : image?.fields?.file?.url) || "/placeholder.svg";
-  console.log("Image URL:", imageUrl);
 
-  // Debug de los assets incluidos
-  console.log("Includes Assets:", bonos[0]?.includes?.Asset);
+  const renderOptions = {
+    renderNode: {
+      [BLOCKS.EMBEDDED_ASSET]: (node) => {
+        const assetId = node.data.target.sys.id;
+        const asset = bonos[0]?.includes?.Asset?.find((a) => a.sys.id === assetId) || null;
+        if (!asset) {
+          console.warn(`Asset no encontrado para ID: ${assetId}`);
+          return <img src="/placeholder.svg" alt="Missing asset" style={{ maxWidth: "100%", margin: "10px 0" }} />;
+        }
+        const assetUrl = asset.fields?.file?.url
+          ? asset.fields.file.url.startsWith("//")
+            ? "https:" + asset.fields.file.url
+            : asset.fields.file.url
+          : "/placeholder.svg";
+        return (
+          <img
+            src={assetUrl}
+            alt={asset.fields?.title || `Embedded asset ${assetId}`}
+            style={{ maxWidth: "100%", margin: "10px 0" }}
+            className="bono-detail__embedded-image"
+          />
+        );
+      },
+      [INLINES.HYPERLINK]: (node) => (
+        <a href={node.data.uri} className="bono-detail__link">
+          {node.content[0].value}
+        </a>
+      ),
+      [BLOCKS.UL_LIST]: (node, children) => {
+        console.log("Rendering UL_LIST:", JSON.stringify(node, null, 2));
+        return <ul className="bono-detail__list">{children}</ul>;
+      },
+      [BLOCKS.OL_LIST]: (node, children) => {
+        console.log("Rendering OL_LIST:", JSON.stringify(node, null, 2));
+        return <ol className="bono-detail__list">{children}</ol>;
+      },
+      [BLOCKS.LIST_ITEM]: (node, children) => {
+        console.log("Rendering LIST_ITEM:", JSON.stringify(node, null, 2));
+        return <li className="bono-detail__list-item">{children}</li>;
+      },
+      [BLOCKS.PARAGRAPH]: (node, children) => {
+        console.log("Rendering PARAGRAPH:", JSON.stringify(node, null, 2));
+        if (!children || children.every(child => !child)) return null;
+        return <p className="bono-detail__paragraph">{children}</p>;
+      },
+      [BLOCKS.HEADING_2]: (node, children) => {
+        console.log("Rendering HEADING_2:", JSON.stringify(node, null, 2));
+        return <h2 className="bono-detail__heading-2">{children}</h2>;
+      },
+      [BLOCKS.HEADING_3]: (node, children) => {
+        console.log("Rendering HEADING_3:", JSON.stringify(node, null, 2));
+        return <h3 className="bono-detail__heading-3">{children}</h3>;
+      },
+    },
+    renderText: (text) => {
+      return text.trim() ? text : null;
+    },
+  };
 
-  // Opciones para renderizar rich text
- const renderOptions = {
-  renderNode: {
-    [BLOCKS.EMBEDDED_ASSET]: (node) => {
-      const assetId = node.data.target.sys.id;
-      const asset = bonos[0]?.includes?.Asset?.find((a) => a.sys.id === assetId) || null;
-      if (!asset) {
-        return <img src="/placeholder.svg" alt="Missing asset" style={{ maxWidth: "100%", margin: "10px 0" }} />;
-      }
-      const assetUrl = asset.fields?.file?.url
-        ? asset.fields.file.url.startsWith("//")
-          ? "https:" + asset.fields.file.url
-          : asset.fields.file.url
-        : "/placeholder.svg";
-      return (
-        <img
-          src={assetUrl}
-          alt={asset.fields?.title || `Embedded asset ${assetId}`}
-          style={{ maxWidth: "100%", margin: "10px 0" }}
-          className="bono-detail__embedded-image"
-        />
-      );
-    },
-    [INLINES.HYPERLINK]: (node) => (
-      <a href={node.data.uri} className="bono-detail__link">
-        {node.content[0].value}
-      </a>
-    ),
-    [BLOCKS.UL_LIST]: (node, children) => {
-      console.log("Rendering UL_LIST:", node); // Debug
-      return <ul className="bono-detail__list">{children}</ul>;
-    },
-    [BLOCKS.OL_LIST]: (node, children) => {
-      console.log("Rendering OL_LIST:", node); // Debug
-      return <ol className="bono-detail__list">{children}</ol>;
-    },
-    [BLOCKS.LIST_ITEM]: (node, children) => {
-      console.log("Rendering LIST_ITEM:", node); // Debug
-      return <li className="bono-detail__list-item">{children}</li>;
-    },
-    [BLOCKS.PARAGRAPH]: (node, children) => {
-      console.log("Rendering PARAGRAPH:", node); // Debug
-      return <p className="bono-detail__paragraph">{children}</p>;
-    },
-  },
-};
   const renderRichText = (richText, fieldName) => {
-    if (!richText || !richText.content) {
+    if (!richText || !richText.content || !hasMeaningfulContent(richText)) {
       console.warn(`Rich text está vacío o inválido para el campo ${fieldName}:`, richText);
-      return <p>No hay descripción disponible para {fieldName}.</p>;
+      return null; // No renderiza nada si el contenido no es significativo
     }
+    console.log(`Rendering rich text for ${fieldName}:`, JSON.stringify(richText, null, 2));
     return documentToReactComponents(richText, renderOptions);
   };
 
@@ -153,7 +184,7 @@ export default async function BonoDetailPage({ params }) {
             </p>
             <p>
               <p style={{ color: "#054F36", fontWeight: "bold", fontSize: "25px" }}>
-                Tiempo de entrega del bono: <span style={{ color: "black" }}>{tiempoEntrega || "No especificado"}</span>
+                Tiempo de entrega Twin del bono: <span style={{ color: "black" }}>{tiempoEntrega || "No especificado"}</span>
               </p>
             </p>
             <p>
@@ -180,55 +211,44 @@ export default async function BonoDetailPage({ params }) {
           </div>
         </div>
         <div className="bono-detail__description">
-          <div className="bono-detail__details" style={{padding:"20px"}}>{renderRichText(description, "description")}</div>
-          
-          {/* Renderiza el contenedor solo si hay al menos una descripción adicional */}
-          {(
-            description1 ,
-            description2 ,
-            description3 ,
-            description4 ,
-            description5 ,
-            description6 ,
-            description7 ||
-            description8 
-            
-          ) && (
+          <div className="bono-detail__details" style={{ padding: "20px" }}>
+            {renderRichText(description, "description")}
+          </div>
+
+          {/* Renderiza el contenedor solo si hay al menos una descripción adicional con contenido significativo */}
+          {[
+            description1,
+            description2,
+            description3,
+            description4,
+            description5,
+            description6,
+            description7,
+            description8,
+            description9,
+            description10,
+            description11,
+          ].some((desc) => hasMeaningfulContent(desc)) && (
             <div className="bono-detail__additional-descriptions">
-              {description1 && (
-                <div className="bono-detail__description-item">{renderRichText(description1, "description1")}</div>
+              {[
+                description1,
+                description2,
+                description3,
+                description4,
+                description5,
+                description6,
+                description7,
+                description8,
+                description9,
+                description10,
+                description11,
+              ].map((desc, index) =>
+                hasMeaningfulContent(desc) ? (
+                  <div key={index} className="bono-detail__description-item">
+                    {renderRichText(desc, `description${index + 1}`)}
+                  </div>
+                ) : null
               )}
-              {description2 && (
-                <div className="bono-detail__description-item">{renderRichText(description2, "description2")}</div>
-              )}
-              {description3 && (
-                <div className="bono-detail__description-item">{renderRichText(description3, "description3")}</div>
-              )}
-              {description4 && (
-                <div className="bono-detail__description-item">{renderRichText(description4, "description4")}</div>
-              )}
-              {description5 && (
-                <div className="bono-detail__description-item">{renderRichText(description5, "description5")}</div>
-              )}
-              {description6 && (
-                <div className="bono-detail__description-item">{renderRichText(description6, "description6")}</div>
-              )}
-              {description7 && (
-                <div className="bono-detail__description-item">{renderRichText(description7, "description7")}</div>
-              )}
-              {description8 && (
-                <div className="bono-detail__description-item">{renderRichText(description8, "description8")}</div>
-              )}
-              {description9 && (
-                <div className="bono-detail__description-item">{renderRichText(description9, "description9")}</div>
-              )}
-              {description10 && (
-                <div className="bono-detail__description-item">{renderRichText(description10, "description10")}</div>
-              )}
-              {description11 && (
-                <div className="bono-detail__description-item">{renderRichText(description11, "description11")}</div>
-              )}
-           
             </div>
           )}
         </div>
