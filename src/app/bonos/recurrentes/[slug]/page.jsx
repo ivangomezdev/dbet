@@ -67,38 +67,38 @@ export default async function BonoDetailPage({ params }) {
   console.log("Includes Assets:", bonos[0]?.includes?.Asset);
 
   // Opciones para renderizar rich text
-  const renderOptions = {
-    renderNode: {
-      [BLOCKS.EMBEDDED_ASSET]: (node) => {
-        const assetId = node.data.target.sys.id;
-        const asset = bonos[0]?.includes?.Asset?.find((a) => a.sys.id === assetId) || null;
-        console.log(`Asset ID: ${assetId}, Found Asset:`, asset);
-        if (!asset) {
-          console.warn(`Asset con ID ${assetId} no encontrado en includes`);
-          return <img src="/placeholder.svg" alt="Missing asset" style={{ maxWidth: "100%", margin: "10px 0" }} />;
-        }
-        const assetUrl = asset.fields?.file?.url
-          ? asset.fields.file.url.startsWith("//")
-            ? "https:" + asset.fields.file.url
-            : asset.fields.file.url
-          : "/placeholder.svg";
-        return (
-          <img
-            src={assetUrl}
-            alt={asset.fields?.title || `Embedded asset ${assetId}`}
-            style={{ maxWidth: "100%", margin: "10px 0" }}
-            className="bono-detail__embedded-image"
-          />
-        );
-      },
-      [INLINES.HYPERLINK]: (node) => (
-        <a href={node.data.uri} className="bono-detail__link">
-          {node.content[0].value}
-        </a>
-      ),
+ const renderOptions = {
+  renderNode: {
+    [BLOCKS.EMBEDDED_ASSET]: (node) => {
+      const assetId = node.data.target.sys.id;
+      const asset = bonos[0]?.includes?.Asset?.find((a) => a.sys.id === assetId) || null;
+      if (!asset) {
+        return <img src="/placeholder.svg" alt="Missing asset" style={{ maxWidth: "100%", margin: "10px 0" }} />;
+      }
+      const assetUrl = asset.fields?.file?.url
+        ? asset.fields.file.url.startsWith("//")
+          ? "https:" + asset.fields.file.url
+          : asset.fields.file.url
+        : "/placeholder.svg";
+      return (
+        <img
+          src={assetUrl}
+          alt={asset.fields?.title || `Embedded asset ${assetId}`}
+          style={{ maxWidth: "100%", margin: "10px 0" }}
+          className="bono-detail__embedded-image"
+        />
+      );
     },
-  };
-
+    [INLINES.HYPERLINK]: (node) => (
+      <a href={node.data.uri} className="bono-detail__link">
+        {node.content[0].value}
+      </a>
+    ),
+    [BLOCKS.UL_LIST]: (node, children) => <ul>{children}</ul>,
+    [BLOCKS.OL_LIST]: (node, children) => <ol>{children}</ol>,
+    [BLOCKS.LIST_ITEM]: (node, children) => <li>{children}</li>,
+  },
+};
   const renderRichText = (richText, fieldName) => {
     if (!richText || !richText.content) {
       console.warn(`Rich text está vacío o inválido para el campo ${fieldName}:`, richText);
@@ -167,7 +167,7 @@ export default async function BonoDetailPage({ params }) {
           </div>
         </div>
         <div className="bono-detail__description">
-          <div className="bono-detail__details">{renderRichText(description, "description")}</div>
+          <div className="bono-detail__details" style={{padding:"20px"}}>{renderRichText(description, "description")}</div>
           
           {/* Renderiza el contenedor solo si hay al menos una descripción adicional */}
           {(
