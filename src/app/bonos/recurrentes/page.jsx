@@ -1,7 +1,7 @@
 "use client";
 import Footer from "@/components/Footer";
 import NavBar from "@/components/NavBar";
-import UserBono from "@/components/UserBono";
+import UserBonoRecurrentes from "@/components/UserBonoRecurrentes";
 
 import { getBonosRecurrentes } from "@/lib/contenful";
 import "../bonos.css";
@@ -45,7 +45,7 @@ const Page = () => {
         <NavBar />
       </header>
       <main className="bonos__content">
-        <UserBono bonosData={bonosData} />
+        <UserBonoRecurrentes bonosData={bonosData} />
       
       </main>
       <footer>
