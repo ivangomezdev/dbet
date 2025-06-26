@@ -1,6 +1,6 @@
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
-import { getBonos } from "../../../../lib/contenful";
+import { getBonosRecurrentes } from "../../../../lib/contenful";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import { BLOCKS, INLINES } from "@contentful/rich-text-types";
 import "./bonoDetail.css";
@@ -9,7 +9,7 @@ import "./bonoDetail.css";
 export const revalidate = 60;
 
 export async function generateStaticParams() {
-  const bonos = await getBonos();
+  const bonos = await getBonosRecurrentes();
   return bonos
     .filter((bono) => typeof bono.fields.slug === "string" && bono.fields.slug.trim() !== "")
     .map((bono) => ({
@@ -19,7 +19,7 @@ export async function generateStaticParams() {
 
 export default async function BonoDetailPage({ params }) {
   const { slug } = params;
-  const bonos = await getBonos();
+  const bonos = await getBonosRecurrentes();
   const bono = bonos.find((b) => b.fields.slug === slug);
 
   if (!bono) {
