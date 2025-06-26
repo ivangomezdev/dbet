@@ -1,7 +1,7 @@
 "use client";
 import Footer from "@/components/Footer";
 import NavBar from "@/components/NavBar";
-import UserBonoRecurrentes from "@/components/UserBonoRecurrentes";
+import UserBonoRecurrentes from "../../../components/userBonoRecurrentes";
 
 import { getBonosRecurrentes } from "@/lib/contenful";
 import "../bonos.css";
