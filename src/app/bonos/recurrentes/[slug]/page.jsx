@@ -94,9 +94,22 @@ export default async function BonoDetailPage({ params }) {
         {node.content[0].value}
       </a>
     ),
-    [BLOCKS.UL_LIST]: (node, children) => <ul>{children}</ul>,
-    [BLOCKS.OL_LIST]: (node, children) => <ol>{children}</ol>,
-    [BLOCKS.LIST_ITEM]: (node, children) => <li>{children}</li>,
+    [BLOCKS.UL_LIST]: (node, children) => {
+      console.log("Rendering UL_LIST:", node); // Debug
+      return <ul className="bono-detail__list">{children}</ul>;
+    },
+    [BLOCKS.OL_LIST]: (node, children) => {
+      console.log("Rendering OL_LIST:", node); // Debug
+      return <ol className="bono-detail__list">{children}</ol>;
+    },
+    [BLOCKS.LIST_ITEM]: (node, children) => {
+      console.log("Rendering LIST_ITEM:", node); // Debug
+      return <li className="bono-detail__list-item">{children}</li>;
+    },
+    [BLOCKS.PARAGRAPH]: (node, children) => {
+      console.log("Rendering PARAGRAPH:", node); // Debug
+      return <p className="bono-detail__paragraph">{children}</p>;
+    },
   },
 };
   const renderRichText = (richText, fieldName) => {

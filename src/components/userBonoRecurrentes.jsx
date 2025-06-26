@@ -32,7 +32,8 @@ export default function UserBonoRecurrentes({ bonosData }) {
       return;
     }
     if (showLink) {
-      router.push("/auth/register");
+          router.push(`/bonos/recurrentes/${slug}`); // <-- Cambia aquí la ruta
+     // router.push("/auth/register");
     } else {
       router.push(`/bonos/recurrentes/${slug}`); // <-- Cambia aquí la ruta
     }
