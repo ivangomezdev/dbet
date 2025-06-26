@@ -46,6 +46,18 @@ export async function getBonos() {
   }
 }
 
+export async function getBonosRecurrentes() {
+  console.log("Ejecutando getBonos...");
+  try {
+    const response = await getEntriesByContentType("recurrentes");
+    console.log("Datos recibidos de Contentful para bonos:", JSON.stringify(response, null, 2));
+    return response;
+  } catch (error) {
+    console.error("Error en getBonos:", error);
+    return [];
+  }
+}
+
 export async function getVideos() {
   console.log("Ejecutando getVideos...");
   try {

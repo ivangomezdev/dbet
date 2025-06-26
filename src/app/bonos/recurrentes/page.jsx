@@ -3,7 +3,7 @@ import Footer from "@/components/Footer";
 import NavBar from "@/components/NavBar";
 import UserBono from "@/components/UserBono";
 
-import { getBonos } from "@/lib/contenful";
+import { getBonosRecurrentes } from "@/lib/contenful";
 import "../bonos.css";
 
 import { useEffect, useState } from "react";
@@ -23,7 +23,7 @@ const Page = () => {
     const fetchBonos = async () => {
       try {
         setIsLoading(true);
-        const data = await getBonos();
+        const data = await getBonosRecurrentes();
         setBonosData(data);
         setIsLoading(false);
       } catch (err) {
