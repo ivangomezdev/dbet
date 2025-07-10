@@ -46,13 +46,13 @@ export default async function BonoDetailPage({ params }) {
     description9,
     description10,
     description11,
-   
     url,
     ganancia,
     cuotaMinima,
     tiempoEntrega,
     metodosPagoNoValidos,
     enlaceOferta,
+    video, // Nuevo campo para el video
   } = bono.fields;
 
   // Debug de la imagen
@@ -65,6 +65,25 @@ export default async function BonoDetailPage({ params }) {
 
   // Debug de los assets incluidos
   console.log("Includes Assets:", bonos[0]?.includes?.Asset);
+
+  // Procesar la URL del video (YouTube o archivo directo)
+  let videoEmbedUrl = null;
+  if (video?.fields?.file?.url) {
+    const videoUrl = video.fields.file.url.startsWith("//")
+      ? "https:" + video.fields.file.url
+      : video.fields.file.url;
+    // Si es un enlace de YouTube, convertir a formato embed
+    if (videoUrl.includes("youtube.com") || videoUrl.includes("youtu.be")) {
+      const videoId = videoUrl.match(/(?:youtube\.com\/.*v=|youtu\.be\/)([^&\?]+)/)?.[1];
+      if (videoId) {
+        videoEmbedUrl = `https://www.youtube.com/embed/${videoId}`;
+      }
+    } else {
+      // Si es un archivo de video subido a Contentful
+      videoEmbedUrl = videoUrl;
+    }
+  }
+  console.log("Video URL:", videoEmbedUrl);
 
   // Opciones para renderizar rich text
   const renderOptions = {
@@ -168,18 +187,18 @@ export default async function BonoDetailPage({ params }) {
         </div>
         <div className="bono-detail__description">
           <div className="bono-detail__details">{renderRichText(description, "description")}</div>
-          
-          {/* Renderiza el contenedor solo si hay al menos una descripción adicional */}
           {(
-            description1 ,
-            description2 ,
-            description3 ,
-            description4 ,
-            description5 ,
-            description6 ,
+            description1 ||
+            description2 ||
+            description3 ||
+            description4 ||
+            description5 ||
+            description6 ||
             description7 ||
-            description8 
-            
+            description8 ||
+            description9 ||
+            description10 ||
+            description11
           ) && (
             <div className="bono-detail__additional-descriptions">
               {description1 && (
@@ -215,10 +234,29 @@ export default async function BonoDetailPage({ params }) {
               {description11 && (
                 <div className="bono-detail__description-item">{renderRichText(description11, "description11")}</div>
               )}
-           
             </div>
           )}
         </div>
+        {videoEmbedUrl && (
+          <div className="bono-detail__video">
+            {videoUrl.includes("youtube.com") || videoUrl.includes("youtu.be") ? (
+              <iframe
+                width="100%"
+                height="315"
+                src={videoEmbedUrl}
+                title="YouTube video"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            ) : (
+              <video controls width="100%">
+                <source src={videoEmbedUrl} type={video.fields.file.contentType} />
+                Tu navegador no soporta el elemento de video.
+              </video>
+            )}
+          </div>
+        )}
       </main>
       <footer>
         <Footer />

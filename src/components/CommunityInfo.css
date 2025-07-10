@@ -65,6 +65,22 @@
   margin: 0 auto;
 }
 
+@media(max-width:526px){
+.community-hero-image video{
+  max-width: 70%;
+  display: flex;
+  justify-content: center;
+} 
+
+.community-main-image {
+  margin: 0 auto !important;
+  text-align: center;
+}}
+
+  
+
+
+
 .community-main-image {
   margin: 0 auto;
   height: auto;

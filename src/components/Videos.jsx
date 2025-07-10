@@ -8,7 +8,6 @@ import VerifiedIcon from "@mui/icons-material/Verified";
 import { getVideos } from "../lib/contenful";
 import "./videos.css";
 
-// Datos de ejemplo para el canal
 const channelData = {
   name: "GUÍAS",
   isVerified: true,
@@ -24,16 +23,11 @@ export default function Videos() {
   const { data: session } = useSession();
   const router = useRouter();
 
-  // Determine if user is authenticated
+  // Determine authentication and subscription status
   const isAuthenticated = !!session || !!cookies.token;
-
-  // Determine subscription status
   const subscriptionStatus = session?.user?.subscriptionStatus || userData?.subscriptionStatus || "inactive";
   const hasPremiumSubscription = subscriptionStatus === "MONTHLY" || subscriptionStatus === "YEAR";
   const isFreePlan = subscriptionStatus === "FREE";
-
-  // Show all videos (including locked ones) if not authenticated or on FREE plan
-  const showLockedVideos = !isAuthenticated || isFreePlan;
 
   // Fetch videos from Contentful
   useEffect(() => {
@@ -45,10 +39,11 @@ export default function Videos() {
           title: entry.fields.title || "Sin título",
           thumbnail: entry.fields.thumbnail?.fields?.file?.url
             ? `https:${entry.fields.thumbnail.fields.file.url}`
-            : "https://res.cloudinary.com/dc5zbh38m/image/upload/v174248 angles/1_ilbchq.png",
+            : "https://res.cloudinary.com/dc5zbh38m/image/upload/v174248/1_ilbchq.png",
           time: entry.fields.time || "hace 1 día",
           duration: entry.fields.duration || "10:00",
           slug: entry.fields.slug || `video-${index + 1}`,
+          premium: entry.fields.premium || false, // Add premium field
         }));
         setVideos(formattedVideos);
       } catch (error) {
@@ -82,22 +77,20 @@ export default function Videos() {
 
   // Handle click on locked video
   const handleLockedVideoClick = () => {
-    if (showLockedVideos) {
-      if (isAuthenticated && isFreePlan) {
-        router.push("/changePlan");
-      } else {
-        router.push("/auth/register");
-      }
+    if (isAuthenticated && isFreePlan) {
+      router.push("https://winbet420.com/changePlan");
+    } else {
+      router.push("/auth/register");
     }
   };
 
-  // Handle video click to navigate to video detail page
+  // Handle video click
   const handleVideoClick = (slug) => {
     router.push(`/guides/${slug}`);
   };
 
-  // Filter and sort videos by slug (guia-1, guia-2, etc.)
-  const filteredVideos = (showLockedVideos ? videos : videos.filter((video) => video.id < 6)).sort((a, b) => {
+  // Filter and sort videos
+  const filteredVideos = videos.sort((a, b) => {
     const aNumber = parseInt(a.slug.split("-")[1], 10) || 0;
     const bNumber = parseInt(b.slug.split("-")[1], 10) || 0;
     return aNumber - bNumber;
@@ -112,7 +105,7 @@ export default function Videos() {
           <div className="guides__profile-name-container">
             <h1 className="guides__profile-name">
               {channelData.name}
-          
+              {channelData.isVerified && <VerifiedIcon />}
             </h1>
           </div>
         </div>
@@ -127,7 +120,7 @@ export default function Videos() {
             }`}
             onClick={() => setActiveFilter("recientes")}
           >
-           Ver guías
+            Ver guías
           </button>
         </div>
       </div>
@@ -136,7 +129,7 @@ export default function Videos() {
       <div className="guides__content">
         <div className="guides__videos-grid">
           {filteredVideos.map((video) => {
-            const isLocked = video.id >= 6 && !hasPremiumSubscription;
+            const isLocked = video.premium && !hasPremiumSubscription;
             return (
               <div
                 key={video.id}
@@ -145,7 +138,16 @@ export default function Videos() {
                 style={{ cursor: isLocked ? "pointer" : "default" }}
               >
                 <div className="guides__video-thumbnail-container">
-                  <img src={video.thumbnail} alt={video.title} style={{ width: "100%", height: "200px", objectFit: "cover" }} />
+                  <img
+                    src={video.thumbnail}
+                    alt={video.title}
+                    style={{
+                      width: "100%",
+                      height: "200px",
+                      objectFit: "cover",
+                      filter: isLocked ? "brightness(50%)" : "none", // Dim the image if locked
+                    }}
+                  />
                   <div className="guides__video-duration">{video.slug.slice(5)}</div>
                   {isLocked && (
                     <div className="guides__video-locked-overlay">

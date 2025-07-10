@@ -21,6 +21,19 @@
   margin-bottom: 20px;
 }
 
+.bono-detail__video {
+  max-width: 100%;
+  margin: 20px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.bono-detail__video iframe,
+.bono-detail__video video {
+  max-width: 100%;
+  border-radius: 8px;
+}
+
 
 .bono-detail__details {
   background-color: rgb(255, 255, 255);

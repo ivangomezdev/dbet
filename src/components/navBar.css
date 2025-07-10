@@ -5,12 +5,6 @@
   font-style: normal;
 }
 
-
-@media(max-width:834px){
-  .login-button{
-    display: none;
-  }
-}
 .navbar {
   position: fixed;
   top: 0;
@@ -67,6 +61,8 @@
   padding: 8px 12px;
   position: relative;
   transition: color 0.3s ease;
+  display: flex;
+  align-items: center; /* Ensure vertical centering */
 }
 
 .navbar-link::before {
@@ -92,6 +88,8 @@
 .navbar-login {
   margin-left: 40px;
   flex-shrink: 0; /* Prevent login button from shrinking */
+  display: flex;
+  align-items: center; /* Center login button vertically */
 }
 
 .login-button {
@@ -132,7 +130,81 @@
   padding: 0;
 }
 
-/* Responsive adjustments */
+/* Desktop Dropdown Styles */
+.dropdown {
+  position: relative;
+  display: inline-flex;
+  align-items: center; /* Align dropdown with other links */
+}
+
+.dropdown-toggle {
+  background: none;
+  border: none;
+  color: white;
+  text-decoration: none;
+  font-family: 'Gagalin', sans-serif;
+  font-size: 23px;
+  padding: 8px 12px;
+  position: relative;
+  transition: color 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.dropdown-toggle::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background-color: #f28c38;
+  z-index: -1;
+  transition: width 0.3s ease;
+}
+
+.dropdown-toggle:hover::before {
+  width: 100%;
+}
+
+.dropdown-toggle:hover {
+  color: white;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #000;
+  min-width: 160px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.dropdown-menu.show {
+  display: block;
+}
+
+.dropdown-item {
+  color: white;
+  text-decoration: none;
+  font-family: 'Gagalin', sans-serif;
+  font-size: 18px;
+  padding: 10px 15px;
+  display: block;
+  transition: background-color 0.3s ease;
+}
+
+.dropdown-item:hover {
+  background-color: #f28c38;
+}
+
+/* Responsive adjustments for medium screens */
 @media (max-width: 1338px) {
   .navbar-container {
     padding: 0 20px;
@@ -145,7 +217,8 @@
     flex-grow: 1;
   }
 
-  .navbar-link {
+  .navbar-link,
+  .dropdown-toggle {
     font-size: 20px;
   }
 
@@ -160,6 +233,53 @@
   }
 }
 
+/* Centering fixes for screens <= 868px */
+@media (max-width: 868px) {
+  .navbar-container {
+    display: flex;
+    align-items: center; /* Ensure container is centered vertically */
+    justify-content: space-between;
+    padding: 0 20px;
+    height: 100%; /* Ensure full height usage */
+  }
+
+  .navbar-links {
+    display: flex;
+    align-items: center; /* Explicitly center links vertically */
+    justify-content: center; /* Center links horizontally */
+    flex-grow: 1;
+    margin-left: 0; /* Remove any fixed margin */
+    gap: 10px; /* Adjust gap for tighter spacing */
+    height: 100%; /* Ensure links container uses full height */
+  }
+
+  .navbar-link,
+  .dropdown-toggle {
+    display: flex;
+    align-items: center; /* Center text/icon vertically within link */
+    font-size: 18px; /* Slightly smaller font for better fit */
+    padding: 8px 10px; /* Consistent padding */
+    line-height: 1; /* Prevent line-height from adding extra space */
+  }
+
+  .dropdown {
+    display: flex;
+    align-items: center; /* Ensure dropdown aligns with other links */
+  }
+
+  .navbar-login {
+    display: flex;
+    align-items: center; /* Center login button vertically */
+    margin-left: 15px;
+  }
+
+  .login-button {
+    font-size: 15px;
+    padding: 6px 10px;
+  }
+}
+
+/* Mobile view */
 @media (max-width: 765px) {
   .navbar-container {
     position: relative;
@@ -172,12 +292,11 @@
     position: absolute;
     left: 10%;
     transform: translateX(-50%);
-    z-index: 10; /* Asegura que el logo esté por encima */
+    z-index: 10; /* Ensure logo is above */
   }
 
   .navbar-logo img {
     width: 120px;
-    
   }
 
   .hero-logo {
@@ -202,14 +321,16 @@
   .mobile-menu {
     display: flex;
     flex-direction: column;
+    align-items: center; /* Center items horizontally */
+    justify-content: center; /* Center items vertically */
     position: absolute;
-    top: 100px;
+    top: 110px; /* Below navbar */
     left: 50%;
     transform: translateX(-50%);
     width: 100%;
     max-width: 300px;
     background-color: #000;
-    padding: 20px;
+    padding: 20px 0; /* Adjusted for centering */
     transform-origin: center top;
     transform: translateX(-50%) scaleY(0);
     transition: transform 0.3s ease-in-out;
@@ -219,20 +340,26 @@
     transform: translateX(-50%) scaleY(1);
   }
 
-  .mobile-menu-link {
+  .mobile-menu-link,
+  .mobile-dropdown-toggle {
     color: white;
     text-decoration: none;
     font-family: 'Gagalin', sans-serif;
     font-size: 20px;
-    padding: 10px 0;
+    padding: 12px 0;
     text-align: center;
     opacity: 0;
     transform: translateY(-10px);
     transition: opacity 0.3s ease, transform 0.3s ease;
     position: relative;
+    display: flex;
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+    width: 100%;
   }
 
-  .mobile-menu-link::before {
+  .mobile-menu-link::before,
+  .mobile-dropdown-toggle::before {
     content: '';
     position: absolute;
     top: 0;
@@ -244,23 +371,27 @@
     transition: width 0.3s ease;
   }
 
-  .mobile-menu-link:hover::before {
+  .mobile-menu-link:hover::before,
+  .mobile-dropdown-toggle:hover::before {
     width: 100%;
   }
 
-  .mobile-menu-link:hover {
+  .mobile-menu-link:hover,
+  .mobile-dropdown-toggle:hover {
     color: white;
   }
 
-  .mobile-menu.open .mobile-menu-link {
+  .mobile-menu.open .mobile-menu-link,
+  .mobile-menu.open .mobile-dropdown-toggle {
     opacity: 1;
     transform: translateY(0);
   }
 
   .mobile-menu-login {
     display: flex;
-    justify-content: center;
-    padding: 10px 0;
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+    padding: 12px 0;
     opacity: 0;
     transform: translateY(-10px);
     transition: opacity 0.3s ease, transform 0.3s ease;
@@ -271,11 +402,66 @@
     transform: translateY(0);
   }
 
-  /* Stagger animation for menu items */
-  .mobile-menu-link:nth-child(1) { transition-delay: 0.1s; }
-  .mobile-menu-link:nth-child(2) { transition-delay: 0.2s; }
-  .mobile-menu-link:nth-child(3) { transition-delay: 0.3s; }
-  .mobile-menu-link:nth-child(4) { transition-delay: 0.4s; }
-  .mobile-menu-link:nth-child(5) { transition-delay: 0.5s; }
+  /* Mobile Dropdown Styles */
+  .mobile-dropdown {
+    position: relative;
+    width: 100%;
+  }
+
+  .mobile-dropdown-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  .mobile-dropdown-menu {
+    display: none;
+    flex-direction: column;
+    background-color: #1a1a1a; /* Slightly lighter for contrast */
+    width: 100%;
+    padding: 10px 0;
+  }
+
+  .mobile-dropdown-menu.show {
+    display: flex;
+  }
+
+  .mobile-dropdown-item {
+    color: white;
+    text-decoration: none;
+    font-family: 'Gagalin', sans-serif;
+    font-size: 18px;
+    padding: 10px 20px;
+    text-align: center;
+    transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+  }
+
+  .mobile-dropdown-item:hover {
+    background-color: #f28c38;
+  }
+
+  /* Stagger animations */
+  .mobile-menu-link:nth-child(1),
+  .mobile-dropdown:nth-child(1) .mobile-dropdown-toggle { transition-delay: 0.1s; }
+  .mobile-menu-link:nth-child(2),
+  .mobile-dropdown:nth-child(2) .mobile-dropdown-toggle { transition-delay: 0.2s; }
+  .mobile-menu-link:nth-child(3),
+  .mobile-dropdown:nth-child(3) .mobile-dropdown-toggle { transition-delay: 0.3s; }
+  .mobile-menu-link:nth-child(4),
+  .mobile-dropdown:nth-child(4) .mobile-dropdown-toggle { transition-delay: 0.4s; }
+  .mobile-menu-link:nth-child(5),
+  .mobile-dropdown:nth-child(5) .mobile-dropdown-toggle { transition-delay: 0.5s; }
   .mobile-menu-login { transition-delay: 0.6s; }
+  .mobile-dropdown-menu .mobile-dropdown-item:nth-child(1) { transition-delay: 0.3s; }
+  .mobile-dropdown-menu .mobile-dropdown-item:nth-child(2) { transition-delay: 0.4s; }
+}
+
+/* Hide login button at 834px or less (from original CSS) */
+@media (max-width: 834px) {
+  .login-button {
+    display: none;
+  }
 }

@@ -77,44 +77,13 @@ function BetInfoVideo() {
 ></iframe>
 
    
-          <div className="bet-info-video__caption">
-            <p>
-             Aprende con el creador de WinBet
-            </p>
-          </div>
-
-          <div className="bet-info-video__controls">
-            <button
-              className="bet-info-video__control-button bet-info-video__control-button--play"
-              onClick={handlePlayPause}
-            >
-              {isPlaying ? "❚❚" : "▶"}
-            </button>
-
-            <div className="bet-info-video__time">
-              {formatTime(currentTime)} / {formatTime(totalDuration)}
-            </div>
-
-            <div className="bet-info-video__right-controls">
-              <button className="bet-info-video__control-button bet-info-video__control-button--volume">
-                🔊
-              </button>
-              <button className="bet-info-video__control-button bet-info-video__control-button--settings">
-                ⚙️
-              </button>
-              <button className="bet-info-video__control-button bet-info-video__control-button--miniplayer">
-                □
-              </button>
-              <button className="bet-info-video__control-button bet-info-video__control-button--fullscreen">
-                ⛶
-              </button>
-            </div>
-          </div>
+     
+      
         </div>
       </div>
 
       <a href="#howWorks" className="bet-info-video__cta">
-        DESCUBRE CÓMO FUNCIONA
+        DESCUBRE MÀS
       </a>
     </div>
   );
