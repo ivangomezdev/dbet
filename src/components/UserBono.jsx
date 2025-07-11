@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import "./userBono.css";
-
 import { useCookies } from "react-cookie";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -10,10 +9,16 @@ import { useRouter } from "next/navigation";
 export default function UserBono({ bonosData }) {
   const [tabActiva, setTabActiva] = useState("disponibles");
   const [cookies] = useCookies(["token"]);
+  const [userData, setUserData] = useState(null); // Assuming userData might be fetched elsewhere
+  const [videos, setVideos] = useState([]); // Assuming videos is used elsewhere
   const { data: session } = useSession();
   const router = useRouter();
 
-  const showLink = !session?.user && !cookies.token;
+  // Determine authentication and subscription status
+  const isAuthenticated = !!session || !!cookies.token;
+  const subscriptionStatus = session?.user?.subscriptionStatus || userData?.subscriptionStatus || "inactive";
+  const hasPremiumSubscription = subscriptionStatus === "MONTHLY" || subscriptionStatus === "YEAR";
+  const isFreePlan = subscriptionStatus === "FREE" || subscriptionStatus === "inactive";
 
   const filtrarBonos = () => {
     if (!bonosData) return [];
@@ -31,10 +36,20 @@ export default function UserBono({ bonosData }) {
       console.error("Slug is missing for this bono");
       return;
     }
-    if (showLink) {
+
+    if (!isAuthenticated) {
+      // Unauthenticated users are redirected to register
       router.push("/auth/register");
-    } else {
+    } else if (isFreePlan) {
+      // Authenticated users with free or inactive plan go to changePlan
+      router.push("/changePlan");
+    } else if (hasPremiumSubscription) {
+      // Authenticated users with premium plans proceed to bono details
       router.push(`/bonos/${slug}`);
+    } else {
+      // Fallback for any unexpected subscription status
+      console.warn("Unexpected subscription status:", subscriptionStatus);
+      router.push("/changePlan"); // Or handle differently based on your requirements
     }
   };
 
