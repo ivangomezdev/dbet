@@ -27,7 +27,7 @@ export default function Videos() {
   const isAuthenticated = !!session || !!cookies.token;
   const subscriptionStatus = session?.user?.subscriptionStatus || userData?.subscriptionStatus || "inactive";
   const hasPremiumSubscription = subscriptionStatus === "MONTHLY" || subscriptionStatus === "YEAR";
-  const isFreePlan = subscriptionStatus === "FREE" || subscriptionStatus === "INACTIVE";
+  const isFreePlan = subscriptionStatus === "FREE" || subscriptionStatus === "inactive";
 
   // Fetch videos from Contentful
   useEffect(() => {
