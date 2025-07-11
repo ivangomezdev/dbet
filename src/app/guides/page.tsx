@@ -22,7 +22,7 @@ const Page = () => {
       <NavBar />
       </header>
       <main className='guides__main bonos__content'>
-        <Videos/>
+        <Videos bonosData={[]} />
          { !cookies.token && !session  ? <div>
                  <SubscriptionCard hrefAnual="/auth/register" hrefFree="/auth/register" hrefMensual="/auth/register"/>
                </div> : <div>  </div> }
