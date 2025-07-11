@@ -1,200 +1,164 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useSession } from "next-auth/react";
+import { useState } from "react";
+import "./userBono.css";
+
 import { useCookies } from "react-cookie";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import VerifiedIcon from "@mui/icons-material/Verified";
-import { getVideos } from "../lib/contenful";
-import "./videos.css";
 
-const channelData = {
-  name: "GUÍAS",
-  isVerified: true,
-  description: "Todo lo que necesitas saber",
-  profileImage: "https://res.cloudinary.com/dc5zbh38m/image/upload/v1742334432/BRAIN_tfew9b.png",
-};
-
-export default function Videos() {
-  const [activeFilter, setActiveFilter] = useState("recientes");
+export default function UserBono({ bonosData }) {
+  const [tabActiva, setTabActiva] = useState("disponibles");
   const [cookies] = useCookies(["token"]);
-  const [userData, setUserData] = useState(null);
-  const [videos, setVideos] = useState([]);
   const { data: session } = useSession();
   const router = useRouter();
 
   // Determine authentication and subscription status
-  const isAuthenticated = !!session || !!cookies.token;
-  const subscriptionStatus = session?.user?.subscriptionStatus || userData?.subscriptionStatus || "inactive";
-  const hasPremiumSubscription = subscriptionStatus === "MONTHLY" || subscriptionStatus === "YEAR";
-  const isFreePlan = subscriptionStatus === "FREE";
+  const isAuthenticated = !!session?.user || !!cookies.token;
+  const subscriptionStatus = session?.user?.subscriptionStatus || "INACTIVE";
+  const isFreePlan = subscriptionStatus === "FREE" || subscriptionStatus === "INACTIVE";
 
-  // Fetch videos from Contentful
-  useEffect(() => {
-    const fetchVideos = async () => {
-      try {
-        const videoEntries = await getVideos();
-        const formattedVideos = videoEntries.map((entry, index) => ({
-          id: index + 1,
-          title: entry.fields.title || "Sin título",
-          thumbnail: entry.fields.thumbnail?.fields?.file?.url
-            ? `https:${entry.fields.thumbnail.fields.file.url}`
-            : "https://res.cloudinary.com/dc5zbh38m/image/upload/v174248/1_ilbchq.png",
-          time: entry.fields.time || "hace 1 día",
-          duration: entry.fields.duration || "10:00",
-          slug: entry.fields.slug || `video-${index + 1}`,
-          premium: entry.fields.premium || false, // Add premium field
-        }));
-        setVideos(formattedVideos);
-      } catch (error) {
-        console.error("Error fetching videos:", error);
-      }
-    };
-    fetchVideos();
-  }, []);
-
-  // Fetch user data for JOSE token
-  useEffect(() => {
-    const fetchUserData = async () => {
-      if (cookies.token && !session) {
-        try {
-          const response = await fetch("/api/user", {
-            headers: {
-              Authorization: `Bearer ${cookies.token}`,
-            },
-          });
-          if (response.ok) {
-            const data = await response.json();
-            setUserData(data);
-          }
-        } catch (error) {
-          console.error("Error fetching user data:", error);
-        }
-      }
-    };
-    fetchUserData();
-  }, [cookies.token, session]);
-
-  // Handle click on locked video
-  const handleLockedVideoClick = () => {
-    if (isAuthenticated && isFreePlan) {
-      router.push("https://winbet420.com/changePlan");
+  const filtrarBonos = () => {
+    if (!bonosData) return [];
+    if (tabActiva === "disponibles") {
+      return bonosData.filter((bono) => !bono.fields.complete);
     } else {
-      router.push("/auth/register");
+      return bonosData.filter((bono) => bono.fields.complete);
     }
   };
 
-  // Handle video click
-  const handleVideoClick = (slug) => {
-    router.push(`/guides/${slug}`);
+  const bonosFiltrados = filtrarBonos();
+
+  const handleShowDetails = (slug) => {
+    if (!slug) {
+      console.error("Slug is missing for this bono");
+      return;
+    }
+    if (!isAuthenticated) {
+      router.push("/auth/register");
+    } else if (isFreePlan) {
+      router.push("/changePlan");
+    } else {
+      router.push(`/bonos/${slug}`);
+    }
   };
 
-  // Filter and sort videos
-  const filteredVideos = videos.sort((a, b) => {
-    const aNumber = parseInt(a.slug.split("-")[1], 10) || 0;
-    const bNumber = parseInt(b.slug.split("-")[1], 10) || 0;
-    return aNumber - bNumber;
-  });
-
   return (
-    <div className="guides">
-      {/* Profile Header */}
-      <div className="guides__profile">
-        <div className="guides__profile-avatar"></div>
-        <div className="guides__profile-info">
-          <div className="guides__profile-name-container">
-            <h1 className="guides__profile-name">
-              {channelData.name}
-              {channelData.isVerified && <VerifiedIcon />}
-            </h1>
+    <div className="user-bono">
+      <div className="user-bono__header">
+        <div className="user-bono__welcome">
+          <h1 className="user-bono__title420">
+            Bonos<span style={{ color: "#FD910E" }}>420</span>
+          </h1>
+        </div>
+      </div>
+
+      <div className="user-bono__content">
+        <div className="user-bono__main">
+          <div className="user-bono__tabs">
+            <button
+              className={`user-bono__tab ${
+                tabActiva === "disponibles" ? "user-bono__tab--active" : ""
+              }`}
+              onClick={() => setTabActiva("disponibles")}
+            >
+              Disponibles
+            </button>
+            <button
+              className={`user-bono__tab ${
+                tabActiva === "completas" ? "user-bono__tab--active" : ""
+              }`}
+              onClick={() => setTabActiva("completas")}
+            >
+              Completas
+            </button>
           </div>
-        </div>
-      </div>
 
-      {/* Navigation */}
-      <div className="guides__navigation">
-        <div className="guides__filters">
-          <button
-            className={`guides__filter-button ${
-              activeFilter === "recientes" ? "guides__filter-button--active" : ""
-            }`}
-            onClick={() => setActiveFilter("recientes")}
-          >
-            Ver guías
-          </button>
-        </div>
-      </div>
+          <div className="user-bono__list">
+            {bonosFiltrados && bonosFiltrados.length > 0 ? (
+              bonosFiltrados.map((bono, key) => (
+                <div
+                  key={key}
+                  className={`user-bono__item ${
+                    bono.fields.complete ? "user-bono__item--completed" : ""
+                  }`}
+                >
+                  <div className="user-bono__logo">
+                    <img
+                      src={
+                        bono.fields.image?.fields?.file?.url || "/placeholder.svg"
+                      }
+                      alt="logoBet"
+                      className="user-bono__logo-img"
+                    />
+                  </div>
 
-      {/* Videos Grid */}
-      <div className="guides__content">
-        <div className="guides__videos-grid">
-          {filteredVideos.map((video) => {
-            const isLocked = video.premium && !hasPremiumSubscription;
-            return (
-              <div
-                key={video.id}
-                className={`guides__video-card ${isLocked ? "guides__video-card--locked" : ""}`}
-                onClick={isLocked ? handleLockedVideoClick : () => handleVideoClick(video.slug)}
-                style={{ cursor: isLocked ? "pointer" : "default" }}
-              >
-                <div className="guides__video-thumbnail-container">
-                  <img
-                    src={video.thumbnail}
-                    alt={video.title}
-                    style={{
-                      width: "100%",
-                      height: "200px",
-                      objectFit: "cover",
-                      filter: isLocked ? "brightness(50%)" : "none", // Dim the image if locked
-                    }}
-                  />
-                  <div className="guides__video-duration">{video.slug.slice(5)}</div>
-                  {isLocked && (
-                    <div className="guides__video-locked-overlay">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                      </svg>
-                      <span>Premium</span>
+                  <div className="user-bono__details">
+                    <h3 className="user-bono__item-title">{bono.fields.title}</h3>
+                    <p className="user-bono__offer-type">
+                      Tipo de Oferta:{" "}
+                      <span className="user-bono__offer-value">
+                        {bono.fields.offerType}
+                      </span>
+                    </p>
+                    <p className="user-bono__promo">{bono.fields.conditions}</p>
+
+                    <div className="user-bono__meta">
+                      <div className="user-bono__difficulty">
+                        Dificultad:
+                        <span
+                          className={`user-bono__difficulty-value ${
+                            bono.fields.difficulty === "Fácil"
+                              ? "user-bono__difficulty-value--easy"
+                              : bono.fields.difficulty === "Media"
+                              ? "user-bono__difficulty-value--medium"
+                              : "user-bono__difficulty-value--hard"
+                          }`}
+                        >
+                          {bono.fields.difficulty}
+                        </span>
+                      </div>
+                      <div className="user-bono__date">
+                        Añadida:{" "}
+                        <span className="user-bono__date-value">
+                          {bono.fields.aadida}
+                        </span>
+                      </div>
                     </div>
-                  )}
-                </div>
-                <div className="guides__video-info">
-                  <h3 className="guides__video-title">{video.title}</h3>
-                  <div className="guides__video-meta">
-                    <span className="guides__video-time">{video.time}</span>
+
+                    <div className="user-bono__actions">
+                      <button
+                        className="user-bono__button user-bono__button--show"
+                        onClick={() => handleShowDetails(bono.fields.slug)}
+                        disabled={!bono.fields.slug} // Disable button if slug is missing
+                      >
+                        MUESTRA
+                      </button>
+                      {!bono.fields.complete ? (
+                        <></>
+                      ) : (
+                        <button
+                          className="user-bono__button user-bono__button--complete"
+                          disabled
+                        >
+                          COMPLETADA
+                        </button>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="user-bono__value">
+                    <div className="user-bono__value-label">Bonos</div>
+                    <div className="user-bono__value-amount">
+                      {bono.fields.amount}€
+                    </div>
                   </div>
                 </div>
-                <button className="guides__video-options" disabled={isLocked}>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <circle cx="12" cy="12" r="1"></circle>
-                    <circle cx="12" cy="5" r="1"></circle>
-                    <circle cx="12" cy="19" r="1"></circle>
-                  </svg>
-                </button>
-              </div>
-            );
-          })}
+              ))
+            ) : (
+              <p>No hay bonos {tabActiva === "disponibles" ? "disponibles" : "completados"}</p>
+            )}
+          </div>
         </div>
       </div>
     </div>

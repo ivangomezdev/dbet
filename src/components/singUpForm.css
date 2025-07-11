@@ -3,7 +3,8 @@
   justify-content: center;
   align-items: center;
   border-radius: 18px;
- 
+  position: relative;
+  z-index: 10; /* Ajustado para estar debajo del navbar y mobile-menu */
   font-family: Arial, sans-serif;
 }
 
@@ -14,25 +15,30 @@
   padding: 30px;
   width: 500px;
   max-width: 500px;
-
+  position: relative;
+  z-index: 10; /* Ajustado para estar debajo del navbar y mobile-menu */
   text-align: center;
 }
 
-@media(max-width:534px){
-  .auth-card{
+@media (max-width: 534px) {
+  .auth-card {
     width: 350px;
+    position: relative;
+    z-index: 10; /* Mantener debajo del mobile-menu */
   }
 }
 
-
-@media(max-width:356px){
-  .auth-card{
+@media (max-width: 356px) {
+  .auth-card {
     width: 300px;
+    position: relative;
+    z-index: 10; /* Mantener debajo del mobile-menu */
   }
 }
+
 .auth-title {
   font-size: 26px;
- font-family: "Gagalin";
+  font-family: "Gagalin";
   margin-bottom: 8px;
   color: #333;
 }
@@ -81,14 +87,16 @@
 .auth-input:focus {
   border-color: #f47b20;
 }
-.signup__link{
-  font-size: 12px;
 
+.signup__link {
+  font-size: 12px;
 }
-.signup__separator{
+
+.signup__separator {
   margin-left: 20px;
   margin-right: 20px;
 }
+
 .auth-button {
   width: 100%;
   padding: 12px;
@@ -104,10 +112,8 @@
   align-items: center;
 }
 
-.auth-button button{
-
+.auth-button button {
   border: none !important;
-  
 }
 
 .auth-button.primary {
@@ -122,7 +128,6 @@
 .auth-button.google {
   background-color: white;
   color: #333;
-
 }
 
 .auth-button.google:hover {

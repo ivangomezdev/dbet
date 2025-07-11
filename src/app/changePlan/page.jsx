@@ -12,7 +12,7 @@ import "../guides/guides.css";
 const cardsData = [
   {
     planType: "FREE",
-    price: "$0",
+    price: "€0",
     period: "/mes",
     features: ["Bonos"],
     buttonTextSpain: "Seleccionar",
@@ -22,9 +22,9 @@ const cardsData = [
   },
   {
     planType: "PREMIUM MENSUAL",
-    price: "$10", // Ajusta según el precio real
+    price: "€14,99", // Ajusta según el precio real
     period: "/mes",
-   features: ["Gana hasta 500 €/US$ al Mes", "Acceso a todas las Guías", "Versión Completa de las Herramientas"],
+   features: ["Gana hasta 500 € al Mes", "Acceso a todas las Guías", "Versión Completa de las Herramientas"],
     tools: ["Bonos", "AutoMBetting", "OddsMatcher"],
     buttonTextSpain: "Comprar",
  buttonTextLatam: "Comprar LATAM (Próximamente)",
@@ -33,9 +33,9 @@ const cardsData = [
   },
   {
     planType: "PREMIUM ANUAL",
-    price: "$100", // Ajusta según el precio real
+    price: "€100", // Ajusta según el precio real
     period: "/año",
-    features: ["Gana hasta 500 €/US$ al Mes", "Acceso a todas las Guías", "Versión Completa de las Herramientas"],
+    features: ["Gana hasta 500 € al Mes", "Acceso a todas las Guías", "Versión Completa de las Herramientas"],
     tools: ["Bonos", "AutoMBetting", "OddsMatcher"],
     buttonTextSpain: "Comprar",
     buttonTextLatam: "Comprar LATAM (Próximamente)",
